@@ -1,0 +1,6 @@
+baseURL = "http://micz.it/"
+languageCode = "en-us"
+title = "micz.it"
+
+publishDir = "docs"
+theme = "anubis"
