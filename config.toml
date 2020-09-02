@@ -1,6 +1,13 @@
 baseURL = "http://micz.it/"
 languageCode = "en-us"
-title = "micz.it"
+title = "Mic's"
 
 publishDir = "docs"
 theme = "anubis"
+
+#googleAnalytics =
+enableRobotsTXT = true
+
+[params]
+   customCSS = ["css/micz.css"] # relative path to "static" directory
+   Subtitle = "Silence is golden."
