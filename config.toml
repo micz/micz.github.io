@@ -11,3 +11,4 @@ enableRobotsTXT = true
 [params]
    customCSS = ["css/micz.css"] # relative path to "static" directory
    Subtitle = "Silence is golden."
+   #style= "light"
