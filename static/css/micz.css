@@ -10,16 +10,18 @@ img.homepage_img{max-width: 100%;}
 article header h1 {font-size:47px;font-weight:400;line-height:1.25;margin-top:.5em;}
 div.content strong {font-weight: 700;}
 p.center{text-align:center;}
-div.common-footer-bottom{display: flex;justify-content: space-between;}
-div.themeSwitcher{width: 100%;text-align: center;margin-top:1em;padding-bottom:1em;}
-
+div.common-footer-bottom{display:flex;justify-content:space-between;}
+div.footer_spacer{width:100%;padding-top:1em;height:1em;}
+div.themeSwitcher{position:relative;}
 .theme-switcher {
     background: var(--switcher-color);
     color: var(--switcher-bg-color);
-    padding:2px;
-    font-size: 16px;
-    border: none;
-    margin-right:0;
-    margin-bottom:0;
+    padding:0px;
+    font-size:16px;
+    border:none;
     border-radius:6px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin:-12px 0 0 -12px;
 }

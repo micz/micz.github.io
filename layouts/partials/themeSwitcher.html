@@ -4,9 +4,7 @@
 {{ end }}
 
 {{ if not (in (slice "light-without-switcher" "dark-without-switcher" "auto-without-switcher") $style) }}
-    <button class="theme-switcher">
-        {{ "dark" | humanize }}
-    </button>
+    <img class="theme-switcher" src="{{ .Site.BaseURL }}images/light.png" title="Dark / Light"/>
 
     <script>
     const STORAGE_KEY = 'user-color-scheme'
@@ -54,7 +52,7 @@
 
     function changeButtonText()
     {
-        switchButton.textContent = currentTheme == 'dark' ?  {{ "light" | humanize }} : {{ "dark" | humanize }}
+        switchButton.src = "{{ .Site.BaseURL }}images/" + (currentTheme == 'dark' ?  "light" : "dark" ) + ".png"
     }
 
     function switchTheme(e) {
