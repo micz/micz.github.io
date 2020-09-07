@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Mic&#39;s</title>
+    <link>http://micz.it/</link>
+    <description>Mic&#39;s</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+    <atom:link href="http://micz.it/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Donate to ThunderdStats Thunderbird Addon!</title>
+      <link>http://micz.it/thunderdbird-addon-thunderstats-your-thunderbird-statistics/donate/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://micz.it/thunderdbird-addon-thunderstats-your-thunderbird-statistics/donate/</guid>
+      <description>
+&lt;a href=&#34;https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;amp;business=UHN4SXPGEXWQL&amp;amp;lc=IT&amp;amp;item_name=IMAP%20Draft%20Unread&amp;amp;item_number=thimapdraftunread&amp;amp;currency_code=EUR&amp;amp;bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted&#34; target=&#34;_blank&#34; rel=&#34;noopener noreferrer&#34;&gt;&lt;img title=&#34;Click here and support this plugin with a small donation!&#34; src=&#34;http://micz.it/images/th_donate.png&#34; alt=&#34;Donation&#34; width=&#34;62&#34; height=&#34;55&#34;  style=&#34;box-sizing: border-box; vertical-align: middle; margin: 5px 20px 20px 0px; float: left; width: auto;&#34; /&gt;&lt;/a&gt;&lt;strong&gt;Support ThunderStats Thunderdbird Addon!&lt;/strong&gt;&lt;br/&gt;
+Are you using this addon every day?&lt;br/&gt;
+Consider to support the development making a small donation. &lt;a href=&#34;https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;amp;business=UHN4SXPGEXWQL&amp;amp;lc=IT&amp;amp;item_name=ThunderStats&amp;amp;item_number=thunderstats&amp;amp;currency_code=EUR&amp;amp;bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted&#34;&gt;Click here!&lt;/a&gt;</description>
+    </item>
+    
+    <item>
+      <title>Thunderbird Addon: ColumnsWizard!</title>
+      <link>http://micz.it/thunderdbird-addon-columnswizard/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://micz.it/thunderdbird-addon-columnswizard/</guid>
+      <description>
+&lt;div style=&#34;float: right; margin: 10px;&#34;&gt;&lt;img height=&#34;128&#34; src=&#34;http://micz.it/images/mzcw_icon.png&#34; width=&#34;128&#34;&gt;&lt;/div&gt;
+&lt;p&gt;With this addon you can add some magic to the messages list columns!&lt;/p&gt;&lt;ul style=&#34;box-sizing: border-box; margin-top: 0px; margin-bottom: 10px; color: #424242; font-family: &#39;Source Sans Pro&#39;, sans-serif;   text-align: justify;&#34;&gt;&lt;li style=&#34;box-sizing: border-box;&#34;&gt;Add a custom column directly from the addon preference window to show any mail header you want.&lt;/li&gt;&lt;li style=&#34;box-sizing: border-box;&#34;&gt;Set the default columns settings for any new folder.&lt;/li&gt;&lt;li style=&#34;box-sizing: border-box;&#34;&gt;Show hidden columns in the Conversation Tab.&lt;/li&gt;&lt;li style=&#34;box-sizing: border-box;&#34;&gt;Edit a mail header value for a single message.&lt;/li&gt;&lt;/ul&gt;
+&lt;p&gt;&lt;br/&gt;&lt;strong style=&#34;box-sizing: border-box;&#34;&gt;How does it work?&lt;/strong&gt;&lt;br&gt;After installing, open the addon preference panel to:&lt;/p&gt;
+&lt;ul&gt;&lt;li style=&#34;box-sizing: border-box;&#34;&gt;Show or add custom columns.&lt;/li&gt;&lt;li style=&#34;box-sizing: border-box;&#34;&gt;Set which column show in a new folder, and choose how to sort the messages in the folder.&lt;/li&gt;&lt;li style=&#34;box-sizing: border-box;&#34;&gt;Choose which columns you want to always see in the Conversation Tab.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;strong style=&#34;box-sizing: border-box;&#34;&gt;&lt;a href=&#34;https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;amp;business=UHN4SXPGEXWQL&amp;amp;lc=IT&amp;amp;item_name=ThunderStats&amp;amp;item_number=thunderstats&amp;amp;currency_code=EUR&amp;amp;bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted&#34; target=&#34;_blank&#34; style=&#34;box-sizing: border-box; background-color: transparent; color: #78909c;&#34;&gt;&lt;img alt=&#34;Donation&#34; class=&#34;alignleft size-full wp-image-865&#34; height=&#34;55&#34; src=&#34;http://micz.it/images/th_donate.png&#34; title=&#34;Click here and support this addon with a small donation!&#34; width=&#34;62&#34; style=&#34;box-sizing: border-box; vertical-align: middle; margin: 5px 20px 20px 0px; float: left; width: auto;&#34;&gt;&lt;/a&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;br/&gt;&lt;strong style=&#34;box-sizing: border-box;&#34;&gt;Support this addon!&lt;br&gt;&lt;/strong&gt;Are you using this addon in your Thunderbird?&lt;br&gt;Consider to support the development making a small donation.&amp;nbsp;&lt;a href=&#34;https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=UHN4SXPGEXWQL&amp;lc=GB&amp;item_name=Columns%20Wizard%20Thunderbird%20Addon%20%28euro%29&amp;item_number=ColumnsWizardEU&amp;currency_code=EUR&amp;bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted&#34; target=&#34;_blank&#34; style=&#34;box-sizing: border-box; background-color: transparent; color: #78909c;&#34;&gt;Click here!&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img alt=&#34;&#34; border=&#34;0&#34; height=&#34;1&#34; src=&#34;https://www.paypalobjects.com/it_IT/i/scr/pixel.gif&#34; width=&#34;1&#34; style=&#34;box-sizing: border-box; vertical-align: middle; margin-bottom: 1em; width: auto;&#34;&gt;
+ &lt;strong style=&#34;box-sizing: border-box;&#34;&gt;Download&lt;/strong&gt;&lt;br&gt;Download it from the&amp;nbsp;&lt;a href=&#34;https://addons.thunderbird.net/it/thunderbird/addon/columnswizard/&#34; target=&#34;_blank&#34; style=&#34;box-sizing: border-box; background-color: transparent; color: #78909c;&#34;&gt;Mozilla add-on site&lt;/a&gt;.&lt;br&gt;This addon is also opensource: get its code from&amp;nbsp;&lt;a href=&#34;https://github.com/micz/ColumnsWizard&#34; target=&#34;_blank&#34; style=&#34;box-sizing: border-box; background-color: transparent; color: #78909c;&#34;&gt;github&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;br/&gt;&lt;strong style=&#34;box-sizing: border-box;&#34;&gt;Bugs&lt;/strong&gt;&lt;br&gt;To send a bug report use&amp;nbsp;&lt;a href=&#34;https://github.com/micz/ColumnsWizard/issues&#34; target=&#34;_blank&#34; style=&#34;box-sizing: border-box; background-color: transparent; color: #78909c;&#34;&gt;github&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;br/&gt;&lt;strong style=&#34;box-sizing: border-box;&#34;&gt;Future improvements?&lt;/strong&gt;&lt;br/&gt;
+  Check the&amp;nbsp;&lt;a href=&#34;https://github.com/micz/ColumnsWizard/issues?labels=new+feature&amp;page=1&amp;state=open&#34; target=&#34;_blank&#34; style=&#34;box-sizing: border-box; background-color: transparent; color: #78909c;&#34;&gt;issue tracker&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;br/&gt;&lt;strong style=&#34;box-sizing: border-box;&#34;&gt;Thanks to&amp;hellip;&lt;/strong&gt;&lt;br&gt;&lt;a href=&#34;https://github.com/cleidigh&#34;&gt;Christopher Leidigh&lt;/a&gt;, for working hard on the Thunderbird 60+ compatibility.&lt;br&gt;Axel Grude, developer of&amp;nbsp;&lt;a href=&#34;https://addons.thunderbird.net/en-US/thunderbird/addon/quickfolders-tabbed-folders/&#34; target=&#34;_blank&#34; style=&#34;box-sizing: border-box; background-color: transparent; color: #78909c;&#34;&gt;QuickFolders&lt;/a&gt;&amp;nbsp;addon, for his help in testing and brainstorming new features.&lt;/p&gt;
+&lt;p&gt;&lt;br&gt;&lt;small&gt;&lt;em&gt;Thanks to&amp;nbsp;&lt;a href=&#34;http://www.babelzilla.org/&#34; target=&#34;_blank&#34; style=&#34;box-sizing: border-box; background-color: transparent; color: #78909c;&#34;&gt;BabelZilla&lt;/a&gt;&amp;nbsp;for the translation support.&lt;/em&gt;&lt;/small&gt;
+  &lt;br&gt;&lt;small&gt;&lt;em&gt;Icon courtesy of &amp;ldquo;&lt;a href=&#34;http://www.iconarchive.com/artist/oxygen-icons.org.html&#34; target=&#34;_blank&#34; style=&#34;box-sizing: border-box; background-color: transparent; color: #78909c;&#34;&gt;Oxygen Team&lt;/a&gt;&amp;ldquo;.&lt;/em&gt;&lt;/small&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Thunderdbird Addon: IMAP Quota (Free Space)!</title>
+      <link>http://micz.it/thunderdbird-addon-imap-quota-free-space/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://micz.it/thunderdbird-addon-imap-quota-free-space/</guid>
+      <description>&lt;div style=&#34;float: right; margin: 10px;&#34;&gt;&lt;img src=&#34;http://micz.it/images/mziq_icon.png&#34; alt=&#34;ImapQuota&#34; width=&#34;150&#34; height=&#34;150&#34; /&gt;&lt;/div&gt;
+&lt;p&gt;Do you know that Thunderbird has a statusbar to show the quota used for an IMAP account?&lt;br/&gt;
+It&#39;s an hidden feature and you need to manually change some configurations to show it always.&lt;br/&gt;
+This addon let you choose how and when show the IMAP quota status bar.&lt;/p&gt;
+
+&lt;p&gt;&lt;br/&gt;&lt;strong&gt;How does it work?&lt;/strong&gt;&lt;br/&gt;
+After installing, open the addon preference panel to choose when and how to show the IMAP quota statusbar.&lt;br/&gt;
+The statusbar is shown only when is selected a folder of an IMAP account.&lt;/p&gt;
+
+&lt;p&gt;&lt;br/&gt;&lt;strong&gt;&lt;a href=&#34;https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;amp;business=UHN4SXPGEXWQL&amp;amp;lc=IT&amp;amp;item_name=Thunderbird%20ImapQuota%20addon&amp;amp;item_number=thimapquota&amp;amp;currency_code=EUR&amp;amp;bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted&#34; target=&#34;_blank&#34;&gt;&lt;img  title=&#34;Click here and support this addon with a small donation!&#34; src=&#34;http://micz.it/images/th_donate.png&#34; alt=&#34;Donation&#34; width=&#34;62&#34; height=&#34;55&#34; style=&#34;box-sizing: border-box; vertical-align: middle; margin: 5px 20px 20px 0px; float: left; width: auto;&#34;/&gt;&lt;/a&gt;Support this addon!&lt;br/&gt;
+&lt;/strong&gt;Are you using this addon in your Thunderbird?&lt;br/&gt;
+Consider to support the development making a small donation. &lt;a href=&#34;https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;amp;business=UHN4SXPGEXWQL&amp;amp;lc=IT&amp;amp;item_name=Thunderbird%20ImapQuota%20addon&amp;amp;item_number=thimapquota&amp;amp;currency_code=EUR&amp;amp;bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted&#34; target=&#34;_blank&#34;&gt;Click here!&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;br/&gt;&lt;img src=&#34;https://www.paypalobjects.com/it_IT/i/scr/pixel.gif&#34; alt=&#34;&#34; width=&#34;1&#34; height=&#34;1&#34; border=&#34;0&#34; /&gt;
+&lt;strong&gt;Download&lt;/strong&gt;&lt;br/&gt;
+Download it from the &lt;a href=&#34;https://addons.thunderbird.net/it/thunderbird/addon/imap-quota-free-space/&#34; target=&#34;_blank&#34;&gt;Mozilla add-on site&lt;/a&gt;.&lt;br/&gt;
+This addon is also opensource: get its code from &lt;a href=&#34;https://github.com/micz/ImapQuota&#34; target=&#34;_blank&#34;&gt;github&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;br/&gt;&lt;strong&gt;Bugs&lt;/strong&gt;&lt;br/&gt;
+To send a bug report use &lt;a href=&#34;https://github.com/micz/ImapQuota/issues&#34; target=&#34;_blank&#34;&gt;github&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;br/&gt;&lt;strong&gt;Future improvements?&lt;/strong&gt;&lt;br/&gt;
+Check the &lt;a href=&#34;https://github.com/micz/ImapQuota/issues?labels=new+feature&amp;amp;page=1&amp;amp;state=open&#34; target=&#34;_blank&#34;&gt;issue tracker&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;br/&gt;&lt;strong&gt;Thanks to...&lt;/strong&gt;&lt;br/&gt;
+&lt;a href=&#34;https://addons.thunderbird.net/it/thunderbird/user/dillinger/&#34; target=&#34;_blank&#34;&gt;Dillinger&lt;/a&gt;, for updating this addon for the Thunderbird 60+ compatibility.&lt;/p&gt;
+
+&lt;p&gt;&lt;br class=&#34;_spacer&#34; /&gt;&lt;small&gt;&lt;em&gt;Thanks to &lt;a href=&#34;http://www.babelzilla.org/&#34; target=&#34;_blank&#34;&gt;BabelZilla&lt;/a&gt; for the translation support.&lt;/em&gt;&lt;/small&gt;
+&lt;small&gt;&lt;/small&gt;&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>What is Inbox 0?</title>
+      <link>http://micz.it/thunderdbird-addon-thunderstats-your-thunderbird-statistics/what-is-inbox-0/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>http://micz.it/thunderdbird-addon-thunderstats-your-thunderbird-statistics/what-is-inbox-0/</guid>
+      <description>
+&lt;p&gt;Inbox Zero is a rigorous approach to email management aimed at keeping the inbox empty &amp;ndash; or almost empty &amp;ndash; at all times.&lt;/p&gt;
+&lt;p&gt;Inbox Zero was developed by productivity expert Merlin Mann. According to Mann, the zero is not a reference to the number of messages in an inbox; it is &amp;ldquo;the amount of time an employee&amp;rsquo;s brain is in his inbox.&amp;rdquo;&lt;br /&gt;Mann&amp;rsquo;s point is that time and attention are finite and when an inbox is confused with a &amp;ldquo;to do&amp;rdquo; list, productivity suffers.&lt;/p&gt;
+&lt;p&gt;Mann identifies five possible actions to take for each message: &lt;em&gt;delete&lt;/em&gt;, &lt;em&gt;delegate&lt;/em&gt;, &lt;em&gt;respond&lt;/em&gt;, &lt;em&gt;defer&lt;/em&gt; and &lt;em&gt;do.&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Here are some of Mann&amp;rsquo;s tips for effective email management:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Don&amp;rsquo;t leave the email client open.&lt;/li&gt;
+&lt;li&gt;Process email periodically throughout the day, perhaps at the top of each hour.&lt;/li&gt;
+&lt;li&gt;First delete or archive as many new messages as possible.&lt;/li&gt;
+&lt;li&gt;Then forward what can be best answered by someone else.&lt;/li&gt;
+&lt;li&gt;Immediately respond to any new messages that can be answered in two minutes or less.&lt;/li&gt;
+&lt;li&gt;Move new messages that require more than two minutes to answer &amp;ndash; and messages that can be answered later &amp;ndash; to a separate &amp;ldquo;requires response&amp;rdquo; folder.&lt;/li&gt;
+&lt;li&gt;Set aside time each day to respond to email in the &amp;ldquo;requires response&amp;rdquo; folder or chip away at mail in this folder throughout the day.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Merlin Mann introduces the Inbox Zero approach in a Google Tech Talk:&lt;/p&gt;
+&lt;p class=&#34;center&#34;&gt;&lt;iframe frameborder=&#34;0&#34; height=&#34;315&#34; src=&#34;https://www.youtube.com/embed/z9UjeTMb3Yk&#34; width=&#34;560&#34;&gt;&lt;/iframe&gt;&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>
