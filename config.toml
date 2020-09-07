@@ -8,8 +8,10 @@ theme = "anubis"
 googleAnalytics = "UA-3931804-1"
 enableRobotsTXT = true
 
+disableKinds = ["taxonomy", "taxonomyTerm"]
+
 [params]
    customCSS = ["css/micz.css"] # relative path to "static" directory
    Subtitle = "Silence is golden."
    style= "auto"
-   #env= "production"
+   env= "production"
