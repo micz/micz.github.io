@@ -7,7 +7,7 @@ header h1.site-title a:hover{color:var(--font-color);border:0;}
 header h1.site-title p{font-size: 20px;margin:0;}
 header h1.site-title{line-height:1.25}
 header.common-header{border-bottom:0;}
-footer.common-footer{border-top:0;}
+footer.common-footer{border-top:1px solid var(--switcher-bg-color);}
 img.homepage_img{max-width: 100%;}
 article header h1 {font-size:47px;font-weight:400;line-height:1.25;margin-top:.5em;}
 div.content strong {font-weight: 700;}
