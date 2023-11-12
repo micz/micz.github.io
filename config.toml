@@ -8,7 +8,7 @@ theme = "anubis"
 googleAnalytics = "UA-3931804-1"
 enableRobotsTXT = true
 
-disableKinds = ["RSS","taxonomy","sitemap","page"]
+disableKinds = ["RSS","taxonomy","sitemap"]
 ignoreErrors = ["error-disable-taxonomy"]
 
 [params]
