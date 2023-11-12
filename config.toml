@@ -5,7 +5,7 @@ title = "Mic's"
 publishDir = "docs"
 theme = "anubis"
 
-googleAnalytics = "UA-3931804-1"
+#googleAnalytics = "UA-3931804-1"
 enableRobotsTXT = true
 
 disableKinds = ["RSS","taxonomy","sitemap"]
