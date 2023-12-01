@@ -1,7 +1,4 @@
---font-color:#444;
---link-state-color:#a31d1d;
-
-body{font-family: 'Gentium Book Basic', Georgia, serif;line-height:1.5;font-weight: 400;font-size: 20px;}
+body{font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,;line-height:1.5;font-size: 20px;}
 header h1.site-title a{font-size: 64px;}
 header h1.site-title a:hover{color:var(--font-color);border:0;}
 header h1.site-title p{font-size: 20px;margin:0;}
