@@ -27,3 +27,23 @@ div.themeSwitcher{position:relative;}
     left: 50%;
     margin:-12px 0 0 -12px;
 }
+div.miczit_bg {
+    background: url("/images/home.jpg") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: -1000;
+}
+div.miczit_spacer {
+  height: calc(90vh - 150px);
+}
+.common-footer {
+    padding-top: 0em;
+    margin-top: 0em;
+  }
