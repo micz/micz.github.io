@@ -7,11 +7,6 @@ theme = "anubis"
 
 enableRobotsTXT = true
 
-[services]
-  [services.googleAnalytics]
-    ID = 'G-14PLEX7LGC'
-
-
 disableKinds = ["RSS","taxonomy","sitemap"]
 ignoreErrors = ["error-disable-taxonomy"]
 
@@ -20,3 +15,8 @@ ignoreErrors = ["error-disable-taxonomy"]
    Subtitle = "Silence is golden."
    style= "auto"
    env= "production"
+
+
+[services]
+  [services.googleAnalytics]
+    ID = 'G-14PLEX7LGC'
