@@ -1,5 +1,5 @@
 baseURL = "https://micz.it/"
-languageCode = "it-it"
+languageCode = "en"
 title = "Mic's"
 
 publishDir = "docs"
