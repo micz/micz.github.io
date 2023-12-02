@@ -5,8 +5,12 @@ title = "Mic's"
 publishDir = "docs"
 theme = "anubis"
 
-#googleAnalytics = "UA-3931804-1"
 enableRobotsTXT = true
+
+[services]
+  [services.googleAnalytics]
+    ID = 'G-14PLEX7LGC'
+
 
 disableKinds = ["RSS","taxonomy","sitemap"]
 ignoreErrors = ["error-disable-taxonomy"]
