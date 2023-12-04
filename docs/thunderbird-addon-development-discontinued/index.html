@@ -15,7 +15,7 @@
 
 
 
-<link rel="stylesheet" href="https://micz.it/css/light.css?rnd=1701550129" />
+<link rel="stylesheet" href="https://micz.it/css/light.css?rnd=1701718543" />
 <style>
 
     [data-theme="dark"] {   
@@ -47,9 +47,9 @@
 
 </style>
 
-<link rel="stylesheet" href="https://micz.it/css/style.css?rnd=1701550129" />
+<link rel="stylesheet" href="https://micz.it/css/style.css?rnd=1701718543" />
 
-<link rel="stylesheet" href="https://micz.it/css/micz.css?rnd=1701550129">
+<link rel="stylesheet" href="https://micz.it/css/micz.css?rnd=1701718543">
 
 
 
@@ -72,17 +72,96 @@ From Thunderbird 60.x, due to major changes made in Firefox by Mozilla, many pat
 
 
 
+    <div id="cookie-notice">
+    <span>We would like to use third party cookies and scripts to improve the 
+    functionality of this website.</span><br/>
+    <a id="cookie-notice-accept" class="btn btn-primary btn-sm">Approve</a>
+    <a id="cookie-notice-deny" class="btn btn-primary btn-sm">Deny</a></div>
+    <script>
+        function createCookie(name,value,days) {
+            var expires = "";
+            if (days) {
+                var date = new Date();
+                date.setTime(date.getTime() + (days*24*60*60*1000));
+                expires = "; expires=" + date.toUTCString();
+            }
+            document.cookie = name + "=" + value + expires + "; path=/" + ";secure;SameSite=None";
+        }
+        function readCookie(name) {
+            var nameEQ = name + "=";
+            var ca = document.cookie.split(';');
+            for(var i=0;i < ca.length;i++) {
+                var c = ca[i];
+                while (c.charAt(0)==' ') c = c.substring(1,c.length);
+                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+            }
+            return null;
+        }
+        
+        function deleteCookiesByPattern(pattern) {
+            const cookies = document.cookie.split(';');
+
+            for (let i = 0; i < cookies.length; i++) {
+
+                const cookie = cookies[i];
+                const eqPos = cookie.indexOf("=");
+                const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+
+                if (name.includes(pattern)) {
+                    
+                    document.cookie = name + "=; Domain=.micz.it; Path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; secure; SameSite=None";
+                }
+            }
+        }
+        
+        if(readCookie('cookie-notice-option')=='true') {
+            
+            
+            function loadScriptAsync(scriptSrc, callback) {
+                if (typeof callback !== 'function') {
+                    throw new Error('Not a valid callback for async script load');
+                }
+                var script = document.createElement('script');
+                script.onload = callback;
+                script.src = scriptSrc;
+                document.head.appendChild(script);
+            }
     
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-14PLEX7LGC"></script>
-<script>
-var doNotTrack = false;
-if (!doNotTrack) {
-	window.dataLayer = window.dataLayer || [];
-	function gtag(){dataLayer.push(arguments);}
-	gtag('js', new Date());
-	gtag('config', 'G-14PLEX7LGC', { 'anonymize_ip': false });
-}
-</script>
+            
+
+            
+            
+
+            loadScriptAsync('https://www.googletagmanager.com/gtag/js?id=G-14PLEX7LGC', function () {
+                window.dataLayer = window.dataLayer || [];
+                function gtag() { dataLayer.push(arguments); }
+                gtag('js', new Date());
+                
+                gtag('config', 'G-14PLEX7LGC', { 'anonymize_ip': true, cookie_flags: 'secure;samesite=none' });
+            })
+    
+            
+        } else if (readCookie('cookie-notice-option')!='false'){
+            deleteCookiesByPattern("_ga");
+            document.getElementById('cookie-notice').style.display = 'block';
+        } else if (readCookie('cookie-notice-option')=='false'){
+            deleteCookiesByPattern("_ga");
+            document.getElementById('cookie-notice').style.display = 'none';
+        }
+    
+        document.getElementById('cookie-notice-accept').addEventListener("click",function() {
+            createCookie('cookie-notice-option','true',31);
+            document.getElementById('cookie-notice').style.display = 'none';
+            location.reload();
+        });
+    
+        document.getElementById('cookie-notice-deny').addEventListener("click",function() {
+            createCookie('cookie-notice-option','false',31);
+            document.getElementById('cookie-notice').style.display = 'none';
+            location.reload();
+        });
+    
+    </script>
 
 
 

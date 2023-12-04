@@ -44,3 +44,25 @@ div.miczit_spacer {
     padding-top: 1em;
     margin-top: 0em;
   }
+
+  #cookie-notice {
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    width: 17%;
+    background: rgb(70, 70, 70);
+    color: rgba(255,255,255,0.8);
+    font-size: 15px;
+  }
+    
+    #cookie-notice a {font-weight: 600; display: inline-flex; cursor: pointer; margin-left: 0.5rem;}
+    #cookie-notice-accept {color:rgb(121, 121, 121)}
+    #cookie-notice-deny {color:rgb(44, 44, 44)}
+    @media (max-width: 767px) {
+        #cookie-notice span {display: block; padding-top: 3px; margin-bottom: 1rem;}
+        #cookie-notice a {position: relative; bottom: 4px;}
+        #cookie-notice {left: 0px;}
+    }
