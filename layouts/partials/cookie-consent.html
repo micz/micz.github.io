@@ -41,6 +41,7 @@
         }
         
         if(readCookie('cookie-notice-option')=='true') {
+            document.getElementById('cookie-notice').style.display = 'none';
             {{ if ((hugo.IsProduction) | or (eq .Site.Params.env "production")) }}
             
             function loadScriptAsync(scriptSrc, callback) {
