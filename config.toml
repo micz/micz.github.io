@@ -19,4 +19,4 @@ ignoreErrors = ["error-disable-taxonomy"]
 
 [services]
   [services.googleAnalytics]
-    ID = 'G-14PLEX7LGC'
+    ID = "G-14PLEX7LGC"
