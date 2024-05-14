@@ -1,0 +1,41 @@
++++
+Title = "\"ThunderAI\" Thunderbird Addon Custom Prompts"
+Type = "no-list"
++++
+
+<p>With Custom Prompts, it is possible to define the text to send to ChatGPT to process the selected email. The added custom prompts will be displayed in the context menu.</p>
+<p>Default custom prompts cannot be modified, but they can be disabled.</p>
+<p>This are the fields used to add a new prompt:
+    <br><br>
+    <img src="{{< base_url >}}images/customprompts/newform1.png" />
+    <ul>
+        <li><strong>ID</strong>: the unique identification string</li>
+        <li><strong>Name</strong>: the string added to the menu</li>
+        <li><strong>Prompt Text</strong>: the text sent to ChatGPT with the email content</li>
+    </ul>
+    <br>
+    <img src="{{< base_url >}}images/customprompts/newform2.png" />
+    <ul>
+        <li><strong>Add to menu</strong>: choose when show this prompt:
+        <ul>
+            <li>Only when composing an email.</li>
+            <li>Only when reading an email.</li>
+            <li>In both cases.</li>
+        </ul></li>
+        <li><strong>Action</strong>: this is the action to be excuted after the ChatGPT reply:
+            <ul>
+                <li>Only close the ChatGPT window.</li>
+                <li>Use the ChatGPT answer to create a reply. It will open a new compose window replying to the original selected message (as the "<pre style="display:inline; margin:0; padding:0;">Reply to this</pre>" default prompt).</li>
+                <li>Substitute the original selected message with the ChatGPT answer.</li>
+            </ul></li>
+        <li><strong>Other properties</strong>: there are three other properties that can be set:
+            <ul>
+                <li><b>Text selection needed</b>: to use this prompt a text must be selected</li>
+                <li><b>Always add the signature</b>: it will always add the signature, as defined in the preferences.</li>
+                <li><b>Ask for additional text</b>: after opening the ChatGPT window, it will ask for additional text, that it will be added to the prompt.</li>
+            </ul></li>
+    </ul>
+</p>
+
+
+
