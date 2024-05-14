@@ -10,7 +10,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="referrer" content="no-referrer-when-downgrade">
 
-<title>Donate to &#34;ThunderAI&#34; Thunderbird Addon! - Mic&#39;s</title>
+<title>&#34;ThunderAI&#34; Thunderbird Addon Custom Prompts - Mic&#39;s</title>
 <meta name="description" content="">
 
 
@@ -53,15 +53,19 @@
 
 
 
-<meta property="og:title" content="Donate to &#34;ThunderAI&#34; Thunderbird Addon!" />
-<meta property="og:description" content=" Support &#34;ThunderAI&#34; Thunderdbird Addon! Are you using this addon every day? Consider to support the development making a small donation. Click here! " />
+<meta property="og:title" content="&#34;ThunderAI&#34; Thunderbird Addon Custom Prompts" />
+<meta property="og:description" content="With Custom Prompts, it is possible to define the text to send to ChatGPT to process the selected email. The added custom prompts will be displayed in the context menu.
+Default custom prompts cannot be modified, but they can be disabled.
+This are the fields used to add a new prompt: ID: the unique identification string Name: the string added to the menu Prompt Text: the text sent to ChatGPT with the email content Add to menu: choose when show this prompt: Only when composing an email." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://micz.it/thunderdbird-addon-thunderai/donate/" /><meta property="article:section" content="thunderdbird-addon-thunderai" />
+<meta property="og:url" content="https://micz.it/thunderdbird-addon-thunderai/custom-prompts/" /><meta property="article:section" content="thunderdbird-addon-thunderai" />
 
 
 
-<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Donate to &#34;ThunderAI&#34; Thunderbird Addon!"/>
-<meta name="twitter:description" content=" Support &#34;ThunderAI&#34; Thunderdbird Addon! Are you using this addon every day? Consider to support the development making a small donation. Click here! "/>
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="&#34;ThunderAI&#34; Thunderbird Addon Custom Prompts"/>
+<meta name="twitter:description" content="With Custom Prompts, it is possible to define the text to send to ChatGPT to process the selected email. The added custom prompts will be displayed in the context menu.
+Default custom prompts cannot be modified, but they can be disabled.
+This are the fields used to add a new prompt: ID: the unique identification string Name: the string added to the menu Prompt Text: the text sent to ChatGPT with the email content Add to menu: choose when show this prompt: Only when composing an email."/>
 
 
 
@@ -190,14 +194,47 @@
     
     <article class="post">
         <header class="post-header">
-            <h1 class="post-title">Donate to &#34;ThunderAI&#34; Thunderbird Addon!</h1>
+            <h1 class="post-title">&#34;ThunderAI&#34; Thunderbird Addon Custom Prompts</h1>
         </header>
         <div class="content">
             
-<a href="https://www.paypal.com/donate/?business=UHN4SXPGEXWQL&no_recurring=1&item_name=Thunderbird+Addon+ThunderAI&currency_code=EUR" target="_blank" rel="noopener noreferrer"><img title="Click here and support this addon with a small donation!" src="https://micz.it/images/th_donate.png" alt="Donation" width="62" height="55"  style="box-sizing: border-box; vertical-align: middle; margin: 5px 20px 20px 0px; float: left; width: auto;" /></a><strong>Support "ThunderAI" Thunderdbird Addon!</strong><br/>
-Are you using this addon every day?<br/>
-Consider to support the development making a small donation. <a href="https://www.paypal.com/donate/?business=UHN4SXPGEXWQL&no_recurring=1&item_name=Thunderbird+Addon+ThunderAI&currency_code=EUR">Click here!</a>
-<p><br/></p>
+<p>With Custom Prompts, it is possible to define the text to send to ChatGPT to process the selected email. The added custom prompts will be displayed in the context menu.</p>
+<p>Default custom prompts cannot be modified, but they can be disabled.</p>
+<p>This are the fields used to add a new prompt:
+    <br><br>
+    <img src="https://micz.it/images/customprompts/newform1.png" />
+    <ul>
+        <li><strong>ID</strong>: the unique identification string</li>
+        <li><strong>Name</strong>: the string added to the menu</li>
+        <li><strong>Prompt Text</strong>: the text sent to ChatGPT with the email content</li>
+    </ul>
+    <br>
+    <img src="https://micz.it/images/customprompts/newform2.png" />
+    <ul>
+        <li><strong>Add to menu</strong>: choose when show this prompt:
+        <ul>
+            <li>Only when composing an email.</li>
+            <li>Only when reading an email.</li>
+            <li>In both cases.</li>
+        </ul></li>
+        <li><strong>Action</strong>: this is the action to be excuted after the ChatGPT reply:
+            <ul>
+                <li>Only close the ChatGPT window.</li>
+                <li>Use the ChatGPT answer to create a reply. It will open a new compose window replying to the original selected message (as the "<pre style="display:inline; margin:0; padding:0;">Reply to this</pre>" default prompt).</li>
+                <li>Substitute the original selected message with the ChatGPT answer.</li>
+            </ul></li>
+        <li><strong>Other properties</strong>: there are three other properties that can be set:
+            <ul>
+                <li><b>Text selection needed</b>: to use this prompt a text must be selected</li>
+                <li><b>Always add the signature</b>: it will always add the signature, as defined in the preferences.</li>
+                <li><b>Ask for additional text</b>: after opening the ChatGPT window, it will ask for additional text, that it will be added to the prompt.</li>
+            </ul></li>
+    </ul>
+</p>
+
+
+
+
         </div>
         
 
