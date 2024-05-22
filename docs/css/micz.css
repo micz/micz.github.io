@@ -66,3 +66,35 @@ div.miczit_spacer {
         #cookie-notice a {position: relative; bottom: 4px;}
         #cookie-notice {left: 0px;}
     }
+
+    /* Thunderbird Addon Translate page*/
+    .thtr-help-normal {
+      border: 1px solid #000;
+    }
+    .thtr-box {
+      display: inline-block;
+      position: relative;
+      top: 5px;
+      min-width: 30px;
+      min-height: 20px;
+    }
+    .thtr-help-empty {
+      -webkit-box-shadow: 0 0 3px 0 red;
+      box-shadow: 0 0 3px 0 red;
+    }
+    .thtr-help-diff {
+      -webkit-box-shadow: 0 0 2px 1px orange;
+      box-shadow: 0 0 2px 1px orange;
+    }
+    .thtr-unchanged {
+      background-color: #ddd;
+      color: #bbb;
+    }
+    .thtr-todo {
+      background-color: #ccc;
+      color: #000;
+    }
+    .thtr-done {
+      background-color: #c2f0c2;
+      color: #28a428;
+    }
