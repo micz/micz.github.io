@@ -1,0 +1,6 @@
+{{ $lang_name := (.Get "lang_name") }}
+{{/* $.Page.Params.eng_head_url => Current source for translation */}}
+{{/* $.Page.Params.eng_base_url => Last Source used for Translation - It will provide information to highlight changes and thus facilitate translation. */}}
+{{ $lang_base_url := (.Get "lang_base_url") }} {{/* Last Translated File - It will initialize the translated fields. */}}
+
+<a href="https://morikko.github.io/translate-web-extension/translate?headoriginal={{ $.Page.Params.eng_head_url }}&baseoriginal={{ $.Page.Params.eng_base_url }}&basetarget={{ $lang_base_url }}" target="_blank">{{ $lang_name }}</a>
