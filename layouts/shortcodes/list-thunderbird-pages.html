@@ -1,0 +1,10 @@
+{{ $addon_status := (.Get "addon_status") }}
+<ul>
+    {{ range .Site.Pages }}
+    {{ if and (in .Permalink "thunderbird") (not (eq .Params.Type "no-list")) (eq .Params.addon_status $addon_status) }}
+            <li>
+                <a href="{{ .Permalink }}">{{ .Title }}</a>
+            </li>
+        {{ end }}
+    {{ end }}
+</ul>
