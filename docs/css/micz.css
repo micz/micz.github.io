@@ -98,3 +98,8 @@ div.miczit_spacer {
       background-color: #c2f0c2;
       color: #28a428;
     }
+    .sup_comment{
+      vertical-align: super;
+      font-size: 0.75em;
+      font-style: italic;
+    }
