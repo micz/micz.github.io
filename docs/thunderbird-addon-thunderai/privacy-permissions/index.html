@@ -15,7 +15,7 @@
 
 
 
-<link rel="stylesheet" href="https://micz.it/css/light.css?rnd=1725035082" />
+<link rel="stylesheet" href="https://micz.it/css/light.css?rnd=1725310701" />
 <style>
 
     [data-theme="dark"] {   
@@ -47,21 +47,21 @@
 
 </style>
 
-<link rel="stylesheet" href="https://micz.it/css/style.css?rnd=1725035082" />
+<link rel="stylesheet" href="https://micz.it/css/style.css?rnd=1725310701" />
 
-<link rel="stylesheet" href="https://micz.it/css/micz.css?rnd=1725035082">
+<link rel="stylesheet" href="https://micz.it/css/micz.css?rnd=1725310701">
 
 
 
 <meta property="og:title" content="&#34;ThunderAI&#34; Thunderbird Addon Privacy &amp; Permissions" />
-<meta property="og:description" content="&#34;ThunderAI&#34; Thunderbird Addon Privacy & PermissionsPrivacyThis add-on interfaces with OpenAI&#39;s API and ChatGPT web interface but collects no data itself other than settings stored locally.The text is sent to OpenAI&#39;s server only on user action and managed by their data retention policy.OpenAI&#39;s privacy policy can be found at https://openai.com/policies/privacy-policyOpenAI&#39;s API data usage policy is here https://openai.com/policies/api-data-usage-policiesPermissionsThese are the permissions used by ThunderAI in Thunderbird." />
+<meta property="og:description" content="&#34;ThunderAI&#34; Thunderbird Addon Privacy & PermissionsPrivacyIf you&#39;re using the ChatGPT web interface or the OpenAI integrations, this add-on connects with OpenAI&#39;s API or ChatGPT web interface, sending the prompt on user action, but it does not collect any data itself, other than settings stored locally.The text is sent to OpenAI&#39;s server only on user action and managed by their data retention policy.OpenAI&#39;s privacy policy can be found at https://openai." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="https://micz.it/thunderbird-addon-thunderai/privacy-permissions/" /><meta property="article:section" content="thunderbird-addon-thunderai" />
 
 
 
 <meta name="twitter:card" content="summary"/><meta name="twitter:title" content="&#34;ThunderAI&#34; Thunderbird Addon Privacy &amp; Permissions"/>
-<meta name="twitter:description" content="&#34;ThunderAI&#34; Thunderbird Addon Privacy & PermissionsPrivacyThis add-on interfaces with OpenAI&#39;s API and ChatGPT web interface but collects no data itself other than settings stored locally.The text is sent to OpenAI&#39;s server only on user action and managed by their data retention policy.OpenAI&#39;s privacy policy can be found at https://openai.com/policies/privacy-policyOpenAI&#39;s API data usage policy is here https://openai.com/policies/api-data-usage-policiesPermissionsThese are the permissions used by ThunderAI in Thunderbird."/>
+<meta name="twitter:description" content="&#34;ThunderAI&#34; Thunderbird Addon Privacy & PermissionsPrivacyIf you&#39;re using the ChatGPT web interface or the OpenAI integrations, this add-on connects with OpenAI&#39;s API or ChatGPT web interface, sending the prompt on user action, but it does not collect any data itself, other than settings stored locally.The text is sent to OpenAI&#39;s server only on user action and managed by their data retention policy.OpenAI&#39;s privacy policy can be found at https://openai."/>
 
 
 
@@ -198,7 +198,7 @@
 
 <h2>Privacy</h2>
 
-<p>This add-on interfaces with OpenAI's API and ChatGPT web interface but collects no data itself other than settings stored locally.
+<p>If you're using the ChatGPT web interface or the OpenAI integrations, this add-on connects with OpenAI's API or ChatGPT web interface, sending the prompt on user action, but it does not collect any data itself, other than settings stored locally.
 <br>The text is sent to OpenAI's server only on user action and managed by their data retention policy.
 
     <ul>
@@ -206,6 +206,7 @@
         <li>OpenAI's API data usage policy is here <a href="https://openai.com/policies/api-data-usage-policies" target="_blank">https://openai.com/policies/api-data-usage-policies</a></li>
     </ul>
 </p>
+<p>If you're using the Ollama API integration, this add-on connects with the local Ollama instance you configured, sending the prompt on user action, and it does not collect any data itself, other than settings stored locally.</p>
 <br>
 
 <h2>Permissions</h2>
@@ -219,10 +220,14 @@ Remember that ThunderAI only operates based on user interaction; nothing is done
     <li><b>Read and modify your email messages as they are displayed to you</b>: Required to create a new email message or substitute the text the user has highlighted.</li>
     <li><b>Read your email messages</b>: Required to create a new email message or substitute the text the user has highlighted.</li>
     <li><b>Access browser tabs</b>: Required to create a new email message or substitute the text the user has highlighted.</li>
+</ul>
+<br>
+<i>Removed permissions</i>
+<ul style="font-size: 0.90em;">
     <li><span class="sup_comment">[Removed in version 2.0.5]</span> <b style="text-decoration: line-through;">Access your data for all websites</b>: Required to access the ChatGPT website using the web interface. <i>This permission was added at the first stages of development and never fixed.</i></li>
     <li><span class="sup_comment">[Removed in version 2.1.0]</span> <b style="text-decoration: line-through;">Display notifications to you</b>: The add-on shows a notification if you're trying to use the ChatGPT API integration, but the API key or model are invalid. In such cases, falls back to the web interface, showing a notification with the error. <i>In version 2.1.0 the fallback to the ChatGPT web interface was removed.</i></li>
 </ul>
-
+<br>
 <div style="text-align: center"><a href="../">Go back to addon page</a></div>
         </div>
         
