@@ -108,6 +108,7 @@ div.miczit_spacer {
       font-style: italic;
       position: relative;
       top: -10px;
+      margin-bottom: 0;
     }
     ul.translate-links{
       display: flex;
@@ -115,4 +116,15 @@ div.miczit_spacer {
       gap: 0px;               /* Spazio tra gli elementi */
       padding: 0;
       margin: 2em 0 0 3em;
+    }
+    img.img-full {
+      width: auto;
+      height: auto;
+      max-width: none;
+    }
+    hr {
+      border-top: 1px solid var(--hr-color) !important;
+      height: 1px;
+      margin-top: 3em;
+      margin-bottom: 2em;
     }
