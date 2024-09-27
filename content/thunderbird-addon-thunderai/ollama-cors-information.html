@@ -1,0 +1,77 @@
++++
+Title = "\"ThunderAI\" Thunderbird Addon - Ollama CORS Information"
+Type = "no-list"
++++
+
+{{< page_title >}}
+
+
+<p><br>The Ollama CORS configuration depends on your operating system and how you're running the local server.<br>
+    On this page you can find all the information gathered with the help of ThunderAI users.<br>
+    If you want to contribute a new configuration, please <a href="https://github.com/micz/ThunderAI/issues" target="_blank">submit a new issue</a>.<br><br></p>
+
+    <h2>Summary</h2>
+    <ul>
+        <li><a href="#docker_windows">Docker on Windows</a></li>
+        <li><a href="#docker_linux">Docker on Linux</a></li>
+        <li><a href="#windows">Ollama on Windows</a></li>
+        <li><a href="#macos">Ollama on macOS</a></li>
+    </ul>
+<br>
+
+<h3 id="docker_windows">Docker on Windows</h3>
+<table>
+    <tr style="vertical-align: top;">
+        <td>When running a new container, open the "Optional settings" and add an "Environment variable" with the following values:
+            <ul>
+                <li>Variable: OLLAMA_ORIGINS</li>
+                <li>Value: moz-extension://*</li>
+            </ul>
+        </td>
+        <td><img src="{{< base_url >}}images/ollama-cors-information/docker_windows.png" class="img-full"></td>
+    </tr>
+</table>
+<hr>
+<h3 id="docker_linux">Docker on Linux</h3>
+<table>
+    <tr style="vertical-align: top;">
+        <td>When running a new container, add this option to the docker command line:
+            <br><pre>-e 'OLLAMA_ORIGINS=moz-extension://*'</pre>
+        </td>
+    </tr>
+</table>
+<hr>
+<h3 id="windows">Ollama on Windows</h3>
+<p class="translate-credits">Thanks to <a href="https://github.com/actXc" target="_blank">actXc</a></p>
+<table>
+    <tr style="vertical-align: top;">
+        <td>
+            <ol>
+                <li>Open Windows Settings (Windows key + I).</li>
+                <li>Search for "environment variables".</li>
+                <li>Click on "Edit the system environment variables".</li>
+                <li>In the new window, click "Environment Variables".</li>
+                <li>Under "System variables", click "New".</li>
+                <li>Variable name: <strong>OLLAMA_ORIGINS</strong></li>
+                <li>Variable value: <strong>moz-extension://*</strong></li>
+                <li>Confirm with "OK".</li>
+                <li>Restart your PC.</li>
+            </ol>
+        </td>
+    </tr>
+</table>
+<hr>
+<style>
+table {
+  border: none;
+  border-collapse: collapse;
+}
+
+td {
+  border: none;
+}
+
+h3{
+    margin-bottom: 0;
+}
+</style>
