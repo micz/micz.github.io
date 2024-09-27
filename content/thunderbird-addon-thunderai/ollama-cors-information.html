@@ -15,6 +15,7 @@ Type = "no-list"
         <li><a href="#docker_windows">Docker on Windows</a></li>
         <li><a href="#docker_linux">Docker on Linux</a></li>
         <li><a href="#windows">Ollama on Windows</a></li>
+        <li><a href="#linux">Ollama on Linux</a></li>
         <li><a href="#macos">Ollama on macOS</a></li>
     </ul>
 <br>
@@ -22,7 +23,7 @@ Type = "no-list"
 <h3 id="docker_windows">Docker on Windows</h3>
 <table>
     <tr style="vertical-align: top;">
-        <td>When running a new container, open the "Optional settings" and add an "Environment variable" with the following values:
+        <td class="top">When running a new container, open the "Optional settings" and add an "Environment variable" with the following values:
             <ul>
                 <li>Variable: OLLAMA_ORIGINS</li>
                 <li>Value: moz-extension://*</li>
@@ -35,7 +36,7 @@ Type = "no-list"
 <h3 id="docker_linux">Docker on Linux</h3>
 <table>
     <tr style="vertical-align: top;">
-        <td>When running a new container, add this option to the docker command line:
+        <td class="top">When running a new container, add this option to the docker command line:
             <br><pre>-e 'OLLAMA_ORIGINS=moz-extension://*'</pre>
         </td>
     </tr>
@@ -45,22 +46,55 @@ Type = "no-list"
 <p class="translate-credits">Thanks to <a href="https://github.com/actXc" target="_blank">actXc</a></p>
 <table>
     <tr style="vertical-align: top;">
-        <td>
+        <td class="top">
             <ol>
-                <li>Open Windows Settings (Windows key + I).</li>
-                <li>Search for "environment variables".</li>
-                <li>Click on "Edit the system environment variables".</li>
-                <li>In the new window, click "Environment Variables".</li>
-                <li>Under "System variables", click "New".</li>
+                <li>Open Windows Settings (Windows key + I)</li>
+                <li>Search for "environment variables"</li>
+                <li>Click on "Edit the system environment variables"</li>
+                <li>In the new window, click "Environment Variables"</li>
+                <li>Under "System variables", click "New"</li>
                 <li>Variable name: <strong>OLLAMA_ORIGINS</strong></li>
                 <li>Variable value: <strong>moz-extension://*</strong></li>
-                <li>Confirm with "OK".</li>
-                <li>Restart your PC.</li>
+                <li>Confirm with "OK"</li>
+                <li>Restart your PC</li>
             </ol>
         </td>
     </tr>
 </table>
 <hr>
+<h3 id="linux">Ollama on Linux</h3>
+<p class="translate-credits">Thanks to <a href="https://github.com/lakonis" target="_blank">lakonis</a></p>
+<table>
+    <tr style="vertical-align: top;">
+        <td class="top">
+            <pre>
+### Editing /etc/systemd/system/ollama.service.d/override.conf
+### Anything between here and the comment below will become the contents of the drop-in file
+
+[Service]
+Environment="OLLAMA_ORIGINS=moz-extension://*"
+
+### Edits below this comment will be discarded
+[...]
+            </pre>
+<i style="font-size: 0.90em;">Tested on Linux Manjaro</i>
+        </td>
+    </tr>
+</table>
+<hr>
+<h3 id="macos">Ollama on macOS</h3>
+<p class="translate-credits">Thanks to <a href="https://github.com/jatoko" target="_blank">jatoko</a></p>
+<table>
+    <tr style="vertical-align: top;">
+        <td class="top">
+            <ol>
+                <li>Open terminal</li>
+                <li>Run the following command in the terminal: <pre>launchctl setenv OLLAMA_ORIGINS "moz-extension://*"</pre></li>
+                <li>(Re)start Ollama (e.g., quit, start)</li>
+            </ol>
+        </td>
+    </tr>
+</table>
 <style>
 table {
   border: none;
@@ -71,7 +105,17 @@ td {
   border: none;
 }
 
+td.top{
+    padding-top: 0;
+}
+
 h3{
     margin-bottom: 0;
+}
+
+pre{
+    margin: 5px;
+    padding: 10px;
+    border-radius: 9px;
 }
 </style>
