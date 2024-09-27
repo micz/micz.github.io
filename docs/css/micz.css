@@ -114,5 +114,5 @@ div.miczit_spacer {
       flex-direction: column; /* Disposizione verticale */
       gap: 0px;               /* Spazio tra gli elementi */
       padding: 0;
-      margin: 0;
+      margin: 2em 0 0 3em;
     }
