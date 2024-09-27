@@ -103,3 +103,16 @@ div.miczit_spacer {
       font-size: 0.75em;
       font-style: italic;
     }
+    .translate-credits{
+      font-size: 0.65em;
+      font-style: italic;
+      position: relative;
+      top: -10px;
+    }
+    ul.translate-links{
+      display: flex;
+      flex-direction: column; /* Disposizione verticale */
+      gap: 0px;               /* Spazio tra gli elementi */
+      padding: 0;
+      margin: 0;
+    }
