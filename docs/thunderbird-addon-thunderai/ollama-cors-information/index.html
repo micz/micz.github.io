@@ -10,7 +10,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="referrer" content="no-referrer-when-downgrade">
 
-<title>Pagina non trovata! / Page not found! - Mic&#39;s</title>
+<title>&#34;ThunderAI&#34; Thunderbird Addon - Ollama CORS Information - Mic&#39;s</title>
 <meta name="description" content="">
 
 
@@ -53,17 +53,21 @@
 
 
 
-<meta property="og:title" content="Pagina non trovata! / Page not found!" />
-<meta property="og:description" content="Quello che stai cercando non è qui!
-Oops! It looks like you&#39;ve taken a wrong turn!" />
+<meta property="og:title" content="&#34;ThunderAI&#34; Thunderbird Addon - Ollama CORS Information" />
+<meta property="og:description" content="&#34;ThunderAI&#34; Thunderbird Addon - Ollama CORS Information The Ollama CORS configuration depends on your operating system and how you&#39;re running the local server.
+On this page you can find all the information gathered with the help of ThunderAI users.
+If you want to contribute a new configuration, please submit a new issue.
+Summary Docker on Windows Docker on Linux Ollama on Windows Ollama on Linux Ollama on macOS Docker on Windows When running a new container, open the &#34;" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://micz.it/404.html" /><meta property="article:section" content="" />
+<meta property="og:url" content="https://micz.it/thunderbird-addon-thunderai/ollama-cors-information/" /><meta property="article:section" content="thunderbird-addon-thunderai" />
 
 
 
-<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Pagina non trovata! / Page not found!"/>
-<meta name="twitter:description" content="Quello che stai cercando non è qui!
-Oops! It looks like you&#39;ve taken a wrong turn!"/>
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="&#34;ThunderAI&#34; Thunderbird Addon - Ollama CORS Information"/>
+<meta name="twitter:description" content="&#34;ThunderAI&#34; Thunderbird Addon - Ollama CORS Information The Ollama CORS configuration depends on your operating system and how you&#39;re running the local server.
+On this page you can find all the information gathered with the help of ThunderAI users.
+If you want to contribute a new configuration, please submit a new issue.
+Summary Docker on Windows Docker on Linux Ollama on Windows Ollama on Linux Ollama on macOS Docker on Windows When running a new container, open the &#34;"/>
 
 
 
@@ -194,9 +198,122 @@ Oops! It looks like you&#39;ve taken a wrong turn!"/>
         
         <div class="content">
             
-<p>Quello che stai cercando non è qui!</p>
-<br/>
-<p>Oops! It looks like you've taken a wrong turn!<br/><br/></p>
+<h1 class="post_title">&#34;ThunderAI&#34; Thunderbird Addon - Ollama CORS Information</h1>
+
+
+<p><br>The Ollama CORS configuration depends on your operating system and how you're running the local server.<br>
+    On this page you can find all the information gathered with the help of ThunderAI users.<br>
+    If you want to contribute a new configuration, please <a href="https://github.com/micz/ThunderAI/issues" target="_blank">submit a new issue</a>.<br><br></p>
+
+    <h2>Summary</h2>
+    <ul>
+        <li><a href="#docker_windows">Docker on Windows</a></li>
+        <li><a href="#docker_linux">Docker on Linux</a></li>
+        <li><a href="#windows">Ollama on Windows</a></li>
+        <li><a href="#linux">Ollama on Linux</a></li>
+        <li><a href="#macos">Ollama on macOS</a></li>
+    </ul>
+<br>
+
+<h3 id="docker_windows">Docker on Windows</h3>
+<table>
+    <tr style="vertical-align: top;">
+        <td class="top">When running a new container, open the "Optional settings" and add an "Environment variable" with the following values:
+            <ul>
+                <li>Variable: OLLAMA_ORIGINS</li>
+                <li>Value: moz-extension://*</li>
+            </ul>
+        </td>
+        <td><img src="https://micz.it/images/ollama-cors-information/docker_windows.png" class="img-full"></td>
+    </tr>
+</table>
+<hr>
+<h3 id="docker_linux">Docker on Linux</h3>
+<table>
+    <tr style="vertical-align: top;">
+        <td class="top">When running a new container, add this option to the docker command line:
+            <br><pre>-e 'OLLAMA_ORIGINS=moz-extension://*'</pre>
+        </td>
+    </tr>
+</table>
+<hr>
+<h3 id="windows">Ollama on Windows</h3>
+<p class="translate-credits">Thanks to <a href="https://github.com/actXc" target="_blank">actXc</a></p>
+<table>
+    <tr style="vertical-align: top;">
+        <td class="top">
+            <ol>
+                <li>Open Windows Settings (Windows key + I)</li>
+                <li>Search for "environment variables"</li>
+                <li>Click on "Edit the system environment variables"</li>
+                <li>In the new window, click "Environment Variables"</li>
+                <li>Under "System variables", click "New"</li>
+                <li>Variable name: <strong>OLLAMA_ORIGINS</strong></li>
+                <li>Variable value: <strong>moz-extension://*</strong></li>
+                <li>Confirm with "OK"</li>
+                <li>Restart your PC</li>
+            </ol>
+        </td>
+    </tr>
+</table>
+<hr>
+<h3 id="linux">Ollama on Linux</h3>
+<p class="translate-credits">Thanks to <a href="https://github.com/lakonis" target="_blank">lakonis</a></p>
+<table>
+    <tr style="vertical-align: top;">
+        <td class="top">
+            <pre>
+### Editing /etc/systemd/system/ollama.service.d/override.conf
+### Anything between here and the comment below will become the contents of the drop-in file
+
+[Service]
+Environment="OLLAMA_ORIGINS=moz-extension://*"
+
+### Edits below this comment will be discarded
+[...]
+            </pre>
+<i style="font-size: 0.90em;">Tested on Linux Manjaro</i>
+        </td>
+    </tr>
+</table>
+<hr>
+<h3 id="macos">Ollama on macOS</h3>
+<p class="translate-credits">Thanks to <a href="https://github.com/jatoko" target="_blank">jatoko</a></p>
+<table>
+    <tr style="vertical-align: top;">
+        <td class="top">
+            <ol>
+                <li>Open terminal</li>
+                <li>Run the following command in the terminal: <pre>launchctl setenv OLLAMA_ORIGINS "moz-extension://*"</pre></li>
+                <li>(Re)start Ollama (e.g., quit, start)</li>
+            </ol>
+        </td>
+    </tr>
+</table>
+<style>
+table {
+  border: none;
+  border-collapse: collapse;
+}
+
+td {
+  border: none;
+}
+
+td.top{
+    padding-top: 0;
+}
+
+h3{
+    margin-bottom: 0;
+}
+
+pre{
+    margin: 5px;
+    padding: 10px;
+    border-radius: 9px;
+}
+</style>
         </div>
         
 
