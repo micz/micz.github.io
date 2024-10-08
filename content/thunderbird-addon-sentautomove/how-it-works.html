@@ -1,10 +1,48 @@
 +++
-Title = "How it works"
+Title = "SentAutoMove - How it works"
 Type = "no-list"
 +++
 
 {{< page_title >}}
 
-<p>TEXT</p>
+<p>SentAutoMove automatically moves your sent emails to specific folders based on related messages in your mailbox.</p>
+<p>You can run it in two ways:</p>
+<ol>
+    <li>In a sent folder using the action button.</li>
+    <li>On one o more selected emails with the context menu.</li>
+</ol>
+<p>When launched, SentAutoMove will cycle through all emails in the folder (in case of 1) or the selected emails (in case of 2).</p>
+<p class="paragraph-space">For each email, it will:</p>
+<ol>
+    <li>Check if it is a sent email.*</li>
+    <li>Look for related messages:</li>
+    <ul>
+        <li>Check if it is a reply.</li>
+        <li>Check if it is part of a conversation.</li>
+        <li>Check if it is connected to a calendar invite through the <i>thread-index</i> header*.</li>
+    </ul>
+    <li>Move the email to the corresponding folder.</li>
+</ol>
+<div class="sam-note">* These actions can be configured in the addon options.</div>
+<p class="paragraph-space">The corresponding folder can be configured in the options page:</p>
+<ul>
+    <li><i>Same folder</i>: the email is moved to the same folder as the related message.</li>
+    <li><i>Subfolder</i>: the email is moved to the subfolder of the related message that starts with the configured <i>prefix</i>, or in the first subfolder if the <i>prefix</i> is not specified.</li>
+</ul>
+<p>A report of the last ten operations can be viewed in the options page.</p>
 
-<div style="text-align: center"><a href="../">Go back to addon page</a></div>
+<div style="text-align:center;margin-top:40px;"><a href="../">Go back to addon page</a></div>
+
+<style>
+.sam-note {
+    text-align: right;
+    font-size: 0.85em;
+    position: relative;
+    top: -14px;
+    font-style: italic;
+}
+
+.paragraph-space {
+    margin-top: 25px;
+}
+</style>
