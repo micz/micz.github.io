@@ -11,6 +11,7 @@ div.content strong {font-weight: 700;}
 p.center{text-align:center;}
 div.common-footer-bottom{display:flex;justify-content:space-between;}
 div.footer_spacer{width:100%;padding-top:1em;height:1em;}
+.paragraph-space{margin-top:25px;}
 div.themeSwitcher{position:relative;}
 .theme-switcher {
     background: var(--switcher-color);
