@@ -9,7 +9,7 @@ Type = "no-list"
 <p>You can run it in two ways:</p>
 <ol>
     <li>In a sent folder using the action button.</li>
-    <li>On one o more selected emails with the context menu.</li>
+    <li>On one or more selected emails with the context menu.</li>
 </ol>
 <p>When launched, SentAutoMove will cycle through all emails in the folder (in case of 1) or the selected emails (in case of 2).</p>
 <p class="paragraph-space">For each email, it will:</p>
@@ -17,8 +17,9 @@ Type = "no-list"
     <li>Check if it is a sent email.*</li>
     <li>Look for related messages:</li>
     <ul>
-        <li>Check if it is a reply.</li>
+        <li>Check if it is a reply of a received message.</li>
         <li>Check if it is part of a conversation.</li>
+        <li>Check if it's a first mail of a conversation, with only replies with a <i>reverse reply search</i>*.</li>
         <li>Check if it is connected to a calendar invite through the <i>thread-index</i> header*.</li>
     </ul>
     <li>Move the email to the corresponding folder.</li>
@@ -29,7 +30,10 @@ Type = "no-list"
     <li><i>Same folder</i>: the email is moved to the same folder as the related message.</li>
     <li><i>Subfolder</i>: the email is moved to the subfolder of the related message that starts with the configured <i>prefix</i>, or in the first subfolder if the <i>prefix</i> is not specified.</li>
 </ul>
-<p>A report of the last ten operations can be viewed in the options page.</p>
+<p class="paragraph-space">During the operation you can check the status and top the operation, clicking on the toolbar button.</p>
+<div><img src="{{< base_url >}}images/sentautomove/sam-popup.png"/></div>
+<p class="paragraph-space">A report of the last ten operations can be viewed in the options page.</p>
+<div><img src="{{< base_url >}}images/sentautomove/sam-report.png"/></div>
 
 <div style="text-align:center;margin-top:40px;"><a href="../">Go back to addon page</a></div>
 
@@ -40,9 +44,5 @@ Type = "no-list"
     position: relative;
     top: -14px;
     font-style: italic;
-}
-
-.paragraph-space {
-    margin-top: 25px;
 }
 </style>
