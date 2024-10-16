@@ -1,0 +1,30 @@
++++
+Title = "\"ThunderAI\" Thunderbird Addon Data Placeholders"
+Type = "no-list"
++++
+
+{{< page_title >}}
+
+<p>Starting with version 2.3.0, it is possible to use data placeholders in the prompt text.</p>
+<p>These are the default placeholders that can be used:
+    <ul>
+        <li><span class="pre_code">{%mail_text_body%}</span>: the body of the email in plain text.</li>
+        <li><span class="pre_code">{%mail_html_body%}</span>: the body of the email in HTML.</li>
+        <li><span class="pre_code">{%mail_subject%}</span>: the subject of the email.</li>
+        <li><span class="pre_code">{%selected_text%}</span>: the text selected by the user. To use this placeholder the "<i>Text selection needed</i>" flag must be set in the prompt configuration.</li>
+        <li><span class="pre_code">{%additional_text%}</span>: the text added by the user before sending the prompt. To use this placeholder the "<i>Ask for additional text</i>" flag must be set in the prompt configuration.</li>
+        <li><span class="pre_code">{%author%}</span>: the author of the email, separated by a comma.</li>
+        <li><span class="pre_code">{%recipients%}</span>: the list of recipients of the email, separated by a comma.</li>
+        <li><span class="pre_code">{%cc_list%}</span>: the list of addresses of the CC field of the email, separated by a comma.</li>
+        <li><span class="pre_code">{%junk_score%}</span>: the Junk score of the email, only for received emails.</li>
+    </ul>
+<br></p>
+
+<p>Placeholders can be added using an autocomplete feature when writing a prompt on the <a href="custom-prompts/">custom prompts</a> page.</p>
+
+ // ADD IMG //
+
+<p>With the option "<i>Placeholders: Use default value</i>", you can choose whether to use the default value or retain the placeholder when no value is available (for example, an email with no address in the CC field)</p>
+
+<br>
+<div style="text-align: center"><a href="../">Go back to addon page</a></div>
