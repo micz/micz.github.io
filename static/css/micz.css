@@ -13,6 +13,10 @@ div.common-footer-bottom{display:flex;justify-content:space-between;}
 div.footer_spacer{width:100%;padding-top:1em;height:1em;}
 .paragraph-space{margin-top:25px;}
 div.themeSwitcher{position:relative;}
+.pre_code{
+  font-family:'Courier New',Courier,monospace;
+  font-weight: bold;
+}
 .theme-switcher {
     background: var(--switcher-color);
     color: var(--switcher-bg-color);
