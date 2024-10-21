@@ -15,7 +15,7 @@
 
 
 
-<link rel="stylesheet" href="https://micz.it/css/light.css?rnd=20241016" />
+<link rel="stylesheet" href="https://micz.it/css/light.css?rnd=20241021" />
 <style>
 
     [data-theme="dark"] {   
@@ -47,19 +47,19 @@
 
 </style>
 
-<link rel="stylesheet" href="https://micz.it/css/style.css?rnd=20241016" />
+<link rel="stylesheet" href="https://micz.it/css/style.css?rnd=20241021" />
 
-<link rel="stylesheet" href="https://micz.it/css/micz.css?rnd=20241016">
+<link rel="stylesheet" href="https://micz.it/css/micz.css?rnd=20241021">
 
 
 
 <meta property="og:url" content="https://micz.it/thunderbird-addon-thunderai/ollama-cors-information/">
   <meta property="og:site_name" content="Mic&#39;s">
   <meta property="og:title" content="&#34;ThunderAI&#34; Thunderbird Addon - Ollama CORS Information">
-  <meta property="og:description" content="&#34;ThunderAI&#34; Thunderbird Addon - Ollama CORS Information The Ollama CORS configuration depends on your operating system and how you&#39;re running the local server.
+  <meta property="og:description" content="&#34;ThunderAI&#34; Thunderbird Addon - Ollama CORS InformationThe Ollama CORS configuration depends on your operating system and how you&#39;re running the local server.
 On this page you can find all the information gathered with the help of ThunderAI users.
 If you want to contribute a new configuration, please submit a new issue.
-Summary Docker on Windows Docker on Linux Ollama on Windows Ollama on Linux Ollama on macOS Docker on Windows When running a new container, open the &#34;Optional settings&#34; and add an &#34;Environment variable&#34; with the following values: Variable: OLLAMA_ORIGINS Value: moz-extension://* Docker on Linux When running a new container, add this option to the docker command line: -e &#39;OLLAMA_ORIGINS=moz-extension://*&#39; Ollama on Windows Thanks to actXc">
+SummaryDocker DesktopDocker Command LineDocker ComposeOllama on WindowsOllama on LinuxOllama on macOSDocker DesktopWhen running a new container, open the &#34;Optional settings&#34; and add an &#34;Environment variable&#34; with the following values:Variable: OLLAMA_ORIGINSValue: moz-extension://*Docker Command LineWhen running a new container, add this option to the docker command line:-e &#39;OLLAMA_ORIGINS=moz-extension://*&#39;Docker ComposeThanks to Amras2322">
   <meta property="og:locale" content="en">
   <meta property="og:type" content="article">
     <meta property="article:section" content="thunderbird-addon-thunderai">
@@ -67,10 +67,10 @@ Summary Docker on Windows Docker on Linux Ollama on Windows Ollama on Linux Olla
 
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="&#34;ThunderAI&#34; Thunderbird Addon - Ollama CORS Information">
-  <meta name="twitter:description" content="&#34;ThunderAI&#34; Thunderbird Addon - Ollama CORS Information The Ollama CORS configuration depends on your operating system and how you&#39;re running the local server.
+  <meta name="twitter:description" content="&#34;ThunderAI&#34; Thunderbird Addon - Ollama CORS InformationThe Ollama CORS configuration depends on your operating system and how you&#39;re running the local server.
 On this page you can find all the information gathered with the help of ThunderAI users.
 If you want to contribute a new configuration, please submit a new issue.
-Summary Docker on Windows Docker on Linux Ollama on Windows Ollama on Linux Ollama on macOS Docker on Windows When running a new container, open the &#34;Optional settings&#34; and add an &#34;Environment variable&#34; with the following values: Variable: OLLAMA_ORIGINS Value: moz-extension://* Docker on Linux When running a new container, add this option to the docker command line: -e &#39;OLLAMA_ORIGINS=moz-extension://*&#39; Ollama on Windows Thanks to actXc">
+SummaryDocker DesktopDocker Command LineDocker ComposeOllama on WindowsOllama on LinuxOllama on macOSDocker DesktopWhen running a new container, open the &#34;Optional settings&#34; and add an &#34;Environment variable&#34; with the following values:Variable: OLLAMA_ORIGINSValue: moz-extension://*Docker Command LineWhen running a new container, add this option to the docker command line:-e &#39;OLLAMA_ORIGINS=moz-extension://*&#39;Docker ComposeThanks to Amras2322">
 
 
 
@@ -210,15 +210,16 @@ Summary Docker on Windows Docker on Linux Ollama on Windows Ollama on Linux Olla
 
     <h2>Summary</h2>
     <ul>
-        <li><a href="#docker_windows">Docker on Windows</a></li>
-        <li><a href="#docker_linux">Docker on Linux</a></li>
+        <li><a href="#docker_desktop">Docker Desktop</a></li>
+        <li><a href="#docker_commandline">Docker Command Line</a></li>
+        <li><a href="#docker_compose">Docker Compose</a></li>
         <li><a href="#windows">Ollama on Windows</a></li>
         <li><a href="#linux">Ollama on Linux</a></li>
         <li><a href="#macos">Ollama on macOS</a></li>
     </ul>
 <br>
 
-<h3 id="docker_windows">Docker on Windows</h3>
+<h3 id="docker_desktop">Docker Desktop</h3>
 <table>
     <tr style="vertical-align: top;">
         <td class="top">When running a new container, open the "Optional settings" and add an "Environment variable" with the following values:
@@ -227,15 +228,31 @@ Summary Docker on Windows Docker on Linux Ollama on Windows Ollama on Linux Olla
                 <li>Value: moz-extension://*</li>
             </ul>
         </td>
-        <td><img src="https://micz.it/images/thunderai/ollama-cors-information/docker_windows.png" class="img-full"></td>
+        <td><img src="https://micz.it/images/thunderai/ollama-cors-information/docker_desktop.png" class="img-full"></td>
     </tr>
 </table>
 <hr>
-<h3 id="docker_linux">Docker on Linux</h3>
+<h3 id="docker_commandline">Docker Command Line</h3>
 <table>
     <tr style="vertical-align: top;">
         <td class="top">When running a new container, add this option to the docker command line:
             <br><pre>-e 'OLLAMA_ORIGINS=moz-extension://*'</pre>
+        </td>
+    </tr>
+</table>
+<hr>
+<h3 id="docker_compose">Docker Compose</h3>
+<p class="translate-credits">Thanks to <a href="https://github.com/Amras2322" target="_blank">Amras2322</a></p>
+<table>
+    <tr style="vertical-align: top;">
+        <td class="top">When configuring the Ollama service add the <code>OLLAMA_ORIGINS</code> option in the <code>environment</code> section in the docker-compose.yml file:
+            <br><pre>services:
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+        [...]
+    environment:
+    - OLLAMA_ORIGINS=moz-extension://*</pre>
         </td>
     </tr>
 </table>

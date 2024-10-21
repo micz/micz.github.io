@@ -13,9 +13,10 @@ div.common-footer-bottom{display:flex;justify-content:space-between;}
 div.footer_spacer{width:100%;padding-top:1em;height:1em;}
 .paragraph-space{margin-top:25px;}
 div.themeSwitcher{position:relative;}
-.pre_code{
-  font-family:'Courier New',Courier,monospace;
-  font-weight: bold;
+code{
+  background-color: var(--pre-bg-color);
+  padding: 1px 4px;
+  border-radius: 5px;
 }
 .theme-switcher {
     background: var(--switcher-color);
