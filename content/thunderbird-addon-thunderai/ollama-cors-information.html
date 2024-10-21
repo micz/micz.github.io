@@ -12,15 +12,16 @@ Type = "no-list"
 
     <h2>Summary</h2>
     <ul>
-        <li><a href="#docker_windows">Docker on Windows</a></li>
-        <li><a href="#docker_linux">Docker on Linux</a></li>
+        <li><a href="#docker_desktop">Docker Desktop</a></li>
+        <li><a href="#docker_commandline">Docker Command Line</a></li>
+        <li><a href="#docker_compose">Docker Compose</a></li>
         <li><a href="#windows">Ollama on Windows</a></li>
         <li><a href="#linux">Ollama on Linux</a></li>
         <li><a href="#macos">Ollama on macOS</a></li>
     </ul>
 <br>
 
-<h3 id="docker_windows">Docker on Windows</h3>
+<h3 id="docker_desktop">Docker Desktop</h3>
 <table>
     <tr style="vertical-align: top;">
         <td class="top">When running a new container, open the "Optional settings" and add an "Environment variable" with the following values:
@@ -29,15 +30,31 @@ Type = "no-list"
                 <li>Value: moz-extension://*</li>
             </ul>
         </td>
-        <td><img src="{{< base_url >}}images/thunderai/ollama-cors-information/docker_windows.png" class="img-full"></td>
+        <td><img src="{{< base_url >}}images/thunderai/ollama-cors-information/docker_desktop.png" class="img-full"></td>
     </tr>
 </table>
 <hr>
-<h3 id="docker_linux">Docker on Linux</h3>
+<h3 id="docker_commandline">Docker Command Line</h3>
 <table>
     <tr style="vertical-align: top;">
         <td class="top">When running a new container, add this option to the docker command line:
             <br><pre>-e 'OLLAMA_ORIGINS=moz-extension://*'</pre>
+        </td>
+    </tr>
+</table>
+<hr>
+<h3 id="docker_compose">Docker Compose</h3>
+<p class="translate-credits">Thanks to <a href="https://github.com/Amras2322" target="_blank">Amras2322</a></p>
+<table>
+    <tr style="vertical-align: top;">
+        <td class="top">When configuring the Ollama service add the <code>OLLAMA_ORIGINS</code> option in the <code>environment</code> section in the docker-compose.yml file:
+            <br><pre>services:
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+        [...]
+    environment:
+    - OLLAMA_ORIGINS=moz-extension://*</pre>
         </td>
     </tr>
 </table>
