@@ -11,12 +11,15 @@ Type = "no-list"
         <li><code>{%mail_text_body%}</code>: the body of the email in plain text.</li>
         <li><code>{%mail_html_body%}</code>: the body of the email in HTML.</li>
         <li><code>{%mail_subject%}</code>: the subject of the email.</li>
-        <li><code>{%selected_text%}</code>: the text selected by the user. To use this placeholder the "<i>Text selection needed</i>" flag must be set in the prompt configuration. <i>This placeholder is not available in the "Add tags" special prompt.</i></li>
-        <li><code>{%additional_text%}</code>: the text added by the user before sending the prompt. To use this placeholder the "<i>Ask for additional text</i>" flag must be set in the prompt configuration. <i>This placeholder is not available in the "Add tags" special prompt.</i></li>
+        <li><code>{%mail_typed_text}</code>: this placeholders autoselects the text typed in a message before the quoted email, removing any previous manual made selection. <span class="sup_comment">[From version 3.1.0]</span></li>
+        <li><code>{%selected_text%}</code>: the text selected by the user. To use this placeholder the "<i>Text selection needed</i>" flag must be set in the prompt configuration.</li>
+        <li><code>{%additional_text%}</code>: the text added by the user before sending the prompt. To use this placeholder the "<i>Ask for additional text</i>" flag must be set in the prompt configuration. <i>This placeholder is not available in the "Add tags" and "Add Calendar Event" special prompts.</i></li>
         <li><code>{%author%}</code>: the author of the email.</li>
         <li><code>{%recipients%}</code>: the list of recipients of the email, separated by a comma.</li>
         <li><code>{%cc_list%}</code>: the list of addresses of the CC field of the email, separated by a comma.</li>
         <li><code>{%junk_score%}</code>: the Junk score of the email, only for received emails.</li>
+        <li><code>{%mail_datetime%}</code>: the date and time of the email. <span class="sup_comment">[From version 3.1.0]</span></li>
+        <li><code>{%current_datetime%}</code>: the current date and time. <span class="sup_comment">[From version 3.1.0]</span></li>
         <li><code>{%tags_full_list%}</code>: a comma separated list of all the tags available in Thunderbird. <span class="sup_comment">[From version 3.0.0]</span></li>
         <li><code>{%tags_current_email%}</code>: a comma separated list of the tags of the current email. <span class="sup_comment">[From version 3.0.0]</span></li>
     </ul>
