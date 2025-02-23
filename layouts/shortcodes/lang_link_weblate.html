@@ -1,0 +1,9 @@
+{{ $lang_name := (.Get "lang_name") }}
+{{/* $.Page.Params.weblate_addon => Addon slug for the URL */}}
+{{ $lang_code := (.Get "lang_code") }}
+
+{{ if eq $lang_code "" }}
+<a href="https://hosted.weblate.org/new-lang/{{ $.Page.Params.weblate_addon }}/main/" target="_blank">{{ $lang_name }}</a>
+{{ else }}
+<a href="https://hosted.weblate.org/translate/{{ $.Page.Params.weblate_addon }}/-/{{ $lang_code }}/?q=state:%3Ctranslated" target="_blank">{{ $lang_name }} <img src="https://hosted.weblate.org/widget/{{ $.Page.Params.weblate_addon }}/-/{{ $lang_code }}/svg-badge.svg" alt="Weblate Translation Status" class="weblate_svg"/></a>
+{{ end }}
