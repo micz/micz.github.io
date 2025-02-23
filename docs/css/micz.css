@@ -13,6 +13,12 @@ div.common-footer-bottom{display:flex;justify-content:space-between;}
 div.footer_spacer{width:100%;padding-top:1em;height:1em;}
 .paragraph-space{margin-top:25px;}
 div.themeSwitcher{position:relative;}
+a img.weblate_svg{
+  display: inline;
+  margin: 0 0 0 9px;
+  position: relative;
+  top: 4px;
+}
 code{
   background-color: var(--pre-bg-color);
   padding: 1px 4px;
