@@ -56,6 +56,10 @@ div.miczit_spacer {
     padding-top: 1em;
     margin-top: 0em;
   }
+.small_font{
+    font-size: 0.8em;
+    font-style: italic;
+}
 
   #cookie-notice {
     text-align: center;
