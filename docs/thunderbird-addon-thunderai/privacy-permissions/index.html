@@ -56,7 +56,7 @@
 <meta property="og:url" content="https://micz.it/thunderbird-addon-thunderai/privacy-permissions/">
   <meta property="og:site_name" content="Mic&#39;s">
   <meta property="og:title" content="&#34;ThunderAI&#34; Thunderbird Addon Privacy & Permissions">
-  <meta property="og:description" content="&#34;ThunderAI&#34; Thunderbird Addon Privacy &amp; PermissionsPrivacyIf you&#39;re using the ChatGPT web interface or the OpenAI integrations, this add-on connects with OpenAI&#39;s API or ChatGPT web interface, sending the prompt on user action, but it does not collect any data itself, other than settings stored locally.The text is sent to OpenAI&#39;s server only on user action and managed by their data retention policy.OpenAI&#39;s privacy policy can be found at https://openai.com/policies/privacy-policyOpenAI&#39;s API data usage policy is here https://openai.com/policies/api-data-usage-policies">
+  <meta property="og:description" content="&#34;ThunderAI&#34; Thunderbird Addon Privacy &amp; Permissions Privacy If you&#39;re using the ChatGPT web interface or the OpenAI integrations, this add-on connects with OpenAI&#39;s API or ChatGPT web interface, sending the prompt on user action, but it does not collect any data itself, other than settings stored locally. The text is sent to OpenAI&#39;s server only on user action and managed by their data retention policy. OpenAI&#39;s privacy policy can be found at https://openai.com/policies/privacy-policy OpenAI&#39;s API data usage policy is here https://openai.com/policies/api-data-usage-policies ">
   <meta property="og:locale" content="en">
   <meta property="og:type" content="article">
     <meta property="article:section" content="thunderbird-addon-thunderai">
@@ -64,7 +64,7 @@
 
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="&#34;ThunderAI&#34; Thunderbird Addon Privacy & Permissions">
-  <meta name="twitter:description" content="&#34;ThunderAI&#34; Thunderbird Addon Privacy &amp; PermissionsPrivacyIf you&#39;re using the ChatGPT web interface or the OpenAI integrations, this add-on connects with OpenAI&#39;s API or ChatGPT web interface, sending the prompt on user action, but it does not collect any data itself, other than settings stored locally.The text is sent to OpenAI&#39;s server only on user action and managed by their data retention policy.OpenAI&#39;s privacy policy can be found at https://openai.com/policies/privacy-policyOpenAI&#39;s API data usage policy is here https://openai.com/policies/api-data-usage-policies">
+  <meta name="twitter:description" content="&#34;ThunderAI&#34; Thunderbird Addon Privacy &amp; Permissions Privacy If you&#39;re using the ChatGPT web interface or the OpenAI integrations, this add-on connects with OpenAI&#39;s API or ChatGPT web interface, sending the prompt on user action, but it does not collect any data itself, other than settings stored locally. The text is sent to OpenAI&#39;s server only on user action and managed by their data retention policy. OpenAI&#39;s privacy policy can be found at https://openai.com/policies/privacy-policy OpenAI&#39;s API data usage policy is here https://openai.com/policies/api-data-usage-policies ">
 
 
 
@@ -201,7 +201,6 @@
 
 <p>If you're using the ChatGPT web interface or the OpenAI integrations, this add-on connects with OpenAI's API or ChatGPT web interface, sending the prompt on user action, but it does not collect any data itself, other than settings stored locally.
 <br>The text is sent to OpenAI's server only on user action and managed by their data retention policy.
-
     <ul>
         <li>OpenAI's privacy policy can be found at <a href="https://openai.com/policies/privacy-policy" target="_blank">https://openai.com/policies/privacy-policy</a></li>
         <li>OpenAI's API data usage policy is here <a href="https://openai.com/policies/api-data-usage-policies" target="_blank">https://openai.com/policies/api-data-usage-policies</a></li>
@@ -211,10 +210,16 @@
 <p>If you're using the Google Gemini integration, this add-on connects with Google Gemini's API, sending the prompt on user action, but it does not collect any data itself, other than settings stored locally.<br>
 Google Geminy privacy information can be found at <a href="https://safety.google/gemini/" target="_blank">https://safety.google/gemini/</a></p>
 <br>
+<p>If you're using Claude, with the Anthropic integration, this add-on connects with Anthropic's API, sending the prompt on user action, but it does not collect any data itself, other than settings stored locally.<br>
+Athropic privacy information can be found at <a href="https://privacy.anthropic.com/" target="_blank">https://privacy.anthropic.com/</a></p>
+<br>
 <p>If you're using the Ollama API integration, this add-on connects with the local Ollama instance you configured, sending the prompt on user action, and it does not collect any data itself, other than settings stored locally.</p>
 <br>
 <p>If you're using the generic OpenAI Compatible API integration, this add-on connects with the instance you configured, sending the prompt on user action, and it does not collect any data itself, other than settings stored locally.<br>
-The privacy policy depends on the service you're connecting to.</v></p>
+The privacy policy depends on the service you're connecting to.</p>
+<br>
+<p>If you're using an automatic feature (such as tagging or spam detection), ThunderAI will send the prompt to the configured service everytime an email is received.<br>
+The privacy policy depends on the service you're connecting to.</p>
 <br>
 
 <h2>Permissions</h2>
@@ -233,6 +238,7 @@ The privacy policy depends on the service you're connecting to.</v></p>
     <li><span class="sup_comment">[Optional]</span> <b>Change properties and tags of your email messages</b>: Required to assign tags to an email message when using the "Add tags" option. <span class="sup_comment">[From version 3.0.0]</span></li>
     <li><span class="sup_comment">[Optional]</span> <b>Move, copy, or delete your email messages</b>: Required to move spam messages to the spam folder, if the automatic spam filter is enabled. <span class="sup_comment">[From version 3.2.0]</span></li>
     <li><span class="sup_comment">[Optional]</span> <b>Access your data for all websites</b>: Granting this permission prevents any CORS issues with Ollama or some OpenAI Compatible APIs. It can be enabled via the corresponding button on the options page. <span class="sup_comment">[From version 3.3.2]</span></li>
+    <li><span class="sup_comment">[Optional]</span> <b>Access your data for sites in the anthropic.com domain</b>: Granting this permission prevents any CORS issues with the Anthropic API. It can be enabled via the corresponding button on the options page. <span class="sup_comment">[From version 3.5.0]</span></li>
 </ul>
 <br>
 <i>Removed permissions</i>
