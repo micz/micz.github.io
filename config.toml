@@ -12,7 +12,7 @@ ignoreErrors = ["error-disable-taxonomy"]
 
 [params]
    customCSS = ["css/micz.css"] # relative path to "static" directory
-   forceCSSReloadID = "20250408"
+   forceCSSReloadID = "20260106"
    Subtitle = "Silence is golden."
    style= "auto"
    env= "production"

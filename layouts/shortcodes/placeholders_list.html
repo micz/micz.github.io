@@ -1,13 +1,9 @@
 {{ $jsonPath := "content/thunderbird-addon-thunderai/placeholders.json" }}
 {{ $data := os.ReadFile $jsonPath | transform.Unmarshal }}
 
-<div id="placeholders-control" style="margin-bottom: 1em; margin-top: 1em;">
-    <label style="margin-right: 15px; cursor: pointer;">
-        <input type="radio" name="sortOrder" value="alpha" checked onclick="togglePlaceholders('alpha')"> Alphabetical Order
-    </label>
-    <label style="cursor: pointer;">
-        <input type="radio" name="sortOrder" value="group" onclick="togglePlaceholders('group')"> Grouped by Theme
-    </label>
+<div id="placeholders-control">
+    <span id="ctrl-alpha" onclick="togglePlaceholders('alpha')" class="placeholder-ctrl active">Alphabetical Order</span>
+    <span id="ctrl-group" onclick="togglePlaceholders('group')" class="placeholder-ctrl">Grouped by Theme</span>
 </div>
 
 <div id="list-alpha">
@@ -51,5 +47,16 @@
     function togglePlaceholders(mode) {
         document.getElementById('list-alpha').style.display = (mode === 'alpha') ? 'block' : 'none';
         document.getElementById('list-grouped').style.display = (mode === 'group') ? 'block' : 'none';
+
+        var ctrlAlpha = document.getElementById('ctrl-alpha');
+        var ctrlGroup = document.getElementById('ctrl-group');
+
+        if (mode === 'alpha') {
+            ctrlAlpha.classList.add('active');
+            ctrlGroup.classList.remove('active');
+        } else {
+            ctrlAlpha.classList.remove('active');
+            ctrlGroup.classList.add('active');
+        }
     }
 </script>
