@@ -130,5 +130,11 @@
         "description": "the default language as defined in the ThunderAI options page.",
         "scope": "ThunderAI Settings",
         "version": "3.2.0"
+    },
+    {
+        "id": "{%mail_headers:<Header-ID>%}",
+        "description": "use this placeholder to get the value of any mail header, replacing &lt;Header-ID&gt; with the ID of the header you wish to retrieve. For example, use <i>{%mail_headers:Received-SPF%}</i> to use the value of <i>Received-SPF</i>.",
+        "scope": "Email Metadata",
+        "version": "3.8.0"
     }
 ]
