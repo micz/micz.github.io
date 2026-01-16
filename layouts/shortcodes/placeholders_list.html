@@ -1,0 +1,62 @@
+{{ $jsonPath := "content/thunderbird-addon-thunderai/placeholders.json" }}
+{{ $data := os.ReadFile $jsonPath | transform.Unmarshal }}
+
+<div id="placeholders-control">
+    <span id="ctrl-alpha" onclick="togglePlaceholders('alpha')" class="placeholder-ctrl active">Alphabetical Order</span>
+    <span id="ctrl-group" onclick="togglePlaceholders('group')" class="placeholder-ctrl">Grouped by Theme</span>
+</div>
+
+<div id="list-alpha">
+    <ul>
+    {{ range sort $data "id" }}
+        <li><code>{{ .id }}</code>: {{ .description | safeHTML }}
+        {{ if ne .version "" }} <span class="sup_comment">[From version {{ .version }}]</span>{{ end }}
+        </li>
+    {{ end }}
+    </ul>
+</div>
+
+<div id="list-grouped" style="display:none;">
+    {{ $groups := dict }}
+    {{ range $data }}
+        {{ $scope := .scope }}
+        {{ $list := index $groups $scope }}
+        {{ if not $list }}{{ $list := slice }}{{ end }}
+        {{ $list := $list | append . }}
+        {{ $groups = merge $groups (dict $scope $list) }}
+    {{ end }}
+    
+    {{ $scopes := slice }}
+    {{ range $k, $v := $groups }}{{ $scopes = $scopes | append $k }}{{ end }}
+    
+    {{ range sort $scopes }}
+        {{ $scope := . }}
+        <h3>{{ $scope }}</h3>
+        <ul>
+        {{ $items := index $groups $scope }}
+        {{ range sort $items "id" }}
+            <li><code>{{ .id }}</code>: {{ .description | safeHTML }}
+            {{ if ne .version "" }} <span class="sup_comment">[From version {{ .version }}]</span>{{ end }}
+            </li>
+        {{ end }}
+        </ul>
+    {{ end }}
+</div>
+
+<script>
+    function togglePlaceholders(mode) {
+        document.getElementById('list-alpha').style.display = (mode === 'alpha') ? 'block' : 'none';
+        document.getElementById('list-grouped').style.display = (mode === 'group') ? 'block' : 'none';
+
+        var ctrlAlpha = document.getElementById('ctrl-alpha');
+        var ctrlGroup = document.getElementById('ctrl-group');
+
+        if (mode === 'alpha') {
+            ctrlAlpha.classList.add('active');
+            ctrlGroup.classList.remove('active');
+        } else {
+            ctrlAlpha.classList.remove('active');
+            ctrlGroup.classList.add('active');
+        }
+    }
+</script>

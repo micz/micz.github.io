@@ -144,3 +144,22 @@ div.miczit_spacer {
       margin-top: 3em;
       margin-bottom: 2em;
     }
+    #placeholders-control {
+    margin: 1em 0;
+}
+
+.placeholder-ctrl {
+    cursor: pointer;
+    padding: 2px 5px;
+    border-radius: 3px;
+}
+
+.placeholder-ctrl.active {
+    font-weight: bold;
+    text-decoration: underline;
+    background-color: #3e3e3e;
+}
+
+#ctrl-alpha {
+    margin-right: 15px;
+}
