@@ -15,7 +15,7 @@
 
 
 
-<link rel="stylesheet" href="https://micz.it/css/light.css?rnd=20250408" />
+<link rel="stylesheet" href="https://micz.it/css/light.css?rnd=20260106" />
 <style>
 
     [data-theme="dark"] {   
@@ -47,9 +47,9 @@
 
 </style>
 
-<link rel="stylesheet" href="https://micz.it/css/style.css?rnd=20250408" />
+<link rel="stylesheet" href="https://micz.it/css/style.css?rnd=20260106" />
 
-<link rel="stylesheet" href="https://micz.it/css/micz.css?rnd=20250408">
+<link rel="stylesheet" href="https://micz.it/css/micz.css?rnd=20260106">
 
 
 
@@ -58,7 +58,8 @@
   <meta property="og:title" content="&#34;ThunderAI&#34; Thunderbird Addon Data Placeholders">
   <meta property="og:description" content="&#34;ThunderAI&#34; Thunderbird Addon Data Placeholders It&#39;s possible to use data placeholders in the prompt text.
 You can use the default placeholders described here, or add your custom data placeholders.
-These are the default placeholders that can be used: {%mail_text_body%}: the body of the email in plain text. {%mail_html_body%}: the body of the email in HTML. {%mail_subject%}: the subject of the email. {%mail_typed_text%}: this placeholders autoselects the text typed in a message only when it&#39;s before the quoted email, removing any previous manual made selection. [From version 3.1.0] {%mail_quoted_text%}: this placeholders autoselects the quoted text only when is after the reply text, removing any previous manual made selection. [From version 3.4.0] {%selected_text%}: the text selected by the user. To use this placeholder the &#34;Text selection needed&#34; flag must be set in the prompt configuration. {%selected_html%}: the html part of the text selected by the user. To use this placeholder the &#34;Text selection needed&#34; flag must be set in the prompt configuration. [From version 3.5.0] {%additional_text%}: the text added by the user before sending the prompt. To use this placeholder the &#34;Ask for additional text&#34; flag must be set in the prompt configuration. This placeholder is not available in the &#34;Add tags&#34; and &#34;Add Calendar Event&#34; special prompts. {%author%}: the author of the email. {%recipients%}: the list of recipients of the email, separated by a comma. {%cc_list%}: the list of addresses of the CC field of the email, separated by a comma. {%junk_score%}: the Junk score of the email, only for received emails. {%mail_datetime%}: the date and time of the email. [From version 3.1.0] {%current_datetime%}: the current date and time. [From version 3.1.0] {%tags_full_list%}: a comma separated list of all the tags available in Thunderbird. [From version 3.0.0] {%tags_current_email%}: a comma separated list of the tags of the current email. [From version 3.0.0] {%thunderai_def_sign%}: the default signature as defined in the ThunderAI options page. [From version 3.2.0] {%thunderai_def_lang%}: the default language as defined in the ThunderAI options page. [From version 3.2.0] {%mail_folder_name%}: the folder name containing the email. [From version 3.3.0] {%mail_folder_path%}: the complete path of the folder containing the email. [From version 3.3.0] {%account_email_address%}: the mail address of the current account. [From version 3.3.0] {%mail_attachments_info%}: prints a list of information about the attachments of the email, in the form &#34;file name&#34; [file type] (file size). As an example: &#34;google.png&#34; [image/png] (2 KB). [From version 3.7.0] ">
+These are the default placeholders that can be used:
+Alphabetical Order Grouped by Theme {%account_email_address%}: the mail address of the current account. [From version 3.3.0] {%additional_text%}: the text added by the user before sending the prompt. To use this placeholder the &#34;Ask for additional text&#34; flag must be set in the prompt configuration. This placeholder is not available in the &#34;Add tags&#34; and &#34;Add Calendar Event&#34; special prompts. {%author%}: the author of the email. {%cc_list%}: the list of addresses of the CC field of the email, separated by a comma. {%current_datetime%}: the current date and time. [From version 3.1.0] {%empty%}: this placeholder will be replaced by an empty string. This allows you to use a prompt that doesn&#39;t include any information from the email and prevents the email body from being automatically appended at the end. [From version 3.4.0] {%junk_score%}: the Junk score of the email, only for received emails. {%mail_attachments_info%}: prints a list of information about the attachments of the email, in the form &#34;file name&#34; [file type] (file size). As an example: &#34;google.png&#34; [image/png] (2 KB). [From version 3.7.0] {%mail_datetime%}: the date and time of the email. [From version 3.1.0] {%mail_folder_name%}: the folder name containing the email. [From version 3.3.0] {%mail_folder_path%}: the complete path of the folder containing the email. [From version 3.3.0] {%mail_headers:&lt;Header-ID&gt;%}: use this placeholder to get the value of any mail header, replacing &lt;Header-ID&gt; with the ID of the header you wish to retrieve. For example, use {%mail_headers:Received-SPF%} to use the value of Received-SPF. [From version 3.8.0] {%mail_html_body%}: the body of the email in HTML. {%mail_quoted_text%}: this placeholders autoselects the quoted text only when is after the reply text, removing any previous manual made selection. [From version 3.4.0] {%mail_subject%}: the subject of the email. {%mail_text_body%}: the body of the email in plain text. {%mail_typed_text%}: this placeholders autoselects the text typed in a message only when it&#39;s before the quoted email, removing any previous manual made selection. [From version 3.1.0] {%recipients%}: the list of recipients of the email, separated by a comma. {%selected_html%}: the html part of the text selected by the user. To use this placeholder the &#34;Text selection needed&#34; flag must be set in the prompt configuration. [From version 3.5.0] {%selected_text%}: the text selected by the user. To use this placeholder the &#34;Text selection needed&#34; flag must be set in the prompt configuration. {%tags_current_email%}: a comma separated list of the tags of the current email. [From version 3.0.0] {%tags_full_list%}: a comma separated list of all the tags available in Thunderbird. [From version 3.0.0] {%thunderai_def_lang%}: the default language as defined in the ThunderAI options page. [From version 3.2.0] {%thunderai_def_sign%}: the default signature as defined in the ThunderAI options page. [From version 3.2.0] Account &amp; Folder {%account_email_address%}: the mail address of the current account. [From version 3.3.0] {%mail_folder_name%}: the folder name containing the email. [From version 3.3.0] {%mail_folder_path%}: the complete path of the folder containing the email. [From version 3.3.0] Email Content {%mail_attachments_info%}: prints a list of information about the attachments of the email, in the form &#34;file name&#34; [file type] (file size). As an example: &#34;google.png&#34; [image/png] (2 KB). [From version 3.7.0] {%mail_html_body%}: the body of the email in HTML. {%mail_quoted_text%}: this placeholders autoselects the quoted text only when is after the reply text, removing any previous manual made selection. [From version 3.4.0] {%mail_subject%}: the subject of the email. {%mail_text_body%}: the body of the email in plain text. {%mail_typed_text%}: this placeholders autoselects the text typed in a message only when it&#39;s before the quoted email, removing any previous manual made selection. [From version 3.1.0] {%selected_html%}: the html part of the text selected by the user. To use this placeholder the &#34;Text selection needed&#34; flag must be set in the prompt configuration. [From version 3.5.0] {%selected_text%}: the text selected by the user. To use this placeholder the &#34;Text selection needed&#34; flag must be set in the prompt configuration. Email Metadata {%author%}: the author of the email. {%cc_list%}: the list of addresses of the CC field of the email, separated by a comma. {%junk_score%}: the Junk score of the email, only for received emails. {%mail_datetime%}: the date and time of the email. [From version 3.1.0] {%mail_headers:&lt;Header-ID&gt;%}: use this placeholder to get the value of any mail header, replacing &lt;Header-ID&gt; with the ID of the header you wish to retrieve. For example, use {%mail_headers:Received-SPF%} to use the value of Received-SPF. [From version 3.8.0] {%recipients%}: the list of recipients of the email, separated by a comma. General {%current_datetime%}: the current date and time. [From version 3.1.0] {%empty%}: this placeholder will be replaced by an empty string. This allows you to use a prompt that doesn&#39;t include any information from the email and prevents the email body from being automatically appended at the end. [From version 3.4.0] Tags {%tags_current_email%}: a comma separated list of the tags of the current email. [From version 3.0.0] {%tags_full_list%}: a comma separated list of all the tags available in Thunderbird. [From version 3.0.0] ThunderAI Settings {%thunderai_def_lang%}: the default language as defined in the ThunderAI options page. [From version 3.2.0] {%thunderai_def_sign%}: the default signature as defined in the ThunderAI options page. [From version 3.2.0] User Input {%additional_text%}: the text added by the user before sending the prompt. To use this placeholder the &#34;Ask for additional text&#34; flag must be set in the prompt configuration. This placeholder is not available in the &#34;Add tags&#34; and &#34;Add Calendar Event&#34; special prompts. Custom placeholders can be added opening the dedicated tab, pressing the button that can find in the ThunderAI options page.">
   <meta property="og:locale" content="en">
   <meta property="og:type" content="article">
     <meta property="article:section" content="thunderbird-addon-thunderai">
@@ -68,7 +69,8 @@ These are the default placeholders that can be used: {%mail_text_body%}: the bod
   <meta name="twitter:title" content="&#34;ThunderAI&#34; Thunderbird Addon Data Placeholders">
   <meta name="twitter:description" content="&#34;ThunderAI&#34; Thunderbird Addon Data Placeholders It&#39;s possible to use data placeholders in the prompt text.
 You can use the default placeholders described here, or add your custom data placeholders.
-These are the default placeholders that can be used: {%mail_text_body%}: the body of the email in plain text. {%mail_html_body%}: the body of the email in HTML. {%mail_subject%}: the subject of the email. {%mail_typed_text%}: this placeholders autoselects the text typed in a message only when it&#39;s before the quoted email, removing any previous manual made selection. [From version 3.1.0] {%mail_quoted_text%}: this placeholders autoselects the quoted text only when is after the reply text, removing any previous manual made selection. [From version 3.4.0] {%selected_text%}: the text selected by the user. To use this placeholder the &#34;Text selection needed&#34; flag must be set in the prompt configuration. {%selected_html%}: the html part of the text selected by the user. To use this placeholder the &#34;Text selection needed&#34; flag must be set in the prompt configuration. [From version 3.5.0] {%additional_text%}: the text added by the user before sending the prompt. To use this placeholder the &#34;Ask for additional text&#34; flag must be set in the prompt configuration. This placeholder is not available in the &#34;Add tags&#34; and &#34;Add Calendar Event&#34; special prompts. {%author%}: the author of the email. {%recipients%}: the list of recipients of the email, separated by a comma. {%cc_list%}: the list of addresses of the CC field of the email, separated by a comma. {%junk_score%}: the Junk score of the email, only for received emails. {%mail_datetime%}: the date and time of the email. [From version 3.1.0] {%current_datetime%}: the current date and time. [From version 3.1.0] {%tags_full_list%}: a comma separated list of all the tags available in Thunderbird. [From version 3.0.0] {%tags_current_email%}: a comma separated list of the tags of the current email. [From version 3.0.0] {%thunderai_def_sign%}: the default signature as defined in the ThunderAI options page. [From version 3.2.0] {%thunderai_def_lang%}: the default language as defined in the ThunderAI options page. [From version 3.2.0] {%mail_folder_name%}: the folder name containing the email. [From version 3.3.0] {%mail_folder_path%}: the complete path of the folder containing the email. [From version 3.3.0] {%account_email_address%}: the mail address of the current account. [From version 3.3.0] {%mail_attachments_info%}: prints a list of information about the attachments of the email, in the form &#34;file name&#34; [file type] (file size). As an example: &#34;google.png&#34; [image/png] (2 KB). [From version 3.7.0] ">
+These are the default placeholders that can be used:
+Alphabetical Order Grouped by Theme {%account_email_address%}: the mail address of the current account. [From version 3.3.0] {%additional_text%}: the text added by the user before sending the prompt. To use this placeholder the &#34;Ask for additional text&#34; flag must be set in the prompt configuration. This placeholder is not available in the &#34;Add tags&#34; and &#34;Add Calendar Event&#34; special prompts. {%author%}: the author of the email. {%cc_list%}: the list of addresses of the CC field of the email, separated by a comma. {%current_datetime%}: the current date and time. [From version 3.1.0] {%empty%}: this placeholder will be replaced by an empty string. This allows you to use a prompt that doesn&#39;t include any information from the email and prevents the email body from being automatically appended at the end. [From version 3.4.0] {%junk_score%}: the Junk score of the email, only for received emails. {%mail_attachments_info%}: prints a list of information about the attachments of the email, in the form &#34;file name&#34; [file type] (file size). As an example: &#34;google.png&#34; [image/png] (2 KB). [From version 3.7.0] {%mail_datetime%}: the date and time of the email. [From version 3.1.0] {%mail_folder_name%}: the folder name containing the email. [From version 3.3.0] {%mail_folder_path%}: the complete path of the folder containing the email. [From version 3.3.0] {%mail_headers:&lt;Header-ID&gt;%}: use this placeholder to get the value of any mail header, replacing &lt;Header-ID&gt; with the ID of the header you wish to retrieve. For example, use {%mail_headers:Received-SPF%} to use the value of Received-SPF. [From version 3.8.0] {%mail_html_body%}: the body of the email in HTML. {%mail_quoted_text%}: this placeholders autoselects the quoted text only when is after the reply text, removing any previous manual made selection. [From version 3.4.0] {%mail_subject%}: the subject of the email. {%mail_text_body%}: the body of the email in plain text. {%mail_typed_text%}: this placeholders autoselects the text typed in a message only when it&#39;s before the quoted email, removing any previous manual made selection. [From version 3.1.0] {%recipients%}: the list of recipients of the email, separated by a comma. {%selected_html%}: the html part of the text selected by the user. To use this placeholder the &#34;Text selection needed&#34; flag must be set in the prompt configuration. [From version 3.5.0] {%selected_text%}: the text selected by the user. To use this placeholder the &#34;Text selection needed&#34; flag must be set in the prompt configuration. {%tags_current_email%}: a comma separated list of the tags of the current email. [From version 3.0.0] {%tags_full_list%}: a comma separated list of all the tags available in Thunderbird. [From version 3.0.0] {%thunderai_def_lang%}: the default language as defined in the ThunderAI options page. [From version 3.2.0] {%thunderai_def_sign%}: the default signature as defined in the ThunderAI options page. [From version 3.2.0] Account &amp; Folder {%account_email_address%}: the mail address of the current account. [From version 3.3.0] {%mail_folder_name%}: the folder name containing the email. [From version 3.3.0] {%mail_folder_path%}: the complete path of the folder containing the email. [From version 3.3.0] Email Content {%mail_attachments_info%}: prints a list of information about the attachments of the email, in the form &#34;file name&#34; [file type] (file size). As an example: &#34;google.png&#34; [image/png] (2 KB). [From version 3.7.0] {%mail_html_body%}: the body of the email in HTML. {%mail_quoted_text%}: this placeholders autoselects the quoted text only when is after the reply text, removing any previous manual made selection. [From version 3.4.0] {%mail_subject%}: the subject of the email. {%mail_text_body%}: the body of the email in plain text. {%mail_typed_text%}: this placeholders autoselects the text typed in a message only when it&#39;s before the quoted email, removing any previous manual made selection. [From version 3.1.0] {%selected_html%}: the html part of the text selected by the user. To use this placeholder the &#34;Text selection needed&#34; flag must be set in the prompt configuration. [From version 3.5.0] {%selected_text%}: the text selected by the user. To use this placeholder the &#34;Text selection needed&#34; flag must be set in the prompt configuration. Email Metadata {%author%}: the author of the email. {%cc_list%}: the list of addresses of the CC field of the email, separated by a comma. {%junk_score%}: the Junk score of the email, only for received emails. {%mail_datetime%}: the date and time of the email. [From version 3.1.0] {%mail_headers:&lt;Header-ID&gt;%}: use this placeholder to get the value of any mail header, replacing &lt;Header-ID&gt; with the ID of the header you wish to retrieve. For example, use {%mail_headers:Received-SPF%} to use the value of Received-SPF. [From version 3.8.0] {%recipients%}: the list of recipients of the email, separated by a comma. General {%current_datetime%}: the current date and time. [From version 3.1.0] {%empty%}: this placeholder will be replaced by an empty string. This allows you to use a prompt that doesn&#39;t include any information from the email and prevents the email body from being automatically appended at the end. [From version 3.4.0] Tags {%tags_current_email%}: a comma separated list of the tags of the current email. [From version 3.0.0] {%tags_full_list%}: a comma separated list of all the tags available in Thunderbird. [From version 3.0.0] ThunderAI Settings {%thunderai_def_lang%}: the default language as defined in the ThunderAI options page. [From version 3.2.0] {%thunderai_def_sign%}: the default signature as defined in the ThunderAI options page. [From version 3.2.0] User Input {%additional_text%}: the text added by the user before sending the prompt. To use this placeholder the &#34;Ask for additional text&#34; flag must be set in the prompt configuration. This placeholder is not available in the &#34;Add tags&#34; and &#34;Add Calendar Event&#34; special prompts. Custom placeholders can be added opening the dedicated tab, pressing the button that can find in the ThunderAI options page.">
 
 
 
@@ -203,32 +205,436 @@ These are the default placeholders that can be used: {%mail_text_body%}: the bod
 
 <p>It's possible to use data placeholders in the prompt text.</p>
 <p>You can use the default placeholders described here, or add your custom data placeholders.</p>
-<p>These are the default placeholders that can be used:
+<p>These are the default placeholders that can be used:</p>
+
+
+
+
+<div id="placeholders-control">
+    <span id="ctrl-alpha" onclick="togglePlaceholders('alpha')" class="placeholder-ctrl active">Alphabetical Order</span>
+    <span id="ctrl-group" onclick="togglePlaceholders('group')" class="placeholder-ctrl">Grouped by Theme</span>
+</div>
+
+<div id="list-alpha">
     <ul>
-        <li><code>{%mail_text_body%}</code>: the body of the email in plain text.</li>
-        <li><code>{%mail_html_body%}</code>: the body of the email in HTML.</li>
-        <li><code>{%mail_subject%}</code>: the subject of the email.</li>
-        <li><code>{%mail_typed_text%}</code>: this placeholders autoselects the text typed in a message only when it's before the quoted email, removing any previous manual made selection. <span class="sup_comment">[From version 3.1.0]</span></li>
-        <li><code>{%mail_quoted_text%}</code>: this placeholders autoselects the quoted text only when is after the reply text, removing any previous manual made selection. <span class="sup_comment">[From version 3.4.0]</span></li>
-        <li><code>{%selected_text%}</code>: the text selected by the user. To use this placeholder the "<i>Text selection needed</i>" flag must be set in the prompt configuration.</li>
-        <li><code>{%selected_html%}</code>: the html part of the text selected by the user. To use this placeholder the "<i>Text selection needed</i>" flag must be set in the prompt configuration. <span class="sup_comment">[From version 3.5.0]</span></li>
-        <li><code>{%additional_text%}</code>: the text added by the user before sending the prompt. To use this placeholder the "<i>Ask for additional text</i>" flag must be set in the prompt configuration. <i>This placeholder is not available in the "Add tags" and "Add Calendar Event" special prompts.</i></li>
-        <li><code>{%author%}</code>: the author of the email.</li>
-        <li><code>{%recipients%}</code>: the list of recipients of the email, separated by a comma.</li>
-        <li><code>{%cc_list%}</code>: the list of addresses of the CC field of the email, separated by a comma.</li>
-        <li><code>{%junk_score%}</code>: the Junk score of the email, only for received emails.</li>
-        <li><code>{%mail_datetime%}</code>: the date and time of the email. <span class="sup_comment">[From version 3.1.0]</span></li>
-        <li><code>{%current_datetime%}</code>: the current date and time. <span class="sup_comment">[From version 3.1.0]</span></li>
-        <li><code>{%tags_full_list%}</code>: a comma separated list of all the tags available in Thunderbird. <span class="sup_comment">[From version 3.0.0]</span></li>
-        <li><code>{%tags_current_email%}</code>: a comma separated list of the tags of the current email. <span class="sup_comment">[From version 3.0.0]</span></li>
-        <li><code>{%thunderai_def_sign%}</code>: the default signature as defined in the ThunderAI options page. <span class="sup_comment">[From version 3.2.0]</span></li>
-        <li><code>{%thunderai_def_lang%}</code>: the default language as defined in the ThunderAI options page. <span class="sup_comment">[From version 3.2.0]</span></li>
-        <li><code>{%mail_folder_name%}</code>: the folder name containing the email. <span class="sup_comment">[From version 3.3.0]</span></li>
-        <li><code>{%mail_folder_path%}</code>: the complete path of the folder containing the email. <span class="sup_comment">[From version 3.3.0]</span></li>
-        <li><code>{%account_email_address%}</code>: the mail address of the current account. <span class="sup_comment">[From version 3.3.0]</span></li>
-        <li><code>{%mail_attachments_info%}</code>: prints a list of information about the attachments of the email, in the form <code>"file name" [file type] (file size)</code>. As an example: <code>"google.png" [image/png] (2 KB)</code>. <span class="sup_comment">[From version 3.7.0]</span></li>
+    
+        <li><code>{%account_email_address%}</code>: the mail address of the current account.
+         <span class="sup_comment">[From version 3.3.0]</span>
+        </li>
+    
+        <li><code>{%additional_text%}</code>: the text added by the user before sending the prompt. To use this placeholder the "<i>Ask for additional text</i>" flag must be set in the prompt configuration. <i>This placeholder is not available in the "Add tags" and "Add Calendar Event" special prompts.</i>
+        
+        </li>
+    
+        <li><code>{%author%}</code>: the author of the email.
+        
+        </li>
+    
+        <li><code>{%cc_list%}</code>: the list of addresses of the CC field of the email, separated by a comma.
+        
+        </li>
+    
+        <li><code>{%current_datetime%}</code>: the current date and time.
+         <span class="sup_comment">[From version 3.1.0]</span>
+        </li>
+    
+        <li><code>{%empty%}</code>: this placeholder will be replaced by an empty string. This allows you to use a prompt that doesn't include any information from the email and prevents the email body from being automatically appended at the end.
+         <span class="sup_comment">[From version 3.4.0]</span>
+        </li>
+    
+        <li><code>{%junk_score%}</code>: the Junk score of the email, only for received emails.
+        
+        </li>
+    
+        <li><code>{%mail_attachments_info%}</code>: prints a list of information about the attachments of the email, in the form <code>"file name" [file type] (file size)</code>. As an example: <code>"google.png" [image/png] (2 KB)</code>.
+         <span class="sup_comment">[From version 3.7.0]</span>
+        </li>
+    
+        <li><code>{%mail_datetime%}</code>: the date and time of the email.
+         <span class="sup_comment">[From version 3.1.0]</span>
+        </li>
+    
+        <li><code>{%mail_folder_name%}</code>: the folder name containing the email.
+         <span class="sup_comment">[From version 3.3.0]</span>
+        </li>
+    
+        <li><code>{%mail_folder_path%}</code>: the complete path of the folder containing the email.
+         <span class="sup_comment">[From version 3.3.0]</span>
+        </li>
+    
+        <li><code>{%mail_headers:&lt;Header-ID&gt;%}</code>: use this placeholder to get the value of any mail header, replacing &lt;Header-ID&gt; with the ID of the header you wish to retrieve. For example, use <i>{%mail_headers:Received-SPF%}</i> to use the value of <i>Received-SPF</i>.
+         <span class="sup_comment">[From version 3.8.0]</span>
+        </li>
+    
+        <li><code>{%mail_html_body%}</code>: the body of the email in HTML.
+        
+        </li>
+    
+        <li><code>{%mail_quoted_text%}</code>: this placeholders autoselects the quoted text only when is after the reply text, removing any previous manual made selection.
+         <span class="sup_comment">[From version 3.4.0]</span>
+        </li>
+    
+        <li><code>{%mail_subject%}</code>: the subject of the email.
+        
+        </li>
+    
+        <li><code>{%mail_text_body%}</code>: the body of the email in plain text.
+        
+        </li>
+    
+        <li><code>{%mail_typed_text%}</code>: this placeholders autoselects the text typed in a message only when it's before the quoted email, removing any previous manual made selection.
+         <span class="sup_comment">[From version 3.1.0]</span>
+        </li>
+    
+        <li><code>{%recipients%}</code>: the list of recipients of the email, separated by a comma.
+        
+        </li>
+    
+        <li><code>{%selected_html%}</code>: the html part of the text selected by the user. To use this placeholder the "<i>Text selection needed</i>" flag must be set in the prompt configuration.
+         <span class="sup_comment">[From version 3.5.0]</span>
+        </li>
+    
+        <li><code>{%selected_text%}</code>: the text selected by the user. To use this placeholder the "<i>Text selection needed</i>" flag must be set in the prompt configuration.
+        
+        </li>
+    
+        <li><code>{%tags_current_email%}</code>: a comma separated list of the tags of the current email.
+         <span class="sup_comment">[From version 3.0.0]</span>
+        </li>
+    
+        <li><code>{%tags_full_list%}</code>: a comma separated list of all the tags available in Thunderbird.
+         <span class="sup_comment">[From version 3.0.0]</span>
+        </li>
+    
+        <li><code>{%thunderai_def_lang%}</code>: the default language as defined in the ThunderAI options page.
+         <span class="sup_comment">[From version 3.2.0]</span>
+        </li>
+    
+        <li><code>{%thunderai_def_sign%}</code>: the default signature as defined in the ThunderAI options page.
+         <span class="sup_comment">[From version 3.2.0]</span>
+        </li>
+    
     </ul>
-<br></p>
+</div>
+
+<div id="list-grouped" style="display:none;">
+    
+    
+        
+        
+        
+        
+        
+    
+        
+        
+        
+        
+        
+    
+        
+        
+        
+        
+        
+    
+        
+        
+        
+        
+        
+    
+        
+        
+        
+        
+        
+    
+        
+        
+        
+        
+        
+    
+        
+        
+        
+        
+        
+    
+        
+        
+        
+        
+        
+    
+        
+        
+        
+        
+        
+    
+        
+        
+        
+        
+        
+    
+        
+        
+        
+        
+        
+    
+        
+        
+        
+        
+        
+    
+        
+        
+        
+        
+        
+    
+        
+        
+        
+        
+        
+    
+        
+        
+        
+        
+        
+    
+        
+        
+        
+        
+        
+    
+        
+        
+        
+        
+        
+    
+        
+        
+        
+        
+        
+    
+        
+        
+        
+        
+        
+    
+        
+        
+        
+        
+        
+    
+        
+        
+        
+        
+        
+    
+        
+        
+        
+        
+        
+    
+        
+        
+        
+        
+        
+    
+        
+        
+        
+        
+        
+    
+    
+    
+    
+    
+    
+        
+        <h3>Account &amp; Folder</h3>
+        <ul>
+        
+        
+            <li><code>{%account_email_address%}</code>: the mail address of the current account.
+             <span class="sup_comment">[From version 3.3.0]</span>
+            </li>
+        
+            <li><code>{%mail_folder_name%}</code>: the folder name containing the email.
+             <span class="sup_comment">[From version 3.3.0]</span>
+            </li>
+        
+            <li><code>{%mail_folder_path%}</code>: the complete path of the folder containing the email.
+             <span class="sup_comment">[From version 3.3.0]</span>
+            </li>
+        
+        </ul>
+    
+        
+        <h3>Email Content</h3>
+        <ul>
+        
+        
+            <li><code>{%mail_attachments_info%}</code>: prints a list of information about the attachments of the email, in the form <code>"file name" [file type] (file size)</code>. As an example: <code>"google.png" [image/png] (2 KB)</code>.
+             <span class="sup_comment">[From version 3.7.0]</span>
+            </li>
+        
+            <li><code>{%mail_html_body%}</code>: the body of the email in HTML.
+            
+            </li>
+        
+            <li><code>{%mail_quoted_text%}</code>: this placeholders autoselects the quoted text only when is after the reply text, removing any previous manual made selection.
+             <span class="sup_comment">[From version 3.4.0]</span>
+            </li>
+        
+            <li><code>{%mail_subject%}</code>: the subject of the email.
+            
+            </li>
+        
+            <li><code>{%mail_text_body%}</code>: the body of the email in plain text.
+            
+            </li>
+        
+            <li><code>{%mail_typed_text%}</code>: this placeholders autoselects the text typed in a message only when it's before the quoted email, removing any previous manual made selection.
+             <span class="sup_comment">[From version 3.1.0]</span>
+            </li>
+        
+            <li><code>{%selected_html%}</code>: the html part of the text selected by the user. To use this placeholder the "<i>Text selection needed</i>" flag must be set in the prompt configuration.
+             <span class="sup_comment">[From version 3.5.0]</span>
+            </li>
+        
+            <li><code>{%selected_text%}</code>: the text selected by the user. To use this placeholder the "<i>Text selection needed</i>" flag must be set in the prompt configuration.
+            
+            </li>
+        
+        </ul>
+    
+        
+        <h3>Email Metadata</h3>
+        <ul>
+        
+        
+            <li><code>{%author%}</code>: the author of the email.
+            
+            </li>
+        
+            <li><code>{%cc_list%}</code>: the list of addresses of the CC field of the email, separated by a comma.
+            
+            </li>
+        
+            <li><code>{%junk_score%}</code>: the Junk score of the email, only for received emails.
+            
+            </li>
+        
+            <li><code>{%mail_datetime%}</code>: the date and time of the email.
+             <span class="sup_comment">[From version 3.1.0]</span>
+            </li>
+        
+            <li><code>{%mail_headers:&lt;Header-ID&gt;%}</code>: use this placeholder to get the value of any mail header, replacing &lt;Header-ID&gt; with the ID of the header you wish to retrieve. For example, use <i>{%mail_headers:Received-SPF%}</i> to use the value of <i>Received-SPF</i>.
+             <span class="sup_comment">[From version 3.8.0]</span>
+            </li>
+        
+            <li><code>{%recipients%}</code>: the list of recipients of the email, separated by a comma.
+            
+            </li>
+        
+        </ul>
+    
+        
+        <h3>General</h3>
+        <ul>
+        
+        
+            <li><code>{%current_datetime%}</code>: the current date and time.
+             <span class="sup_comment">[From version 3.1.0]</span>
+            </li>
+        
+            <li><code>{%empty%}</code>: this placeholder will be replaced by an empty string. This allows you to use a prompt that doesn't include any information from the email and prevents the email body from being automatically appended at the end.
+             <span class="sup_comment">[From version 3.4.0]</span>
+            </li>
+        
+        </ul>
+    
+        
+        <h3>Tags</h3>
+        <ul>
+        
+        
+            <li><code>{%tags_current_email%}</code>: a comma separated list of the tags of the current email.
+             <span class="sup_comment">[From version 3.0.0]</span>
+            </li>
+        
+            <li><code>{%tags_full_list%}</code>: a comma separated list of all the tags available in Thunderbird.
+             <span class="sup_comment">[From version 3.0.0]</span>
+            </li>
+        
+        </ul>
+    
+        
+        <h3>ThunderAI Settings</h3>
+        <ul>
+        
+        
+            <li><code>{%thunderai_def_lang%}</code>: the default language as defined in the ThunderAI options page.
+             <span class="sup_comment">[From version 3.2.0]</span>
+            </li>
+        
+            <li><code>{%thunderai_def_sign%}</code>: the default signature as defined in the ThunderAI options page.
+             <span class="sup_comment">[From version 3.2.0]</span>
+            </li>
+        
+        </ul>
+    
+        
+        <h3>User Input</h3>
+        <ul>
+        
+        
+            <li><code>{%additional_text%}</code>: the text added by the user before sending the prompt. To use this placeholder the "<i>Ask for additional text</i>" flag must be set in the prompt configuration. <i>This placeholder is not available in the "Add tags" and "Add Calendar Event" special prompts.</i>
+            
+            </li>
+        
+        </ul>
+    
+</div>
+
+<script>
+    function togglePlaceholders(mode) {
+        document.getElementById('list-alpha').style.display = (mode === 'alpha') ? 'block' : 'none';
+        document.getElementById('list-grouped').style.display = (mode === 'group') ? 'block' : 'none';
+
+        var ctrlAlpha = document.getElementById('ctrl-alpha');
+        var ctrlGroup = document.getElementById('ctrl-group');
+
+        if (mode === 'alpha') {
+            ctrlAlpha.classList.add('active');
+            ctrlGroup.classList.remove('active');
+        } else {
+            ctrlAlpha.classList.remove('active');
+            ctrlGroup.classList.add('active');
+        }
+    }
+</script>
+
+<br>
 
 <p>Custom placeholders can be added opening the dedicated tab, pressing the button
     
