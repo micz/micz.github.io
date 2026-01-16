@@ -136,5 +136,11 @@
         "description": "use this placeholder to get the value of any mail header, replacing &lt;Header-ID&gt; with the ID of the header you wish to retrieve. For example, use <i>{%mail_headers:Received-SPF%}</i> to use the value of <i>Received-SPF</i>.",
         "scope": "Email Metadata",
         "version": "3.8.0"
+    },
+    {
+        "id": "{%empty%}",
+        "description": "this placeholder will be replaced by an empty string. This allows you to use a prompt that doesn't include any information from the email and prevents the email body from being automatically appended at the end.",
+        "scope": "General",
+        "version": "3.4.0"
     }
 ]
