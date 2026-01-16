@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="115" height="20" xml:lang="en" role="img" aria-label="переведено 94%">
-    <title>переведено 94%</title>
+<svg xmlns="http://www.w3.org/2000/svg" width="115" height="20" xml:lang="en" role="img" aria-label="переведено 92%">
+    <title>переведено 92%</title>
     <linearGradient id="a" x2="0" y2="100%"><stop offset="0" stop-color="#bbb" stop-opacity=".1"/><stop offset="1" stop-opacity=".1"/></linearGradient>
     <rect width="115" height="20" fill="#555" rx="3"/>
     <rect width="33" height="20" x="82" fill="#4c1" rx="3"/>
@@ -7,7 +7,7 @@
     <g fill="#fff" font-family="Source Sans,Kurinto Sans,DejaVu Sans,Verdana,Geneva,sans-serif" font-size="11" text-anchor="middle">
         <text x="41" y="15" fill="#010101" fill-opacity=".3">переведено</text>
         <text x="41" y="14">переведено</text>
-        <text x="98" y="15" fill="#010101" fill-opacity=".3">94%</text>
-        <text x="98" y="14">94%</text>
+        <text x="98" y="15" fill="#010101" fill-opacity=".3">92%</text>
+        <text x="98" y="14">92%</text>
     </g>
 </svg>
