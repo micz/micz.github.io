@@ -66,6 +66,12 @@
         "version": ""
     },
     {
+        "id": "{%mail_html_body_or_selected%}",
+        "description": "a selection if there is any, otherwise the body of the email in HTML.",
+        "scope": "Email Content",
+        "version": "4.0.0"
+    },
+    {
         "id": "{%mail_quoted_text%}",
         "description": "this placeholders autoselects the quoted text only when is after the reply text, removing any previous manual made selection.",
         "scope": "Email Content",
@@ -82,6 +88,12 @@
         "description": "the body of the email in plain text.",
         "scope": "Email Content",
         "version": ""
+    },
+    {
+        "id": "{%mail_text_body_or_selected%}",
+        "description": "a selection if there is any, otherwise the body of the email in plain text.",
+        "scope": "Email Content",
+        "version": "4.0.0"
     },
     {
         "id": "{%mail_typed_text%}",
