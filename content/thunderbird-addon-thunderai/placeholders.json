@@ -6,10 +6,10 @@
         "version": "3.3.0"
     },
     {
-        "id": "{%additional_text%}",
-        "description": "the text added by the user before sending the prompt. To use this placeholder the \"<i>Ask for additional text</i>\" flag must be set in the prompt configuration. <i>This placeholder is not available in the \"Add tags\" and \"Add Calendar Event\" special prompts.</i>",
+        "id": "{%additional_text:<Placeholder-ID>%}",
+        "description": "the text added by the user before sending the prompt. To use this placeholder the \"<i>Ask for additional text</i>\" flag must be set in the prompt configuration. You can define more instances of this placeholder, defining different &lt;Placeholder-ID&gt;, that will be shown in the form used to ask the value to the user. This placeholder is not available in the \"Add tags\" and \"Add Calendar Event\" special prompts.",
         "scope": "User Input",
-        "version": ""
+        "version": "4.0.0"
     },
     {
         "id": "{%author%}",
