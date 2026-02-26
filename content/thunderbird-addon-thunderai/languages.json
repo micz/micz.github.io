@@ -1,0 +1,128 @@
+[
+    {
+        "lang_name": "Bulgarian - Bǎlgarski (български)",
+        "lang_code": "bg",
+        "released": false,
+        "credits": ""
+    },
+    {
+        "lang_name": "Czech - Čeština",
+        "lang_code": "cs",
+        "released": true,
+        "credits": "<a href=\"https://hosted.weblate.org/user/Fjuro/\" target=\"_blank\">Fjuro</a>, <a href=\"https://hosted.weblate.org/user/jaroush/\" target=\"_blank\">Jaroslav Staněk</a>"
+    },
+    {
+        "lang_name": "German - Deutsch",
+        "lang_code": "de",
+        "released": true,
+        "credits": "Generated automatically"
+    },
+    {
+        "lang_name": "Greek - Elliniká (Ελληνικά)",
+        "lang_code": "el",
+        "released": true,
+        "credits": "<a href=\"https://github.com/christoskaterini\" target=\"_blank\">ChristosK.</a>"
+    },
+    {
+        "lang_name": "Spanish - Español",
+        "lang_code": "es",
+        "released": true,
+        "credits": "<a href=\"https://hosted.weblate.org/user/gerardo.sobarzo/\" target=\"_blank\">Gerardo Sobarzo</a>, <a href=\"https://hosted.weblate.org/user/arendon/\" target=\"_blank\">Andrés Rendón Hernández</a>, <a href=\"https://hosted.weblate.org/user/ErickLimonG/\" target=\"_blank\">Erick Limon</a>"
+    },
+    {
+        "lang_name": "Esperanto",
+        "lang_code": "eo",
+        "released": false,
+        "credits": ""
+    },
+    {
+        "lang_name": "Chinese (Traditional) - Fántǐ Zhōngwén (繁體中文)",
+        "lang_code": "zh_Hant",
+        "released": true,
+        "credits": "<a href=\"https://github.com/evez\" target=\"_blank\">evez</a>"
+    },
+    {
+        "lang_name": "French - Français",
+        "lang_code": "fr",
+        "released": true,
+        "credits": "Generated automatically, <a href=\"https://github.com/noam-sc\" target=\"_blank\">Noam</a>"
+    },
+    {
+        "lang_name": "Croatian - Hrvatski",
+        "lang_code": "hr",
+        "released": true,
+        "credits": "Petar Jedvaj"
+    },
+    {
+        "lang_name": "Italian - Italiano",
+        "lang_code": "it",
+        "released": true,
+        "credits": "<a href=\"https://github.com/micz\" target=\"_blank\">Mic</a>"
+    },
+    {
+        "lang_name": "Chinese (Simplified) - Jiǎntǐ Zhōngwén (简体中文)",
+        "lang_code": "zh_Hans",
+        "released": true,
+        "credits": "<a href=\"https://github.com/jeklau\" target=\"_blank\">jeklau</a>"
+    },
+    {
+        "lang_name": "Hungarian - Magyar",
+        "lang_code": "hu",
+        "released": false,
+        "credits": ""
+    },
+    {
+        "lang_name": "Japanese - Nihongo (日本語)",
+        "lang_code": "ja",
+        "released": true,
+        "credits": "<a href=\"https://hosted.weblate.org/user/watya1/\" target=\"_blank\">Taichi Ito</a>"
+    },
+    {
+        "lang_name": "Polish - Polski",
+        "lang_code": "pl",
+        "released": true,
+        "credits": "<a href=\"https://github.com/neexpl\" target=\"_blank\">neexpl</a>, <a href=\"https://github.com/makkacprzak\" target=\"_blank\">makkacprzak</a>"
+    },
+    {
+        "lang_name": "Portuguese - Português",
+        "lang_code": "pt",
+        "released": false,
+        "credits": ""
+    },
+    {
+        "lang_name": "Brazilian Portuguese - Português Brasileiro",
+        "lang_code": "pt-br",
+        "released": true,
+        "credits": "Bruno Pereira de Souza"
+    },
+    {
+        "lang_name": "Romanian - Română",
+        "lang_code": "ro",
+        "released": false,
+        "credits": ""
+    },
+    {
+        "lang_name": "Russian - Russkiy (русский)",
+        "lang_code": "ru",
+        "released": true,
+        "credits": "<a href=\"https://hosted.weblate.org/user/law820314/\" target=\"_blank\">Maksim</a>, <a href=\"https://hosted.weblate.org/user/gebekovasmobile/\" target=\"_blank\">G S (TAra)</a>, <a href=\"https://hosted.weblate.org/user/PouncePanda/\" target=\"_blank\">Konstantin Spirin</a>"
+    },
+    {
+        "lang_name": "Swedish - Svenska",
+        "lang_code": "sv",
+        "released": true,
+        "credits": "<a href=\"https://hosted.weblate.org/user/Andy_tb/\" target=\"_blank\">Andreas Pettersson</a>, <a href=\"https://hosted.weblate.org/user/bittin1ddc447d824349b2/\" target=\"_blank\">Luna Jernberg</a>"
+    },
+    {
+        "lang_name": "Turkish - Türkçe",
+        "lang_code": "tr",
+        "released": false,
+        "credits": ""
+    },
+    {
+        "lang_name": "Translate in a new language",
+        "lang_code": "",
+        "released": false,
+        "credits": ""
+    }
+]
