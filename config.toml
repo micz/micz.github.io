@@ -9,6 +9,7 @@ enableRobotsTXT = true
 
 disableKinds = ["RSS","taxonomy","sitemap"]
 ignoreErrors = ["error-disable-taxonomy"]
+ignoreFiles = ["\\.json$"]
 
 [params]
    customCSS = ["css/micz.css"] # relative path to "static" directory
