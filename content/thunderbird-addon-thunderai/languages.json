@@ -3,7 +3,7 @@
         "lang_name": "Bulgarian - Bǎlgarski (български)",
         "lang_code": "bg",
         "released": false,
-        "credits": ""
+        "credits": "<a href=\"https://hosted.weblate.org/user/kalon.vasilev/\" target=\"_blank\">Kaloyan Vassilev</a>, <a href=\"https://hosted.weblate.org/user/bogomil/\" target=\"_blank\">Bogomil Shopov</a>"
     },
     {
         "lang_name": "Czech - Čeština",
@@ -33,7 +33,7 @@
         "lang_name": "Esperanto",
         "lang_code": "eo",
         "released": false,
-        "credits": ""
+        "credits": "<a href=\"https://hosted.weblate.org/user/phlostically/\" target=\"_blank\">phlostically</a>"
     },
     {
         "lang_name": "Chinese (Traditional) - Fántǐ Zhōngwén (繁體中文)",
@@ -69,7 +69,7 @@
         "lang_name": "Hungarian - Magyar",
         "lang_code": "hu",
         "released": false,
-        "credits": ""
+        "credits": "<a href=\"https://hosted.weblate.org/user/benedek.vigh/\" target=\"_blank\">Benedek Vigh (冯白诺)</a>"
     },
     {
         "lang_name": "Japanese - Nihongo (日本語)",
@@ -87,7 +87,7 @@
         "lang_name": "Portuguese - Português",
         "lang_code": "pt",
         "released": false,
-        "credits": ""
+        "credits": "<a href=\"https://hosted.weblate.org/user/nobrega8/\" target=\"_blank\">Afonso Nóbrega</a>, <a href=\"https://hosted.weblate.org/user/alucenafaria/\" target=\"_blank\">Antonio Lucena de Faria</a>"
     },
     {
         "lang_name": "Brazilian Portuguese - Português Brasileiro",
@@ -99,7 +99,7 @@
         "lang_name": "Romanian - Română",
         "lang_code": "ro",
         "released": false,
-        "credits": ""
+        "credits": "<a href=\"https://hosted.weblate.org/user/indreias/\" target=\"_blank\">Ioan Indreias</a>"
     },
     {
         "lang_name": "Russian - Russkiy (русский)",
@@ -117,7 +117,7 @@
         "lang_name": "Turkish - Türkçe",
         "lang_code": "tr",
         "released": false,
-        "credits": ""
+        "credits": "<a href=\"https://hosted.weblate.org/user/babico/\" target=\"_blank\">Müslüm Barış Korkmazer</a>"
     },
     {
         "lang_name": "Translate in a new language",
