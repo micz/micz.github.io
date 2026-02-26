@@ -1,0 +1,22 @@
+{{ $jsonPath := printf "content/%slanguages.json" $.Page.File.Dir }}
+{{ $data := os.ReadFile $jsonPath | transform.Unmarshal }}
+{{ $addon_id := $.Page.Params.weblate_addon }}
+{{ $langs := where $data "lang_code" "ne" "" }}
+{{ $new_lang := where $data "lang_code" "" }}
+
+<ul class="translate-links">
+{{ range sort $langs "lang_name" }}
+    <li>
+        <a href="https://hosted.weblate.org/translate/{{ $addon_id }}/-/{{ .lang_code }}/?q=state:%3Ctranslated" target="_blank">{{ .lang_name }} <img src="{{ site.BaseURL }}weblate/{{ $addon_id }}/{{ .lang_code }}.svg" alt="Weblate Translation Status" class="weblate_svg"/></a>
+        <br>
+        {{ if .released }}
+        <span class="translate-credits">Credits: {{ .credits | safeHTML }}</span>
+        {{ else }}
+        <span class="translate-credits">Not released, work in progress...</span>
+        {{ end }}
+    </li>
+{{ end }}
+{{ range $new_lang }}
+    <li style="margin-top:20px;"><a href="https://hosted.weblate.org/new-lang/{{ $addon_id }}/main/" target="_blank">{{ .lang_name }}</a></li>
+{{ end }}
+</ul>
