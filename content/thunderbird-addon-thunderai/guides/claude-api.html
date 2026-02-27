@@ -1,0 +1,111 @@
++++
+Title = "\"ThunderAI\" Setup Guide - Claude API"
+Type = "no-list"
++++
+
+{{< page_title >}}
+
+<p>
+    The <strong>Claude API</strong> integration connects ThunderAI to Anthropic's Claude AI models.<br>
+    Claude is known for producing careful, well-structured responses and handling long documents well — a great fit for reading and composing detailed emails.
+</p>
+
+<table>
+    <tr>
+        <td><strong>API key required</strong></td>
+        <td>Yes</td>
+    </tr>
+    <tr>
+        <td><strong>Free option</strong></td>
+        <td>No — pay-per-use</td>
+    </tr>
+    <tr>
+        <td><strong>Best for</strong></td>
+        <td>Detailed analysis, long emails, structured writing</td>
+    </tr>
+</table>
+
+<br>
+
+<h2>Prerequisites</h2>
+<ul>
+    <li>An <a href="https://console.anthropic.com" target="_blank">Anthropic account</a> with API access</li>
+    <li>A valid Claude API key</li>
+    <li>Thunderbird with ThunderAI installed</li>
+</ul>
+
+<h2>Getting an API key</h2>
+<ol>
+    <li>Go to <a href="https://console.anthropic.com/settings/keys" target="_blank">console.anthropic.com/settings/keys</a></li>
+    <li>Click <strong>Create Key</strong></li>
+    <li>Give it a name and copy the key immediately — it will not be shown again</li>
+</ol>
+
+<h2>Setup</h2>
+
+<h3>1. Open ThunderAI Options</h3>
+<p>
+    In Thunderbird, click the ThunderAI menu and select <strong>Options</strong>, or go to<br>
+    <strong>Tools → Add-ons and Themes → ThunderAI → Preferences</strong>.
+</p>
+
+<h3>2. Select the Claude API integration</h3>
+<p>In the <strong>Connection</strong> section, choose <strong>Claude API</strong> from the integration dropdown.</p>
+
+<h3>3. Enter your API key</h3>
+<p>Paste your Claude API key in the <strong>API Key</strong> field.</p>
+
+<h3>4. Grant the required permission</h3>
+<p>
+    The Claude API requires ThunderAI to access the <code>anthropic.com</code> domain.<br>
+    A button will appear on the options page to grant this permission — click it and confirm in the Thunderbird dialog.
+</p>
+<p><em>This is an optional permission requested only when you select the Claude integration. It allows ThunderAI to communicate with Anthropic's API servers. ThunderAI does not collect any data.</em></p>
+
+<h3>5. Choose a model</h3>
+<p>Select a Claude model from the <strong>Model</strong> dropdown.</p>
+
+<h3>6. Save and test</h3>
+<p>Click <strong>Save</strong>. Open any email, use the ThunderAI menu, and run a prompt to confirm the integration is working.</p>
+
+<h2>Tips</h2>
+<ul>
+    <li>Claude models handle large amounts of text well thanks to their extended context window — useful when processing long email threads.</li>
+    <li>Claude tends to be thorough in its responses. If you prefer shorter outputs, add instructions like "Be concise" directly in your prompts or in a custom prompt template.</li>
+    <li>Monitor your API usage and costs at <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a>.</li>
+</ul>
+
+<h2>Troubleshooting</h2>
+
+<h3>"Authentication error" or "Invalid API key"</h3>
+<p>Check that the key was copied correctly. Regenerate a new key from the Anthropic console if needed.</p>
+
+<h3>CORS error or requests failing</h3>
+<p>Make sure you have granted the <code>anthropic.com</code> domain permission as described in step 4. Without it, ThunderAI cannot reach the Claude API.</p>
+
+<h3>"Credit balance too low" error</h3>
+<p>Add credits to your Anthropic account at <a href="https://console.anthropic.com/settings/billing" target="_blank">console.anthropic.com/settings/billing</a>.</p>
+
+<h3>No models appear in the dropdown</h3>
+<p>Verify your API key is saved and the domain permission has been granted. Try saving the options page and reopening it.</p>
+
+<br>
+<div style="text-align: center">
+    <a href="../">Back to guides</a> &nbsp;|&nbsp; <a href="../ollama/">Next: Ollama →</a>
+</div>
+
+
+<style>
+table {
+    border-collapse: collapse;
+    margin: 10px 0;
+}
+th, td {
+    border: 1px solid #ccc;
+    padding: 7px 14px;
+    text-align: left;
+}
+h3 {
+    margin-bottom: 4px;
+}
+</style>

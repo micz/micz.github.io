@@ -1,0 +1,108 @@
++++
+Title = "\"ThunderAI\" Setup Guide - Google Gemini"
+Type = "no-list"
++++
+
+{{< page_title >}}
+
+<p>
+    The <strong>Google Gemini</strong> integration connects ThunderAI to Google's Gemini AI models via the Gemini API.<br>
+    It includes support for advanced options like <strong>System Instructions</strong> and <strong>thinkingBudget</strong>, useful for power users who want more control over the model's behavior.
+</p>
+
+<table>
+    <tr>
+        <td><strong>API key required</strong></td>
+        <td>Yes</td>
+    </tr>
+    <tr>
+        <td><strong>Free option</strong></td>
+        <td>Yes — generous free tier available</td>
+    </tr>
+    <tr>
+        <td><strong>Best for</strong></td>
+        <td>Users who prefer Google's ecosystem, or want a free API option</td>
+    </tr>
+</table>
+
+<br>
+
+<h2>Prerequisites</h2>
+<ul>
+    <li>A <a href="https://accounts.google.com" target="_blank">Google account</a></li>
+    <li>A Gemini API key (free tier available)</li>
+    <li>Thunderbird with ThunderAI installed</li>
+</ul>
+
+<h2>Getting an API key</h2>
+<ol>
+    <li>Go to <a href="https://aistudio.google.com/apikey" target="_blank">aistudio.google.com/apikey</a></li>
+    <li>Click <strong>Create API key</strong></li>
+    <li>Select an existing Google Cloud project or create a new one</li>
+    <li>Copy the generated API key</li>
+</ol>
+<p><em>The Gemini API has a free tier with generous rate limits, suitable for personal email use. Paid tiers are available if you need higher throughput.</em></p>
+
+<h2>Setup</h2>
+
+<h3>1. Open ThunderAI Options</h3>
+<p>
+    In Thunderbird, click the ThunderAI menu and select <strong>Options</strong>, or go to<br>
+    <strong>Tools → Add-ons and Themes → ThunderAI → Preferences</strong>.
+</p>
+
+<h3>2. Select the Google Gemini integration</h3>
+<p>In the <strong>Connection</strong> section, choose <strong>Google Gemini</strong> from the integration dropdown.</p>
+
+<h3>3. Enter your API key</h3>
+<p>Paste your API key in the <strong>API Key</strong> field.</p>
+
+<h3>4. Choose a model</h3>
+<p>Select the Gemini model from the <strong>Model</strong> dropdown. ThunderAI will retrieve available models from your account.</p>
+
+<h3>5. (Optional) Configure System Instructions</h3>
+<p>
+    System Instructions let you set a persistent context for all your prompts — for example, telling the model to always respond formally, in a specific language, or to assume a certain role.<br>
+    Enter your instructions in the <strong>System Instructions</strong> field on the options page.
+</p>
+
+<h3>6. (Optional) Configure thinkingBudget</h3>
+<p>The <strong>thinkingBudget</strong> option controls how much internal reasoning the model does before responding. A higher value can improve quality on complex tasks at the cost of speed and quota. Leave it at the default unless you have specific needs.</p>
+
+<h3>7. Save and test</h3>
+<p>Click <strong>Save</strong>. Open any email, use the ThunderAI menu, and run a prompt to verify the connection.</p>
+
+<h2>Tips</h2>
+<ul>
+    <li>The free tier is refreshed monthly and is generally sufficient for personal use.</li>
+    <li>System Instructions are particularly useful if you need to specify general rules for your email assistant.</li>
+</ul>
+
+<h2>Troubleshooting</h2>
+
+<h3>"API key not valid" error</h3>
+<p>Verify the key was copied correctly. Regenerate a new key from AI Studio if needed.</p>
+
+<h3>"Model not found" or empty model list</h3>
+<p>Ensure your API key has access to Gemini models. Some keys created in restricted Google Cloud projects may have limited model access.</p>
+
+<br>
+<div style="text-align: center">
+    <a href="../">Back to guides</a> &nbsp;|&nbsp; <a href="../claude-api/">Next: Claude API →</a>
+</div>
+
+
+<style>
+table {
+    border-collapse: collapse;
+    margin: 10px 0;
+}
+th, td {
+    border: 1px solid #ccc;
+    padding: 7px 14px;
+    text-align: left;
+}
+h3 {
+    margin-bottom: 4px;
+}
+</style>

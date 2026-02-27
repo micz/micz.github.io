@@ -1,0 +1,155 @@
++++
+Title = "\"ThunderAI\" Setup Guide - OpenAI Compatible API"
+Type = "no-list"
++++
+
+{{< page_title >}}
+
+<p>
+    The <strong>OpenAI Compatible API</strong> integration lets you connect ThunderAI to any server that follows the OpenAI API format.<br>
+    This covers local servers like <strong>LM Studio</strong>, hosted services like <strong>DeepSeek</strong>, <strong>Grok</strong>, <strong>Mistral AI</strong>, <strong>OpenRouter</strong>, and <strong>Perplexity</strong>, as well as any custom or self-hosted endpoint.
+</p>
+
+<table>
+    <tr>
+        <td><strong>API key required</strong></td>
+        <td>Depends on the service</td>
+    </tr>
+    <tr>
+        <td><strong>Free option</strong></td>
+        <td>Depends on the service (local servers are free)</td>
+    </tr>
+    <tr>
+        <td><strong>Best for</strong></td>
+        <td>Flexibility — local servers, alternative providers, custom endpoints</td>
+    </tr>
+</table>
+
+<br>
+
+<h2>Predefined configurations</h2>
+<p>ThunderAI includes ready-made presets for the most popular OpenAI-compatible services. If you are using one of these, select the preset and only provide your API key:</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>Preset</th>
+            <th>Notes</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><strong>DeepSeek API</strong></td>
+            <td>Fast and cost-effective, strong reasoning models</td>
+        </tr>
+        <tr>
+            <td><strong>Grok API</strong></td>
+            <td>xAI's Grok models</td>
+        </tr>
+        <tr>
+            <td><strong>Mistral API</strong></td>
+            <td>Mistral AI's hosted models</td>
+        </tr>
+        <tr>
+            <td><strong>OpenRouter API</strong></td>
+            <td>Access many providers through a single API key</td>
+        </tr>
+        <tr>
+            <td><strong>Perplexity API</strong></td>
+            <td>Includes web-search augmented models</td>
+        </tr>
+    </tbody>
+</table>
+
+<br>
+
+<h2>Setup</h2>
+
+<h3>1. Open ThunderAI Options</h3>
+<p>
+    In Thunderbird, click the ThunderAI menu and select <strong>Options</strong>, or go to<br>
+    <strong>Tools → Add-ons and Themes → ThunderAI → Preferences</strong>.
+</p>
+
+<h3>2. Select the OpenAI Compatible API integration</h3>
+<p>In the <strong>Connection</strong> section, choose <strong>OpenAI Compatible API</strong> from the integration dropdown.</p>
+
+<h3>3a. Using a preset</h3>
+<p>If your provider has a preset, select it from the preset list. The API URL will be filled in automatically. Enter your API key and skip to step 5.</p>
+
+<h3>3b. Manual configuration</h3>
+<p>If your provider is not in the preset list, configure it manually:</p>
+<ul>
+    <li><strong>API URL</strong>: Enter the base URL of your server. For LM Studio running locally, this is typically <code>http://localhost:1234/v1</code>. For hosted providers, check their documentation.</li>
+    <li><strong>Remove "v1" from URL</strong>: Enable this if your provider's documentation instructs you to use the base URL without the <code>/v1</code> segment.</li>
+</ul>
+
+<h3>4. Enter your API key (if required)</h3>
+<p>Local servers like LM Studio usually do not require an API key — you can leave this field empty or enter any placeholder value. Hosted services will require a valid key.</p>
+
+<h3>5. Choose a model</h3>
+<p>Select your model from the <strong>Model</strong> dropdown. Use the button to refresh the list.</p>
+<p>If the server does not expose a models list endpoint, enable the <strong>Set model name manually</strong> option and type the model name as specified by your provider.</p>
+
+<h3>6. Save and test</h3>
+<p>Click <strong>Save</strong>. Open any email, use the ThunderAI menu, and run a prompt to verify everything works.</p>
+
+<h2>LM Studio — quick setup</h2>
+<p><a href="https://lmstudio.ai" target="_blank">LM Studio</a> provides a local server with an OpenAI-compatible API and a graphical interface to download and manage models.</p>
+<ol>
+    <li>Download and install LM Studio from <a href="https://lmstudio.ai" target="_blank">lmstudio.ai</a></li>
+    <li>In LM Studio, go to the <strong>Local Server</strong> tab and start the server</li>
+    <li>Download a model of your choice from LM Studio's model browser</li>
+    <li>In ThunderAI, set the API URL to <code>http://localhost:1234/v1</code>, leave the API key empty, and select your model</li>
+</ol>
+
+<h2>Tips</h2>
+<ul>
+    <li><strong>OpenRouter</strong> is a great option if you want to access many different models (including Claude, Gemini, and Mistral) through a single API key and billing account.</li>
+    <li>When using local servers, performance depends on your hardware — see the <a href="../ollama/">Ollama guide</a> for hardware tips.</li>
+    <li>If requests fail with a CORS error on a local server, use the <strong>"All URLs"</strong> optional permission in ThunderAI settings as a workaround.</li>
+</ul>
+
+<h2>Troubleshooting</h2>
+
+<h3>"Connection refused" on a local server</h3>
+<p>Make sure the local server (e.g. LM Studio) is actually running and the server URL in ThunderAI matches the port it is listening on.</p>
+
+<h3>"401 Unauthorized" error</h3>
+<p>Check your API key. For local servers that do not require a key, try entering a dummy value like <code>none</code> — some servers reject empty key fields.</p>
+
+<h3>Empty model list</h3>
+<p>Enable the <strong>Set model name manually</strong> option and type the model name as specified by your provider or server documentation.</p>
+
+<h3>The "v1" in the URL causes errors</h3>
+<p>Enable the <strong>Remove "v1" from URL</strong> option in ThunderAI settings.</p>
+
+<br>
+<div style="text-align: center">
+    <a href="../">Back to guides</a>
+</div>
+
+
+<style>
+table {
+    border-collapse: collapse;
+    margin: 10px 0;
+    width: 100%;
+}
+th, td {
+    border: 1px solid #ccc;
+    padding: 7px 14px;
+    text-align: left;
+}
+th {
+    font-weight: bold;
+}
+h3 {
+    margin-bottom: 4px;
+}
+pre {
+    margin: 5px;
+    padding: 10px;
+    border-radius: 9px;
+}
+</style>

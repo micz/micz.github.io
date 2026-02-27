@@ -1,0 +1,102 @@
++++
+Title = "\"ThunderAI\" Setup Guide - OpenAI API"
+Type = "no-list"
++++
+
+{{< page_title >}}
+
+<p>
+    The <strong>OpenAI API</strong> integration connects ThunderAI directly to OpenAI's servers using an API key.<br>
+    Compared to the web interface, it is faster, more reliable, and gives you explicit control over which model you use.
+</p>
+
+<table>
+    <tr>
+        <td><strong>API key required</strong></td>
+        <td>Yes</td>
+    </tr>
+    <tr>
+        <td><strong>Free option</strong></td>
+        <td>No — pay-per-use billing</td>
+    </tr>
+    <tr>
+        <td><strong>Best for</strong></td>
+        <td>Stable, fast access to ChatGPT models</td>
+    </tr>
+</table>
+
+<br>
+
+<h2>Prerequisites</h2>
+<ul>
+    <li>An <a href="https://platform.openai.com" target="_blank">OpenAI account</a> with API access enabled</li>
+    <li>A valid API key</li>
+    <li>Thunderbird with ThunderAI installed</li>
+</ul>
+<p><em>Note: OpenAI API usage is billed separately from a ChatGPT subscription. Even if you have ChatGPT Plus, you still need to add credits to your <a href="https://platform.openai.com/settings/organization/billing" target="_blank">API account</a>.</em></p>
+
+<h2>Getting an API key</h2>
+<ol>
+    <li>Go to <a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com/api-keys</a></li>
+    <li>Click <strong>Create new secret key</strong></li>
+    <li>Give it a name (e.g. "ThunderAI") and click <strong>Create</strong></li>
+    <li><strong>Copy the key immediately</strong> — it will not be shown again</li>
+</ol>
+
+<h2>Setup</h2>
+
+<h3>1. Open ThunderAI Options</h3>
+<p>
+    In Thunderbird, click the ThunderAI menu and select <strong>Options</strong>, or go to<br>
+    <strong>Tools → Add-ons and Themes → ThunderAI → Preferences</strong>.
+</p>
+
+<h3>2. Select the OpenAI API integration</h3>
+<p>In the <strong>Connection</strong> section, choose <strong>OpenAI API</strong> from the integration dropdown.</p>
+
+<h3>3. Enter your API key</h3>
+<p>Paste your API key in the <strong>API Key</strong> field. The key is stored locally in Thunderbird and never sent anywhere other than OpenAI's servers.</p>
+
+<h3>4. Choose a model</h3>
+<p>Select the model you want to use from the <strong>Model</strong> dropdown. Click the button to refresh the list.</p>
+
+<h3>5. Save and test</h3>
+<p>Click <strong>Save</strong>. Then open any email, use the ThunderAI menu, and run a prompt to verify that everything is working.</p>
+
+<h2>Tips</h2>
+<ul>
+    <li>API usage is measured in tokens. Emails are typically short, so costs are usually very low. Check your usage at <a href="https://platform.openai.com/usage" target="_blank">platform.openai.com/usage</a>.</li>
+    <li>OpenAI regularly adds new models. Refresh the model list in ThunderAI options to see the latest available.</li>
+</ul>
+
+<h2>Troubleshooting</h2>
+
+<h3>"Invalid API key" error</h3>
+<p>Double-check that you copied the key correctly — there should be no extra spaces. If the key still fails, generate a new one from the OpenAI platform.</p>
+
+<h3>"You exceeded your current quota" error</h3>
+<p>Your OpenAI API account has run out of credits. Add more at <a href="https://platform.openai.com/settings/organization/billing" target="_blank">platform.openai.com/settings/organization/billing</a>.</p>
+
+<h3>No models appear in the dropdown</h3>
+<p>Make sure your API key is saved and valid. If the problem persists, check your internet connection.</p>
+
+<br>
+<div style="text-align: center">
+    <a href="../">Back to guides</a> &nbsp;|&nbsp; <a href="../google-gemini/">Next: Google Gemini →</a>
+</div>
+
+
+<style>
+table {
+    border-collapse: collapse;
+    margin: 10px 0;
+}
+th, td {
+    border: 1px solid #ccc;
+    padding: 7px 14px;
+    text-align: left;
+}
+h3 {
+    margin-bottom: 4px;
+}
+</style>

@@ -1,0 +1,120 @@
++++
+Title = "\"ThunderAI\" Setup Guide - Ollama (Local AI)"
+Type = "no-list"
++++
+
+{{< page_title >}}
+
+<p>
+    The <strong>Ollama</strong> integration lets you run AI models locally on your own machine.<br>
+    Your emails never leave your computer — no API keys, no cloud services, no costs beyond your hardware.
+</p>
+
+<table>
+    <tr>
+        <td><strong>API key required</strong></td>
+        <td>No</td>
+    </tr>
+    <tr>
+        <td><strong>Free option</strong></td>
+        <td>Yes — completely free</td>
+    </tr>
+    <tr>
+        <td><strong>Private / Local?</strong></td>
+        <td>Yes — everything stays on your machine</td>
+    </tr>
+    <tr>
+        <td><strong>Best for</strong></td>
+        <td>Privacy-conscious users, sensitive emails, offline use</td>
+    </tr>
+</table>
+
+<br>
+
+<h2>Prerequisites</h2>
+<ul>
+    <li><a href="https://ollama.com" target="_blank">Ollama</a> installed and running on your machine (or accessible on your local network)</li>
+    <li>At least one model downloaded in Ollama</li>
+    <li>Thunderbird with ThunderAI installed</li>
+</ul>
+
+<h2>Installing Ollama and downloading a model</h2>
+<p>If you haven't installed Ollama yet:</p>
+<ol>
+    <li>Download it from <a href="https://ollama.com" target="_blank">ollama.com</a> and follow the installation instructions for your OS</li>
+    <li>Open a terminal and pull a model, for example:<br><pre>ollama pull llama3</pre>Other good options for email tasks: <code>mistral</code>, <code>phi3</code>, <code>gemma2</code></li>
+    <li>Verify Ollama is running:<br><pre>ollama list</pre></li>
+</ol>
+
+<h2>Configuring CORS</h2>
+<p>
+    Thunderbird extensions run in a sandboxed environment, so Ollama needs to be configured to accept requests from browser extensions.<br>
+    You need to set the <code>OLLAMA_ORIGINS</code> environment variable to <code>moz-extension://*</code>.
+</p>
+<p>For more detailed CORS configurations, see the <a href="../../ollama-cors-information/">Ollama CORS Information page</a>.</p>
+
+<h2>Setup</h2>
+
+<h3>1. Open ThunderAI Options</h3>
+<p>
+    In Thunderbird, click the ThunderAI menu and select <strong>Options</strong>, or go to<br>
+    <strong>Tools → Add-ons and Themes → ThunderAI → Preferences</strong>.
+</p>
+
+<h3>2. Select the Ollama integration</h3>
+<p>In the <strong>Connection</strong> section, choose <strong>Ollama</strong> from the integration dropdown.</p>
+
+<h3>3. Set the server URL</h3>
+<p>Enter the URL of your Ollama server. The default is:</p>
+<pre>http://localhost:11434</pre>
+<p>If Ollama is running on another machine on your network, replace <code>localhost</code> with that machine's IP address.</p>
+
+<h3>4. Choose a model</h3>
+<p>Select a model from the <strong>Model</strong> dropdown. ThunderAI will fetch the list of models available in your Ollama instance.</p>
+
+<h3>5. Save and test</h3>
+<p>Click <strong>Save</strong>. Open any email, use the ThunderAI menu, and run a prompt to verify the connection.</p>
+
+<h2>Tips</h2>
+<ul>
+    <li>Performance depends on your hardware. A modern machine with at least 16 GB of RAM will handle models like <code>llama3</code> or <code>mistral</code> comfortably. A GPU significantly speeds things up.</li>
+    <li>Smaller models (7B parameters) are faster but less capable; larger models (13B, 70B) produce better results but require more resources.</li>
+    <li>For email tasks, <code>mistral</code> and <code>llama3</code> are popular choices offering a good balance of quality and speed.</li>
+</ul>
+
+<h2>Troubleshooting</h2>
+
+<h3>"Failed to connect" or no response</h3>
+<p>Check that Ollama is actually running (<code>ollama list</code> in a terminal). Verify the server URL in ThunderAI options matches your Ollama setup.</p>
+
+<h3>CORS error</h3>
+<p>The <code>OLLAMA_ORIGINS</code> variable is either not set or Ollama was not restarted after setting it. Follow the steps above again, or use the "All URLs" permission as a workaround.</p>
+
+<h3>Empty model list</h3>
+<p>Make sure you have pulled at least one model with <code>ollama pull &lt;modelname&gt;</code> and that Ollama is running.</p>
+
+<br>
+<div style="text-align: center">
+    <a href="../">Back to guides</a> &nbsp;|&nbsp; <a href="../openai-compatible-api/">Next: OpenAI Compatible API →</a>
+</div>
+
+
+<style>
+table {
+    border-collapse: collapse;
+    margin: 10px 0;
+}
+th, td {
+    border: 1px solid #ccc;
+    padding: 7px 14px;
+    text-align: left;
+}
+h3 {
+    margin-bottom: 4px;
+}
+pre {
+    margin: 5px;
+    padding: 10px;
+    border-radius: 9px;
+}
+</style>
