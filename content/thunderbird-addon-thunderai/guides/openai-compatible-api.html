@@ -21,7 +21,7 @@ Type = "no-list"
     </tr>
     <tr>
         <td><strong>Best for</strong></td>
-        <td>Flexibility — local servers, alternative providers, custom endpoints</td>
+        <td>Flexibility: local servers, alternative providers, custom endpoints</td>
     </tr>
 </table>
 
@@ -85,7 +85,7 @@ Type = "no-list"
 </ul>
 
 <h3>4. Enter your API key (if required)</h3>
-<p>Local servers like LM Studio usually do not require an API key — you can leave this field empty or enter any placeholder value. Hosted services will require a valid key.</p>
+<p>Local servers like LM Studio usually do not require an API key, so you can leave this field empty or enter any placeholder value. Hosted services will require a valid key.</p>
 
 <h3>5. Choose a model</h3>
 <p>Select your model from the <strong>Model</strong> dropdown. Use the button to refresh the list.</p>
@@ -107,7 +107,7 @@ Type = "no-list"
 <ul>
     <li><strong>OpenRouter</strong> is a great option if you want to access many different models (including Claude, Gemini, and Mistral) through a single API key and billing account.</li>
     <li>When using local servers, performance depends on your hardware — see the <a href="../ollama/">Ollama guide</a> for hardware tips.</li>
-    <li>If requests fail with a CORS error on a local server, use the <strong>"All URLs"</strong> optional permission in ThunderAI settings as a workaround.</li>
+    <li>If requests fail with a CORS error and you can't add the proper configuration on the server, use the <strong>"All URLs"</strong> optional permission in ThunderAI settings as a workaround.</li>
 </ul>
 
 <h2>Troubleshooting</h2>
@@ -116,7 +116,7 @@ Type = "no-list"
 <p>Make sure the local server (e.g. LM Studio) is actually running and the server URL in ThunderAI matches the port it is listening on.</p>
 
 <h3>"401 Unauthorized" error</h3>
-<p>Check your API key. For local servers that do not require a key, try entering a dummy value like <code>none</code> — some servers reject empty key fields.</p>
+<p>Check your API key. For local servers that do not require a key, try entering a dummy value like <code>none</code>. Some servers reject empty key fields.</p>
 
 <h3>Empty model list</h3>
 <p>Enable the <strong>Set model name manually</strong> option and type the model name as specified by your provider or server documentation.</p>
