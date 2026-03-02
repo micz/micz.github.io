@@ -1,0 +1,110 @@
++++
+Title = "\"ThunderAI\" Tutorial - Create Your First Custom Prompt"
+Type = "no-list"
++++
+
+{{< page_title >}}
+
+<p>
+    In this tutorial you will build a complete, working custom prompt from scratch.<br>
+    The goal is a prompt that <strong>drafts a formal reply</strong> to an email, addressed to the right person, written in a tone you define on the spot, and signed with your name.<br>
+    We'll combine a <a href="../../custom-prompts/" target="_blank">custom prompt</a>, standard <a href="../../data-placeholders/" target="_blank">data placeholders</a>, and a custom data placeholder.
+</p>
+<p>By the end you will know how all three pieces work together, and you can apply the same approach to any prompt you want to build.</p>
+
+<h2>What we are building</h2>
+<p>The finished prompt will:</p>
+<ol>
+    <li>Address the reply to the original sender by name, pulled automatically from the email.</li>
+    <li>Ask you for a <strong>tone</strong> (e.g. "formal", "friendly", "brief") every time you use it.</li>
+    <li>Sign off with your name, stored once as a custom data placeholder.</li>
+</ol>
+<p>The final prompt text will look like this:</p>
+<pre>Write a reply to the following email.
+Address the reply to: {%author%}
+Tone: {%additional_text:tone%}
+Sign the reply with: {%thunderai_my_name%}
+
+{%mail_text_body%}</pre>
+
+<h2>Step 1 — Create a custom data placeholder for your name</h2>
+<p>
+    First, store your name as a reusable custom placeholder, so you don't have to type it into every prompt you create.<br>
+    Open <strong>ThunderAI Options</strong> and click the
+    <img src="{{< base_url >}}images/thunderai/custom-data-placeholders-button.png" style="display:inline;margin:0;position:relative;top:0.25em;"/>
+    button to open the custom data placeholders tab.
+</p>
+<p>Add a new placeholder with these values:</p>
+<ul>
+    <li><strong>ID</strong>: <code>my_name</code> — this becomes <code>{%thunderai_my_name%}</code> in your prompts.</li>
+    <li><strong>Value</strong>: your full name, e.g. <code>Jane Smith</code>.</li>
+</ul>
+<p>Save it. You can now use <code>{%thunderai_my_name%}</code> in any prompt and ThunderAI will replace it with your name automatically.</p>
+
+<h2>Step 2 — Create the custom prompt</h2>
+<p>Go to the <strong>Custom Prompts</strong> tab in ThunderAI Options and add a new prompt.</p>
+
+<p>Fill in the fields as follows:</p>
+<ul>
+    <li><strong>ID</strong>: <code>formal_reply</code></li>
+    <li><strong>Name</strong>: <code>Draft a reply…</code> — the name will appear in the ThunderAI menu. The <code>…</code> is a useful convention to signal that the prompt will ask for input before running.</li>
+    <li><strong>Prompt Text</strong>: copy the prompt below.
+        <pre>Write a reply to the following email.
+Address the reply to: {%author%}
+Tone: {%additional_text:tone%}
+Sign the reply with: {%thunderai_my_name%}
+
+{%mail_text_body%}</pre>
+    </li>
+</ul>
+<p>A note on the placeholders used:</p>
+<ul>
+    <li><code>{%author%}</code> — a standard placeholder that inserts the sender's name from the email header.</li>
+    <li><code>{%additional_text:tone%}</code> — a user input placeholder: ThunderAI will ask you to type the tone each time you run this prompt. The ID <code>tone</code> is the label shown in the input field.</li>
+    <li><code>{%thunderai_my_name%}</code> — the custom data placeholder you created in Step 1.</li>
+    <li><code>{%mail_text_body%}</code> — the full body of the email, so the AI has the context it needs.</li>
+</ul>
+
+<h2>Step 3 — Configure the prompt settings</h2>
+<p>Still in the new prompt form, set the following options:</p>
+<ul>
+    <li><strong>Add to menu</strong>: <em>Only when reading an email</em> — you want to reply to received emails, not use this while composing.</li>
+    <li><strong>Action</strong>: <em>Use the AI service answer to create a reply</em> — this will open a compose window pre-filled with the AI's draft.</li>
+    <li><strong>Ask for additional text</strong>: enable this — it is required for the <code>{%additional_text:tone%}</code> placeholder to work.</li>
+    <li><strong>Always add the signature</strong>: leave this off, since we are already adding the name via the prompt itself. Enable it if you want Thunderbird's full signature block appended as well.</li>
+</ul>
+<p>Save the prompt.</p>
+
+<h2>Step 4 — Try it out</h2>
+<ol>
+    <li>Open any received email in Thunderbird.</li>
+    <li>Open the ThunderAI menu and select <strong>Draft a reply…</strong></li>
+    <li>ThunderAI will show an input field labelled <strong>tone</strong> — type something like <code>formal and concise</code> and confirm.</li>
+    <li>The prompt is sent to the AI with all placeholders resolved. The reply draft opens in a new compose window, addressed to the sender and signed with your name.</li>
+</ol>
+
+<h2>What to try next</h2>
+<p>Now that you know how the pieces fit together, here are a few directions to explore:</p>
+<ul>
+    <li><strong>Add more custom placeholders</strong> — store your job title, company name, or a standard disclaimer, and reuse them across all your prompts.</li>
+    <li><strong>Add more user input fields</strong> — you can have multiple <code>{%additional_text:&lt;id&gt;%}</code> placeholders in the same prompt, each with a different ID. Each one becomes a separate input field.</li>
+    <li><strong>Use <code>{%mail_quoted_text%}</code> instead of <code>{%mail_text_body%}</code></strong> — useful when replying to a thread where you only want the AI to read the most recent message, not the entire history.</li>
+    <li><strong>Enable the diff viewer</strong> — if you build a proofreading or rewriting prompt with the <em>Substitute the original text</em> action, enabling the diff viewer lets you review changes before accepting them.</li>
+</ul>
+
+<br>
+<div style="text-align: center">
+    <a href="../">Back to guides</a>
+</div>
+
+
+<style>
+pre {
+    margin: 8px 0 12px 0;
+    padding: 10px;
+    border-radius: 9px;
+}
+h2 {
+    margin-top: 1.6em;
+}
+</style>
