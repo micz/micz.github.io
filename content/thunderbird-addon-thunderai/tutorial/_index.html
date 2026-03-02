@@ -36,7 +36,7 @@ Sign the reply with: {%thunderai_my_name%}
 </p>
 <p>Add a new placeholder with these values:</p>
 <ul>
-    <li><strong>ID</strong>: <code>my_name</code> — this becomes <code>{%thunderai_my_name%}</code> in your prompts.</li>
+    <li><strong>ID</strong>: <code>my_name</code> — This becomes <code>{%thunderai_my_name%}</code> in your prompts.</li>
     <li><strong>Value</strong>: your full name, e.g. <code>Jane Smith</code>.</li>
 </ul>
 <p>Save it. You can now use <code>{%thunderai_my_name%}</code> in any prompt and ThunderAI will replace it with your name automatically.</p>
@@ -47,7 +47,7 @@ Sign the reply with: {%thunderai_my_name%}
 <p>Fill in the fields as follows:</p>
 <ul>
     <li><strong>ID</strong>: <code>formal_reply</code></li>
-    <li><strong>Name</strong>: <code>Draft a reply…</code> — the name will appear in the ThunderAI menu. The <code>…</code> is a useful convention to signal that the prompt will ask for input before running.</li>
+    <li><strong>Name</strong>: <code>Draft a reply...</code> — The name will appear in the ThunderAI menu. The <code>...</code> is a useful convention to signal that the prompt will ask for input before running.</li>
     <li><strong>Prompt Text</strong>: copy the prompt below.
         <pre>Write a reply to the following email.
 Address the reply to: {%author%}
@@ -59,42 +59,43 @@ Sign the reply with: {%thunderai_my_name%}
 </ul>
 <p>A note on the placeholders used:</p>
 <ul>
-    <li><code>{%author%}</code> — a standard placeholder that inserts the sender's name from the email header.</li>
-    <li><code>{%additional_text:tone%}</code> — a user input placeholder: ThunderAI will ask you to type the tone each time you run this prompt. The ID <code>tone</code> is the label shown in the input field.</li>
-    <li><code>{%thunderai_my_name%}</code> — the custom data placeholder you created in Step 1.</li>
-    <li><code>{%mail_text_body%}</code> — the full body of the email, so the AI has the context it needs.</li>
+    <li><code>{%author%}</code> — A standard placeholder that inserts the sender's name from the email header.</li>
+    <li><code>{%additional_text:tone%}</code> — A user input placeholder: ThunderAI will ask you to type the tone each time you run this prompt. The ID <code>tone</code> is the label shown in the input field.</li>
+    <li><code>{%thunderai_my_name%}</code> — The custom data placeholder you created in Step 1.</li>
+    <li><code>{%mail_text_body%}</code> — The full body of the email, so the AI has the context it needs.</li>
 </ul>
 
 <h2>Step 3 — Configure the prompt settings</h2>
 <p>Still in the new prompt form, set the following options:</p>
 <ul>
-    <li><strong>Add to menu</strong>: <em>Only when reading an email</em> — you want to reply to received emails, not use this while composing.</li>
-    <li><strong>Action</strong>: <em>Use the AI service answer to create a reply</em> — this will open a compose window pre-filled with the AI's draft.</li>
-    <li><strong>Ask for additional text</strong>: enable this — it is required for the <code>{%additional_text:tone%}</code> placeholder to work.</li>
-    <li><strong>Always add the signature</strong>: leave this off, since we are already adding the name via the prompt itself. Enable it if you want Thunderbird's full signature block appended as well.</li>
+    <li><strong>Add to menu</strong>: <em>Reading an email</em> — You want to reply to received emails, not use this while composing.</li>
+    <li><strong>Action</strong>: <em>Do reply</em> — This will open a compose window pre-filled with the AI's draft.</li>
+    <li><strong>Ask for additional text</strong>: enable this — It is required for the <code>{%additional_text:tone%}</code> placeholder to work.</li>
+    <li><strong>Always add the signature</strong>: leave this off — Since we are already adding the name via the prompt itself. Enable it if you want Thunderbird's full signature block appended as well.</li>
 </ul>
 <p>Save the prompt.</p>
 
 <h2>Step 4 — Try it out</h2>
 <ol>
     <li>Open any received email in Thunderbird.</li>
-    <li>Open the ThunderAI menu and select <strong>Draft a reply…</strong></li>
-    <li>ThunderAI will show an input field labelled <strong>tone</strong> — type something like <code>formal and concise</code> and confirm.</li>
+    <li>Open the ThunderAI menu and select <strong>Draft a reply...</strong></li>
+    <li>ThunderAI will show an input field labelled <strong>tone</strong>, type something like <code>formal and concise</code> and confirm.</li>
     <li>The prompt is sent to the AI with all placeholders resolved. The reply draft opens in a new compose window, addressed to the sender and signed with your name.</li>
 </ol>
 
 <h2>What to try next</h2>
 <p>Now that you know how the pieces fit together, here are a few directions to explore:</p>
 <ul>
-    <li><strong>Add more custom placeholders</strong> — store your job title, company name, or a standard disclaimer, and reuse them across all your prompts.</li>
-    <li><strong>Add more user input fields</strong> — you can have multiple <code>{%additional_text:&lt;id&gt;%}</code> placeholders in the same prompt, each with a different ID. Each one becomes a separate input field.</li>
-    <li><strong>Use <code>{%mail_quoted_text%}</code> instead of <code>{%mail_text_body%}</code></strong> — useful when replying to a thread where you only want the AI to read the most recent message, not the entire history.</li>
-    <li><strong>Enable the diff viewer</strong> — if you build a proofreading or rewriting prompt with the <em>Substitute the original text</em> action, enabling the diff viewer lets you review changes before accepting them.</li>
+    <li><strong>Add more custom placeholders</strong> — Store your job title, company name, or a standard disclaimer, and reuse them across all your prompts.</li>
+    <li><strong>Add more user input fields</strong> — You can have multiple <code>{%additional_text:&lt;id&gt;%}</code> placeholders in the same prompt, each with a different ID. Each one becomes a separate input field.</li>
+    
+    <li><strong>Enable the diff viewer</strong> — If you build a proofreading or rewriting prompt with the <em>Substitute the original text</em> action, enabling the diff viewer lets you review changes before accepting them.</li>
 </ul>
 
 <br>
 <div style="text-align: center">
-    <a href="../">Back to guides</a>
+    <a href="../../guides/">Back to guides</a><br>
+    <a href="../../">Go back to addon page</a>
 </div>
 
 
