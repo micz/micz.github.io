@@ -185,3 +185,7 @@ pre.tutorial {
 h2.tutorial {
     margin-top: 1.6em;
 }
+div.img_center{
+  width: 100%;
+  text-align: center;
+}

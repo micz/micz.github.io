@@ -37,8 +37,15 @@ Sign the reply with: {%thunderai_my_name%}
 <p>Add a new placeholder with these values:</p>
 <ul>
     <li><strong>ID</strong>: <code>my_name</code> — This becomes <code>{%thunderai_my_name%}</code> in your prompts.</li>
-    <li><strong>Value</strong>: your full name, e.g. <code>Jane Smith</code>.</li>
+    <li><strong>Name</strong>: <code>My Name</code> — A descriptive name that is useful to you.</li>
+    <li><strong>Data Placeholder Text</strong>: your full name, e.g. <code>Jane Smith</code>.</li>
+    <li><strong>Usable in prompts added to menu</strong>: <code>Composing an email</code> — We need this only when composing an email.</li>
 </ul>
+
+<div class="img_center">
+    <img src="{{< base_url >}}images/thunderai/tutorial/thunderai_tutorial_custom_data_placeholder.png" />
+</div>
+
 <p>Save it. You can now use <code>{%thunderai_my_name%}</code> in any prompt and ThunderAI will replace it with your name automatically.</p>
 
 <h2 class="tutorial">Step 2 — Create the custom prompt</h2>
@@ -59,7 +66,7 @@ Sign the reply with: {%thunderai_my_name%}
 </ul>
 <p>A note on the placeholders used:</p>
 <ul>
-    <li><code>{%author%}</code> — A standard placeholder that inserts the sender's name from the email header.</li>
+    <li><code>{%author%}</code> — A standard placeholder that inserts the sender's name and email address from the email header.</li>
     <li><code>{%additional_text:tone%}</code> — A user input placeholder: ThunderAI will ask you to type the tone each time you run this prompt. The ID <code>tone</code> is the label shown in the input field.</li>
     <li><code>{%thunderai_my_name%}</code> — The custom data placeholder you created in Step 1.</li>
     <li><code>{%mail_text_body%}</code> — The full body of the email, so the AI has the context it needs.</li>
@@ -71,16 +78,36 @@ Sign the reply with: {%thunderai_my_name%}
     <li><strong>Add to menu</strong>: <em>Reading an email</em> — You want to reply to received emails, not use this while composing.</li>
     <li><strong>Action</strong>: <em>Do reply</em> — This will open a compose window pre-filled with the AI's draft.</li>
     <li><strong>Ask for additional text</strong>: enable this — It is required for the <code>{%additional_text:tone%}</code> placeholder to work.</li>
-    <li><strong>Always add the signature</strong>: leave this off — Since we are already adding the name via the prompt itself. Enable it if you want Thunderbird's full signature block appended as well.</li>
+    <li><strong>Always add the signature</strong>: leave this off — Since we are already adding the name via the prompt itself. Enable it if you want the ThunderAI signature, defined in the preferences, appended as well.</li>
 </ul>
-<p>Save the prompt.</p>
+
+<div class="img_center">
+    <img src="{{< base_url >}}images/thunderai/tutorial/thunderai_tutorial_customprompt.png" />
+</div>
+
+<p>Here, clicking on <strong>Show additional properties</strong> you can also define specific configurations for the APIs or the ChatGPT Web Interface (like a specific Model or a Custom GPT) that will only apply to this prompt.</p>
+
+<p>Add the prompt and click on the <strong>Save All</strong> button.</p>
 
 <h2 class="tutorial">Step 4 — Try it out</h2>
 <ol>
     <li>Open any received email in Thunderbird.</li>
-    <li>Open the ThunderAI menu and select <strong>Draft a reply...</strong></li>
-    <li>ThunderAI will show an input field labelled <strong>tone</strong>, type something like <code>formal and concise</code> and confirm.</li>
-    <li>The prompt is sent to the AI with all placeholders resolved. The reply draft opens in a new compose window, addressed to the sender and signed with your name.</li>
+    <li>Open the ThunderAI menu and select <strong>Draft a reply...</strong>
+        <div class="img_center">
+            <img src="{{< base_url >}}images/thunderai/tutorial/thunderai_tutorial_menu.png" />
+        </div>
+    </li>
+    <li>ThunderAI will show an input field labelled <strong>tone</strong>, type something like <code>formal and concise</code> and confirm.
+        <div class="img_center">
+            <img src="{{< base_url >}}images/thunderai/tutorial/thunderai_tutorial_additional_text.png" />
+        </div>
+    </li>
+    <li>The prompt is sent to the AI with all placeholders resolved.</li>
+    <li>After the AI answers, click the <strong>Use this answer</strong> button to import the text in a new compose window.
+        <div class="img_center">
+            <img src="{{< base_url >}}images/thunderai/tutorial/thunderai_tutorial_reply_button.png" />
+        </div>
+    </li>
 </ol>
 
 <h2 class="tutorial">What to try next</h2>
