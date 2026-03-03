@@ -12,7 +12,7 @@ Type = "no-list"
 </p>
 <p>By the end you will know how all three pieces work together, and you can apply the same approach to any prompt you want to build.</p>
 
-<h2>What we are building</h2>
+<h2 class="tutorial">What we are building</h2>
 <p>The finished prompt will:</p>
 <ol>
     <li>Address the reply to the original sender by name, pulled automatically from the email.</li>
@@ -20,14 +20,14 @@ Type = "no-list"
     <li>Sign off with your name, stored once as a custom data placeholder.</li>
 </ol>
 <p>The final prompt text will look like this:</p>
-<pre>Write a reply to the following email.
+<pre class="tutorial">Write a reply to the following email.
 Address the reply to: {%author%}
 Tone: {%additional_text:tone%}
 Sign the reply with: {%thunderai_my_name%}
 
 {%mail_text_body%}</pre>
 
-<h2>Step 1 — Create a custom data placeholder for your name</h2>
+<h2 class="tutorial">Step 1 — Create a custom data placeholder for your name</h2>
 <p>
     First, store your name as a reusable custom placeholder, so you don't have to type it into every prompt you create.<br>
     Open <strong>ThunderAI Options</strong> and click the
@@ -41,7 +41,7 @@ Sign the reply with: {%thunderai_my_name%}
 </ul>
 <p>Save it. You can now use <code>{%thunderai_my_name%}</code> in any prompt and ThunderAI will replace it with your name automatically.</p>
 
-<h2>Step 2 — Create the custom prompt</h2>
+<h2 class="tutorial">Step 2 — Create the custom prompt</h2>
 <p>Go to the <strong>Custom Prompts</strong> tab in ThunderAI Options and add a new prompt.</p>
 
 <p>Fill in the fields as follows:</p>
@@ -49,7 +49,7 @@ Sign the reply with: {%thunderai_my_name%}
     <li><strong>ID</strong>: <code>formal_reply</code></li>
     <li><strong>Name</strong>: <code>Draft a reply...</code> — The name will appear in the ThunderAI menu. The <code>...</code> is a useful convention to signal that the prompt will ask for input before running.</li>
     <li><strong>Prompt Text</strong>: copy the prompt below.
-        <pre>Write a reply to the following email.
+        <pre class="tutorial">Write a reply to the following email.
 Address the reply to: {%author%}
 Tone: {%additional_text:tone%}
 Sign the reply with: {%thunderai_my_name%}
@@ -65,7 +65,7 @@ Sign the reply with: {%thunderai_my_name%}
     <li><code>{%mail_text_body%}</code> — The full body of the email, so the AI has the context it needs.</li>
 </ul>
 
-<h2>Step 3 — Configure the prompt settings</h2>
+<h2 class="tutorial">Step 3 — Configure the prompt settings</h2>
 <p>Still in the new prompt form, set the following options:</p>
 <ul>
     <li><strong>Add to menu</strong>: <em>Reading an email</em> — You want to reply to received emails, not use this while composing.</li>
@@ -75,7 +75,7 @@ Sign the reply with: {%thunderai_my_name%}
 </ul>
 <p>Save the prompt.</p>
 
-<h2>Step 4 — Try it out</h2>
+<h2 class="tutorial">Step 4 — Try it out</h2>
 <ol>
     <li>Open any received email in Thunderbird.</li>
     <li>Open the ThunderAI menu and select <strong>Draft a reply...</strong></li>
@@ -83,7 +83,7 @@ Sign the reply with: {%thunderai_my_name%}
     <li>The prompt is sent to the AI with all placeholders resolved. The reply draft opens in a new compose window, addressed to the sender and signed with your name.</li>
 </ol>
 
-<h2>What to try next</h2>
+<h2 class="tutorial">What to try next</h2>
 <p>Now that you know how the pieces fit together, here are a few directions to explore:</p>
 <ul>
     <li><strong>Add more custom placeholders</strong> — Store your job title, company name, or a standard disclaimer, and reuse them across all your prompts.</li>
@@ -97,15 +97,3 @@ Sign the reply with: {%thunderai_my_name%}
     <a href="../guides/">Go back to guides</a><br>
     <a href="../">Go back to addon page</a>
 </div>
-
-
-<style>
-pre {
-    margin: 8px 0 12px 0;
-    padding: 10px;
-    border-radius: 9px;
-}
-h2 {
-    margin-top: 1.6em;
-}
-</style>

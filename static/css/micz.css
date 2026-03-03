@@ -163,3 +163,25 @@ div.miczit_spacer {
 #ctrl-alpha {
     margin-right: 15px;
 }
+
+table.guides {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 10px 0;
+}
+table.guides th, table.guides td {
+    border: 1px solid #ccc;
+    padding: 8px 12px;
+    text-align: left;
+}
+table.guides th {
+    font-weight: bold;
+}
+pre.tutorial {
+    margin: 8px 0 12px 0;
+    padding: 10px;
+    border-radius: 9px;
+}
+h2.tutorial {
+    margin-top: 1.6em;
+}
