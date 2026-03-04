@@ -13,7 +13,7 @@ ignoreFiles = ["\\.json$"]
 
 [params]
    customCSS = ["css/micz.css"] # relative path to "static" directory
-   forceCSSReloadID = "20260106"
+   forceCSSReloadID = "20260304"
    Subtitle = "Silence is golden."
    style= "auto"
    env= "production"
