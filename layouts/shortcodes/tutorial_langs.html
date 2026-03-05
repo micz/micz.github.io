@@ -7,16 +7,16 @@
 {{ $urlPath := $page | replaceRE "/_index$" "" }}
 
 <div class="lang-switcher">
-  {{ range site.Languages }}
+  {{ range sort site.Languages "LanguageName" }}
     {{ if eq .Lang $defaultLang }}
       <a href="/{{ $addonBase }}{{ $urlPath }}/" hreflang="{{ .Lang }}">
-        {{- if eq .Lang "en" }}🇬🇧{{ else if eq .Lang "it" }}🇮🇹{{ else if eq .Lang "fr" }}🇫🇷{{ else }}{{ .Lang }}{{ end }} {{ .LanguageName -}}
+        {{- with .Params.flag }}{{ . }}{{ else }}{{ $.Lang }}{{ end }} {{ .LanguageName -}}
       </a>
     {{ else }}
       {{ $filePath := printf "%s%s.%s.html" $contentBase $page .Lang }}
       {{ if os.FileExists $filePath }}
         <a href="/{{ .Lang }}/{{ $addonBase }}{{ $urlPath }}/" hreflang="{{ .Lang }}">
-          {{- if eq .Lang "en" }}🇬🇧{{ else if eq .Lang "it" }}🇮🇹{{ else if eq .Lang "fr" }}🇫🇷{{ else }}{{ .Lang }}{{ end }} {{ .LanguageName -}}
+          {{- with .Params.flag }}{{ . }}{{ else }}{{ $.Lang }}{{ end }} {{ .LanguageName -}}
         </a>
       {{ end }}
     {{ end }}

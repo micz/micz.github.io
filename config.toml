@@ -18,12 +18,18 @@ defaultContentLanguageInSubdir = false
   [languages.en]
     languageName = "English"
     weight = 1
+    [languages.en.params]
+      flag = "🇬🇧"
   [languages.it]
     languageName = "Italiano"
     weight = 2
+    [languages.it.params]
+      flag = "🇮🇹"
   [languages.fr]
     languageName = "Français"
     weight = 3
+    [languages.fr.params]
+      flag = "🇫🇷"
 
 [params]
    customCSS = ["css/micz.css"] # relative path to "static" directory
