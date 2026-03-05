@@ -1,0 +1,13 @@
+{{ if and .Params.multilang .Translations }}
+<div class="lang-switcher">
+  {{ range .AllTranslations }}
+    <a href="{{ .Permalink }}" hreflang="{{ .Language.Lang }}"
+      {{- if eq .Language.Lang $.Language.Lang }} class="current"{{ end }}>
+      {{- if eq .Language.Lang "en" }}🇬🇧
+      {{- else if eq .Language.Lang "it" }}🇮🇹
+      {{- else }}{{ .Language.Lang }}
+      {{- end }} {{ .Language.LanguageName -}}
+    </a>
+  {{ end }}
+</div>
+{{ end }}

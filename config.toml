@@ -11,9 +11,20 @@ disableKinds = ["RSS","taxonomy","sitemap"]
 ignoreErrors = ["error-disable-taxonomy"]
 ignoreFiles = ["\\.json$"]
 
+defaultContentLanguage = "en"
+defaultContentLanguageInSubdir = false
+
+[languages]
+  [languages.en]
+    languageName = "English"
+    weight = 1
+  [languages.it]
+    languageName = "Italiano"
+    weight = 2
+
 [params]
    customCSS = ["css/micz.css"] # relative path to "static" directory
-   forceCSSReloadID = "20260304"
+   forceCSSReloadID = "20260305"
    Subtitle = "Silence is golden."
    style= "auto"
    env= "production"
