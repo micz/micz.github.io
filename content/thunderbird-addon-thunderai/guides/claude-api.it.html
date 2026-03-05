@@ -1,0 +1,112 @@
++++
+Title = "Guida di configurazione per \"ThunderAI\" - Claude API"
+Type = "no-list"
+multilang = true
++++
+
+{{< page_title >}}
+
+<p>
+    L'integrazione con la <strong>Claude API</strong> connette ThunderAI ai modelli AI Claude di Anthropic.<br>
+    Claude è noto per produrre risposte accurate e ben strutturate, gestendo ottimamente i documenti lunghi — ideale per leggere e comporre email dettagliate.
+</p>
+
+<table>
+    <tr>
+        <td><strong>Chiave API richiesta</strong></td>
+        <td>Sì</td>
+    </tr>
+    <tr>
+        <td><strong>Opzione gratuita</strong></td>
+        <td>No [Pagamento a consumo]</td>
+    </tr>
+    <tr>
+        <td><strong>Ideale per</strong></td>
+        <td>Analisi dettagliate, email lunghe, scrittura strutturata</td>
+    </tr>
+</table>
+
+<br>
+
+<h2>Prerequisiti</h2>
+<ul>
+    <li>Un <a href="https://console.anthropic.com" target="_blank">account Anthropic</a> con accesso alle API</li>
+    <li>Una chiave Claude API valida</li>
+    <li>Thunderbird con ThunderAI installato</li>
+</ul>
+
+<h2>Ottenere una chiave API</h2>
+<ol>
+    <li>Vai su <a href="https://console.anthropic.com/settings/keys" target="_blank">console.anthropic.com/settings/keys</a></li>
+    <li>Clicca su <strong>Create Key</strong></li>
+    <li>Assegnagli un nome e copia subito la chiave: non verrà mostrata di nuovo</li>
+</ol>
+
+<h2>Configurazione</h2>
+
+<h3>1. Apri le opzioni di ThunderAI</h3>
+<p>
+    In Thunderbird, clicca sul menu ThunderAI e seleziona <strong>Options</strong>, oppure vai su<br>
+    <strong>Strumenti → Componenti aggiuntivi e temi → ThunderAI → Preferenze</strong>.
+</p>
+
+<h3>2. Seleziona l'integrazione Claude API</h3>
+<p>Nella sezione <strong>Connection</strong>, scegli <strong>Claude API</strong> dal menu a tendina delle integrazioni.</p>
+
+<h3>3. Inserisci la tua chiave API</h3>
+<p>Incolla la tua chiave Claude API nel campo <strong>API Key</strong>.</p>
+
+<h3>4. Concedi il permesso richiesto</h3>
+<p>
+    La Claude API richiede che ThunderAI acceda al dominio <code>anthropic.com</code>.<br>
+    Nella pagina delle opzioni comparirà un pulsante per concedere questo permesso — clicca su di esso e conferma nella finestra di dialogo di Thunderbird.
+</p>
+<p><em>Si tratta di un permesso opzionale richiesto solo quando selezioni l'integrazione Claude. Consente a ThunderAI di comunicare con i server API di Anthropic. ThunderAI non raccoglie alcun dato.</em></p>
+
+<h3>5. Scegli un modello</h3>
+<p>Seleziona un modello Claude dal menu a tendina <strong>Model</strong>. Clicca sul pulsante per aggiornare l'elenco.</p>
+
+<h3>6. Salva e testa</h3>
+<p>Clicca su <strong>Save</strong>. Apri una qualsiasi email, usa il menu ThunderAI ed esegui un prompt per confermare che l'integrazione funzioni.</p>
+
+<h2>Suggerimenti</h2>
+<ul>
+    <li>I modelli Claude gestiscono grandi quantità di testo grazie alla loro ampia finestra di contesto, utile quando si elaborano lunghe conversazioni email.</li>
+    <li>Claude tende a essere dettagliato nelle risposte. Se preferisci output più brevi, aggiungi istruzioni come "Sii conciso" direttamente nei tuoi prompt o in un template di prompt personalizzato.</li>
+    <li>Monitora il tuo utilizzo e i costi su <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a>.</li>
+</ul>
+
+<h2>Risoluzione dei problemi</h2>
+
+<h3>"Authentication error" o "Invalid API key"</h3>
+<p>Verifica che la chiave sia stata copiata correttamente. Se necessario, rigenera una nuova chiave dalla console Anthropic.</p>
+
+<h3>Errore CORS o richieste che falliscono</h3>
+<p>Assicurati di aver concesso il permesso per il dominio <code>anthropic.com</code> come descritto al passaggio 4. Senza di esso, ThunderAI non può raggiungere la Claude API.</p>
+
+<h3>Errore "Credit balance too low"</h3>
+<p>Aggiungi crediti al tuo account Anthropic su <a href="https://console.anthropic.com/settings/billing" target="_blank">console.anthropic.com/settings/billing</a>.</p>
+
+<h3>Nessun modello nel menu a tendina</h3>
+<p>Verifica che la chiave API sia salvata e che il permesso per il dominio sia stato concesso. Prova a salvare la pagina delle opzioni e riaprirla.</p>
+
+<br>
+<div style="text-align: center">
+    <a href="../">Torna alle guide</a> &nbsp;|&nbsp; <a href="../ollama/">Avanti: Ollama →</a>
+</div>
+
+
+<style>
+table {
+    border-collapse: collapse;
+    margin: 10px 0;
+}
+th, td {
+    border: 1px solid #ccc;
+    padding: 7px 14px;
+    text-align: left;
+}
+h3 {
+    margin-bottom: 4px;
+}
+</style>

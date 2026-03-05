@@ -1,0 +1,103 @@
++++
+Title = "Guida di configurazione per \"ThunderAI\" - OpenAI API"
+Type = "no-list"
+multilang = true
++++
+
+{{< page_title >}}
+
+<p>
+    L'integrazione con <strong>OpenAI API</strong> connette ThunderAI direttamente ai server di OpenAI tramite una chiave API.<br>
+    Rispetto all'interfaccia web, è più veloce, più affidabile e ti offre il controllo esplicito sul modello da utilizzare.
+</p>
+
+<table>
+    <tr>
+        <td><strong>Chiave API richiesta</strong></td>
+        <td>Sì</td>
+    </tr>
+    <tr>
+        <td><strong>Opzione gratuita</strong></td>
+        <td>No [Pagamento a consumo]</td>
+    </tr>
+    <tr>
+        <td><strong>Ideale per</strong></td>
+        <td>Accesso stabile e veloce ai modelli ChatGPT</td>
+    </tr>
+</table>
+
+<br>
+
+<h2>Prerequisiti</h2>
+<ul>
+    <li>Un <a href="https://platform.openai.com" target="_blank">account OpenAI</a> con accesso alle API abilitato</li>
+    <li>Una chiave API valida</li>
+    <li>Thunderbird con ThunderAI installato</li>
+</ul>
+<p><em>Nota: l'utilizzo dell'API OpenAI viene fatturato separatamente rispetto all'abbonamento ChatGPT. Anche se hai ChatGPT Plus, devi comunque aggiungere crediti al tuo account API.</em></p>
+
+<h2>Ottenere una chiave API</h2>
+<ol>
+    <li>Vai su <a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com/api-keys</a></li>
+    <li>Clicca su <strong>Create new secret key</strong></li>
+    <li>Assegnagli un nome (ad es. "ThunderAI") e clicca su <strong>Create</strong></li>
+    <li>Copia subito la chiave: non verrà mostrata di nuovo</li>
+</ol>
+
+<h2>Configurazione</h2>
+
+<h3>1. Apri le opzioni di ThunderAI</h3>
+<p>
+    In Thunderbird, clicca sul menu ThunderAI e seleziona <strong>Options</strong>, oppure vai su<br>
+    <strong>Strumenti → Componenti aggiuntivi e temi → ThunderAI → Preferenze</strong>.
+</p>
+
+<h3>2. Seleziona l'integrazione OpenAI API</h3>
+<p>Nella sezione <strong>Connection</strong>, scegli <strong>OpenAI API</strong> dal menu a tendina delle integrazioni.</p>
+
+<h3>3. Inserisci la tua chiave API</h3>
+<p>Incolla la tua chiave API nel campo <strong>API Key</strong>. La chiave viene memorizzata localmente in Thunderbird e non viene mai inviata ad altri server oltre a quelli di OpenAI.</p>
+
+<h3>4. Scegli un modello</h3>
+<p>Seleziona il modello che desideri utilizzare dal menu a tendina <strong>Model</strong>. Clicca sul pulsante per aggiornare l'elenco.</p>
+
+<h3>5. Salva e testa</h3>
+<p>Clicca su <strong>Save</strong>. Apri una qualsiasi email, usa il menu ThunderAI ed esegui un prompt per verificare che tutto funzioni.</p>
+
+<h2>Suggerimenti</h2>
+<ul>
+    <li>L'utilizzo delle API viene misurato in token. Le email sono generalmente brevi, quindi i costi sono di solito molto bassi. Controlla il tuo utilizzo su <a href="https://platform.openai.com/usage" target="_blank">platform.openai.com/usage</a>.</li>
+    <li>OpenAI aggiunge regolarmente nuovi modelli. Aggiorna l'elenco dei modelli nelle opzioni di ThunderAI per vedere gli ultimi disponibili.</li>
+</ul>
+
+<h2>Risoluzione dei problemi</h2>
+
+<h3>Errore "Invalid API key"</h3>
+<p>Verifica di aver copiato la chiave correttamente: non devono esserci spazi extra. Se la chiave continua a non funzionare, generane una nuova dalla piattaforma OpenAI.</p>
+
+<h3>Errore "You exceeded your current quota"</h3>
+<p>Il tuo account API OpenAI ha esaurito i crediti. Aggiungine altri su <a href="https://platform.openai.com/settings/organization/billing" target="_blank">platform.openai.com/settings/organization/billing</a>.</p>
+
+<h3>Nessun modello nel menu a tendina</h3>
+<p>Assicurati che la tua chiave API sia salvata e valida. Se il problema persiste, controlla la connessione internet.</p>
+
+<br>
+<div style="text-align: center">
+    <a href="../">Torna alle guide</a> &nbsp;|&nbsp; <a href="../google-gemini/">Avanti: Google Gemini →</a>
+</div>
+
+
+<style>
+table {
+    border-collapse: collapse;
+    margin: 10px 0;
+}
+th, td {
+    border: 1px solid #ccc;
+    padding: 7px 14px;
+    text-align: left;
+}
+h3 {
+    margin-bottom: 4px;
+}
+</style>

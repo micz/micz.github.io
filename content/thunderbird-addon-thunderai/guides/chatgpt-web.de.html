@@ -1,0 +1,98 @@
++++
+Title = "\"ThunderAI\" Einrichtungsanleitung - ChatGPT Web Interface"
+Type = "no-list"
+multilang = true
++++
+
+{{< page_title >}}
+
+<p>
+    Die Integration mit der <strong>ChatGPT Web Interface</strong> ermöglicht es Ihnen, ThunderAI ohne API-Schlüssel zu nutzen.<br>
+    ThunderAI interagiert direkt mit der ChatGPT-Website in Ihrem Namen, sodass ein kostenloses ChatGPT-Konto ausreicht.
+</p>
+
+<table>
+    <tr>
+        <td><strong>API-Schlüssel erforderlich</strong></td>
+        <td>Nein</td>
+    </tr>
+    <tr>
+        <td><strong>Kostenlose Option</strong></td>
+        <td>Ja [Auch mit einem kostenlosen ChatGPT-Konto]</td>
+    </tr>
+    <tr>
+        <td><strong>Geeignet für</strong></td>
+        <td>Schneller Einstieg, keine Abrechnungseinrichtung</td>
+    </tr>
+</table>
+
+<br>
+
+<h2>Voraussetzungen</h2>
+<ul>
+    <li>Ein kostenloses (oder kostenpflichtiges) Konto auf <a href="https://chatgpt.com" target="_blank">chatgpt.com</a></li>
+    <li>Thunderbird mit installiertem ThunderAI</li>
+</ul>
+
+<h2>Einrichtung</h2>
+
+<h3>1. ThunderAI-Optionen öffnen</h3>
+<p>
+    Klicken Sie in Thunderbird auf das ThunderAI-Menü und wählen Sie <strong>Options</strong>, oder gehen Sie zu<br>
+    <strong>Extras → Add-ons und Themes → ThunderAI → Einstellungen</strong>.
+</p>
+
+<h3>2. ChatGPT Web Interface auswählen</h3>
+<p>Wählen Sie im Bereich <strong>Connection</strong> die Option <strong>ChatGPT Web Interface</strong> aus dem Integrations-Dropdown.</p>
+
+<h3>3. Erforderliche Berechtigung erteilen</h3>
+<p>
+    ThunderAI benötigt die Berechtigung, auf <code>chatgpt.com</code> zuzugreifen.
+</p>
+<p><em>Diese Berechtigung ist optional und wird ausschließlich dazu verwendet, in Ihrem Namen mit der ChatGPT-Website zu interagieren. ThunderAI erfasst oder speichert keine Ihrer Daten.</em></p>
+
+<h3>4. Bei ChatGPT in Thunderbird anmelden</h3>
+<p>
+    Dies müssen Sie nur einmal tun; Thunderbird hält die Sitzung aktiv.<br>
+    Verwenden Sie die Schaltfläche auf der ThunderAI-Einstellungsseite, um einen neuen Thunderbird-Tab zu öffnen und <i>chatgpt.com</i> zu besuchen. Melden Sie sich mit Ihrem Konto an.
+</p>
+
+<h3>5. Integration testen</h3>
+<p>Öffnen Sie eine beliebige E-Mail, klicken Sie auf die ThunderAI-Schaltfläche in der Symbolleiste und wählen Sie einen Prompt (z.&nbsp;B. <strong>Summarize</strong>). ThunderAI öffnet ein Panel und interagiert mit ChatGPT.</p>
+
+<h2>Tipps und bekannte Einschränkungen</h2>
+<ul>
+    <li>Die Antwortgeschwindigkeit hängt von der ChatGPT-Website ab und kann variieren. Die API-Integration ist in der Regel schneller und zuverlässiger.</li>
+    <li>Kostenlose Konten unterliegen den eigenen Nutzungslimits von ChatGPT (Rate-Limits, Modellverfügbarkeit).</li>
+    <li>Wenn ChatGPT das Layout seiner Website ändert, kann die Integration vorübergehend aufhören zu funktionieren, bis ThunderAI aktualisiert wird. Prüfen Sie die <a href="../../status/">Statusseite</a> auf bekannte Probleme.</li>
+    <li>Sie können die Verwendung eines Custom GPT oder Projekts global in den Einstellungen oder in der Konfiguration eines einzelnen Prompts festlegen.</li>
+</ul>
+
+<h2>Fehlerbehebung</h2>
+
+<h3>ThunderAI zeigt einen Fehler oder keine Antwort</h3>
+<p>Stellen Sie sicher, dass Sie in einem Thunderbird-Tab bei ChatGPT angemeldet sind. Versuchen Sie, <i>chatgpt.com</i> direkt aus Thunderbird heraus aufzurufen, und prüfen Sie, ob die Sitzung aktiv ist. Verwenden Sie dafür die Schaltfläche auf der ThunderAI-Einstellungsseite.</p>
+
+<h3>Antworten sind langsam oder laufen ab</h3>
+<p>Dies ist in der Regel ein vorübergehendes Problem mit der ChatGPT-Website. Warten Sie einen Moment und versuchen Sie es erneut, oder wechseln Sie zur Integration <a href="../openai-api/">OpenAI API</a> für zuverlässigere Leistung.</p>
+
+<br>
+<div style="text-align: center">
+    <a href="../">Zurück zu den Anleitungen</a> &nbsp;|&nbsp; <a href="../openai-api/">Weiter: OpenAI API →</a>
+</div>
+
+
+<style>
+table {
+    border-collapse: collapse;
+    margin: 10px 0;
+}
+th, td {
+    border: 1px solid #ccc;
+    padding: 7px 14px;
+    text-align: left;
+}
+h3 {
+    margin-bottom: 4px;
+}
+</style>

@@ -1,0 +1,109 @@
++++
+Title = "Guida di configurazione per \"ThunderAI\" - Google Gemini"
+Type = "no-list"
+multilang = true
++++
+
+{{< page_title >}}
+
+<p>
+    L'integrazione con <strong>Google Gemini</strong> connette ThunderAI ai modelli AI Gemini di Google tramite la Gemini API.<br>
+    Include il supporto per opzioni avanzate come <strong>System Instructions</strong> e <strong>thinkingBudget</strong>, utili per gli utenti che desiderano maggiore controllo sul comportamento del modello.
+</p>
+
+<table>
+    <tr>
+        <td><strong>Chiave API richiesta</strong></td>
+        <td>Sì</td>
+    </tr>
+    <tr>
+        <td><strong>Opzione gratuita</strong></td>
+        <td>Sì [Livello gratuito generoso disponibile]</td>
+    </tr>
+    <tr>
+        <td><strong>Ideale per</strong></td>
+        <td>Chi preferisce l'ecosistema Google o vuole un'opzione API gratuita</td>
+    </tr>
+</table>
+
+<br>
+
+<h2>Prerequisiti</h2>
+<ul>
+    <li>Un <a href="https://accounts.google.com" target="_blank">account Google</a></li>
+    <li>Una chiave Gemini API (livello gratuito disponibile)</li>
+    <li>Thunderbird con ThunderAI installato</li>
+</ul>
+
+<h2>Ottenere una chiave API</h2>
+<ol>
+    <li>Vai su <a href="https://aistudio.google.com/apikey" target="_blank">aistudio.google.com/apikey</a></li>
+    <li>Clicca su <strong>Create API key</strong></li>
+    <li>Seleziona un progetto Google Cloud esistente o creane uno nuovo</li>
+    <li>Copia la chiave API generata</li>
+</ol>
+<p><em>La Gemini API offre un livello gratuito con limiti generosi, adatto all'uso personale delle email. Sono disponibili piani a pagamento se hai bisogno di maggiore throughput.</em></p>
+
+<h2>Configurazione</h2>
+
+<h3>1. Apri le opzioni di ThunderAI</h3>
+<p>
+    In Thunderbird, clicca sul menu ThunderAI e seleziona <strong>Options</strong>, oppure vai su<br>
+    <strong>Strumenti → Componenti aggiuntivi e temi → ThunderAI → Preferenze</strong>.
+</p>
+
+<h3>2. Seleziona l'integrazione Google Gemini</h3>
+<p>Nella sezione <strong>Connection</strong>, scegli <strong>Google Gemini</strong> dal menu a tendina delle integrazioni.</p>
+
+<h3>3. Inserisci la tua chiave API</h3>
+<p>Incolla la tua chiave API nel campo <strong>API Key</strong>.</p>
+
+<h3>4. Scegli un modello</h3>
+<p>Seleziona il modello Gemini dal menu a tendina <strong>Model</strong>. Clicca sul pulsante per aggiornare l'elenco.</p>
+
+<h3>5. (Opzionale) Configura le System Instructions</h3>
+<p>
+    Le System Instructions ti permettono di impostare un contesto persistente per tutti i tuoi prompt. Ad esempio, puoi indicare al modello di rispondere sempre in modo formale, in una lingua specifica, o di assumere un determinato ruolo.<br>
+    Inserisci le istruzioni nel campo <strong>System Instructions</strong> nella pagina delle opzioni.
+</p>
+
+<h3>6. (Opzionale) Configura il thinkingBudget</h3>
+<p>L'opzione <strong>thinkingBudget</strong> controlla quanta elaborazione interna il modello esegue prima di rispondere. Un valore più alto può migliorare la qualità su compiti complessi, a scapito della velocità e della quota. Lascia il valore predefinito, a meno che tu non abbia esigenze specifiche.</p>
+
+<h3>7. Salva e testa</h3>
+<p>Clicca su <strong>Save</strong>. Apri una qualsiasi email, usa il menu ThunderAI ed esegui un prompt per verificare la connessione.</p>
+
+<h2>Suggerimenti</h2>
+<ul>
+    <li>Il livello gratuito si rinnova mensilmente ed è generalmente sufficiente per l'uso personale.</li>
+    <li>Le System Instructions sono particolarmente utili se hai bisogno di specificare regole generali per il tuo assistente email.</li>
+</ul>
+
+<h2>Risoluzione dei problemi</h2>
+
+<h3>Errore "API key not valid"</h3>
+<p>Verifica che la chiave sia stata copiata correttamente. Se necessario, rigenera una nuova chiave da AI Studio.</p>
+
+<h3>"Model not found" o elenco modelli vuoto</h3>
+<p>Assicurati che la tua chiave API abbia accesso ai modelli Gemini. Alcune chiavi create in progetti Google Cloud con restrizioni potrebbero avere accesso limitato ai modelli.</p>
+
+<br>
+<div style="text-align: center">
+    <a href="../">Torna alle guide</a> &nbsp;|&nbsp; <a href="../claude-api/">Avanti: Claude API →</a>
+</div>
+
+
+<style>
+table {
+    border-collapse: collapse;
+    margin: 10px 0;
+}
+th, td {
+    border: 1px solid #ccc;
+    padding: 7px 14px;
+    text-align: left;
+}
+h3 {
+    margin-bottom: 4px;
+}
+</style>

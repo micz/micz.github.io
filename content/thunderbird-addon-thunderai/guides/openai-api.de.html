@@ -1,0 +1,103 @@
++++
+Title = "\"ThunderAI\" Einrichtungsanleitung - OpenAI API"
+Type = "no-list"
+multilang = true
++++
+
+{{< page_title >}}
+
+<p>
+    Die Integration mit der <strong>OpenAI API</strong> verbindet ThunderAI direkt über einen API-Schlüssel mit den OpenAI-Servern.<br>
+    Im Vergleich zur Web-Oberfläche ist sie schneller, zuverlässiger und gibt Ihnen die explizite Kontrolle darüber, welches Modell Sie verwenden.
+</p>
+
+<table>
+    <tr>
+        <td><strong>API-Schlüssel erforderlich</strong></td>
+        <td>Ja</td>
+    </tr>
+    <tr>
+        <td><strong>Kostenlose Option</strong></td>
+        <td>Nein [Nutzungsbasierte Abrechnung]</td>
+    </tr>
+    <tr>
+        <td><strong>Geeignet für</strong></td>
+        <td>Stabiler, schneller Zugriff auf ChatGPT-Modelle</td>
+    </tr>
+</table>
+
+<br>
+
+<h2>Voraussetzungen</h2>
+<ul>
+    <li>Ein <a href="https://platform.openai.com" target="_blank">OpenAI-Konto</a> mit aktiviertem API-Zugang</li>
+    <li>Ein gültiger API-Schlüssel</li>
+    <li>Thunderbird mit installiertem ThunderAI</li>
+</ul>
+<p><em>Hinweis: Die Nutzung der OpenAI API wird separat von einem ChatGPT-Abonnement abgerechnet. Auch wenn Sie ChatGPT Plus haben, müssen Sie Ihrem API-Konto dennoch Guthaben hinzufügen.</em></p>
+
+<h2>API-Schlüssel erhalten</h2>
+<ol>
+    <li>Gehen Sie zu <a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com/api-keys</a></li>
+    <li>Klicken Sie auf <strong>Create new secret key</strong></li>
+    <li>Geben Sie ihm einen Namen (z.&nbsp;B. „ThunderAI") und klicken Sie auf <strong>Create</strong></li>
+    <li>Kopieren Sie den Schlüssel sofort — er wird nicht noch einmal angezeigt</li>
+</ol>
+
+<h2>Einrichtung</h2>
+
+<h3>1. ThunderAI-Optionen öffnen</h3>
+<p>
+    Klicken Sie in Thunderbird auf das ThunderAI-Menü und wählen Sie <strong>Options</strong>, oder gehen Sie zu<br>
+    <strong>Extras → Add-ons und Themes → ThunderAI → Einstellungen</strong>.
+</p>
+
+<h3>2. OpenAI API-Integration auswählen</h3>
+<p>Wählen Sie im Bereich <strong>Connection</strong> die Option <strong>OpenAI API</strong> aus dem Integrations-Dropdown.</p>
+
+<h3>3. API-Schlüssel eingeben</h3>
+<p>Fügen Sie Ihren API-Schlüssel in das Feld <strong>API Key</strong> ein. Der Schlüssel wird lokal in Thunderbird gespeichert und niemals an andere Server als die von OpenAI gesendet.</p>
+
+<h3>4. Modell auswählen</h3>
+<p>Wählen Sie das gewünschte Modell aus dem Dropdown <strong>Model</strong>. Klicken Sie auf die Schaltfläche, um die Liste zu aktualisieren.</p>
+
+<h3>5. Speichern und testen</h3>
+<p>Klicken Sie auf <strong>Save</strong>. Öffnen Sie dann eine beliebige E-Mail, verwenden Sie das ThunderAI-Menü und führen Sie einen Prompt aus, um zu überprüfen, dass alles funktioniert.</p>
+
+<h2>Tipps</h2>
+<ul>
+    <li>Die API-Nutzung wird in Tokens gemessen. E-Mails sind in der Regel kurz, daher sind die Kosten meist sehr gering. Überprüfen Sie Ihre Nutzung unter <a href="https://platform.openai.com/usage" target="_blank">platform.openai.com/usage</a>.</li>
+    <li>OpenAI fügt regelmäßig neue Modelle hinzu. Aktualisieren Sie die Modellliste in den ThunderAI-Optionen, um die neuesten verfügbaren zu sehen.</li>
+</ul>
+
+<h2>Fehlerbehebung</h2>
+
+<h3>Fehler „Invalid API key"</h3>
+<p>Prüfen Sie, ob der Schlüssel korrekt kopiert wurde — es sollten keine zusätzlichen Leerzeichen vorhanden sein. Falls der Schlüssel weiterhin fehlschlägt, generieren Sie einen neuen über die OpenAI-Plattform.</p>
+
+<h3>Fehler „You exceeded your current quota"</h3>
+<p>Ihr OpenAI API-Konto hat kein Guthaben mehr. Fügen Sie weiteres Guthaben unter <a href="https://platform.openai.com/settings/organization/billing" target="_blank">platform.openai.com/settings/organization/billing</a> hinzu.</p>
+
+<h3>Keine Modelle im Dropdown sichtbar</h3>
+<p>Stellen Sie sicher, dass Ihr API-Schlüssel gespeichert und gültig ist. Wenn das Problem weiterhin besteht, prüfen Sie Ihre Internetverbindung.</p>
+
+<br>
+<div style="text-align: center">
+    <a href="../">Zurück zu den Anleitungen</a> &nbsp;|&nbsp; <a href="../google-gemini/">Weiter: Google Gemini →</a>
+</div>
+
+
+<style>
+table {
+    border-collapse: collapse;
+    margin: 10px 0;
+}
+th, td {
+    border: 1px solid #ccc;
+    padding: 7px 14px;
+    text-align: left;
+}
+h3 {
+    margin-bottom: 4px;
+}
+</style>

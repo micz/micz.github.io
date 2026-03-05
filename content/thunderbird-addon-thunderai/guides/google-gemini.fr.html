@@ -1,0 +1,109 @@
++++
+Title = "Guide de configuration pour \"ThunderAI\" - Google Gemini"
+Type = "no-list"
+multilang = true
++++
+
+{{< page_title >}}
+
+<p>
+    L'intégration <strong>Google Gemini</strong> connecte ThunderAI aux modèles AI Gemini de Google via l'API Gemini.<br>
+    Elle inclut la prise en charge d'options avancées telles que les <strong>System Instructions</strong> et le <strong>thinkingBudget</strong>, utiles pour les utilisateurs qui souhaitent un contrôle plus fin du comportement du modèle.
+</p>
+
+<table>
+    <tr>
+        <td><strong>Clé API requise</strong></td>
+        <td>Oui</td>
+    </tr>
+    <tr>
+        <td><strong>Option gratuite</strong></td>
+        <td>Oui [Niveau gratuit généreux disponible]</td>
+    </tr>
+    <tr>
+        <td><strong>Idéal pour</strong></td>
+        <td>Les utilisateurs de l'écosystème Google ou souhaitant une option API gratuite</td>
+    </tr>
+</table>
+
+<br>
+
+<h2>Prérequis</h2>
+<ul>
+    <li>Un <a href="https://accounts.google.com" target="_blank">compte Google</a></li>
+    <li>Une clé Gemini API (niveau gratuit disponible)</li>
+    <li>Thunderbird avec ThunderAI installé</li>
+</ul>
+
+<h2>Obtenir une clé API</h2>
+<ol>
+    <li>Accédez à <a href="https://aistudio.google.com/apikey" target="_blank">aistudio.google.com/apikey</a></li>
+    <li>Cliquez sur <strong>Create API key</strong></li>
+    <li>Sélectionnez un projet Google Cloud existant ou créez-en un nouveau</li>
+    <li>Copiez la clé API générée</li>
+</ol>
+<p><em>L'API Gemini propose un niveau gratuit avec des limites généreuses, adapté à un usage personnel. Des niveaux payants sont disponibles si vous avez besoin d'un débit plus élevé.</em></p>
+
+<h2>Configuration</h2>
+
+<h3>1. Ouvrir les options de ThunderAI</h3>
+<p>
+    Dans Thunderbird, cliquez sur le menu ThunderAI et sélectionnez <strong>Options</strong>, ou accédez à<br>
+    <strong>Outils → Modules complémentaires et thèmes → ThunderAI → Préférences</strong>.
+</p>
+
+<h3>2. Sélectionner l'intégration Google Gemini</h3>
+<p>Dans la section <strong>Connection</strong>, choisissez <strong>Google Gemini</strong> dans le menu déroulant des intégrations.</p>
+
+<h3>3. Saisir votre clé API</h3>
+<p>Collez votre clé API dans le champ <strong>API Key</strong>.</p>
+
+<h3>4. Choisir un modèle</h3>
+<p>Sélectionnez le modèle Gemini dans le menu déroulant <strong>Model</strong>. Cliquez sur le bouton pour actualiser la liste.</p>
+
+<h3>5. (Optionnel) Configurer les System Instructions</h3>
+<p>
+    Les System Instructions vous permettent de définir un contexte persistant pour tous vos prompts. Par exemple, demander au modèle de toujours répondre formellement, dans une langue spécifique, ou d'adopter un certain rôle.<br>
+    Saisissez vos instructions dans le champ <strong>System Instructions</strong> sur la page des options.
+</p>
+
+<h3>6. (Optionnel) Configurer le thinkingBudget</h3>
+<p>L'option <strong>thinkingBudget</strong> contrôle la quantité de raisonnement interne que le modèle effectue avant de répondre. Une valeur plus élevée peut améliorer la qualité sur des tâches complexes au détriment de la vitesse et du quota. Laissez la valeur par défaut sauf si vous avez des besoins spécifiques.</p>
+
+<h3>7. Enregistrer et tester</h3>
+<p>Cliquez sur <strong>Save</strong>. Ouvrez n'importe quel e-mail, utilisez le menu ThunderAI et exécutez un prompt pour vérifier la connexion.</p>
+
+<h2>Conseils</h2>
+<ul>
+    <li>Le niveau gratuit se renouvelle mensuellement et est généralement suffisant pour un usage personnel.</li>
+    <li>Les System Instructions sont particulièrement utiles si vous devez spécifier des règles générales pour votre assistant e-mail.</li>
+</ul>
+
+<h2>Dépannage</h2>
+
+<h3>Erreur «&nbsp;API key not valid&nbsp;»</h3>
+<p>Vérifiez que la clé a été copiée correctement. Si nécessaire, régénérez une nouvelle clé depuis AI Studio.</p>
+
+<h3>«&nbsp;Model not found&nbsp;» ou liste de modèles vide</h3>
+<p>Assurez-vous que votre clé API a accès aux modèles Gemini. Certaines clés créées dans des projets Google Cloud restreints peuvent avoir un accès limité aux modèles.</p>
+
+<br>
+<div style="text-align: center">
+    <a href="../">Retour aux guides</a> &nbsp;|&nbsp; <a href="../claude-api/">Suivant&nbsp;: Claude API →</a>
+</div>
+
+
+<style>
+table {
+    border-collapse: collapse;
+    margin: 10px 0;
+}
+th, td {
+    border: 1px solid #ccc;
+    padding: 7px 14px;
+    text-align: left;
+}
+h3 {
+    margin-bottom: 4px;
+}
+</style>

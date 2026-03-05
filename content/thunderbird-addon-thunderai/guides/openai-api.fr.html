@@ -1,0 +1,103 @@
++++
+Title = "Guide de configuration pour \"ThunderAI\" - OpenAI API"
+Type = "no-list"
+multilang = true
++++
+
+{{< page_title >}}
+
+<p>
+    L'intégration <strong>OpenAI API</strong> connecte ThunderAI directement aux serveurs d'OpenAI via une clé API.<br>
+    Par rapport à l'interface web, elle est plus rapide, plus fiable et vous donne un contrôle explicite sur le modèle utilisé.
+</p>
+
+<table>
+    <tr>
+        <td><strong>Clé API requise</strong></td>
+        <td>Oui</td>
+    </tr>
+    <tr>
+        <td><strong>Option gratuite</strong></td>
+        <td>Non [Facturation à l'usage]</td>
+    </tr>
+    <tr>
+        <td><strong>Idéal pour</strong></td>
+        <td>Accès stable et rapide aux modèles ChatGPT</td>
+    </tr>
+</table>
+
+<br>
+
+<h2>Prérequis</h2>
+<ul>
+    <li>Un <a href="https://platform.openai.com" target="_blank">compte OpenAI</a> avec accès à l'API activé</li>
+    <li>Une clé API valide</li>
+    <li>Thunderbird avec ThunderAI installé</li>
+</ul>
+<p><em>Note&nbsp;: l'utilisation de l'API OpenAI est facturée séparément d'un abonnement ChatGPT. Même si vous avez ChatGPT Plus, vous devez quand même ajouter des crédits à votre compte API.</em></p>
+
+<h2>Obtenir une clé API</h2>
+<ol>
+    <li>Accédez à <a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com/api-keys</a></li>
+    <li>Cliquez sur <strong>Create new secret key</strong></li>
+    <li>Donnez-lui un nom (ex.&nbsp;: «&nbsp;ThunderAI&nbsp;») et cliquez sur <strong>Create</strong></li>
+    <li>Copiez la clé immédiatement, elle ne sera plus affichée</li>
+</ol>
+
+<h2>Configuration</h2>
+
+<h3>1. Ouvrir les options de ThunderAI</h3>
+<p>
+    Dans Thunderbird, cliquez sur le menu ThunderAI et sélectionnez <strong>Options</strong>, ou accédez à<br>
+    <strong>Outils → Modules complémentaires et thèmes → ThunderAI → Préférences</strong>.
+</p>
+
+<h3>2. Sélectionner l'intégration OpenAI API</h3>
+<p>Dans la section <strong>Connection</strong>, choisissez <strong>OpenAI API</strong> dans le menu déroulant des intégrations.</p>
+
+<h3>3. Saisir votre clé API</h3>
+<p>Collez votre clé API dans le champ <strong>API Key</strong>. La clé est stockée localement dans Thunderbird et n'est jamais envoyée ailleurs qu'aux serveurs d'OpenAI.</p>
+
+<h3>4. Choisir un modèle</h3>
+<p>Sélectionnez le modèle que vous souhaitez utiliser dans le menu déroulant <strong>Model</strong>. Cliquez sur le bouton pour actualiser la liste.</p>
+
+<h3>5. Enregistrer et tester</h3>
+<p>Cliquez sur <strong>Save</strong>. Ouvrez ensuite n'importe quel e-mail, utilisez le menu ThunderAI et exécutez un prompt pour vérifier que tout fonctionne.</p>
+
+<h2>Conseils</h2>
+<ul>
+    <li>L'utilisation de l'API est mesurée en tokens. Les e-mails sont généralement courts, donc les coûts sont habituellement très faibles. Vérifiez votre utilisation sur <a href="https://platform.openai.com/usage" target="_blank">platform.openai.com/usage</a>.</li>
+    <li>OpenAI ajoute régulièrement de nouveaux modèles. Actualisez la liste des modèles dans les options ThunderAI pour voir les derniers disponibles.</li>
+</ul>
+
+<h2>Dépannage</h2>
+
+<h3>Erreur «&nbsp;Invalid API key&nbsp;»</h3>
+<p>Vérifiez que vous avez bien copié la clé — il ne doit pas y avoir d'espaces supplémentaires. Si la clé échoue encore, générez-en une nouvelle depuis la plateforme OpenAI.</p>
+
+<h3>Erreur «&nbsp;You exceeded your current quota&nbsp;»</h3>
+<p>Votre compte API OpenAI n'a plus de crédits. Ajoutez-en sur <a href="https://platform.openai.com/settings/organization/billing" target="_blank">platform.openai.com/settings/organization/billing</a>.</p>
+
+<h3>Aucun modèle n'apparaît dans le menu déroulant</h3>
+<p>Assurez-vous que votre clé API est enregistrée et valide. Si le problème persiste, vérifiez votre connexion internet.</p>
+
+<br>
+<div style="text-align: center">
+    <a href="../">Retour aux guides</a> &nbsp;|&nbsp; <a href="../google-gemini/">Suivant&nbsp;: Google Gemini →</a>
+</div>
+
+
+<style>
+table {
+    border-collapse: collapse;
+    margin: 10px 0;
+}
+th, td {
+    border: 1px solid #ccc;
+    padding: 7px 14px;
+    text-align: left;
+}
+h3 {
+    margin-bottom: 4px;
+}
+</style>
