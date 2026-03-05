@@ -1,0 +1,126 @@
++++
+Title = "Tutoriel \"ThunderAI\" - Créez votre premier prompt personnalisé"
+Type = "no-list"
+multilang = true
++++
+
+{{< page_title >}}
+
+<p>
+    Dans ce tutoriel, vous allez construire un prompt personnalisé complet et fonctionnel à partir de zéro.<br>
+    L'objectif est un prompt qui <strong>rédige une réponse formelle</strong> à un e-mail, adressée à la bonne personne, écrite avec un ton que vous définissez sur le moment, et signée avec votre nom.<br>
+    Nous combinerons un <a href="../../../custom-prompts/" target="_blank">prompt personnalisé</a>, des <a href="../../../data-placeholders/" target="_blank">espaces réservés de données</a> standard et un espace réservé de données personnalisé.
+</p>
+<p>À la fin, vous saurez comment les trois éléments fonctionnent ensemble et vous pourrez appliquer la même approche à n'importe quel prompt que vous souhaitez créer.</p>
+
+<h2 class="tutorial">Ce que nous allons construire</h2>
+<p>Le prompt terminé :</p>
+<ol>
+    <li>Adressera la réponse à l'expéditeur original par son nom, extrait automatiquement de l'e-mail.</li>
+    <li>Vous demandera un <strong>ton</strong> (par ex. « formel », « amical », « concis ») à chaque utilisation.</li>
+    <li>Signera la réponse avec votre nom, enregistré une seule fois comme espace réservé de données personnalisé.</li>
+</ol>
+<p>Le texte final du prompt ressemblera à ceci :</p>
+<pre class="tutorial">Write a reply to the following email.
+Address the reply to: {%author%}
+Tone: {%additional_text:tone%}
+Sign the reply with: {%thunderai_my_name%}
+
+{%mail_text_body%}</pre>
+
+<h2 class="tutorial">Étape 1 — Créez un espace réservé de données personnalisé pour votre nom</h2>
+<p>
+    Commencez par enregistrer votre nom comme espace réservé réutilisable, afin de ne pas avoir à le saisir dans chaque prompt que vous créez.<br>
+    Ouvrez les <strong>Options de ThunderAI</strong> et cliquez sur le bouton
+    <img src="{{< base_url >}}images/thunderai/custom-data-placeholders-button.png" style="display:inline;margin:0;position:relative;top:0.25em;"/>
+    pour ouvrir l'onglet des espaces réservés de données personnalisés.
+</p>
+<p>Ajoutez un nouvel espace réservé avec ces valeurs :</p>
+<ul>
+    <li><strong>ID</strong> : <code>my_name</code> — Cela devient <code>{%thunderai_my_name%}</code> dans vos prompts.</li>
+    <li><strong>Name</strong> : <code>My Name</code> — Un nom descriptif qui vous est utile.</li>
+    <li><strong>Data Placeholder Text</strong> : votre nom complet, par ex. <code>Jean Dupont</code>.</li>
+    <li><strong>Usable in prompts added to menu</strong> : <code>Composing an email</code> — Nous en avons besoin uniquement lors de la composition d'un e-mail.</li>
+</ul>
+
+<div class="img_center">
+    <img src="{{< base_url >}}images/thunderai/tutorial/thunderai_tutorial_custom_data_placeholder.png" />
+</div>
+
+<p>Sauvegardez-le. Vous pouvez maintenant utiliser <code>{%thunderai_my_name%}</code> dans n'importe quel prompt et ThunderAI le remplacera automatiquement par votre nom.</p>
+
+<h2 class="tutorial">Étape 2 — Créez le prompt personnalisé</h2>
+<p>Allez dans l'onglet <strong>Custom Prompts</strong> des Options de ThunderAI et ajoutez un nouveau prompt.</p>
+
+<p>Remplissez les champs comme suit :</p>
+<ul>
+    <li><strong>ID</strong> : <code>formal_reply</code></li>
+    <li><strong>Name</strong> : <code>Rédiger une réponse...</code> — Le nom apparaîtra dans le menu ThunderAI. Les <code>...</code> sont une convention utile pour signaler que le prompt demandera une saisie avant de s'exécuter.</li>
+    <li><strong>Prompt Text</strong> : copiez le prompt ci-dessous.
+        <pre class="tutorial">Write a reply to the following email.
+Address the reply to: {%author%}
+Tone: {%additional_text:tone%}
+Sign the reply with: {%thunderai_my_name%}
+
+{%mail_text_body%}</pre>
+    </li>
+</ul>
+<p>Une note sur les espaces réservés utilisés :</p>
+<ul>
+    <li><code>{%author%}</code> — Un espace réservé standard qui insère le nom et l'adresse e-mail de l'expéditeur depuis l'en-tête de l'e-mail.</li>
+    <li><code>{%additional_text:tone%}</code> — Un espace réservé de saisie utilisateur : ThunderAI vous demandera de saisir le ton à chaque exécution de ce prompt. L'ID <code>tone</code> est l'étiquette affichée dans le champ de saisie.</li>
+    <li><code>{%thunderai_my_name%}</code> — L'espace réservé de données personnalisé créé à l'Étape 1.</li>
+    <li><code>{%mail_text_body%}</code> — Le corps complet de l'e-mail, pour que l'IA dispose du contexte nécessaire.</li>
+</ul>
+
+<h2 class="tutorial">Étape 3 — Configurez les paramètres du prompt</h2>
+<p>Toujours dans le formulaire du nouveau prompt, définissez les options suivantes :</p>
+<ul>
+    <li><strong>Add to menu</strong> : <em>Reading an email</em> — Vous souhaitez répondre aux e-mails reçus, pas utiliser ceci lors de la composition.</li>
+    <li><strong>Action</strong> : <em>Do reply</em> — Cela ouvrira une fenêtre de composition pré-remplie avec le brouillon de l'IA.</li>
+    <li><strong>Ask for additional text</strong> : activez cette option — Elle est nécessaire pour que l'espace réservé <code>{%additional_text:tone%}</code> fonctionne.</li>
+    <li><strong>Always add the signature</strong> : laissez cette option désactivée — Puisque nous ajoutons déjà le nom via le prompt lui-même. Activez-la si vous souhaitez que la signature ThunderAI, définie dans les préférences, soit également ajoutée.</li>
+</ul>
+
+<div class="img_center">
+    <img src="{{< base_url >}}images/thunderai/tutorial/thunderai_tutorial_customprompt.png" />
+</div>
+
+<p>En cliquant sur <strong>Show additional properties</strong>, vous pouvez également définir des configurations spécifiques pour les API ou l'interface web ChatGPT (comme un modèle spécifique ou un Custom GPT) qui s'appliqueront uniquement à ce prompt.</p>
+
+<p>Ajoutez le prompt et cliquez sur le bouton <strong>Save All</strong>.</p>
+
+<h2 class="tutorial">Étape 4 — Essayez-le</h2>
+<ol>
+    <li>Ouvrez n'importe quel e-mail reçu dans Thunderbird.</li>
+    <li>Ouvrez le menu ThunderAI et sélectionnez <strong>Rédiger une réponse...</strong>
+        <div class="img_center">
+            <img src="{{< base_url >}}images/thunderai/tutorial/thunderai_tutorial_menu.png" />
+        </div>
+    </li>
+    <li>ThunderAI affichera un champ de saisie intitulé <strong>tone</strong> : saisissez quelque chose comme <code>formel et concis</code> et confirmez.
+        <div class="img_center">
+            <img src="{{< base_url >}}images/thunderai/tutorial/thunderai_tutorial_additional_text.png" />
+        </div>
+    </li>
+    <li>Le prompt est envoyé à l'IA avec tous les espaces réservés résolus.</li>
+    <li>Après la réponse de l'IA, cliquez sur le bouton <strong>Use this answer</strong> pour importer le texte dans une nouvelle fenêtre de composition.
+        <div class="img_center">
+            <img src="{{< base_url >}}images/thunderai/tutorial/thunderai_tutorial_reply_button.png" />
+        </div>
+    </li>
+</ol>
+
+<h2 class="tutorial">Quoi essayer ensuite</h2>
+<p>Maintenant que vous savez comment les éléments s'assemblent, voici quelques pistes à explorer :</p>
+<ul>
+    <li><strong>Ajoutez d'autres espaces réservés personnalisés</strong> — Enregistrez votre titre de poste, le nom de votre entreprise ou une clause de non-responsabilité standard, et réutilisez-les dans tous vos prompts.</li>
+    <li><strong>Ajoutez d'autres champs de saisie</strong> — Vous pouvez avoir plusieurs espaces réservés <code>{%additional_text:&lt;id&gt;%}</code> dans le même prompt, chacun avec un ID différent. Chacun devient un champ de saisie distinct.</li>
+    <li><strong>Activez le visualiseur de différences</strong> — Si vous créez un prompt de correction ou de réécriture avec l'action <em>Substitute the original text</em>, l'activation du visualiseur de différences vous permet d'examiner les modifications avant de les accepter.</li>
+</ul>
+
+<br>
+<div style="text-align: center">
+    <a href="../../../thunderbird-addon-thunderai/guides/">Retour aux guides</a><br>
+    <a href="../../../thunderbird-addon-thunderai/">Retour à la page de l'extension</a>
+</div>
