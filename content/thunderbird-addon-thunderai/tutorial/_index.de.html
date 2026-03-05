@@ -1,0 +1,126 @@
++++
+Title = "\"ThunderAI\" Tutorial - Erstellen Sie Ihren ersten benutzerdefinierten Prompt"
+Type = "no-list"
+multilang = true
++++
+
+{{< page_title >}}
+
+<p>
+    In diesem Tutorial erstellen Sie von Grund auf einen vollständigen, funktionierenden benutzerdefinierten Prompt.<br>
+    Das Ziel ist ein Prompt, der <strong>eine formelle Antwort</strong> auf eine E-Mail verfasst, die an die richtige Person adressiert ist, in einem Ton geschrieben ist, den Sie im Moment festlegen, und mit Ihrem Namen unterschrieben ist.<br>
+    Wir kombinieren einen <a href="../../../custom-prompts/" target="_blank">benutzerdefinierten Prompt</a>, standardmäßige <a href="../../../data-placeholders/" target="_blank">Datenplatzhalter</a> und einen benutzerdefinierten Datenplatzhalter.
+</p>
+<p>Am Ende werden Sie wissen, wie alle drei Teile zusammenarbeiten, und Sie können denselben Ansatz auf jeden Prompt anwenden, den Sie erstellen möchten.</p>
+
+<h2 class="tutorial">Was wir erstellen</h2>
+<p>Der fertige Prompt wird:</p>
+<ol>
+    <li>Die Antwort an den ursprünglichen Absender namentlich adressieren, automatisch aus der E-Mail entnommen.</li>
+    <li>Jedes Mal, wenn Sie ihn verwenden, nach einem <strong>Ton</strong> fragen (z.&nbsp;B. „formell", „freundlich", „knapp").</li>
+    <li>Die Antwort mit Ihrem Namen unterzeichnen, der einmal als benutzerdefinierter Datenplatzhalter gespeichert wurde.</li>
+</ol>
+<p>Der endgültige Prompttext sieht in etwa so aus:</p>
+<pre class="tutorial">Write a reply to the following email.
+Address the reply to: {%author%}
+Tone: {%additional_text:tone%}
+Sign the reply with: {%thunderai_my_name%}
+
+{%mail_text_body%}</pre>
+
+<h2 class="tutorial">Schritt 1 — Erstellen Sie einen benutzerdefinierten Datenplatzhalter für Ihren Namen</h2>
+<p>
+    Speichern Sie zunächst Ihren Namen als wiederverwendbaren Platzhalter, damit Sie ihn nicht in jeden Prompt eingeben müssen.<br>
+    Öffnen Sie die <strong>ThunderAI-Optionen</strong> und klicken Sie auf die Schaltfläche
+    <img src="{{< base_url >}}images/thunderai/custom-data-placeholders-button.png" style="display:inline;margin:0;position:relative;top:0.25em;"/>
+    um den Tab für benutzerdefinierte Datenplatzhalter zu öffnen.
+</p>
+<p>Fügen Sie einen neuen Platzhalter mit diesen Werten hinzu:</p>
+<ul>
+    <li><strong>ID</strong>: <code>my_name</code> — Daraus wird <code>{%thunderai_my_name%}</code> in Ihren Prompts.</li>
+    <li><strong>Name</strong>: <code>My Name</code> — Ein beschreibender Name, der für Sie nützlich ist.</li>
+    <li><strong>Data Placeholder Text</strong>: Ihr vollständiger Name, z.&nbsp;B. <code>Max Mustermann</code>.</li>
+    <li><strong>Usable in prompts added to menu</strong>: <code>Composing an email</code> — Wir brauchen dies nur beim Verfassen einer E-Mail.</li>
+</ul>
+
+<div class="img_center">
+    <img src="{{< base_url >}}images/thunderai/tutorial/thunderai_tutorial_custom_data_placeholder.png" />
+</div>
+
+<p>Speichern Sie ihn. Sie können jetzt <code>{%thunderai_my_name%}</code> in jedem Prompt verwenden und ThunderAI ersetzt ihn automatisch durch Ihren Namen.</p>
+
+<h2 class="tutorial">Schritt 2 — Erstellen Sie den benutzerdefinierten Prompt</h2>
+<p>Gehen Sie in den ThunderAI-Optionen zum Tab <strong>Custom Prompts</strong> und fügen Sie einen neuen Prompt hinzu.</p>
+
+<p>Füllen Sie die Felder wie folgt aus:</p>
+<ul>
+    <li><strong>ID</strong>: <code>formal_reply</code></li>
+    <li><strong>Name</strong>: <code>Antwort verfassen...</code> — Der Name erscheint im ThunderAI-Menü. Die <code>...</code> sind eine nützliche Konvention, um anzuzeigen, dass der Prompt vor der Ausführung eine Eingabe verlangt.</li>
+    <li><strong>Prompt Text</strong>: Kopieren Sie den Prompt unten.
+        <pre class="tutorial">Write a reply to the following email.
+Address the reply to: {%author%}
+Tone: {%additional_text:tone%}
+Sign the reply with: {%thunderai_my_name%}
+
+{%mail_text_body%}</pre>
+    </li>
+</ul>
+<p>Ein Hinweis zu den verwendeten Platzhaltern:</p>
+<ul>
+    <li><code>{%author%}</code> — Ein Standardplatzhalter, der den Namen und die E-Mail-Adresse des Absenders aus dem E-Mail-Header einfügt.</li>
+    <li><code>{%additional_text:tone%}</code> — Ein Benutzereingabe-Platzhalter: ThunderAI fordert Sie jedes Mal, wenn Sie diesen Prompt ausführen, zur Eingabe des Tons auf. Die ID <code>tone</code> ist die Bezeichnung, die im Eingabefeld angezeigt wird.</li>
+    <li><code>{%thunderai_my_name%}</code> — Der in Schritt 1 erstellte benutzerdefinierte Datenplatzhalter.</li>
+    <li><code>{%mail_text_body%}</code> — Der vollständige Text der E-Mail, damit die KI den notwendigen Kontext hat.</li>
+</ul>
+
+<h2 class="tutorial">Schritt 3 — Konfigurieren Sie die Prompt-Einstellungen</h2>
+<p>Legen Sie im Formular des neuen Prompts die folgenden Optionen fest:</p>
+<ul>
+    <li><strong>Add to menu</strong>: <em>Reading an email</em> — Sie möchten auf empfangene E-Mails antworten, nicht diesen Prompt beim Verfassen verwenden.</li>
+    <li><strong>Action</strong>: <em>Do reply</em> — Dies öffnet ein Verfassen-Fenster, das bereits mit dem Entwurf der KI befüllt ist.</li>
+    <li><strong>Ask for additional text</strong>: aktivieren — Es ist erforderlich, damit der Platzhalter <code>{%additional_text:tone%}</code> funktioniert.</li>
+    <li><strong>Always add the signature</strong>: deaktiviert lassen — Da wir den Namen bereits über den Prompt selbst hinzufügen. Aktivieren Sie es, wenn Sie möchten, dass die in den Einstellungen definierte ThunderAI-Signatur ebenfalls hinzugefügt wird.</li>
+</ul>
+
+<div class="img_center">
+    <img src="{{< base_url >}}images/thunderai/tutorial/thunderai_tutorial_customprompt.png" />
+</div>
+
+<p>Durch Klicken auf <strong>Show additional properties</strong> können Sie auch spezifische Konfigurationen für die APIs oder die ChatGPT-Weboberfläche (wie ein bestimmtes Modell oder einen Custom GPT) festlegen, die nur für diesen Prompt gelten.</p>
+
+<p>Fügen Sie den Prompt hinzu und klicken Sie auf die Schaltfläche <strong>Save All</strong>.</p>
+
+<h2 class="tutorial">Schritt 4 — Probieren Sie es aus</h2>
+<ol>
+    <li>Öffnen Sie eine beliebige empfangene E-Mail in Thunderbird.</li>
+    <li>Öffnen Sie das ThunderAI-Menü und wählen Sie <strong>Antwort verfassen...</strong>
+        <div class="img_center">
+            <img src="{{< base_url >}}images/thunderai/tutorial/thunderai_tutorial_menu.png" />
+        </div>
+    </li>
+    <li>ThunderAI zeigt ein Eingabefeld mit der Bezeichnung <strong>tone</strong>: Geben Sie etwas wie <code>formell und prägnant</code> ein und bestätigen Sie.
+        <div class="img_center">
+            <img src="{{< base_url >}}images/thunderai/tutorial/thunderai_tutorial_additional_text.png" />
+        </div>
+    </li>
+    <li>Der Prompt wird mit allen aufgelösten Platzhaltern an die KI gesendet.</li>
+    <li>Nachdem die KI geantwortet hat, klicken Sie auf die Schaltfläche <strong>Use this answer</strong>, um den Text in ein neues Verfassen-Fenster zu importieren.
+        <div class="img_center">
+            <img src="{{< base_url >}}images/thunderai/tutorial/thunderai_tutorial_reply_button.png" />
+        </div>
+    </li>
+</ol>
+
+<h2 class="tutorial">Was Sie als Nächstes ausprobieren können</h2>
+<p>Jetzt, da Sie wissen, wie die Teile zusammenpassen, sind hier einige Richtungen zum Erkunden:</p>
+<ul>
+    <li><strong>Weitere benutzerdefinierte Platzhalter hinzufügen</strong> — Speichern Sie Ihre Berufsbezeichnung, den Firmennamen oder einen Standardhaftungsausschluss und verwenden Sie sie in allen Ihren Prompts wieder.</li>
+    <li><strong>Weitere Benutzereingabefelder hinzufügen</strong> — Sie können mehrere <code>{%additional_text:&lt;id&gt;%}</code>-Platzhalter im selben Prompt haben, jeder mit einer anderen ID. Jeder wird zu einem separaten Eingabefeld.</li>
+    <li><strong>Den Diff-Viewer aktivieren</strong> — Wenn Sie einen Korrekturlese- oder Umschreibe-Prompt mit der Aktion <em>Substitute the original text</em> erstellen, können Sie mit dem aktivierten Diff-Viewer Änderungen prüfen, bevor Sie sie übernehmen.</li>
+</ul>
+
+<br>
+<div style="text-align: center">
+    <a href="../../../thunderbird-addon-thunderai/guides/">Zurück zu den Anleitungen</a><br>
+    <a href="../../../thunderbird-addon-thunderai/">Zurück zur Erweiterungsseite</a>
+</div>
