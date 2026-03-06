@@ -18,10 +18,16 @@
         "credits": "Generated automatically"
     },
     {
+        "lang_name": "Dutch - Nederlands",
+        "lang_code": "nl",
+        "released": false,
+        "credits": "<a href=\"https://hosted.weblate.org/user/portefeuillesgevraagd/\" target=\"_blank\">Pieter de Bruin</a>"
+    },
+    {
         "lang_name": "Greek - Elliniká (Ελληνικά)",
         "lang_code": "el",
         "released": true,
-        "credits": "<a href=\"https://github.com/christoskaterini\" target=\"_blank\">ChristosK.</a>"
+        "credits": ""
     },
     {
         "lang_name": "Spanish - Español",
