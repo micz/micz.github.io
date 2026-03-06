@@ -1,0 +1,156 @@
++++
+Title = "\"ThunderAI\" Guía de configuración - OpenAI Compatible API"
+Type = "no-list"
+multilang = true
++++
+
+{{< page_title >}}
+
+<p>
+    La integración con la <strong>OpenAI Compatible API</strong> te permite conectar ThunderAI a cualquier servidor que siga el formato de la API de OpenAI.<br>
+    Esto incluye servidores locales como <strong>LM Studio</strong>, servicios alojados como <strong>DeepSeek</strong>, <strong>Grok</strong>, <strong>Mistral AI</strong>, <strong>OpenRouter</strong> y <strong>Perplexity</strong>, así como cualquier endpoint personalizado o autoalojado.
+</p>
+
+<table>
+    <tr>
+        <td><strong>Clave de API requerida</strong></td>
+        <td>Depende del servicio</td>
+    </tr>
+    <tr>
+        <td><strong>Opción gratuita</strong></td>
+        <td>Depende del servicio (los servidores locales son gratuitos)</td>
+    </tr>
+    <tr>
+        <td><strong>Ideal para</strong></td>
+        <td>Flexibilidad: servidores locales, proveedores alternativos, endpoints personalizados</td>
+    </tr>
+</table>
+
+<br>
+
+<h2>Configuraciones predefinidas</h2>
+<p>ThunderAI incluye configuraciones predefinidas para los servicios compatibles con OpenAI más populares. Si usas uno de ellos, selecciona la configuración predefinida y solo proporciona tu clave de API:</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>Configuración predefinida</th>
+            <th>Notas</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><strong>DeepSeek API</strong></td>
+            <td>Rápido y rentable, modelos de razonamiento potentes</td>
+        </tr>
+        <tr>
+            <td><strong>Grok API</strong></td>
+            <td>Los modelos Grok de xAI</td>
+        </tr>
+        <tr>
+            <td><strong>Mistral API</strong></td>
+            <td>Los modelos alojados de Mistral AI</td>
+        </tr>
+        <tr>
+            <td><strong>OpenRouter API</strong></td>
+            <td>Accede a muchos proveedores con una sola clave de API</td>
+        </tr>
+        <tr>
+            <td><strong>Perplexity API</strong></td>
+            <td>Incluye modelos con búsqueda web integrada</td>
+        </tr>
+    </tbody>
+</table>
+
+<br>
+
+<h2>Configuración</h2>
+
+<h3>1. Abre las Opciones de ThunderAI</h3>
+<p>
+    En Thunderbird, haz clic en el menú de ThunderAI y selecciona <strong>Options</strong>, o ve a<br>
+    <strong>Herramientas → Complementos y temas → ThunderAI → Preferencias</strong>.
+</p>
+
+<h3>2. Selecciona la integración OpenAI Compatible API</h3>
+<p>En la sección <strong>Connection</strong>, elige <strong>OpenAI Compatible API</strong> del menú desplegable de integración.</p>
+
+<h3>3a. Usar una configuración predefinida</h3>
+<p>Si tu proveedor tiene una configuración predefinida, selecciónala de la lista. La URL de la API se rellenará automáticamente. Introduce tu clave de API y pasa al paso 5.</p>
+
+<h3>3b. Configuración manual</h3>
+<p>Si tu proveedor no está en la lista de configuraciones predefinidas, configúralo manualmente:</p>
+<ul>
+    <li><strong>API URL</strong>: Introduce la URL base de tu servidor. Para LM Studio ejecutándose localmente, suele ser <code>http://localhost:1234/v1</code>. Para proveedores alojados, consulta su documentación.</li>
+    <li><strong>Remove "v1" from URL</strong>: Actívalo si la documentación de tu proveedor te indica que uses la URL base sin el segmento <code>/v1</code>.</li>
+</ul>
+
+<h3>4. Introduce tu clave de API (si es necesario)</h3>
+<p>Los servidores locales como LM Studio generalmente no requieren una clave de API, por lo que puedes dejar este campo vacío o introducir cualquier valor de marcador. Los servicios alojados requerirán una clave válida.</p>
+
+<h3>5. Elige un modelo</h3>
+<p>Selecciona tu modelo del menú desplegable <strong>Model</strong>. Usa el botón para actualizar la lista.</p>
+<p>Si el servidor no expone un endpoint de lista de modelos, activa la opción <strong>Set model name manually</strong> y escribe el nombre del modelo tal como lo especifica tu proveedor.</p>
+
+<h3>6. Guarda y prueba</h3>
+<p>Haz clic en <strong>Save</strong>. Abre cualquier correo electrónico, usa el menú de ThunderAI y ejecuta un prompt para verificar que todo funciona.</p>
+
+<h2>LM Studio — configuración rápida</h2>
+<p><a href="https://lmstudio.ai" target="_blank">LM Studio</a> proporciona un servidor local con una API compatible con OpenAI y una interfaz gráfica para descargar y gestionar modelos.</p>
+<ol>
+    <li>Descarga e instala LM Studio desde <a href="https://lmstudio.ai" target="_blank">lmstudio.ai</a></li>
+    <li>En LM Studio, ve a la pestaña <strong>Local Server</strong> e inicia el servidor</li>
+    <li>Descarga un modelo de tu elección desde el navegador de modelos de LM Studio</li>
+    <li>En ThunderAI, establece la URL de la API como <code>http://localhost:1234/v1</code>, deja la clave de API vacía y selecciona tu modelo</li>
+</ol>
+
+<h2>Consejos</h2>
+<ul>
+    <li><strong>OpenRouter</strong> es una excelente opción si quieres acceder a muchos modelos diferentes (incluyendo Claude, Gemini y Mistral) con una sola clave de API y cuenta de facturación.</li>
+    <li>Al usar servidores locales, el rendimiento depende de tu hardware — consulta la <a href="../ollama/">guía de Ollama</a> para consejos sobre hardware.</li>
+    <li>Si las solicitudes fallan con un error CORS y no puedes añadir la configuración adecuada en el servidor, usa el permiso opcional <strong>"All URLs"</strong> en los ajustes de ThunderAI como solución alternativa.</li>
+</ul>
+
+<h2>Solución de problemas</h2>
+
+<h3>"Connection refused" en un servidor local</h3>
+<p>Asegúrate de que el servidor local (p. ej. LM Studio) está realmente en ejecución y de que la URL del servidor en ThunderAI coincide con el puerto en el que está escuchando.</p>
+
+<h3>Error "401 Unauthorized"</h3>
+<p>Comprueba tu clave de API. Para servidores locales que no requieren clave, prueba introducir un valor ficticio como <code>none</code>. Algunos servidores rechazan los campos de clave vacíos.</p>
+
+<h3>Lista de modelos vacía</h3>
+<p>Activa la opción <strong>Set model name manually</strong> y escribe el nombre del modelo tal como lo especifica tu proveedor o la documentación del servidor.</p>
+
+<h3>El "v1" en la URL provoca errores</h3>
+<p>Activa la opción <strong>Remove "v1" from URL</strong> en los ajustes de ThunderAI.</p>
+
+<br>
+<div style="text-align: center">
+    <a href="../">Volver a las guías</a>
+</div>
+
+
+<style>
+table {
+    border-collapse: collapse;
+    margin: 10px 0;
+    width: 100%;
+}
+th, td {
+    border: 1px solid #ccc;
+    padding: 7px 14px;
+    text-align: left;
+}
+th {
+    font-weight: bold;
+}
+h3 {
+    margin-bottom: 4px;
+}
+pre {
+    margin: 5px;
+    padding: 10px;
+    border-radius: 9px;
+}
+</style>
