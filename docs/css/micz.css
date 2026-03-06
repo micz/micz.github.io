@@ -189,3 +189,22 @@ div.img_center{
   width: 100%;
   text-align: center;
 }
+.lang-switcher {
+    margin-bottom: 1em;
+    font-size: 0.9em;
+}
+.lang-switcher a {
+    margin-right: 0.75em;
+    color: var(--link-color);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+}
+.lang-switcher a:hover {
+    border-bottom-color: var(--link-color);
+}
+.lang-switcher a.current {
+    font-weight: bold;
+    color: var(--font-color);
+    cursor: default;
+    pointer-events: none;
+}
