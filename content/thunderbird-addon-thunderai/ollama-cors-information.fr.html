@@ -1,0 +1,152 @@
++++
+Title = "\"ThunderAI\" Thunderbird Addon - Informations CORS d'Ollama"
+Type = "no-list"
+multilang = true
++++
+
+{{< page_title >}}
+
+
+<p><br>La configuration CORS d'Ollama dépend de votre système d'exploitation et de la façon dont vous exécutez le serveur local.<br>
+    Sur cette page, vous trouverez toutes les informations recueillies avec l'aide des utilisateurs de ThunderAI.<br>
+    Si vous souhaitez contribuer avec une nouvelle configuration, veuillez <a href="https://github.com/micz/ThunderAI/issues" target="_blank">soumettre un nouveau ticket</a>.<br><br>
+
+    Si vous ne pouvez pas configurer CORS sur le serveur ou n'y avez pas accès, vous pouvez désormais accorder la permission "Toutes les URLs" à ThunderAI pour éviter tout problème CORS.
+    <br>Utilisez le bouton correspondant sur la page des options, comme indiqué ci-dessous.<br><br>
+    <img src="{{< base_url >}}images/thunderai/ollama-cors-information/all_urls.png" class="img-full"><br></p>
+
+    <h2>Sommaire</h2>
+    <ul>
+        <li><a href="#docker_desktop">Docker Desktop</a></li>
+        <li><a href="#docker_commandline">Docker en ligne de commande</a></li>
+        <li><a href="#docker_compose">Docker Compose</a></li>
+        <li><a href="#windows">Ollama sous Windows</a></li>
+        <li><a href="#linux">Ollama sous Linux</a></li>
+        <li><a href="#macos">Ollama sous macOS</a></li>
+    </ul>
+<br>
+
+<h3 id="docker_desktop">Docker Desktop</h3>
+<table>
+    <tr style="vertical-align: top;">
+        <td class="top">Lors du démarrage d'un nouveau conteneur, ouvrez les "Paramètres optionnels" et ajoutez une "Variable d'environnement" avec les valeurs suivantes :
+            <ul>
+                <li>Variable : <code>OLLAMA_ORIGINS</code></li>
+                <li>Valeur : <code>moz-extension://*</code></li>
+            </ul>
+        </td>
+        <td><img src="{{< base_url >}}images/thunderai/ollama-cors-information/docker_desktop.png" class="img-full"></td>
+    </tr>
+</table>
+<hr>
+<h3 id="docker_commandline">Docker en ligne de commande</h3>
+<table>
+    <tr style="vertical-align: top;">
+        <td class="top">Lors du démarrage d'un nouveau conteneur, ajoutez cette option à la commande docker :
+            <br><pre>-e 'OLLAMA_ORIGINS=moz-extension://*'</pre>
+        </td>
+    </tr>
+</table>
+<hr>
+<h3 id="docker_compose">Docker Compose</h3>
+<p class="translate-credits">Merci à <a href="https://github.com/Amras2322" target="_blank">Amras2322</a></p>
+<table>
+    <tr style="vertical-align: top;">
+        <td class="top">Lors de la configuration du service Ollama, ajoutez l'option <code>OLLAMA_ORIGINS</code> dans la section <code>environment</code> du fichier docker-compose.yml :
+            <br><pre>services:
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+        [...]
+    environment:
+    - OLLAMA_ORIGINS=moz-extension://*</pre>
+        </td>
+    </tr>
+</table>
+<hr>
+<h3 id="windows">Ollama sous Windows</h3>
+<p class="translate-credits">Merci à <a href="https://github.com/actXc" target="_blank">actXc</a></p>
+<table>
+    <tr style="vertical-align: top;">
+        <td class="top">
+            <ol>
+                <li>Ouvrir les Paramètres Windows (touche Windows + I)</li>
+                <li>Rechercher "variables d'environnement"</li>
+                <li>Cliquer sur "Modifier les variables d'environnement système"</li>
+                <li>Dans la nouvelle fenêtre, cliquer sur "Variables d'environnement"</li>
+                <li>Sous "Variables système", cliquer sur "Nouveau"</li>
+                <li>Nom de la variable : <code>OLLAMA_ORIGINS</code></li>
+                <li>Valeur de la variable : <code>moz-extension://*</code></li>
+                <li>Confirmer avec "OK"</li>
+                <li>Redémarrer le PC</li>
+            </ol>
+        </td>
+    </tr>
+</table>
+<hr>
+<h3 id="linux">Ollama sous Linux</h3>
+<p class="translate-credits">Merci à <a href="https://github.com/lakonis" target="_blank">lakonis</a></p>
+<table>
+    <tr style="vertical-align: top;">
+        <td class="top">
+            <pre>
+### Édition de /etc/systemd/system/ollama.service.d/override.conf
+### Tout ce qui se trouve entre ici et le commentaire ci-dessous deviendra le contenu du fichier drop-in
+
+[Service]
+Environment="OLLAMA_ORIGINS=moz-extension://*"
+
+### Les modifications en dessous de ce commentaire seront ignorées
+[...]
+            </pre>
+<i style="font-size: 0.90em;">Testé sous Linux Manjaro</i>
+        </td>
+    </tr>
+</table>
+<hr>
+<h3 id="macos">Ollama sous macOS</h3>
+<p class="translate-credits">Merci à <a href="https://github.com/jatoko" target="_blank">jatoko</a></p>
+<table>
+    <tr style="vertical-align: top;">
+        <td class="top">
+            <ol>
+                <li>Ouvrir le terminal</li>
+                <li>Exécuter la commande suivante dans le terminal : <pre>launchctl setenv OLLAMA_ORIGINS "moz-extension://*"</pre></li>
+                <li>(Re)démarrer Ollama (par ex. quitter et relancer)</li>
+            </ol>
+        </td>
+    </tr>
+</table>
+
+
+
+<br>
+<div style="text-align: center"><a href="../">Retour à la page de l'addon</a></div>
+
+
+
+
+<style>
+table {
+  border: none;
+  border-collapse: collapse;
+}
+
+td {
+  border: none;
+}
+
+td.top{
+    padding-top: 0;
+}
+
+h3{
+    margin-bottom: 0;
+}
+
+pre{
+    margin: 5px;
+    padding: 10px;
+    border-radius: 9px;
+}
+</style>

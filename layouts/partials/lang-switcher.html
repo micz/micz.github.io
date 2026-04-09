@@ -1,10 +1,23 @@
 {{ if and .Params.multilang .Translations }}
+{{ $defaultLang := "" }}{{ range hugo.Sites }}{{ if .IsDefault }}{{ $defaultLang = .Language.Lang }}{{ end }}{{ end }}
 <div class="lang-switcher">
+  {{/* First: default language (English) */}}
+  {{ range .AllTranslations }}
+    {{ if eq .Language.Lang $defaultLang }}
+      <a href="{{ .Permalink }}" hreflang="{{ .Language.Lang }}"
+        {{- if eq .Language.Lang $.Language.Lang }} class="current"{{ end }}>
+        {{- with .Language.Params.flag }}{{ . }}{{ else }}{{ .Language.Lang }}{{ end }} {{ .Language.LanguageName -}}
+      </a>
+    {{ end }}
+  {{ end }}
+  {{/* Then: other languages in alphabetical order */}}
   {{ range sort .AllTranslations "Language.LanguageName" }}
-    <a href="{{ .Permalink }}" hreflang="{{ .Language.Lang }}"
-      {{- if eq .Language.Lang $.Language.Lang }} class="current"{{ end }}>
-      {{- with .Language.Params.flag }}{{ . }}{{ else }}{{ $.Language.Lang }}{{ end }} {{ .Language.LanguageName -}}
-    </a>
+    {{ if ne .Language.Lang $defaultLang }}
+      <a href="{{ .Permalink }}" hreflang="{{ .Language.Lang }}"
+        {{- if eq .Language.Lang $.Language.Lang }} class="current"{{ end }}>
+        {{- with .Language.Params.flag }}{{ . }}{{ else }}{{ .Language.Lang }}{{ end }} {{ .Language.LanguageName -}}
+      </a>
+    {{ end }}
   {{ end }}
 </div>
 {{ end }}
