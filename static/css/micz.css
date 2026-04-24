@@ -115,9 +115,11 @@ div.miczit_spacer {
       color: #28a428;
     }
     .sup_comment{
-      vertical-align: super;
-      font-size: 0.75em;
+      font-size: 0.8em;
       font-style: italic;
+    }
+    .perm_desc{
+      font-size: 0.9em;
     }
     .translate-credits{
       font-size: 0.65em;
