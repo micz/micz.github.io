@@ -1,9 +1,22 @@
 {{ $jsonPath := "content/thunderbird-addon-thunderai/permissions.json" }}
 {{ $data := os.ReadFile $jsonPath | transform.Unmarshal }}
 
+{{ $active := where $data "dismissed" false }}
+{{ $mandatory := where $active "optional" false }}
+{{ $optional := where $active "optional" true }}
+
 <ul>
-{{ range where $data "dismissed" false }}
-    <li>{{ if .optional }}<span class="sup_comment">[Optional]</span> {{ end }}<b>{{ .name }}</b>: {{ .description | safeHTML }}
+{{ range $mandatory }}
+    <li><b>{{ .name }}</b>: {{ .description | safeHTML }}
+    {{ if ne .version "" }} <span class="sup_comment">[From version {{ .version }}]</span>{{ end }}
+    </li>
+{{ end }}
+</ul>
+<br>
+<i>Optional permissions</i>
+<ul>
+{{ range $optional }}
+    <li><b>{{ .name }}</b>: {{ .description | safeHTML }}
     {{ if ne .version "" }}
         {{ if .optional_from_version }} <span class="sup_comment">[From version {{ .version }}, optional from version {{ .optional_from_version }}]</span>
         {{ else }} <span class="sup_comment">[From version {{ .version }}]</span>
