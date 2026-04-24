@@ -7,8 +7,8 @@
 
 <ul>
 {{ range $mandatory }}
-    <li><b>{{ .name }}</b>: {{ .description | safeHTML }}
-    {{ if ne .version "" }} <span class="sup_comment">[From version {{ .version }}]</span>{{ end }}
+    <li><b>{{ .name }}</b>{{ if ne .version "" }} <span class="sup_comment">[From version {{ .version }}]</span>{{ end }}<br>
+    {{ .description | safeHTML }}
     </li>
 {{ end }}
 </ul>
@@ -16,12 +16,13 @@
 <i>Optional permissions</i>
 <ul>
 {{ range $optional }}
-    <li><b>{{ .name }}</b>: {{ .description | safeHTML }}
+    <li><b>{{ .name }}</b>
     {{ if ne .version "" }}
         {{ if .optional_from_version }} <span class="sup_comment">[From version {{ .version }}, optional from version {{ .optional_from_version }}]</span>
         {{ else }} <span class="sup_comment">[From version {{ .version }}]</span>
         {{ end }}
-    {{ end }}
+    {{ end }}<br>
+    {{ .description | safeHTML }}
     </li>
 {{ end }}
 </ul>
@@ -29,6 +30,7 @@
 <i>Removed permissions</i>
 <ul style="font-size: 0.90em;">
 {{ range where $data "dismissed" true }}
-    <li><span class="sup_comment">[Removed in version {{ .version }}]</span> <b style="text-decoration: line-through;">{{ .name }}</b>: {{ .description | safeHTML }}{{ if .note }} <i>{{ .note }}</i>{{ end }}</li>
+    <li><b style="text-decoration: line-through;">{{ .name }}</b> <span class="sup_comment">[Removed in version {{ .version }}]</span><br>
+    {{ .description | safeHTML }}{{ if .note }} <i>{{ .note }}</i>{{ end }}</li>
 {{ end }}
 </ul>
