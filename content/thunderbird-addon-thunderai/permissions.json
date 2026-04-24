@@ -121,5 +121,13 @@
         "dismissed": true,
         "version": "2.1.0",
         "note": "In version 2.1.0 the fallback to the ChatGPT web interface was removed."
+    },
+    {
+        "id": "addressBooks",
+        "name": "Read and modify your address books and contacts",
+        "description": "This permission is required to skip specific email addresses when using the antispam filter. Your contacts and address books will not be modified, and no addresses are sent to the AI service. All processing happens locally within Thunderbird to determine which emails should bypass the AI antispam analysis.",
+        "optional": true,
+        "dismissed": false,
+        "version": "4.1.0"
     }
 ]
