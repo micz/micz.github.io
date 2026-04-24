@@ -1,0 +1,125 @@
+[
+    {
+        "id": "https://*.chatgpt.com/*",
+        "name": "Access your data for sites in the chatgpt.com domain",
+        "description": "Required to access the ChatGPT website using the web interface.",
+        "optional": true,
+        "dismissed": false,
+        "version": "2.0.5",
+        "optional_from_version": "3.4.0"
+    },
+    {
+        "id": "accountsRead",
+        "name": "See your mail accounts, their identities and their folders",
+        "description": "Necessary to choose the correct mail identity when replying to an email.",
+        "optional": false,
+        "dismissed": false,
+        "version": ""
+    },
+    {
+        "id": "compose",
+        "name": "Read and modify your email messages as you compose and send them",
+        "description": "Required to create a new email message or substitute the text the user has highlighted.",
+        "optional": false,
+        "dismissed": false,
+        "version": ""
+    },
+    {
+        "id": "downloads",
+        "name": "Download files and read and modify the browser's download history",
+        "description": "Needed for downloading the custom prompts export.",
+        "optional": false,
+        "dismissed": false,
+        "version": ""
+    },
+    {
+        "id": "messagesModify",
+        "name": "Read and modify your email messages as they are displayed to you",
+        "description": "Required to create a new email message or substitute the text the user has highlighted.",
+        "optional": false,
+        "dismissed": false,
+        "version": ""
+    },
+    {
+        "id": "messagesRead",
+        "name": "Read your email messages",
+        "description": "Required to create a new email message or substitute the text the user has highlighted.",
+        "optional": false,
+        "dismissed": false,
+        "version": ""
+    },
+    {
+        "id": "tabs",
+        "name": "Access browser tabs",
+        "description": "Required to create a new email message or substitute the text the user has highlighted.",
+        "optional": false,
+        "dismissed": false,
+        "version": ""
+    },
+    {
+        "id": "messagesTagsList",
+        "name": "List message tags",
+        "description": "Required to use the tags related <a href=\"../data-placeholders/\">data placeholders</a> and check if the tags received from the API are new or they have to be created, when using the \"Add tags\" option.",
+        "optional": false,
+        "dismissed": false,
+        "version": "3.0.0"
+    },
+    {
+        "id": "messagesTags",
+        "name": "Create, modify and delete message tags",
+        "description": "Required to create new tags when using the \"Add tags\" option.",
+        "optional": true,
+        "dismissed": false,
+        "version": "3.0.0"
+    },
+    {
+        "id": "messagesUpdate",
+        "name": "Change properties and tags of your email messages",
+        "description": "Required to assign tags to an email message when using the \"Add tags\" option.",
+        "optional": true,
+        "dismissed": false,
+        "version": "3.0.0"
+    },
+    {
+        "id": "messagesMove",
+        "name": "Move, copy, or delete your email messages",
+        "description": "Required to move spam messages to the spam folder, if the automatic spam filter is enabled.",
+        "optional": true,
+        "dismissed": false,
+        "version": "3.2.0"
+    },
+    {
+        "id": "<all_urls>",
+        "name": "Access your data for all websites",
+        "description": "Granting this permission prevents any CORS issues with Ollama or some OpenAI Compatible APIs. It can be enabled via the corresponding button on the options page.",
+        "optional": true,
+        "dismissed": false,
+        "version": "3.3.2"
+    },
+    {
+        "id": "https://*.anthropic.com/*",
+        "name": "Access your data for sites in the anthropic.com domain",
+        "description": "Granting this permission prevents any CORS issues with the Claude API. It can be enabled via the corresponding button on the options page.",
+        "optional": true,
+        "dismissed": false,
+        "version": "3.5.0"
+    },
+    {
+        "id": "<all_urls>",
+        "name": "Access your data for all websites",
+        "description": "Required to access the ChatGPT website using the web interface.",
+        "optional": false,
+        "dismissed": true,
+        "version": "2.0.5",
+        "note": "This permission was added at the first stages of development and never fixed."
+    },
+    {
+        "id": "notifications",
+        "name": "Display notifications to you",
+        "description": "The add-on shows a notification if you're trying to use the ChatGPT API integration, but the API key or model are invalid. In such cases, falls back to the web interface, showing a notification with the error.",
+        "optional": false,
+        "dismissed": true,
+        "version": "2.1.0",
+        "note": "In version 2.1.0 the fallback to the ChatGPT web interface was removed."
+    }
+]

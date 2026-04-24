@@ -33,26 +33,7 @@ The privacy policy depends on the service you're connecting to.</p>
 <h2>Permissions</h2>
 <p>These are the permissions used by ThunderAI in Thunderbird.<br>
     Remember that ThunderAI operates solely based on user interaction. Aside from automatic tagging and spam detection (if enabled), no actions are performed without direct user input within the add-on menu.</p>
-<ul>
-    <li><span class="sup_comment">[Optional]</span> <b>Access your data for sites in the chatgpt.com domain</b>: Required to access the ChatGPT website using the web interface. <span class="sup_comment">[From version 2.0.5, optional from version 3.4.0]</span></li>
-    <li><b>See your mail accounts, their identities and their folders</b>: Necessary to choose the correct mail identity when replying to an email.</li>
-    <li><b>Read and modify your email messages as you compose and send them</b>: Required to create a new email message or substitute the text the user has highlighted.</li>
-    <li><b>Download files and read and modify the browser's download history</b>: Needed for downloading the custom prompts export.</li>
-    <li><b>Read and modify your email messages as they are displayed to you</b>: Required to create a new email message or substitute the text the user has highlighted.</li>
-    <li><b>Read your email messages</b>: Required to create a new email message or substitute the text the user has highlighted.</li>
-    <li><b>Access browser tabs</b>: Required to create a new email message or substitute the text the user has highlighted.</li>
-    <li><b>List message tags</b>: Required to use the tags related <a href="../data-placeholders/">data placeholders</a> and check if the tags received from the API are new or they have to be created, when using the "Add tags" option. <span class="sup_comment">[From version 3.0.0]</span></li>
-    <li><span class="sup_comment">[Optional]</span> <b>Create, modify and delete message tags</b>: Required to create new tags when using the "Add tags" option. <span class="sup_comment">[From version 3.0.0]</span></li>
-    <li><span class="sup_comment">[Optional]</span> <b>Change properties and tags of your email messages</b>: Required to assign tags to an email message when using the "Add tags" option. <span class="sup_comment">[From version 3.0.0]</span></li>
-    <li><span class="sup_comment">[Optional]</span> <b>Move, copy, or delete your email messages</b>: Required to move spam messages to the spam folder, if the automatic spam filter is enabled. <span class="sup_comment">[From version 3.2.0]</span></li>
-    <li><span class="sup_comment">[Optional]</span> <b>Access your data for all websites</b>: Granting this permission prevents any CORS issues with Ollama or some OpenAI Compatible APIs. It can be enabled via the corresponding button on the options page. <span class="sup_comment">[From version 3.3.2]</span></li>
-    <li><span class="sup_comment">[Optional]</span> <b>Access your data for sites in the anthropic.com domain</b>: Granting this permission prevents any CORS issues with the Claude API. It can be enabled via the corresponding button on the options page. <span class="sup_comment">[From version 3.5.0]</span></li>
-</ul>
-<br>
-<i>Removed permissions</i>
-<ul style="font-size: 0.90em;">
-    <li><span class="sup_comment">[Removed in version 2.0.5]</span> <b style="text-decoration: line-through;">Access your data for all websites</b>: Required to access the ChatGPT website using the web interface. <i>This permission was added at the first stages of development and never fixed.</i></li>
-    <li><span class="sup_comment">[Removed in version 2.1.0]</span> <b style="text-decoration: line-through;">Display notifications to you</b>: The add-on shows a notification if you're trying to use the ChatGPT API integration, but the API key or model are invalid. In such cases, falls back to the web interface, showing a notification with the error. <i>In version 2.1.0 the fallback to the ChatGPT web interface was removed.</i></li>
-</ul>
+
+{{< permissions_list >}}
 <br>
 <div style="text-align: center"><a href="../">Go back to addon page</a></div>
