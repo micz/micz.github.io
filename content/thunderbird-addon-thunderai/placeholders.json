@@ -144,10 +144,28 @@
         "version": "3.2.0"
     },
     {
+        "id": "{%thunderai_translate_lang%}",
+        "description": "the language defined in the translation settings.",
+        "scope": "ThunderAI Settings",
+        "version": "4.1.0"
+    },
+    {
+        "id": "{%thunderai_translate_exclude_lang%}",
+        "description": "the languages to be excluded from the translation as defined in the translation settings.",
+        "scope": "ThunderAI Settings",
+        "version": "4.1.0"
+    },
+    {
         "id": "{%mail_headers:<Header-ID>%}",
         "description": "use this placeholder to get the value of any mail header, replacing &lt;Header-ID&gt; with the ID of the header you wish to retrieve. For example, use <i>{%mail_headers:Received-SPF%}</i> to use the value of <i>Received-SPF</i>.",
         "scope": "Email Metadata",
         "version": "3.8.0"
+    },
+    {
+        "id": "{%mail_full_headers%}",
+        "description": "use this placeholder to get all the mail headers.",
+        "scope": "Email Metadata",
+        "version": "4.1.0"
     },
     {
         "id": "{%empty%}",
