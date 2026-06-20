@@ -27,7 +27,7 @@
         "lang_name": "Greek - Elliniká (Ελληνικά)",
         "lang_code": "el",
         "released": true,
-        "credits": ""
+        "credits": "<a href=\"https://github.com/christoskaterini\" target=\"_blank\">ChristosK.</a>"
     },
     {
         "lang_name": "Spanish - Español",
@@ -74,8 +74,14 @@
     {
         "lang_name": "Hungarian - Magyar",
         "lang_code": "hu",
-        "released": false,
-        "credits": "<a href=\"https://hosted.weblate.org/user/benedek.vigh/\" target=\"_blank\">Benedek Vigh (冯白诺)</a>"
+        "released": true,
+        "credits": "<a href=\"https://hosted.weblate.org/user/simaphonesave/\" target=\"_blank\">Roland S</a>, <a href=\"https://hosted.weblate.org/user/benedek.vigh/\" target=\"_blank\">Benedek Vigh (冯白诺)</a>"
+    },
+    {
+        "lang_name": "Indonesian - Bahasa Indonesia",
+        "lang_code": "id",
+        "released": true,
+        "credits": "<a href=\"https://github.com/arifpedia\" target=\"_blank\">Arif Budiman</a>"
     },
     {
         "lang_name": "Japanese - Nihongo (日本語)",
