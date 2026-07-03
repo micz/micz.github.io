@@ -98,8 +98,8 @@
     {
         "lang_name": "Portuguese - Português",
         "lang_code": "pt",
-        "released": false,
-        "credits": "<a href=\"https://hosted.weblate.org/user/nobrega8/\" target=\"_blank\">Afonso Nóbrega</a>, <a href=\"https://hosted.weblate.org/user/alucenafaria/\" target=\"_blank\">Antonio Lucena de Faria</a>"
+        "released": true,
+        "credits": "<a href=\"https://hosted.weblate.org/user/nobrega8/\" target=\"_blank\">Afonso Nóbrega</a>, <a href=\"https://hosted.weblate.org/user/alucenafaria/\" target=\"_blank\">Antonio Lucena de Faria</a>, <a href=\"https://github.com/SantosSi\" target=\"_blank\">Silvério Santos</a>"
     },
     {
         "lang_name": "Brazilian Portuguese - Português Brasileiro",
