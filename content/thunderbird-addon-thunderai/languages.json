@@ -27,7 +27,7 @@
         "lang_name": "Greek - Elliniká (Ελληνικά)",
         "lang_code": "el",
         "released": true,
-        "credits": ""
+        "credits": "<a href=\"https://github.com/christoskaterini\" target=\"_blank\">ChristosK.</a>"
     },
     {
         "lang_name": "Spanish - Español",
@@ -74,8 +74,14 @@
     {
         "lang_name": "Hungarian - Magyar",
         "lang_code": "hu",
-        "released": false,
-        "credits": "<a href=\"https://hosted.weblate.org/user/benedek.vigh/\" target=\"_blank\">Benedek Vigh (冯白诺)</a>"
+        "released": true,
+        "credits": "<a href=\"https://hosted.weblate.org/user/simaphonesave/\" target=\"_blank\">Roland S</a>, <a href=\"https://hosted.weblate.org/user/benedek.vigh/\" target=\"_blank\">Benedek Vigh (冯白诺)</a>"
+    },
+    {
+        "lang_name": "Indonesian - Bahasa Indonesia",
+        "lang_code": "id",
+        "released": true,
+        "credits": "<a href=\"https://github.com/arifpedia\" target=\"_blank\">Arif Budiman</a>"
     },
     {
         "lang_name": "Japanese - Nihongo (日本語)",
@@ -87,13 +93,13 @@
         "lang_name": "Polish - Polski",
         "lang_code": "pl",
         "released": true,
-        "credits": "<a href=\"https://github.com/neexpl\" target=\"_blank\">neexpl</a>, <a href=\"https://github.com/makkacprzak\" target=\"_blank\">makkacprzak</a>"
+        "credits": "<a href=\"https://github.com/neexpl\" target=\"_blank\">neexpl</a>, <a href=\"https://github.com/makkacprzak\" target=\"_blank\">makkacprzak</a>, <a href=\"https://github.com/stankiewiczmichal\" target=\"_blank\">Michał Stankiewicz</a>, <a href=\"https://github.com/LukaszJal\" target=\"_blank\">LukaszJal</a>"
     },
     {
         "lang_name": "Portuguese - Português",
         "lang_code": "pt",
-        "released": false,
-        "credits": "<a href=\"https://hosted.weblate.org/user/nobrega8/\" target=\"_blank\">Afonso Nóbrega</a>, <a href=\"https://hosted.weblate.org/user/alucenafaria/\" target=\"_blank\">Antonio Lucena de Faria</a>"
+        "released": true,
+        "credits": "<a href=\"https://github.com/SantosSi\" target=\"_blank\">Silvério Santos</a>, <a href=\"https://hosted.weblate.org/user/nobrega8/\" target=\"_blank\">Afonso Nóbrega</a>, <a href=\"https://hosted.weblate.org/user/alucenafaria/\" target=\"_blank\">Antonio Lucena de Faria</a>"
     },
     {
         "lang_name": "Brazilian Portuguese - Português Brasileiro",
