@@ -93,7 +93,7 @@
         "lang_name": "Polish - Polski",
         "lang_code": "pl",
         "released": true,
-        "credits": "<a href=\"https://github.com/neexpl\" target=\"_blank\">neexpl</a>, <a href=\"https://github.com/makkacprzak\" target=\"_blank\">makkacprzak</a>, <a href=\"https://github.com/stankiewiczmichal\" target=\"_blank\">Michał Stankiewicz</a>, <a href=\"https://github.com/LukaszJal\" target=\"_blank\">LukaszJal</a>"
+        "credits": "<a href=\"https://github.com/neexpl\" target=\"_blank\">neexpl</a>, <a href=\"https://github.com/makkacprzak\" target=\"_blank\">makkacprzak</a>, <a href=\"https://github.com/stankiewiczmichal\" target=\"_blank\">Michał Stankiewicz</a>, <a href=\"https://github.com/LukaszJal\" target=\"_blank\">LukaszJal</a>, Generated automatically"
     },
     {
         "lang_name": "Portuguese - Português",
@@ -105,7 +105,7 @@
         "lang_name": "Brazilian Portuguese - Português Brasileiro",
         "lang_code": "pt-br",
         "released": true,
-        "credits": "Bruno Pereira de Souza, <a href=\"https://github.com/Brusca\" target=\"_blank\">Bruno Scatolin</a>"
+        "credits": "Bruno Pereira de Souza, Generated automatically, <a href=\"https://github.com/Brusca\" target=\"_blank\">Bruno Scatolin</a>"
     },
     {
         "lang_name": "Romanian - Română",
