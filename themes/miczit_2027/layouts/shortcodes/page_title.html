@@ -1,1 +1,8 @@
-<h1 class="post_title">{{ .Page.Params.Title }}</h1>
+{{ $t := partial "title-split.html" .Page }}
+{{ $status := .Page.Params.addon_status }}
+<div class="title-block">
+    {{ if or $t.eyebrow $status }}
+        <p class="eyebrow">{{ with $t.eyebrow }}{{ . }}{{ end }}{{ with $status }} <span class="badge badge-{{ . }}">{{ . }}</span>{{ end }}</p>
+    {{ end }}
+    <h1 class="page-title">{{ $t.title }}</h1>
+</div>

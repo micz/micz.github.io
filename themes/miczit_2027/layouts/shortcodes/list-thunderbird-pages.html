@@ -1,10 +1,14 @@
 {{ $addon_status := (.Get "addon_status") }}
-<ul>
-    {{ range .Site.Pages }}
+<ul class="card-grid">
+    {{- range .Site.Pages }}
     {{ if and (in .Permalink "thunderbird") (not (eq .Params.Type "no-list")) (eq .Params.addon_status $addon_status) }}
-            <li>
-                <a href="{{ .Permalink }}">{{ .Title }}</a>
-            </li>
-        {{ end }}
+        {{ $t := partial "title-split.html" . }}
+        <li>
+            <a class="card" href="{{ .Permalink }}">
+                {{ with .Params.addon_icon }}<img class="card-icon" src="{{ . | relURL }}" alt="" width="36" height="36" loading="lazy">{{ end }}
+                <span class="card-title">{{ $t.title }}</span>
+            </a>
+        </li>
     {{ end }}
+    {{- end }}
 </ul>
