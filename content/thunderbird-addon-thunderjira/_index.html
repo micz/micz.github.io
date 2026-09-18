@@ -1,35 +1,54 @@
 +++
 Title = "Thunderbird Addon: ThunderJira! Jira integrated into your Thunderbird!"
 addon_status = "active"
+addon_icon = "images/thunderjira_icon.png"
 +++
 
 {{< page_title >}}
 
-<div style="float: right;"><img src="{{< base_url >}}images/thunderjira_icon.png" /></div>
-<p>Do you want to manage your Jira issues without leaving Thunderbird?<br />ThunderJira integrates Jira Cloud and Jira Server / Data Center directly into your email client!</p>
+<div class="addon-hero">
+    <div class="addon-intro">
+        <p>Do you want to manage your Jira issues without leaving Thunderbird?<br>ThunderJira integrates Jira Cloud and Jira Server / Data Center directly into your email client!<br>
+        Create a new Jira issue directly from any email, and follow issue links enriched with a clickable badge that opens the issue in your browser.</p>
+        <div class="addon-cta">
+            <a class="btn btn-primary" href="https://addons.thunderbird.net/thunderbird/addon/thunderjira/" target="_blank">Download from the Thunderbird Add-on site</a>
+            <a class="btn" href="https://github.com/micz/ThunderJira" target="_blank">Source code on GitHub</a>
+        </div>
+    </div>
+    <aside class="addon-side">
+        <img class="addon-icon" src="{{< base_url >}}images/thunderjira_icon.png" alt="ThunderJira icon" width="128" height="128">
+        <div class="side-card">
+            <p><strong>Support this addon!</strong></p>
+            <p>Are you using ThunderJira in your Thunderbird? Consider supporting the development with a small donation.</p>
+            <p><a class="btn" href="https://www.paypal.com/donate/?business=UHN4SXPGEXWQL&amp;no_recurring=1&amp;item_name=Thunderbird+Addon+ThunderJira&amp;currency_code=EUR" target="_blank" rel="nofollow">Donate with PayPal</a></p>
+        </div>
+    </aside>
+</div>
 
-<p><br/><strong>How does it work?</strong><br />
-After installing it, configure the connection from the ThunderJira Options page in the Add-ons manager.<br />
-You can connect to both <strong>Jira Cloud</strong> (atlassian.net) and <strong>Jira Server / Data Center</strong> (self-hosted).<br />
-Once configured, you can create a new Jira issue directly from any email: the subject pre-fills the summary and the body pre-fills the description. Dynamic fields are loaded automatically based on the selected project and issue type.<br />
+<h2>Documentation &amp; support</h2>
+<div class="doc-grid">
+    <a class="doc-card" href="https://github.com/micz/ThunderJira/issues" target="_blank">
+        <span class="doc-card-title">Problems or suggestions?</span>
+        <span class="doc-card-text">To report a problem or suggest a new feature, submit a new issue on GitHub.</span>
+    </a>
+    <a class="doc-card" href="https://github.com/micz/ThunderJira/issues?labels=new+feature&amp;page=1&amp;state=open" target="_blank">
+        <span class="doc-card-title">Future improvements</span>
+        <span class="doc-card-text">Check the issue tracker for planned features.</span>
+    </a>
+</div>
+
+<h3>How does it work?</h3>
+<p>After installing it, configure the connection from the ThunderJira Options page in the Add-ons manager.<br>
+You can connect to both <strong>Jira Cloud</strong> (atlassian.net) and <strong>Jira Server / Data Center</strong> (self-hosted).<br>
+Once configured, you can create a new Jira issue directly from any email: the subject pre-fills the summary and the body pre-fills the description. Dynamic fields are loaded automatically based on the selected project and issue type.<br>
 Jira issue links found in email bodies are automatically enriched with a clickable badge that opens the issue directly in your browser.</p>
 
-<p><br/><strong>Requirements</strong><br />
-Thunderbird 140 or later is required.<br />
+<h3>Requirements</h3>
+<p>Thunderbird 140 or later is required.<br>
 You need a Jira Cloud or Jira Server / Data Center instance and valid credentials (API token for Cloud, Personal Access Token for Server).</p>
 
-<p><br/><strong>Privacy</strong><br />All data processing is performed locally on your device. Your Jira credentials are stored only in your local Thunderbird profile and are never transmitted to any third-party service. All requests go directly from your Thunderbird to your Jira instance.</p>
+<h3>Privacy</h3>
+<p>All data processing is performed locally on your device. Your Jira credentials are stored only in your local Thunderbird profile and are never transmitted to any third-party service. All requests go directly from your Thunderbird to your Jira instance.</p>
 
-<p><br/><strong><a rel="nofollow" href="https://www.paypal.com/donate/?business=UHN4SXPGEXWQL&no_recurring=1&item_name=Thunderbird+Addon+ThunderJira&currency_code=EUR" target="_blank"><img alt="Donation" class="alignleft size-full wp-image-865" height="55" src="{{< base_url >}}images/th_donate.png" style="box-sizing: border-box; vertical-align: middle; margin: 5px 20px 20px 0px; float: left; width: auto;" title="Click here and support this addon with a small donation!" width="62" /></a>Support this addon!<br /></strong>Are you using ThunderJira in your Thunderbird?<br /> Consider supporting the development with a small donation. <a rel="nofollow" href="https://www.paypal.com/donate/?business=UHN4SXPGEXWQL&no_recurring=1&item_name=Thunderbird+Addon+ThunderJira&currency_code=EUR" target="_blank">Click here!</a></p>
-
-<p><img alt="" border="0" height="1" src="https://www.paypalobjects.com/it_IT/i/scr/pixel.gif" width="1" /><br /><strong>Download</strong><br />
-Download it from the <a href="https://addons.thunderbird.net/thunderbird/addon/thunderjira/" target="_blank">Thunderbird Add-on site</a>.<br />
-This addon is also open source: get the code from <a href="https://github.com/micz/ThunderJira" target="_blank">GitHub</a>.</p>
-
-<p><br/><strong>Problems or suggestions?</strong><br /> To report a problem or suggest a new feature, <a href="https://github.com/micz/ThunderJira/issues" target="_blank">submit a new issue</a> on GitHub.</p>
-
-<p><br/><strong>Future improvements?</strong><br /> Check the <a href="https://github.com/micz/ThunderJira/issues?labels=new+feature&page=1&state=open" target="_blank">issue tracker</a> for planned features.</p>
-
-<p><br/><strong>Thanks to&hellip;</strong><br />
-<a href="https://icon-icons.com/authors/42-double-j-design" target="_blank">DoubleDesign</a> for the base image used to create the addon icon.<br />
-<a href="https://www.flaticon.com/authors/jessigue" target="_blank">JessiGue</a> for the show/hide icon used for API token fields.</p>
+<p><small><em>Thanks to <a href="https://icon-icons.com/authors/42-double-j-design" target="_blank">DoubleDesign</a> for the base image used to create the addon icon.</em></small>
+<br><small><em>Thanks to <a href="https://www.flaticon.com/authors/jessigue" target="_blank">JessiGue</a> for the show/hide icon used for API token fields.</em></small></p>

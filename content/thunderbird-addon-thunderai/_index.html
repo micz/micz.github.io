@@ -2,31 +2,82 @@
 Title = "Thunderbird Addon: ThunderAI"
 aliases = ['/thunderdbird-addon-thunderai/']
 addon_status = "active"
+addon_icon = "images/thunderai/mzta_icon.png"
 +++
-
 
 {{< page_title >}}
 
-<div style="float: right;"><img src="{{< base_url >}}images/thunderai/mzta_icon.png" /></div>
-<p>ThunderAI is a Thunderbird Addon that uses the capabilities of <b>ChatGPT</b>, <b>Gemini</b>, <b>Claude</b> or <b>Ollama</b> to <b>enhance email management</b>.
-    <br>It enables users to define <b><a href="custom-prompts/">custom prompts</a></b> and use additional <b><a href="data-placeholders/">data placeholders</a></b> to analyse, write, correct, assign tags and optimize their emails, facilitating more effective and professional communication.
-    <br>ThunderAI becomes a great tool for anyone looking to improve their email quality, both in content and grammar, making the writing process quicker and more intuitive.
-    <br>You can use an <b>API key</b>, but it's also possible to use this extension even with a <b>free account!</b> with the ChatGPT web interface integration.</p>
-<p><br><a rel="nofollow" href="https://www.paypal.com/donate/?business=UHN4SXPGEXWQL&no_recurring=1&item_name=Thunderbird+Addon+ThunderAI&currency_code=EUR" target="_blank" style="box-sizing: border-box; background-color: transparent;"><img alt="Donation" class="alignleft size-full wp-image-865" height="55" src="{{< base_url >}}images/th_donate.png" title="Click here and support this addon with a small donation!" width="62" style="box-sizing: border-box; vertical-align: middle; margin: 5px 20px 20px 0px; float: left; width: auto;"></a>
-<strong style="box-sizing: border-box;">Support this addon!<br></strong>Are you using this addon in your Thunderbird?<br>Consider to support the development making a small donation.&nbsp;<a rel="nofollow" href="https://www.paypal.com/donate/?business=UHN4SXPGEXWQL&no_recurring=1&item_name=Thunderbird+Addon+ThunderAI&currency_code=EUR" target="_blank" style="box-sizing: border-box; background-color: transparent; ">Click here!</a></p>
-<p><br><strong>Download</strong><br> Download it from the <a href="https://addons.thunderbird.net/thunderbird/addon/thunderai/" target="_blank">Thunderbird Add-on site</a>.<br> This addon is also opensource: get its code from <a href="https://github.com/micz/ThunderAI">github</a>.</p>
-<p><br><strong>Setup Guides</strong><br>Need help configuring ThunderAI?<br>Check out <a href="guides/">step-by-step guides</a>. {{< page_langs_flags page="guides/_index" >}}
-<br>Want to learn how to define a custom prompt? <a href="tutorial/">Follow this tutorial!</a> {{< page_langs_flags page="tutorial/_index" >}}
-<br>You can also let ChatGPT <a href="https://chatgpt.com/g/g-69b6b11c89b88191a6798be6e97025f1-thunder-ai-prompt-architect" target="_blank">help you crafting</a> your custom prompts! <span style="font-size:0.9rem;">(Thanks to <a href="https://github.com/PawelKinczyk" target="_blank">Paweł</a> for this tool)</span></p>
-<p><br><strong>Translations</strong><br>Would you like to help translate this addon?<br><a href="translate/">Find out how!</a></p>
-<p><br><strong>Problems or suggestions?</strong><br>To report a problem or suggest a feature <a href="https://github.com/micz/ThunderAI/issues" target="_blank">submit a new issue</a>.</p>
-<p><br><strong>ChatGPT Web Interface Status</strong><br>Check <a href="status/">this page</a> for any known issues in interacting with the ChatGPT web interface.</p>
-<p><br><strong>Ollama CORS Information</strong><br>If you're using Ollama, you need to correctly set the CORS configuration.<br>
-    On <a href="ollama-cors-information/">this page</a> you can find all the information gathered with the help of ThunderAI users.</p>
-<p><br><strong>Privacy and Permissions</strong><br>Find all the relevant information in the <a href="privacy/">Privacy</a> page and the <a href="permissions/">Permissions</a> page.</p>
-<p id="sparks"><br><strong><img src="{{< base_url >}}images/thunderai/sparks.png" /> Sparks!</strong><br>Sparks is an add-on for Thunderbird, designed to add <a href="https://github.com/micz/ThunderAI-Sparks?tab=readme-ov-file#features" target="_blank">advanced features</a> to ThunderAI.
-<br>You can download it from the <a href="https://addons.thunderbird.net/thunderbird/addon/thunderai-sparks/" target="_blank">Thunderbird Add-on site</a>.
-<br>The source code is available on <a href="https://github.com/micz/ThunderAI-Sparks">github</a>.</p>
-<p><br><small><em>Thanks to ChatGPT-4 for the help with the icon. ;-)</em></small>
-    <br><small><em>Thanks to <a href="https://www.iconfinder.com/fluent-designsystem" target="_blank">Fluent Design System</a> for the Custom Prompts table sorting icons.</em></small>
-    <br><small><em>Thanks to <a href="https://hosted.weblate.org/engage/thunderai/" target="_blank">Hosted Weblate</a> for the supporting ThunderAI with a translation hosting free plan.</em></small></p>
+<div class="addon-hero">
+    <div class="addon-intro">
+        <p>ThunderAI is a Thunderbird Addon that uses the capabilities of <b>ChatGPT</b>, <b>Gemini</b>, <b>Claude</b> or <b>Ollama</b> to <b>enhance email management</b>.
+        It enables users to define <b><a href="custom-prompts/">custom prompts</a></b> and use additional <b><a href="data-placeholders/">data placeholders</a></b> to analyse, write, correct, assign tags and optimize their emails, facilitating more effective and professional communication.</p>
+        <p>ThunderAI becomes a great tool for anyone looking to improve their email quality, both in content and grammar, making the writing process quicker and more intuitive.</p>
+        <p>You can use an <b>API key</b>, but it's also possible to use this extension even with a <b>free account!</b> with the ChatGPT web interface integration.</p>
+        <div class="addon-cta">
+            <a class="btn btn-primary" href="https://addons.thunderbird.net/thunderbird/addon/thunderai/" target="_blank">Download from the Thunderbird Add-on site</a>
+            <a class="btn" href="https://github.com/micz/ThunderAI" target="_blank">Source code on GitHub</a>
+        </div>
+    </div>
+    <aside class="addon-side">
+        <img class="addon-icon" src="{{< base_url >}}images/thunderai/mzta_icon.png" alt="ThunderAI icon" width="128" height="128">
+        <div class="side-card">
+            <p><strong>Support this addon!</strong></p>
+            <p>Are you using this addon in your Thunderbird? Consider to support the development making a small donation.</p>
+            <p><a class="btn" href="https://www.paypal.com/donate/?business=UHN4SXPGEXWQL&amp;no_recurring=1&amp;item_name=Thunderbird+Addon+ThunderAI&amp;currency_code=EUR" target="_blank" rel="nofollow">Donate with PayPal</a></p>
+        </div>
+    </aside>
+</div>
+
+<h2>Documentation &amp; support</h2>
+<div class="doc-grid">
+    <a class="doc-card" href="guides/">
+        <span class="doc-card-title">Setup Guides</span>
+        <span class="doc-card-text">Step-by-step guides to help you configure ThunderAI with the AI backend of your choice.</span>
+    </a>
+    <a class="doc-card" href="tutorial/">
+        <span class="doc-card-title">Tutorial</span>
+        <span class="doc-card-text">Follow this tutorial to learn how to define your first custom prompt.</span>
+    </a>
+    <a class="doc-card" href="custom-prompts/">
+        <span class="doc-card-title">Custom Prompts</span>
+        <span class="doc-card-text">Define your own prompts to analyse, write, correct, assign tags and optimize your emails.</span>
+    </a>
+    <a class="doc-card" href="data-placeholders/">
+        <span class="doc-card-title">Data Placeholders</span>
+        <span class="doc-card-text">Use the available data placeholders to enrich your custom prompts.</span>
+    </a>
+    <a class="doc-card" href="translate/">
+        <span class="doc-card-title">Translations</span>
+        <span class="doc-card-text">Would you like to help translate this addon? Find out how!</span>
+    </a>
+    <a class="doc-card" href="status/">
+        <span class="doc-card-title">ChatGPT Web Interface Status</span>
+        <span class="doc-card-text">Check this page for any known issues in interacting with the ChatGPT web interface.</span>
+    </a>
+    <a class="doc-card" href="ollama-cors-information/">
+        <span class="doc-card-title">Ollama CORS Information</span>
+        <span class="doc-card-text">If you're using Ollama, you need to correctly set the CORS configuration.</span>
+    </a>
+    <a class="doc-card" href="privacy/">
+        <span class="doc-card-title">Privacy &amp; Permissions</span>
+        <span class="doc-card-text">Find all the relevant information about privacy and permissions.</span>
+    </a>
+    <a class="doc-card" href="https://github.com/micz/ThunderAI/issues" target="_blank">
+        <span class="doc-card-title">Problems or suggestions?</span>
+        <span class="doc-card-text">To report a problem or suggest a feature, submit a new issue.</span>
+    </a>
+</div>
+
+<p class="small_text">Setup guides in other languages:</p>
+{{< page_langs_flags page="guides/_index" >}}
+<p class="small_text">Tutorial in other languages:</p>
+{{< page_langs_flags page="tutorial/_index" >}}
+<p class="small_text">You can also let ChatGPT <a href="https://chatgpt.com/g/g-69b6b11c89b88191a6798be6e97025f1-thunder-ai-prompt-architect" target="_blank">help you crafting</a> your custom prompts! (Thanks to <a href="https://github.com/PawelKinczyk" target="_blank">Paweł</a> for this tool)</p>
+
+<p id="sparks"><strong>Sparks!</strong><br>Sparks is an add-on for Thunderbird, designed to add <a href="https://github.com/micz/ThunderAI-Sparks?tab=readme-ov-file#features" target="_blank">advanced features</a> to ThunderAI.
+You can download it from the <a href="https://addons.thunderbird.net/thunderbird/addon/thunderai-sparks/" target="_blank">Thunderbird Add-on site</a>.
+The source code is available on <a href="https://github.com/micz/ThunderAI-Sparks">github</a>.</p>
+
+<p><small><em>Thanks to ChatGPT-4 for the help with the icon. ;-)</em></small>
+<br><small><em>Thanks to <a href="https://www.iconfinder.com/fluent-designsystem" target="_blank">Fluent Design System</a> for the Custom Prompts table sorting icons.</em></small>
+<br><small><em>Thanks to <a href="https://hosted.weblate.org/engage/thunderai/" target="_blank">Hosted Weblate</a> for the supporting ThunderAI with a translation hosting free plan.</em></small></p>
