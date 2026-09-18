@@ -231,3 +231,44 @@ div.img_center{
     cursor: default;
     pointer-events: none;
 }
+details {
+    border: 1px solid var(--hr-color);
+    border-radius: 8px;
+    margin: 0.8em 0;
+    padding: 0 1em;
+}
+details > summary {
+    cursor: pointer;
+    font-weight: 600;
+    padding: 0.6em 0.2em;
+    margin: 0 -0.2em;
+    border-radius: 6px;
+}
+details > summary:hover {
+    background-color: color-mix(in srgb, var(--font-color) 8%, transparent);
+}
+details[open] > summary {
+    border-bottom: 1px solid var(--hr-color);
+    border-radius: 6px 6px 0 0;
+    margin-bottom: 0.8em;
+}
+details > summary:focus-visible {
+    outline: 2px solid var(--font-color);
+    outline-offset: 2px;
+}
+details > *:last-child {
+    margin-bottom: 1em;
+}
+.admon {
+    background-color: color-mix(in srgb, var(--font-color) 6%, var(--bg-color));
+    border-left: 4px solid var(--hr-color);
+    border-radius: 0 8px 8px 0;
+    padding: 0.8em 1.2em;
+    margin: 1.2em 0;
+}
+.admon h3 {
+    margin-top: 0.2em;
+}
+.admon > *:last-child {
+    margin-bottom: 0.2em;
+}

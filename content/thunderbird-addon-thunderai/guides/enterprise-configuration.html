@@ -1,0 +1,840 @@
++++
+Title = "\"ThunderAI\" Thunderbird Addon - Enterprise Configuration"
+Type = "no-list"
++++
+
+{{< page_title >}}
+
+<p>
+    For administrators deploying ThunderAI across an organization. It covers pre-configuring
+    settings, enforcing them so users cannot change them, and distributing a shared set of prompts.
+</p>
+<p>
+    No add-on setting needs to be touched on each machine: everything here is driven by
+    Thunderbird's own enterprise policy file.
+</p>
+
+<h2>Summary</h2>
+<ul>
+    <li><a href="#two-things">Two things to know first</a></li>
+    <li><a href="#where">Where policies.json goes</a></li>
+    <li><a href="#structure">Structure</a></li>
+    <li><a href="#enforced">Enforced vs. initial values</a></li>
+    <li><a href="#example">Worked example</a></li>
+    <li><a href="#org-prompts">Organization prompts</a></li>
+    <li><a href="#key-reference">Key reference</a></li>
+    <li><a href="#troubleshooting">Troubleshooting</a></li>
+    <li><a href="#notes">Notes</a></li>
+</ul>
+
+<hr>
+
+<h2 id="two-things">Two things to know first</h2>
+
+<div class="admon warn">
+    <h3>⚠️ Policies are read only at Thunderbird startup</h3>
+    <p>
+        There is <strong>no live reload.</strong> Any change to <code>policies.json</code> — including
+        rotating an API key or token — takes effect only after Thunderbird is fully restarted. Users
+        who leave Thunderbird running for days will not pick up a change until they restart.
+    </p>
+    <p>
+        If you rotate a credential, plan for the window in which running clients still hold the old one.
+    </p>
+</div>
+
+<div class="admon warn">
+    <h3>⚠️ Policy files are world-readable</h3>
+    <p>
+        <code>policies.json</code> must be readable by every user account on the machine, so
+        <strong>any local user can read any API key you put in it.</strong> It is not a secret store.
+    </p>
+    <p>
+        Prefer pointing ThunderAI at an <strong>internal gateway</strong> (via <code>openai_comp_host</code>)
+        that holds the real provider credentials server-side, and put a revocable per-organization token
+        in the policy — not a raw provider key. If you must deploy a provider key directly, use one scoped
+        and rate-limited to this purpose, and rotate it on the assumption it is exposed.
+    </p>
+</div>
+
+<hr>
+
+<h2 id="where">Where <code>policies.json</code> goes</h2>
+
+<table class="guides">
+    <thead>
+        <tr>
+            <th>OS</th>
+            <th>Path</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><strong>Linux</strong></td>
+            <td><code>/etc/thunderbird/policies/policies.json</code> <strong>(recommended)</strong></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td>or <code>&lt;install dir&gt;/distribution/policies.json</code></td>
+        </tr>
+        <tr>
+            <td><strong>Windows</strong></td>
+            <td><code>C:\Program Files\Mozilla Thunderbird\distribution\policies.json</code></td>
+        </tr>
+        <tr>
+            <td><strong>macOS</strong></td>
+            <td><code>/Applications/Thunderbird.app/Contents/Resources/distribution/policies.json</code></td>
+        </tr>
+    </tbody>
+</table>
+
+<p>
+    <strong>On Linux, use <code>/etc/thunderbird/policies/</code>.</strong> It lives outside the
+    application directory, so it <strong>survives application updates</strong>. The
+    <code>distribution</code> directory — the only option on Windows and macOS — sits inside the
+    installation and <strong>may be removed or replaced when Thunderbird updates</strong>, silently
+    dropping your configuration.
+</p>
+<p>
+    On Windows you can avoid that by using Group Policy / the registry instead of the file, under
+    <code>HKLM\SOFTWARE\Policies\Mozilla\Thunderbird</code>. On macOS, a configuration profile
+    (<code>.mobileconfig</code>) is the equivalent durable option. Both express the same
+    <code>3rdparty</code> structure shown below.
+</p>
+<p>To verify a policy has loaded, open <code>about:policies</code> in Thunderbird.</p>
+
+<hr>
+
+<h2 id="structure">Structure</h2>
+
+<p>Every ThunderAI setting lives under <code>3rdparty</code> → <code>Extensions</code> → <code>thunderai@micz.it</code>:</p>
+
+<pre>{
+  "policies": {
+    "3rdparty": {
+      "Extensions": {
+        "thunderai@micz.it": {
+          "connection_type": "openai_comp_api"
+        }
+      }
+    }
+  }
+}</pre>
+
+<p>
+    <strong>Policy key names are exactly ThunderAI's own setting names.</strong> There is no mapping
+    table and no renaming — see the <a href="#key-reference">key reference</a>.
+</p>
+
+<hr>
+
+<h2 id="enforced">Enforced vs. initial values</h2>
+
+<p>
+    <strong>Every key you set is enforced by default.</strong> The user sees it in the settings, greyed
+    out and marked as managed, and cannot change it.
+</p>
+<p>To supply a <em>starting</em> value the user may then change, add a sibling <code>"&lt;key&gt;:locked": false</code>:</p>
+
+<pre>"reply_type": "reply_all",
+"reply_type:locked": false</pre>
+
+<table class="guides">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Enforced (default)</th>
+            <th><code>"&lt;key&gt;:locked": false</code></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>User can change it</td>
+            <td>no</td>
+            <td>yes</td>
+        </tr>
+        <tr>
+            <td>Control in settings</td>
+            <td>disabled, marked "Managed"</td>
+            <td>normal</td>
+        </tr>
+        <tr>
+            <td>If the user already set it</td>
+            <td>policy value wins</td>
+            <td><strong>user's value wins</strong></td>
+        </tr>
+        <tr>
+            <td>Written to the user's profile</td>
+            <td>never</td>
+            <td>yes, once they change it</td>
+        </tr>
+    </tbody>
+</table>
+
+<p>
+    That third row matters. An <strong>unlocked</strong> value is only an initial suggestion: a user who
+    already configured that setting keeps their own value and never sees yours. Use an enforced value if
+    you need it to actually apply everywhere.
+</p>
+<p>
+    Nothing enforced is ever written into the user's profile, so <strong>removing a key from the policy
+    cleanly restores</strong> whatever the user had before, or the ThunderAI default.
+</p>
+
+<hr>
+
+<h2 id="example">Worked example</h2>
+
+<p>
+    An organization routing all AI traffic through an internal gateway, enforcing the connection and the
+    privacy-relevant settings, suggesting a couple of defaults, and shipping two shared prompts.
+</p>
+
+<pre>{
+  "policies": {
+    "3rdparty": {
+      "Extensions": {
+        "thunderai@micz.it": {
+
+          "_schema_version": 1,
+          "_org_name": "ACME Corporation",
+          "_org_id": "acme",
+
+          "connection_type": "openai_comp_api",
+          "openai_comp_host": "https://ai-gateway.acme.example/v1",
+          "openai_comp_api_key": "acme-gateway-token-REPLACE-ME",
+          "openai_comp_model": "gpt-4o",
+          "openai_comp_chat_name": "ACME AI",
+
+          "spamfilter": false,
+          "add_tags_auto": false,
+
+          "default_chatgpt_lang": "English",
+          "default_chatgpt_lang:locked": false,
+          "reply_type": "reply_all",
+          "reply_type:locked": false,
+
+          "_org_prompts": [
+            {
+              "id": "support_reply",
+              "name": "Draft support reply",
+              "text": "Draft a reply to this customer email. Follow ACME tone of voice: concise, factual, no promises about delivery dates.\n\n{%mail_text_body_or_selected%}",
+              "type": "1",
+              "action": "1",
+              "need_signature": "1"
+            },
+            {
+              "id": "legal_review",
+              "name": "Flag legal risk",
+              "text": "Review the following text and list any statement that could create a contractual obligation.\n\n{%mail_text_body_or_selected%}",
+              "type": "0",
+              "action": "0",
+              "api_type": "anthropic_api"
+            }
+          ]
+
+        }
+      }
+    }
+  }
+}</pre>
+
+<p>
+    What the user sees: the connection is pre-configured and locked, so they are never asked to run the
+    setup wizard. The spam filter and auto-tagging are off and cannot be turned on. Language and reply
+    style start at the organization's preference but can be changed. The two ACME prompts appear in a
+    labelled group, read-only, each with a <strong>Copy</strong> button for making an editable personal
+    version.
+</p>
+
+<hr>
+
+<h2 id="org-prompts">Organization prompts</h2>
+
+<p>
+    <code>_org_prompts</code> is an array of prompt objects that becomes a shared, read-only prompt set
+    alongside the user's own.
+</p>
+<p>
+    <strong>Requires <code>_org_id</code></strong> — lowercase letters, digits and hyphens only, no
+    underscore. It namespaces your prompt ids so they can never clash with ThunderAI's built-ins or with
+    another organization's. Choose it once and <strong>never change it</strong>: it is part of every
+    prompt id, and changing it makes users lose the menu positions they set.
+</p>
+<p>
+    The final id becomes <code>org_&lt;_org_id&gt;_&lt;id&gt;</code> — so <code>"id": "support_reply"</code>
+    with <code>"_org_id": "acme"</code> is stored as <code>org_acme_support_reply</code>.
+</p>
+
+<h3>Fields</h3>
+
+<table class="guides">
+    <thead>
+        <tr>
+            <th>Field</th>
+            <th>Required</th>
+            <th>Notes</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>id</code></td>
+            <td><strong>yes</strong></td>
+            <td>unique within the array, no whitespace; prefixed automatically</td>
+        </tr>
+        <tr>
+            <td><code>name</code></td>
+            <td><strong>yes</strong></td>
+            <td>shown in menus</td>
+        </tr>
+        <tr>
+            <td><code>text</code></td>
+            <td><strong>yes</strong></td>
+            <td>the prompt; may contain <code>{%placeholder%}</code> tokens</td>
+        </tr>
+        <tr>
+            <td><code>type</code></td>
+            <td>no</td>
+            <td><code>"0"</code> always, <code>"1"</code> reading, <code>"2"</code> composing</td>
+        </tr>
+        <tr>
+            <td><code>action</code></td>
+            <td>no</td>
+            <td><code>"0"</code> close, <code>"1"</code> reply, <code>"2"</code> substitute text</td>
+        </tr>
+        <tr>
+            <td><code>need_selected</code></td>
+            <td>no</td>
+            <td><code>"1"</code> requires a text selection</td>
+        </tr>
+        <tr>
+            <td><code>need_signature</code></td>
+            <td>no</td>
+            <td><code>"1"</code> includes the signature</td>
+        </tr>
+        <tr>
+            <td><code>need_custom_text</code></td>
+            <td>no</td>
+            <td><code>"1"</code> prompts for extra input</td>
+        </tr>
+        <tr>
+            <td><code>define_response_lang</code></td>
+            <td>no</td>
+            <td><code>"1"</code> appends a response-language instruction</td>
+        </tr>
+        <tr>
+            <td><code>use_diff_viewer</code></td>
+            <td>no</td>
+            <td><code>"1"</code> offers a diff of the result</td>
+        </tr>
+        <tr>
+            <td><code>api_type</code></td>
+            <td>no</td>
+            <td>route <em>this prompt</em> to a specific provider</td>
+        </tr>
+    </tbody>
+</table>
+
+<p>
+    <code>api_type</code> accepts <code>chatgpt_web</code>, <code>chatgpt_api</code>,
+    <code>google_gemini_api</code>, <code>anthropic_api</code>, <code>ollama_api</code>,
+    <code>openai_comp_api</code>. Empty or absent means "use the configured connection".
+</p>
+
+<h3>Behaviour</h3>
+
+<ul>
+    <li><strong>Fully declarative.</strong> The policy is the only source of truth. Add, change or remove
+        a prompt and it is reflected at the next Thunderbird start. Users' own prompts are never touched.</li>
+    <li><strong>Read-only, but copyable.</strong> Users cannot edit or delete them, but <strong>Copy</strong>
+        makes an ordinary editable personal prompt.</li>
+    <li><strong>Users control placement.</strong> Menu position and visibility are per-user, set in Menu
+        Order like any other prompt.</li>
+    <li><strong>If a user already has a prompt with the same id</strong>, yours takes precedence and theirs
+        is disabled, with an explanation shown on the Manage Prompts page. Their prompt is not deleted and
+        works again if you remove yours.</li>
+</ul>
+
+<h3>If a prompt is rejected</h3>
+
+<p>
+    Each prompt is validated independently — one bad entry is skipped, the rest still load. A prompt is
+    skipped if <code>id</code>, <code>name</code> or <code>text</code> is missing or empty, if
+    <code>id</code> is duplicated, or if <code>api_type</code> is not a valid connection type. If
+    <code>_org_id</code> is missing or malformed the <strong>whole set</strong> is skipped.
+</p>
+<p>
+    Rejections are reported in the Thunderbird Error Console (<strong>Tools → Developer Tools → Error
+    Console</strong>), prefixed <code>[ThunderAI Logger | mzta-managed]</code>. Check it after changing a
+    policy — these warnings appear whether or not debug logging is on.
+</p>
+
+<hr>
+
+<h2 id="key-reference">Key reference</h2>
+
+<p>
+    Values must match the type shown. A wrong type is ignored with a warning; it is <strong>not</strong>
+    coerced — <code>"true"</code> is not <code>true</code>.
+</p>
+
+<h3>Connection</h3>
+
+<table class="guides">
+    <thead>
+        <tr>
+            <th>Key</th>
+            <th>Type</th>
+            <th>Default</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr><td><code>connection_type</code></td><td>string</td><td><code>""</code></td></tr>
+        <tr><td><code>use_specific_integration</code></td><td>boolean</td><td><code>false</code></td></tr>
+    </tbody>
+</table>
+
+<p>
+    <code>connection_type</code>: <code>chatgpt_web</code>, <code>chatgpt_api</code>,
+    <code>google_gemini_api</code>, <code>anthropic_api</code>, <code>ollama_api</code>,
+    <code>openai_comp_api</code>. Empty means "not configured" and triggers the setup wizard — set it to
+    skip onboarding entirely.
+</p>
+
+<h3>Provider settings</h3>
+
+<details>
+    <summary><b>OpenAI-compatible</b> (use this for an internal gateway) — <code>openai_comp_*</code></summary>
+
+    <table class="guides">
+        <thead>
+            <tr>
+                <th>Key</th>
+                <th>Type</th>
+                <th>Default</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td><code>openai_comp_host</code></td><td>string</td><td><code>""</code></td></tr>
+            <tr><td><code>openai_comp_api_key</code></td><td>string</td><td><code>""</code></td></tr>
+            <tr><td><code>openai_comp_model</code></td><td>string</td><td><code>""</code></td></tr>
+            <tr><td><code>openai_comp_use_v1</code></td><td>boolean</td><td><code>true</code></td></tr>
+            <tr><td><code>openai_comp_chat_name</code></td><td>string</td><td><code>"OpenAI Comp"</code></td></tr>
+            <tr><td><code>openai_comp_temperature</code></td><td>string</td><td><code>""</code></td></tr>
+            <tr><td><code>openai_comp_extra_body</code></td><td>string</td><td><code>""</code></td></tr>
+        </tbody>
+    </table>
+</details>
+
+<details>
+    <summary><b>OpenAI / ChatGPT API</b> — <code>chatgpt_*</code></summary>
+
+    <table class="guides">
+        <thead>
+            <tr>
+                <th>Key</th>
+                <th>Type</th>
+                <th>Default</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td><code>chatgpt_api_key</code></td><td>string</td><td><code>""</code></td></tr>
+            <tr><td><code>chatgpt_model</code></td><td>string</td><td><code>""</code></td></tr>
+            <tr><td><code>chatgpt_developer_messages</code></td><td>string</td><td><code>""</code></td></tr>
+            <tr><td><code>chatgpt_temperature</code></td><td>string</td><td><code>""</code></td></tr>
+            <tr><td><code>chatgpt_store</code></td><td>boolean</td><td><code>false</code></td></tr>
+            <tr><td><code>chatgpt_reasoning_summary</code></td><td>string</td><td><code>""</code></td></tr>
+            <tr><td><code>chatgpt_reasoning_effort</code></td><td>string</td><td><code>""</code></td></tr>
+            <tr><td><code>chatgpt_extra_body</code></td><td>string</td><td><code>""</code></td></tr>
+        </tbody>
+    </table>
+</details>
+
+<details>
+    <summary><b>Anthropic / Claude</b> — <code>anthropic_*</code></summary>
+
+    <table class="guides">
+        <thead>
+            <tr>
+                <th>Key</th>
+                <th>Type</th>
+                <th>Default</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td><code>anthropic_api_key</code></td><td>string</td><td><code>""</code></td></tr>
+            <tr><td><code>anthropic_model</code></td><td>string</td><td><code>""</code></td></tr>
+            <tr><td><code>anthropic_version</code></td><td>string</td><td><code>"2023-06-01"</code></td></tr>
+            <tr><td><code>anthropic_max_tokens</code></td><td>number</td><td><code>4096</code></td></tr>
+            <tr><td><code>anthropic_system_prompt</code></td><td>string</td><td><code>""</code></td></tr>
+            <tr><td><code>anthropic_temperature</code></td><td>string</td><td><code>""</code></td></tr>
+            <tr><td><code>anthropic_extended_thinking_budget</code></td><td>number</td><td><code>0</code></td></tr>
+            <tr><td><code>anthropic_effort</code></td><td>string</td><td><code>""</code></td></tr>
+        </tbody>
+    </table>
+</details>
+
+<details>
+    <summary><b>Google Gemini</b> — <code>google_gemini_*</code></summary>
+
+    <table class="guides">
+        <thead>
+            <tr>
+                <th>Key</th>
+                <th>Type</th>
+                <th>Default</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td><code>google_gemini_api_key</code></td><td>string</td><td><code>""</code></td></tr>
+            <tr><td><code>google_gemini_model</code></td><td>string</td><td><code>""</code></td></tr>
+            <tr><td><code>google_gemini_system_instruction</code></td><td>string</td><td><code>""</code></td></tr>
+            <tr><td><code>google_gemini_thinking_budget</code></td><td>string</td><td><code>""</code></td></tr>
+            <tr><td><code>google_gemini_temperature</code></td><td>string</td><td><code>""</code></td></tr>
+        </tbody>
+    </table>
+</details>
+
+<details>
+    <summary><b>Ollama</b> (self-hosted) — <code>ollama_*</code></summary>
+
+    <table class="guides">
+        <thead>
+            <tr>
+                <th>Key</th>
+                <th>Type</th>
+                <th>Default</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td><code>ollama_host</code></td><td>string</td><td><code>""</code></td></tr>
+            <tr><td><code>ollama_model</code></td><td>string</td><td><code>""</code></td></tr>
+            <tr><td><code>ollama_num_ctx</code></td><td>number</td><td><code>0</code></td></tr>
+            <tr><td><code>ollama_temperature</code></td><td>string</td><td><code>""</code></td></tr>
+            <tr><td><code>ollama_think</code></td><td>boolean</td><td><code>false</code></td></tr>
+            <tr><td><code>ollama_format_json</code></td><td>boolean</td><td><code>false</code></td></tr>
+        </tbody>
+    </table>
+</details>
+
+<details>
+    <summary><b>ChatGPT Web</b> — <code>chatgpt_web_*</code></summary>
+
+    <table class="guides">
+        <thead>
+            <tr>
+                <th>Key</th>
+                <th>Type</th>
+                <th>Default</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td><code>chatgpt_web_model</code></td><td>string</td><td><code>""</code></td></tr>
+            <tr><td><code>chatgpt_web_project</code></td><td>string</td><td><code>""</code></td></tr>
+            <tr><td><code>chatgpt_web_custom_gpt</code></td><td>string</td><td><code>""</code></td></tr>
+            <tr><td><code>chatgpt_web_tempchat</code></td><td>boolean</td><td><code>false</code></td></tr>
+            <tr><td><code>chatgpt_web_load_wait_time</code></td><td>number</td><td><code>1000</code></td></tr>
+        </tbody>
+    </table>
+</details>
+
+<h3>Features</h3>
+
+<p>
+    Each of these can be turned off and locked, which is the usual way to keep a feature off an entire fleet.
+</p>
+
+<table class="guides">
+    <thead>
+        <tr>
+            <th>Key</th>
+            <th>Type</th>
+            <th>Default</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr><td><code>add_tags</code></td><td>boolean</td><td><code>false</code></td></tr>
+        <tr><td><code>spamfilter</code></td><td>boolean</td><td><code>false</code></td></tr>
+        <tr><td><code>summarize</code></td><td>boolean</td><td><code>false</code></td></tr>
+        <tr><td><code>translate</code></td><td>boolean</td><td><code>true</code></td></tr>
+        <tr><td><code>get_calendar_event</code></td><td>boolean</td><td><code>true</code></td></tr>
+        <tr><td><code>get_task</code></td><td>boolean</td><td><code>true</code></td></tr>
+    </tbody>
+</table>
+
+<details>
+    <summary><b>Tagging</b> — <code>add_tags_*</code></summary>
+
+    <table class="guides">
+        <thead>
+            <tr>
+                <th>Key</th>
+                <th>Type</th>
+                <th>Default</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td><code>add_tags_maxnum</code></td><td>number</td><td><code>3</code></td></tr>
+            <tr><td><code>add_tags_auto</code></td><td>boolean</td><td><code>false</code></td></tr>
+            <tr><td><code>add_tags_auto_force_existing</code></td><td>boolean</td><td><code>false</code></td></tr>
+            <tr><td><code>add_tags_auto_only_inbox</code></td><td>boolean</td><td><code>true</code></td></tr>
+            <tr><td><code>add_tags_auto_include_sent</code></td><td>boolean</td><td><code>false</code></td></tr>
+            <tr><td><code>add_tags_auto_uselist</code></td><td>boolean</td><td><code>false</code></td></tr>
+            <tr><td><code>add_tags_auto_uselist_list</code></td><td>string</td><td><code>""</code></td></tr>
+            <tr><td><code>add_tags_first_uppercase</code></td><td>boolean</td><td><code>true</code></td></tr>
+            <tr><td><code>add_tags_force_lang</code></td><td>boolean</td><td><code>true</code></td></tr>
+            <tr><td><code>add_tags_hide_exclusions</code></td><td>boolean</td><td><code>false</code></td></tr>
+            <tr><td><code>add_tags_exclusions_exact_match</code></td><td>boolean</td><td><code>false</code></td></tr>
+        </tbody>
+    </table>
+</details>
+
+<details>
+    <summary><b>Spam filter</b> — <code>spamfilter_*</code></summary>
+
+    <table class="guides">
+        <thead>
+            <tr>
+                <th>Key</th>
+                <th>Type</th>
+                <th>Default</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td><code>spamfilter_threshold</code></td><td>number</td><td><code>70</code></td></tr>
+            <tr><td><code>spamfilter_skip_addresses</code></td><td>array</td><td><code>[]</code></td></tr>
+            <tr><td><code>spamfilter_skip_addressbook</code></td><td>boolean</td><td><code>true</code></td></tr>
+            <tr><td><code>spamfilter_show_msg_panel</code></td><td>boolean</td><td><code>true</code></td></tr>
+            <tr><td><code>spamfilter_only_inbox</code></td><td>boolean</td><td><code>false</code></td></tr>
+        </tbody>
+    </table>
+</details>
+
+<details>
+    <summary><b>Summarize</b> — <code>summarize_*</code></summary>
+
+    <table class="guides">
+        <thead>
+            <tr>
+                <th>Key</th>
+                <th>Type</th>
+                <th>Default</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td><code>summarize_auto</code></td><td>number</td><td><code>1</code></td></tr>
+            <tr><td><code>summarize_display_mode</code></td><td>string</td><td><code>"inline"</code></td></tr>
+            <tr><td><code>summarize_max_messages</code></td><td>number</td><td><code>20</code></td></tr>
+            <tr><td><code>summarize_max_display_length</code></td><td>number</td><td><code>0</code></td></tr>
+            <tr><td><code>summarize_strip_formatting</code></td><td>boolean</td><td><code>false</code></td></tr>
+            <tr><td><code>summarize_auto_senders</code></td><td>boolean</td><td><code>false</code></td></tr>
+            <tr><td><code>summarize_auto_senders_list</code></td><td>array</td><td><code>[]</code></td></tr>
+        </tbody>
+    </table>
+
+    <p><code>summarize_auto</code>: <code>0</code> disabled, <code>1</code> manual button,
+        <code>2</code> on message open, <code>3</code> on receive.</p>
+</details>
+
+<details>
+    <summary><b>Translate</b> — <code>translate_*</code></summary>
+
+    <table class="guides">
+        <thead>
+            <tr>
+                <th>Key</th>
+                <th>Type</th>
+                <th>Default</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td><code>translate_auto</code></td><td>number</td><td><code>0</code></td></tr>
+            <tr><td><code>translate_lang</code></td><td>string</td><td><code>""</code></td></tr>
+            <tr><td><code>translate_exclude_lang</code></td><td>string</td><td><code>""</code></td></tr>
+            <tr><td><code>translate_max_display_length</code></td><td>number</td><td><code>0</code></td></tr>
+        </tbody>
+    </table>
+</details>
+
+<details>
+    <summary><b>Calendar and tasks</b></summary>
+
+    <table class="guides">
+        <thead>
+            <tr>
+                <th>Key</th>
+                <th>Type</th>
+                <th>Default</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td><code>get_calendar_event_from_clipboard</code></td><td>boolean</td><td><code>false</code></td></tr>
+            <tr><td><code>calendar_enforce_timezone</code></td><td>boolean</td><td><code>false</code></td></tr>
+            <tr><td><code>calendar_timezone</code></td><td>string</td><td><code>""</code></td></tr>
+            <tr><td><code>calendar_no_selection</code></td><td>boolean</td><td><code>false</code></td></tr>
+        </tbody>
+    </table>
+</details>
+
+<h3>Per-feature connection overrides</h3>
+
+<p>
+    Each feature can be routed to a different provider than the global connection. For every prefix in
+    <code>add_tags</code>, <code>spamfilter</code>, <code>summarize</code>, <code>translate</code>,
+    <code>get_calendar_event</code>, <code>get_task</code>:
+</p>
+
+<table class="guides">
+    <thead>
+        <tr>
+            <th>Key</th>
+            <th>Type</th>
+            <th>Default</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr><td><code>&lt;prefix&gt;_use_specific_integration</code></td><td>boolean</td><td><code>false</code></td></tr>
+        <tr><td><code>&lt;prefix&gt;_connection_type</code></td><td>string</td><td><code>"chatgpt_api"</code></td></tr>
+    </tbody>
+</table>
+
+<p>
+    For example, to send spam filtering to a local Ollama instance while everything else uses the gateway:
+    set <code>spamfilter_use_specific_integration</code> to <code>true</code> and
+    <code>spamfilter_connection_type</code> to <code>ollama_api</code>.
+</p>
+
+<h3>General</h3>
+
+<table class="guides">
+    <thead>
+        <tr>
+            <th>Key</th>
+            <th>Type</th>
+            <th>Default</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr><td><code>default_chatgpt_lang</code></td><td>string</td><td><code>""</code></td></tr>
+        <tr><td><code>default_sign_name</code></td><td>string</td><td><code>""</code></td></tr>
+        <tr><td><code>reply_type</code></td><td>string</td><td><code>"reply_all"</code></td></tr>
+        <tr><td><code>max_prompt_length</code></td><td>number</td><td><code>30000</code></td></tr>
+        <tr><td><code>special_command_timeout</code></td><td>number</td><td><code>120000</code></td></tr>
+        <tr><td><code>diff_granularity</code></td><td>string</td><td><code>"words"</code></td></tr>
+        <tr><td><code>hide_thinking</code></td><td>boolean</td><td><code>true</code></td></tr>
+        <tr><td><code>placeholders_use_default_value</code></td><td>boolean</td><td><code>false</code></td></tr>
+        <tr><td><code>dynamic_menu_force_enter</code></td><td>boolean</td><td><code>false</code></td></tr>
+        <tr><td><code>do_debug</code></td><td>boolean</td><td><code>false</code></td></tr>
+    </tbody>
+</table>
+
+<p>
+    <code>reply_type</code>: <code>reply_all</code> or <code>reply_sender</code>. &nbsp;
+    <code>diff_granularity</code>: <code>words</code> or <code>sentences</code>. &nbsp;
+    <code>special_command_timeout</code> and <code>max_prompt_length</code> are in milliseconds and
+    characters respectively.
+</p>
+
+<h3>Keys that cannot be set by policy</h3>
+
+<p>
+    These are per-machine or per-profile state, not configuration. Setting them is ignored with a warning.
+</p>
+
+<table class="guides">
+    <thead>
+        <tr>
+            <th>Key</th>
+            <th>Why</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>chatgpt_win_height</code>, <code>chatgpt_win_width</code>, <code>chatgpt_win_top</code>,
+                <code>chatgpt_win_left</code>, <code>chatgpt_win_save_position</code></td>
+            <td>window geometry, specific to a machine's display</td>
+        </tr>
+        <tr>
+            <td><code>api_webchat_font_scale</code></td>
+            <td>local UI zoom</td>
+        </tr>
+        <tr>
+            <td><code>add_tags_enabled_accounts</code>, <code>spamfilter_enabled_accounts</code></td>
+            <td>account identifiers, specific to a profile</td>
+        </tr>
+    </tbody>
+</table>
+
+<hr>
+
+<h2 id="troubleshooting">Troubleshooting</h2>
+
+<p>
+    <strong>Open <code>about:policies</code></strong> to confirm Thunderbird loaded the file at all. If
+    ThunderAI's settings are not listed there, the problem is the file's location or its JSON syntax, not
+    ThunderAI.
+</p>
+<p>
+    <strong>Open the Error Console</strong> (Tools → Developer Tools → Error Console) and filter on
+    <code>ThunderAI</code>. Rejected keys and prompts are reported there, each naming what was wrong.
+    These warnings are not gated on debug logging.
+</p>
+
+<table class="guides">
+    <thead>
+        <tr>
+            <th>Symptom</th>
+            <th>Likely cause</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Nothing applied at all</td>
+            <td>File in the wrong place, or invalid JSON. Check <code>about:policies</code>.</td>
+        </tr>
+        <tr>
+            <td>One key ignored, warning about its type</td>
+            <td>Value type does not match — <code>"true"</code> is not <code>true</code>,
+                <code>"70"</code> is not <code>70</code>.</td>
+        </tr>
+        <tr>
+            <td>One key ignored, "cannot be set by policy"</td>
+            <td>It is in the excluded list above.</td>
+        </tr>
+        <tr>
+            <td>Settings still editable</td>
+            <td>The key has <code>"&lt;key&gt;:locked": false</code>, or you are looking at a key you did
+                not set.</td>
+        </tr>
+        <tr>
+            <td>A change did nothing</td>
+            <td>Thunderbird was not restarted. Policies are read only at startup.</td>
+        </tr>
+        <tr>
+            <td>Organization prompts missing</td>
+            <td><code>_org_id</code> missing or contains an underscore/uppercase — the whole set is then
+                skipped.</td>
+        </tr>
+        <tr>
+            <td>One prompt missing</td>
+            <td>Missing <code>id</code>, <code>name</code> or <code>text</code>, a duplicate
+                <code>id</code>, or an invalid <code>api_type</code>.</td>
+        </tr>
+        <tr>
+            <td>An unlocked value did not apply</td>
+            <td>The user had already set that preference; their value wins. Enforce it instead.</td>
+        </tr>
+    </tbody>
+</table>
+
+<hr>
+
+<h2 id="notes">Notes</h2>
+
+<ul>
+    <li>ThunderAI requests <strong>no additional permissions</strong> for any of this.</li>
+    <li>With no policy installed, ThunderAI behaves exactly as it does for any individual user.</li>
+</ul>
+
+<br>
+<div style="text-align: center"><a href="../">Back to guides</a></div>
