@@ -1,0 +1,66 @@
+# Preview/alternate build for the miczit_2027 theme.
+#
+# This config is fully independent from config.toml (anubis):
+#   hugo --config config.miczit_2027.toml
+#
+# - theme:    miczit_2027 (dark-first editorial theme)
+# - layoutDir:points to an intentionally empty directory, so the project-level
+#   layouts/ overrides written for anubis are NOT applied to this build.
+#   (Project layouts always win over theme layouts; the empty layoutDir
+#   neutralizes them. Verified: with layoutDir set, theme single.html wins and
+#   theme shortcodes resolve even when the project has same-named ones.)
+# - publishDir:docs_preview keeps the current production output (docs/, committed)
+#   untouched. Switching the published site to this theme is a separate,
+#   explicit decision: change publishDir in this file (or migrate config.toml).
+
+baseURL = "https://micz.it/"
+languageCode = "en"
+title = "Mic's"
+
+publishDir = "docs_preview"
+theme = "miczit_2027"
+layoutDir = "layouts_2027"
+
+enableRobotsTXT = true
+
+disableKinds = ["RSS","taxonomy","sitemap"]
+ignoreErrors = ["error-disable-taxonomy"]
+ignoreFiles = ["\\.json$"]
+
+defaultContentLanguage = "en"
+defaultContentLanguageInSubdir = false
+
+[languages]
+  [languages.en]
+    languageName = "English"
+    weight = 1
+    [languages.en.params]
+      flag = "🇬🇧"
+  [languages.it]
+    languageName = "Italiano"
+    weight = 2
+    [languages.it.params]
+      flag = "🇮🇹"
+  [languages.de]
+    languageName = "Deutsch"
+    weight = 3
+    [languages.de.params]
+      flag = "🇩🇪"
+  [languages.fr]
+    languageName = "Français"
+    weight = 4
+    [languages.fr.params]
+      flag = "🇫🇷"
+  [languages.es]
+    languageName = "Español"
+    weight = 5
+    [languages.es.params]
+      flag = "🇪🇸"
+
+[params]
+   Subtitle = "Silence is golden."
+   env= "production"
+
+[services]
+  [services.googleAnalytics]
+    ID = "G-14PLEX7LGC"

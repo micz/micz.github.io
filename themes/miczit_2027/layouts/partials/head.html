@@ -1,0 +1,18 @@
+<meta charset="utf-8">
+<meta name="HandheldFriendly" content="True">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="no-referrer-when-downgrade">
+
+<title>{{ if .Title }}{{ .Title }} - {{ end }}{{ .Site.Title }}</title>
+<meta name="description" content="{{ .Site.Params.Description }}">
+
+<link rel="stylesheet" href="{{ "css/theme.css" | relURL }}?v=20260918">
+
+{{ template "_internal/opengraph.html" . }}
+{{ template "_internal/twitter_cards.html" . }}
+
+{{ if eq (getenv "HUGO_ENV") "production" | or (eq .Site.Params.env "production")  }}
+    {{- partial "cookie-consent.html" . }}
+{{ end }}
+
+{{ partial "head-extra.html" . }}

@@ -1,0 +1,13 @@
+<footer class="site-footer{{ if .IsHome }} on-photo{{ end }}">
+    <div class="footer-inner">
+        <div class="footer-rail">
+            <a target="_blank" rel="noopener noreferrer" href="http://creativecommons.org/licenses/by-nc-nd/4.0/" title="Creative Commons by-nc-nd 4.0">cc</a>
+            <span class="rail-sep" aria-hidden="true">·</span>
+            <a href="https://github.com/micz/" title="github" target="_blank" rel="noopener noreferrer">github</a>
+            <span class="rail-sep" aria-hidden="true">·</span>
+            <a href="/thunderbird-addons/" title="Thunderbird Addons"><img src="/images/thunderbird-64px.png" width="16" height="16" alt="" loading="lazy" /> thunderbird addons</a>
+        </div>
+        <div class="footer-toggle">{{ partial "theme-toggle.html" . }}</div>
+        <p class="footer-credit">Made with <a target="_blank" rel="noopener noreferrer" href="https://gohugo.io/">Hugo</a>.</p>
+    </div>
+</footer>

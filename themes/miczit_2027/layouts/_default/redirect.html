@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="{{ .Language.Lang }}">
+<head>
+<meta charset="utf-8">
+{{ $target := "" }}
+{{ range .Translations }}
+  {{ if eq .Language.Weight 1 }}{{ $target = .Permalink }}{{ end }}
+{{ end }}
+{{ if $target }}
+<meta http-equiv="refresh" content="0; url={{ $target }}">
+<script>window.location.href="{{ $target }}";</script>
+{{ end }}
+</head>
+<body></body>
+</html>

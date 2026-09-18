@@ -1,0 +1,13 @@
+<header class="site-header">
+    <div class="site-header-inner">
+        <a class="wordmark" href="{{ .Site.BaseURL | relLangURL }}" title="{{ .Site.Title }}">{{ replace .Site.Title "'" "’" }}</a>
+        {{ if .Site.Menus.main }}
+            <nav class="site-nav">
+                {{ $currentPage := . }}
+                {{ range .Site.Menus.main }}
+                <a class="{{if or ($currentPage.IsMenuCurrent "main" .) ($currentPage.HasMenuCurrent "main" .) }} active{{end}}" href="{{ .URL | absLangURL }}" title="{{ .Title }}">{{ .Name }}</a>
+                {{ end }}
+            </nav>
+        {{ end }}
+    </div>
+</header>

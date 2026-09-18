@@ -1,0 +1,11 @@
+{{ define "main" }}
+    <article class="post">
+        <div class="page-top">
+            {{ partial "breadcrumb.html" . }}
+            {{ partial "lang-switcher.html" . }}
+        </div>
+        <div class="content">
+            {{ .Content }}
+        </div>
+    </article>
+{{ end }}

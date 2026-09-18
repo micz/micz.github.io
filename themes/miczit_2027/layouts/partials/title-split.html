@@ -1,0 +1,26 @@
+{{/* Splits a page title into {eyebrow, title}.
+
+     Recognized patterns (everything else passes through untouched):
+       1. "Thunderbird Addon: <Name>"                -> eyebrow "Thunderbird Addon", title <Name>
+       2. "\"<Addon>\" Thunderbird Addon - <Page>"   -> eyebrow <Addon>, title <Page>
+          "\"<Addon>\" Thunderbird Addon <Page>"     -> (same; separator is inconsistent in content)
+          "\"<Addon>\" Thunderbird Addon"            -> eyebrow <Addon>, title <Addon>
+
+     Usage: {{ $t := partial "title-split.html" . }} — pass a page or anything with .Title. */}}
+{{ $title := .Title }}
+{{ $eyebrow := "" }}
+{{ $main := $title }}
+{{ if findRE `^Thunderbird Addon: .+` $title }}
+    {{ $eyebrow = "Thunderbird Addon" }}
+    {{ $main = replaceRE `^Thunderbird Addon: ` "" $title }}
+{{ else if findRE `^"[^"]+" Thunderbird Addon` $title }}
+    {{ $addon := replaceRE `^"([^"]+)" Thunderbird Addon(?: ?- ?)?(.*)$` "$1" $title }}
+    {{ $rest := trim (replaceRE `^"[^"]+" Thunderbird Addon(?: ?- ?)?(.*)$` "$1" $title) " " }}
+    {{ $eyebrow = $addon }}
+    {{ if eq $rest "" }}
+        {{ $main = $addon }}
+    {{ else }}
+        {{ $main = $rest }}
+    {{ end }}
+{{ end }}
+{{ return (dict "eyebrow" $eyebrow "title" $main) }}

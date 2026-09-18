@@ -1,0 +1,15 @@
+{{ if .Ancestors }}{{/* .Ancestors walks deepest→home; reverse for breadcrumb order. */}}
+<nav class="breadcrumb" aria-label="Breadcrumb">
+    {{ range .Ancestors.Reverse }}
+        {{ if .IsHome }}
+            <a href="{{ .RelPermalink }}">{{ i18n "home" }}</a>
+        {{ else }}
+            {{ $t := partial "title-split.html" . }}
+            <a href="{{ .RelPermalink }}">{{ $t.title }}</a>
+        {{ end }}
+        <span class="crumb-sep" aria-hidden="true">/</span>
+    {{ end }}
+    {{ $t := partial "title-split.html" . }}
+    <span class="crumb-current" aria-current="page">{{ $t.title }}</span>
+</nav>
+{{ end }}

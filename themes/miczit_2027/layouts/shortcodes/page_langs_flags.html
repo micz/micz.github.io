@@ -1,0 +1,23 @@
+{{ $page := .Get "page" }}
+{{ $contentBase := "content/thunderbird-addon-thunderai/" }}
+{{ $addonBase := "thunderbird-addon-thunderai/" }}
+{{ $defaultLang := "" }}{{ range hugo.Sites }}{{ if .IsDefault }}{{ $defaultLang = .Language.Lang }}{{ end }}{{ end }}
+
+{{ $urlPath := $page | replaceRE "/_index$" "" }}
+
+{{/* First: default language (English) */}}
+{{ range hugo.Sites }}
+  {{ if eq .Language.Lang $defaultLang }}
+    <a href="/{{ $addonBase }}{{ $urlPath }}/" hreflang="{{ .Language.Lang }}" title="{{ .Language.LanguageName }}">{{- with .Language.Params.flag }}{{ . }}{{ else }}{{ .Language.Lang }}{{ end -}}</a>
+  {{ end }}
+{{ end }}
+
+{{/* Then: other languages in alphabetical order */}}
+{{ range sort hugo.Sites ".Language.LanguageName" }}
+  {{ if ne .Language.Lang $defaultLang }}
+    {{ $filePath := printf "%s%s.%s.html" $contentBase $page .Language.Lang }}
+    {{ if os.FileExists $filePath }}
+      <a href="/{{ .Language.Lang }}/{{ $addonBase }}{{ $urlPath }}/" hreflang="{{ .Language.Lang }}" title="{{ .Language.LanguageName }}">{{- with .Language.Params.flag }}{{ . }}{{ else }}{{ .Language.Lang }}{{ end -}}</a>
+    {{ end }}
+  {{ end }}
+{{ end }}
