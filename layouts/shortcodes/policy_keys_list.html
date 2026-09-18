@@ -1,0 +1,209 @@
+{{ $jsonPath := "content/thunderbird-addon-thunderai/policy-keys.json" }}
+{{ $data := os.ReadFile $jsonPath | transform.Unmarshal }}
+
+{{ $settable := where $data "settable" true }}
+{{ $excluded := where $data "settable" false }}
+
+{{/* Display order of the groups: connection first, then providers, features, general. */}}
+{{ $groupOrder := slice
+    "Structure and organization"
+    "Restrictions"
+    "Connection"
+    "OpenAI-compatible"
+    "OpenAI / ChatGPT API"
+    "Anthropic / Claude"
+    "Google Gemini"
+    "Ollama"
+    "ChatGPT Web"
+    "Features"
+    "Tagging"
+    "Spam filter"
+    "Summarize"
+    "Translate"
+    "Calendar and tasks"
+    "Per-feature connection overrides"
+    "General"
+}}
+
+<div id="placeholders-control" role="tablist" aria-label="Key reference view">
+    <button type="button" id="ctrl-group" onclick="togglePolicyKeys('group')" class="placeholder-ctrl active" role="tab" aria-selected="true" aria-controls="list-grouped" tabindex="0">Grouped by Section</button>
+    <button type="button" id="ctrl-alpha" onclick="togglePolicyKeys('alpha')" class="placeholder-ctrl" role="tab" aria-selected="false" aria-controls="list-alpha" tabindex="-1">All Keys A-Z</button>
+</div>
+
+<div class="policy-key-filter">
+    <input type="search" id="policy-key-search" placeholder="Filter keys&hellip;" aria-label="Filter keys by name" autocomplete="off">
+    <span id="policy-key-count" class="small_text"></span>
+</div>
+
+{{/* ---------- Grouped view ---------- */}}
+<div id="list-grouped" role="tabpanel" aria-labelledby="ctrl-group">
+    {{ range $groupOrder }}
+        {{ $group := . }}
+        {{ $items := where $settable "group" $group }}
+        {{ with $items }}
+        <details>
+            <summary><b>{{ $group }}</b> <span class="sup_comment">({{ len $items }})</span></summary>
+            <table class="guides policy-keys">
+                <thead>
+                    <tr>
+                        <th>Key</th>
+                        <th>Type</th>
+                        <th>Default</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {{ range sort $items "key" }}
+                    <tr>
+                        <td><code>{{ .key }}</code>
+                            {{ with .values }}<br><span class="sup_comment">{{ . }}</span>{{ end }}
+                            {{ with .notes }}<br><span class="perm_desc">{{ . | safeHTML }}</span>{{ end }}
+                            {{ if ne .version "" }} <span class="sup_comment">[From version {{ .version }}]</span>{{ end }}
+                        </td>
+                        <td>{{ .type }}</td>
+                        <td><code>{{ .default }}</code></td>
+                    </tr>
+                {{ end }}
+                </tbody>
+            </table>
+        </details>
+        {{ end }}
+    {{ end }}
+</div>
+
+{{/* ---------- Flat A-Z view ---------- */}}
+<div id="list-alpha" role="tabpanel" aria-labelledby="ctrl-alpha" style="display:none;">
+    <table class="guides policy-keys">
+        <thead>
+            <tr>
+                <th>Key</th>
+                <th>Type</th>
+                <th>Default</th>
+                <th>Section</th>
+            </tr>
+        </thead>
+        <tbody>
+        {{ range sort $settable "key" }}
+            <tr>
+                <td><code>{{ .key }}</code>
+                    {{ with .values }}<br><span class="sup_comment">{{ . }}</span>{{ end }}
+                </td>
+                <td>{{ .type }}</td>
+                <td><code>{{ .default }}</code></td>
+                <td class="small_text">{{ .group }}</td>
+            </tr>
+        {{ end }}
+        </tbody>
+    </table>
+</div>
+
+{{/* ---------- Keys that cannot be set ---------- */}}
+<h3>Keys that cannot be set by policy</h3>
+<p>These are per-machine or per-profile state, not configuration. Setting them is ignored with a warning.</p>
+<table class="guides">
+    <thead>
+        <tr>
+            <th>Key</th>
+            <th>Why</th>
+        </tr>
+    </thead>
+    <tbody>
+    {{ range sort $excluded "key" }}
+        <tr>
+            <td><code>{{ .key }}</code></td>
+            <td>{{ .notes }}</td>
+        </tr>
+    {{ end }}
+    </tbody>
+</table>
+
+<script>
+    function togglePolicyKeys(mode, moveFocus) {
+        document.getElementById('list-grouped').style.display = (mode === 'group') ? 'block' : 'none';
+        document.getElementById('list-alpha').style.display = (mode === 'alpha') ? 'block' : 'none';
+
+        var ctrlGroup = document.getElementById('ctrl-group');
+        var ctrlAlpha = document.getElementById('ctrl-alpha');
+        var selected = (mode === 'group') ? ctrlGroup : ctrlAlpha;
+        var other = (mode === 'group') ? ctrlAlpha : ctrlGroup;
+
+        selected.classList.add('active');
+        selected.setAttribute('aria-selected', 'true');
+        selected.setAttribute('tabindex', '0');
+
+        other.classList.remove('active');
+        other.setAttribute('aria-selected', 'false');
+        other.setAttribute('tabindex', '-1');
+
+        if (moveFocus) {
+            selected.focus();
+        }
+
+        filterPolicyKeys();
+    }
+
+    function filterPolicyKeys() {
+        var input = document.getElementById('policy-key-search');
+        var counter = document.getElementById('policy-key-count');
+        if (!input) { return; }
+
+        var term = input.value.trim().toLowerCase();
+        var grouped = document.getElementById('list-grouped');
+        var visiblePanel = (grouped.style.display === 'none')
+            ? document.getElementById('list-alpha')
+            : grouped;
+
+        var shown = 0;
+        var rows = visiblePanel.querySelectorAll('table.policy-keys tbody tr');
+        rows.forEach(function (row) {
+            var code = row.querySelector('code');
+            var name = code ? code.textContent.toLowerCase() : '';
+            var match = (term === '') || (name.indexOf(term) !== -1);
+            row.style.display = match ? '' : 'none';
+            if (match) { shown++; }
+        });
+
+        // While filtering, open every <details> that still has a match and hide the empty ones.
+        visiblePanel.querySelectorAll('details').forEach(function (d) {
+            var any = Array.prototype.some.call(
+                d.querySelectorAll('tbody tr'),
+                function (r) { return r.style.display !== 'none'; }
+            );
+            d.style.display = any ? '' : 'none';
+            if (term !== '') { d.open = any; }
+        });
+
+        counter.textContent = (term === '') ? '' : shown + ' key' + (shown === 1 ? '' : 's') + ' matching';
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var input = document.getElementById('policy-key-search');
+        if (input) {
+            input.addEventListener('input', filterPolicyKeys);
+        }
+
+        var control = document.getElementById('placeholders-control');
+        if (!control) { return; }
+
+        control.addEventListener('keydown', function (event) {
+            var mode = null;
+
+            switch (event.key) {
+                case 'ArrowLeft':
+                case 'ArrowUp':
+                case 'Home':
+                    mode = 'group';
+                    break;
+                case 'ArrowRight':
+                case 'ArrowDown':
+                case 'End':
+                    mode = 'alpha';
+                    break;
+                default:
+                    return;
+            }
+
+            event.preventDefault();
+            togglePolicyKeys(mode, true);
+        });
+    });
+</script>

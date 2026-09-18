@@ -14,22 +14,7 @@ Type = "no-list"
     Thunderbird's own enterprise policy file.
 </p>
 
-<h2>Summary</h2>
-<ul>
-    <li><a href="#two-things">Two things to know first</a></li>
-    <li><a href="#where">Where policies.json goes</a></li>
-    <li><a href="#structure">Structure</a></li>
-    <li><a href="#enforced">Enforced vs. initial values</a></li>
-    <li><a href="#example">Worked example</a></li>
-    <li><a href="#org-prompts">Organization prompts</a></li>
-    <li><a href="#key-reference">Key reference</a></li>
-    <li><a href="#troubleshooting">Troubleshooting</a></li>
-    <li><a href="#notes">Notes</a></li>
-</ul>
-
-<hr>
-
-<h2 id="two-things">Two things to know first</h2>
+<h2 id="before">Before you start</h2>
 
 <div class="admon warn">
     <h3>⚠️ Policies are read only at Thunderbird startup</h3>
@@ -57,7 +42,14 @@ Type = "no-list"
     </p>
 </div>
 
-<hr>
+<nav id="section-nav" aria-label="On this page">
+    <a href="#where">Installing</a>
+    <a href="#enforced">Enforced values</a>
+    <a href="#example">Example</a>
+    <a href="#org-prompts">Org prompts</a>
+    <a href="#key-reference">Key reference</a>
+    <a href="#troubleshooting">Troubleshooting</a>
+</nav>
 
 <h2 id="where">Where <code>policies.json</code> goes</h2>
 
@@ -103,7 +95,6 @@ Type = "no-list"
 </p>
 <p>To verify a policy has loaded, open <code>about:policies</code> in Thunderbird.</p>
 
-<hr>
 
 <h2 id="structure">Structure</h2>
 
@@ -126,7 +117,6 @@ Type = "no-list"
     table and no renaming — see the <a href="#key-reference">key reference</a>.
 </p>
 
-<hr>
 
 <h2 id="enforced">Enforced vs. initial values</h2>
 
@@ -181,7 +171,6 @@ Type = "no-list"
     cleanly restores</strong> whatever the user had before, or the ThunderAI default.
 </p>
 
-<hr>
 
 <h2 id="example">Worked example</h2>
 
@@ -189,6 +178,9 @@ Type = "no-list"
     An organization routing all AI traffic through an internal gateway, enforcing the connection and the
     privacy-relevant settings, suggesting a couple of defaults, and shipping two shared prompts.
 </p>
+
+<details open>
+    <summary><b>Example <code>policies.json</code></b></summary>
 
 <pre>{
   "policies": {
@@ -238,6 +230,7 @@ Type = "no-list"
     }
   }
 }</pre>
+</details>
 
 <p>
     What the user sees: the connection is pre-configured and locked, so they are never asked to run the
@@ -247,7 +240,6 @@ Type = "no-list"
     version.
 </p>
 
-<hr>
 
 <h2 id="org-prompts">Organization prompts</h2>
 
@@ -369,403 +361,20 @@ Type = "no-list"
     policy — these warnings appear whether or not debug logging is on.
 </p>
 
-<hr>
 
 <h2 id="key-reference">Key reference</h2>
 
 <p>
-    Values must match the type shown. A wrong type is ignored with a warning; it is <strong>not</strong>
-    coerced — <code>"true"</code> is not <code>true</code>.
+    Every key below is a ThunderAI setting name, used verbatim as the policy key. Values must match the
+    type shown: a wrong type is ignored with a warning and is <strong>not</strong> coerced —
+    <code>"true"</code> is not <code>true</code>, and <code>"70"</code> is not <code>70</code>.
+</p>
+<p class="small_text">
+    Use <b>Grouped by Section</b> to browse by area, or <b>All Keys A-Z</b> when you already have a key
+    name and need its type. The filter box searches key names in the view you are in.
 </p>
 
-<h3>Connection</h3>
-
-<table class="guides">
-    <thead>
-        <tr>
-            <th>Key</th>
-            <th>Type</th>
-            <th>Default</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr><td><code>connection_type</code></td><td>string</td><td><code>""</code></td></tr>
-        <tr><td><code>use_specific_integration</code></td><td>boolean</td><td><code>false</code></td></tr>
-    </tbody>
-</table>
-
-<p>
-    <code>connection_type</code>: <code>chatgpt_web</code>, <code>chatgpt_api</code>,
-    <code>google_gemini_api</code>, <code>anthropic_api</code>, <code>ollama_api</code>,
-    <code>openai_comp_api</code>. Empty means "not configured" and triggers the setup wizard — set it to
-    skip onboarding entirely.
-</p>
-
-<h3>Provider settings</h3>
-
-<details>
-    <summary><b>OpenAI-compatible</b> (use this for an internal gateway) — <code>openai_comp_*</code></summary>
-
-    <table class="guides">
-        <thead>
-            <tr>
-                <th>Key</th>
-                <th>Type</th>
-                <th>Default</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr><td><code>openai_comp_host</code></td><td>string</td><td><code>""</code></td></tr>
-            <tr><td><code>openai_comp_api_key</code></td><td>string</td><td><code>""</code></td></tr>
-            <tr><td><code>openai_comp_model</code></td><td>string</td><td><code>""</code></td></tr>
-            <tr><td><code>openai_comp_use_v1</code></td><td>boolean</td><td><code>true</code></td></tr>
-            <tr><td><code>openai_comp_chat_name</code></td><td>string</td><td><code>"OpenAI Comp"</code></td></tr>
-            <tr><td><code>openai_comp_temperature</code></td><td>string</td><td><code>""</code></td></tr>
-            <tr><td><code>openai_comp_extra_body</code></td><td>string</td><td><code>""</code></td></tr>
-        </tbody>
-    </table>
-</details>
-
-<details>
-    <summary><b>OpenAI / ChatGPT API</b> — <code>chatgpt_*</code></summary>
-
-    <table class="guides">
-        <thead>
-            <tr>
-                <th>Key</th>
-                <th>Type</th>
-                <th>Default</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr><td><code>chatgpt_api_key</code></td><td>string</td><td><code>""</code></td></tr>
-            <tr><td><code>chatgpt_model</code></td><td>string</td><td><code>""</code></td></tr>
-            <tr><td><code>chatgpt_developer_messages</code></td><td>string</td><td><code>""</code></td></tr>
-            <tr><td><code>chatgpt_temperature</code></td><td>string</td><td><code>""</code></td></tr>
-            <tr><td><code>chatgpt_store</code></td><td>boolean</td><td><code>false</code></td></tr>
-            <tr><td><code>chatgpt_reasoning_summary</code></td><td>string</td><td><code>""</code></td></tr>
-            <tr><td><code>chatgpt_reasoning_effort</code></td><td>string</td><td><code>""</code></td></tr>
-            <tr><td><code>chatgpt_extra_body</code></td><td>string</td><td><code>""</code></td></tr>
-        </tbody>
-    </table>
-</details>
-
-<details>
-    <summary><b>Anthropic / Claude</b> — <code>anthropic_*</code></summary>
-
-    <table class="guides">
-        <thead>
-            <tr>
-                <th>Key</th>
-                <th>Type</th>
-                <th>Default</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr><td><code>anthropic_api_key</code></td><td>string</td><td><code>""</code></td></tr>
-            <tr><td><code>anthropic_model</code></td><td>string</td><td><code>""</code></td></tr>
-            <tr><td><code>anthropic_version</code></td><td>string</td><td><code>"2023-06-01"</code></td></tr>
-            <tr><td><code>anthropic_max_tokens</code></td><td>number</td><td><code>4096</code></td></tr>
-            <tr><td><code>anthropic_system_prompt</code></td><td>string</td><td><code>""</code></td></tr>
-            <tr><td><code>anthropic_temperature</code></td><td>string</td><td><code>""</code></td></tr>
-            <tr><td><code>anthropic_extended_thinking_budget</code></td><td>number</td><td><code>0</code></td></tr>
-            <tr><td><code>anthropic_effort</code></td><td>string</td><td><code>""</code></td></tr>
-        </tbody>
-    </table>
-</details>
-
-<details>
-    <summary><b>Google Gemini</b> — <code>google_gemini_*</code></summary>
-
-    <table class="guides">
-        <thead>
-            <tr>
-                <th>Key</th>
-                <th>Type</th>
-                <th>Default</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr><td><code>google_gemini_api_key</code></td><td>string</td><td><code>""</code></td></tr>
-            <tr><td><code>google_gemini_model</code></td><td>string</td><td><code>""</code></td></tr>
-            <tr><td><code>google_gemini_system_instruction</code></td><td>string</td><td><code>""</code></td></tr>
-            <tr><td><code>google_gemini_thinking_budget</code></td><td>string</td><td><code>""</code></td></tr>
-            <tr><td><code>google_gemini_temperature</code></td><td>string</td><td><code>""</code></td></tr>
-        </tbody>
-    </table>
-</details>
-
-<details>
-    <summary><b>Ollama</b> (self-hosted) — <code>ollama_*</code></summary>
-
-    <table class="guides">
-        <thead>
-            <tr>
-                <th>Key</th>
-                <th>Type</th>
-                <th>Default</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr><td><code>ollama_host</code></td><td>string</td><td><code>""</code></td></tr>
-            <tr><td><code>ollama_model</code></td><td>string</td><td><code>""</code></td></tr>
-            <tr><td><code>ollama_num_ctx</code></td><td>number</td><td><code>0</code></td></tr>
-            <tr><td><code>ollama_temperature</code></td><td>string</td><td><code>""</code></td></tr>
-            <tr><td><code>ollama_think</code></td><td>boolean</td><td><code>false</code></td></tr>
-            <tr><td><code>ollama_format_json</code></td><td>boolean</td><td><code>false</code></td></tr>
-        </tbody>
-    </table>
-</details>
-
-<details>
-    <summary><b>ChatGPT Web</b> — <code>chatgpt_web_*</code></summary>
-
-    <table class="guides">
-        <thead>
-            <tr>
-                <th>Key</th>
-                <th>Type</th>
-                <th>Default</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr><td><code>chatgpt_web_model</code></td><td>string</td><td><code>""</code></td></tr>
-            <tr><td><code>chatgpt_web_project</code></td><td>string</td><td><code>""</code></td></tr>
-            <tr><td><code>chatgpt_web_custom_gpt</code></td><td>string</td><td><code>""</code></td></tr>
-            <tr><td><code>chatgpt_web_tempchat</code></td><td>boolean</td><td><code>false</code></td></tr>
-            <tr><td><code>chatgpt_web_load_wait_time</code></td><td>number</td><td><code>1000</code></td></tr>
-        </tbody>
-    </table>
-</details>
-
-<h3>Features</h3>
-
-<p>
-    Each of these can be turned off and locked, which is the usual way to keep a feature off an entire fleet.
-</p>
-
-<table class="guides">
-    <thead>
-        <tr>
-            <th>Key</th>
-            <th>Type</th>
-            <th>Default</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr><td><code>add_tags</code></td><td>boolean</td><td><code>false</code></td></tr>
-        <tr><td><code>spamfilter</code></td><td>boolean</td><td><code>false</code></td></tr>
-        <tr><td><code>summarize</code></td><td>boolean</td><td><code>false</code></td></tr>
-        <tr><td><code>translate</code></td><td>boolean</td><td><code>true</code></td></tr>
-        <tr><td><code>get_calendar_event</code></td><td>boolean</td><td><code>true</code></td></tr>
-        <tr><td><code>get_task</code></td><td>boolean</td><td><code>true</code></td></tr>
-    </tbody>
-</table>
-
-<details>
-    <summary><b>Tagging</b> — <code>add_tags_*</code></summary>
-
-    <table class="guides">
-        <thead>
-            <tr>
-                <th>Key</th>
-                <th>Type</th>
-                <th>Default</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr><td><code>add_tags_maxnum</code></td><td>number</td><td><code>3</code></td></tr>
-            <tr><td><code>add_tags_auto</code></td><td>boolean</td><td><code>false</code></td></tr>
-            <tr><td><code>add_tags_auto_force_existing</code></td><td>boolean</td><td><code>false</code></td></tr>
-            <tr><td><code>add_tags_auto_only_inbox</code></td><td>boolean</td><td><code>true</code></td></tr>
-            <tr><td><code>add_tags_auto_include_sent</code></td><td>boolean</td><td><code>false</code></td></tr>
-            <tr><td><code>add_tags_auto_uselist</code></td><td>boolean</td><td><code>false</code></td></tr>
-            <tr><td><code>add_tags_auto_uselist_list</code></td><td>string</td><td><code>""</code></td></tr>
-            <tr><td><code>add_tags_first_uppercase</code></td><td>boolean</td><td><code>true</code></td></tr>
-            <tr><td><code>add_tags_force_lang</code></td><td>boolean</td><td><code>true</code></td></tr>
-            <tr><td><code>add_tags_hide_exclusions</code></td><td>boolean</td><td><code>false</code></td></tr>
-            <tr><td><code>add_tags_exclusions_exact_match</code></td><td>boolean</td><td><code>false</code></td></tr>
-        </tbody>
-    </table>
-</details>
-
-<details>
-    <summary><b>Spam filter</b> — <code>spamfilter_*</code></summary>
-
-    <table class="guides">
-        <thead>
-            <tr>
-                <th>Key</th>
-                <th>Type</th>
-                <th>Default</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr><td><code>spamfilter_threshold</code></td><td>number</td><td><code>70</code></td></tr>
-            <tr><td><code>spamfilter_skip_addresses</code></td><td>array</td><td><code>[]</code></td></tr>
-            <tr><td><code>spamfilter_skip_addressbook</code></td><td>boolean</td><td><code>true</code></td></tr>
-            <tr><td><code>spamfilter_show_msg_panel</code></td><td>boolean</td><td><code>true</code></td></tr>
-            <tr><td><code>spamfilter_only_inbox</code></td><td>boolean</td><td><code>false</code></td></tr>
-        </tbody>
-    </table>
-</details>
-
-<details>
-    <summary><b>Summarize</b> — <code>summarize_*</code></summary>
-
-    <table class="guides">
-        <thead>
-            <tr>
-                <th>Key</th>
-                <th>Type</th>
-                <th>Default</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr><td><code>summarize_auto</code></td><td>number</td><td><code>1</code></td></tr>
-            <tr><td><code>summarize_display_mode</code></td><td>string</td><td><code>"inline"</code></td></tr>
-            <tr><td><code>summarize_max_messages</code></td><td>number</td><td><code>20</code></td></tr>
-            <tr><td><code>summarize_max_display_length</code></td><td>number</td><td><code>0</code></td></tr>
-            <tr><td><code>summarize_strip_formatting</code></td><td>boolean</td><td><code>false</code></td></tr>
-            <tr><td><code>summarize_auto_senders</code></td><td>boolean</td><td><code>false</code></td></tr>
-            <tr><td><code>summarize_auto_senders_list</code></td><td>array</td><td><code>[]</code></td></tr>
-        </tbody>
-    </table>
-
-    <p><code>summarize_auto</code>: <code>0</code> disabled, <code>1</code> manual button,
-        <code>2</code> on message open, <code>3</code> on receive.</p>
-</details>
-
-<details>
-    <summary><b>Translate</b> — <code>translate_*</code></summary>
-
-    <table class="guides">
-        <thead>
-            <tr>
-                <th>Key</th>
-                <th>Type</th>
-                <th>Default</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr><td><code>translate_auto</code></td><td>number</td><td><code>0</code></td></tr>
-            <tr><td><code>translate_lang</code></td><td>string</td><td><code>""</code></td></tr>
-            <tr><td><code>translate_exclude_lang</code></td><td>string</td><td><code>""</code></td></tr>
-            <tr><td><code>translate_max_display_length</code></td><td>number</td><td><code>0</code></td></tr>
-        </tbody>
-    </table>
-</details>
-
-<details>
-    <summary><b>Calendar and tasks</b></summary>
-
-    <table class="guides">
-        <thead>
-            <tr>
-                <th>Key</th>
-                <th>Type</th>
-                <th>Default</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr><td><code>get_calendar_event_from_clipboard</code></td><td>boolean</td><td><code>false</code></td></tr>
-            <tr><td><code>calendar_enforce_timezone</code></td><td>boolean</td><td><code>false</code></td></tr>
-            <tr><td><code>calendar_timezone</code></td><td>string</td><td><code>""</code></td></tr>
-            <tr><td><code>calendar_no_selection</code></td><td>boolean</td><td><code>false</code></td></tr>
-        </tbody>
-    </table>
-</details>
-
-<h3>Per-feature connection overrides</h3>
-
-<p>
-    Each feature can be routed to a different provider than the global connection. For every prefix in
-    <code>add_tags</code>, <code>spamfilter</code>, <code>summarize</code>, <code>translate</code>,
-    <code>get_calendar_event</code>, <code>get_task</code>:
-</p>
-
-<table class="guides">
-    <thead>
-        <tr>
-            <th>Key</th>
-            <th>Type</th>
-            <th>Default</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr><td><code>&lt;prefix&gt;_use_specific_integration</code></td><td>boolean</td><td><code>false</code></td></tr>
-        <tr><td><code>&lt;prefix&gt;_connection_type</code></td><td>string</td><td><code>"chatgpt_api"</code></td></tr>
-    </tbody>
-</table>
-
-<p>
-    For example, to send spam filtering to a local Ollama instance while everything else uses the gateway:
-    set <code>spamfilter_use_specific_integration</code> to <code>true</code> and
-    <code>spamfilter_connection_type</code> to <code>ollama_api</code>.
-</p>
-
-<h3>General</h3>
-
-<table class="guides">
-    <thead>
-        <tr>
-            <th>Key</th>
-            <th>Type</th>
-            <th>Default</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr><td><code>default_chatgpt_lang</code></td><td>string</td><td><code>""</code></td></tr>
-        <tr><td><code>default_sign_name</code></td><td>string</td><td><code>""</code></td></tr>
-        <tr><td><code>reply_type</code></td><td>string</td><td><code>"reply_all"</code></td></tr>
-        <tr><td><code>max_prompt_length</code></td><td>number</td><td><code>30000</code></td></tr>
-        <tr><td><code>special_command_timeout</code></td><td>number</td><td><code>120000</code></td></tr>
-        <tr><td><code>diff_granularity</code></td><td>string</td><td><code>"words"</code></td></tr>
-        <tr><td><code>hide_thinking</code></td><td>boolean</td><td><code>true</code></td></tr>
-        <tr><td><code>placeholders_use_default_value</code></td><td>boolean</td><td><code>false</code></td></tr>
-        <tr><td><code>dynamic_menu_force_enter</code></td><td>boolean</td><td><code>false</code></td></tr>
-        <tr><td><code>do_debug</code></td><td>boolean</td><td><code>false</code></td></tr>
-    </tbody>
-</table>
-
-<p>
-    <code>reply_type</code>: <code>reply_all</code> or <code>reply_sender</code>. &nbsp;
-    <code>diff_granularity</code>: <code>words</code> or <code>sentences</code>. &nbsp;
-    <code>special_command_timeout</code> and <code>max_prompt_length</code> are in milliseconds and
-    characters respectively.
-</p>
-
-<h3>Keys that cannot be set by policy</h3>
-
-<p>
-    These are per-machine or per-profile state, not configuration. Setting them is ignored with a warning.
-</p>
-
-<table class="guides">
-    <thead>
-        <tr>
-            <th>Key</th>
-            <th>Why</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td><code>chatgpt_win_height</code>, <code>chatgpt_win_width</code>, <code>chatgpt_win_top</code>,
-                <code>chatgpt_win_left</code>, <code>chatgpt_win_save_position</code></td>
-            <td>window geometry, specific to a machine's display</td>
-        </tr>
-        <tr>
-            <td><code>api_webchat_font_scale</code></td>
-            <td>local UI zoom</td>
-        </tr>
-        <tr>
-            <td><code>add_tags_enabled_accounts</code>, <code>spamfilter_enabled_accounts</code></td>
-            <td>account identifiers, specific to a profile</td>
-        </tr>
-    </tbody>
-</table>
-
-<hr>
+{{< policy_keys_list >}}
 
 <h2 id="troubleshooting">Troubleshooting</h2>
 
@@ -827,7 +436,6 @@ Type = "no-list"
     </tbody>
 </table>
 
-<hr>
 
 <h2 id="notes">Notes</h2>
 
@@ -838,3 +446,110 @@ Type = "no-list"
 
 <br>
 <div style="text-align: center"><a href="../">Back to guides</a></div>
+
+<script>
+    // Scroll spy for #section-nav: highlights the section currently being read and keeps
+    // the active chip scrolled into view inside the bar on narrow screens.
+    (function () {
+        var nav = document.getElementById('section-nav');
+        if (!nav) { return; }
+
+        var links = Array.prototype.slice.call(nav.querySelectorAll('a'));
+        var sections = links
+            .map(function (a) {
+                var el = document.getElementById(a.getAttribute('href').slice(1));
+                return el ? { link: a, el: el } : null;
+            })
+            .filter(Boolean);
+        if (!sections.length) { return; }
+
+        var current = null;
+
+        function setActive(entry) {
+            if (entry === current) { return; }
+            current = entry;
+
+            links.forEach(function (a) {
+                a.classList.remove('current');
+                a.removeAttribute('aria-current');
+            });
+            if (!entry) { return; }
+
+            entry.link.classList.add('current');
+            entry.link.setAttribute('aria-current', 'true');
+
+            // Keep the active chip visible when the bar itself scrolls horizontally.
+            if (nav.scrollWidth > nav.clientWidth) {
+                var navBox = nav.getBoundingClientRect();
+                var chip = entry.link.getBoundingClientRect();
+                if (chip.left < navBox.left || chip.right > navBox.right) {
+                    nav.scrollLeft += chip.left - navBox.left
+                        - (navBox.width - chip.width) / 2;
+                }
+            }
+        }
+
+        // Where an anchor jump parks a heading: the CSS scroll-margin-top of the headings.
+        // The reading line must sit just below it, otherwise clicking a link lands the
+        // heading under the line and the PREVIOUS section stays highlighted.
+        function readingLine() {
+            var probe = sections[0].el;
+            var margin = parseFloat(
+                getComputedStyle(probe).scrollMarginTop
+            );
+            if (!isFinite(margin) || margin <= 0) {
+                margin = (nav.getBoundingClientRect().bottom || 0);
+            }
+            return margin + 4;
+        }
+
+        function update() {
+            // The section whose heading is the last one above the reading line.
+            var line = readingLine();
+            var found = null;
+
+            for (var i = 0; i < sections.length; i++) {
+                if (sections[i].el.getBoundingClientRect().top <= line) {
+                    found = sections[i];
+                } else {
+                    break;
+                }
+            }
+
+            // At the very bottom the last section wins even if its heading is above the line.
+            if (window.innerHeight + window.scrollY >= document.body.scrollHeight - 2) {
+                found = sections[sections.length - 1];
+            }
+
+            setActive(found);
+        }
+
+        // A click is an explicit choice: highlight that section at once and hold it until
+        // the smooth scroll has settled, so the bar never lags a section behind.
+        var pinnedUntil = 0;
+
+        links.forEach(function (a) {
+            a.addEventListener('click', function () {
+                var target = sections.filter(function (s) { return s.link === a; })[0];
+                if (!target) { return; }
+                setActive(target);
+                pinnedUntil = Date.now() + 700;
+            });
+        });
+
+        var ticking = false;
+        function onScroll() {
+            if (ticking) { return; }
+            ticking = true;
+            window.requestAnimationFrame(function () {
+                if (Date.now() >= pinnedUntil) { update(); }
+                ticking = false;
+            });
+        }
+
+        window.addEventListener('scroll', onScroll, { passive: true });
+        window.addEventListener('resize', onScroll);
+        document.addEventListener('DOMContentLoaded', update);
+        update();
+    })();
+</script>
