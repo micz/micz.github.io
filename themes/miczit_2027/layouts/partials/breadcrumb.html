@@ -1,6 +1,10 @@
-{{ if .Ancestors }}{{/* .Ancestors walks deepest→home; reverse for breadcrumb order. */}}
+{{ if .Ancestors }}{{/* .Ancestors walks deepest→home; reverse for breadcrumb order.
+     Language redirect stubs have no Title — skip them to avoid empty crumbs. */}}
+{{ $crumbs := slice }}
+{{ range .Ancestors.Reverse }}{{ if or .Title .IsHome }}{{ $crumbs = $crumbs | append . }}{{ end }}{{ end }}
+{{ if gt (len $crumbs) 0 }}
 <nav class="breadcrumb" aria-label="Breadcrumb">
-    {{ range .Ancestors.Reverse }}
+    {{ range $crumbs }}
         {{ if .IsHome }}
             <a href="{{ .RelPermalink }}">{{ i18n "home" }}</a>
         {{ else }}
@@ -12,4 +16,5 @@
     {{ $t := partial "title-split.html" . }}
     <span class="crumb-current" aria-current="page">{{ $t.title }}</span>
 </nav>
+{{ end }}
 {{ end }}

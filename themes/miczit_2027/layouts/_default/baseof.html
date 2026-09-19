@@ -4,7 +4,7 @@
     {{ partial "theme-init.html" . }}
     {{ block "head" . }}{{ partial "head.html" . }}{{ end }}
 </head>
-<body>
+<body{{ if .IsHome }} class="home"{{ end }}>
     <a class="skip-link" href="#main">{{ i18n "skipToContent" }}</a>
     <div class="page-shell">
         {{ block "header" . }}{{ partial "header.html" . }}{{ end }}
