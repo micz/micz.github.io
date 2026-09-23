@@ -8,7 +8,7 @@
         "settable": true,
         "values": "",
         "notes": "Policy schema version of this block.",
-        "version": ""
+        "version": "5.1.0"
     },
     {
         "key": "_org_name",
@@ -19,7 +19,7 @@
         "settable": true,
         "values": "",
         "notes": "Organization name shown beside the managed settings.",
-        "version": ""
+        "version": "5.1.0"
     },
     {
         "key": "_org_id",
@@ -30,7 +30,7 @@
         "settable": true,
         "values": "",
         "notes": "Required for _org_prompts. Lowercase letters, digits and hyphens only, no underscore. Choose it once and never change it.",
-        "version": ""
+        "version": "5.1.0"
     },
     {
         "key": "_org_prompts",
@@ -41,7 +41,7 @@
         "settable": true,
         "values": "",
         "notes": "The shared, read-only prompt set. See the Organization prompts section.",
-        "version": ""
+        "version": "5.1.0"
     },
     {
         "key": "_disable_prompt_management",
@@ -52,7 +52,7 @@
         "settable": true,
         "values": "true",
         "notes": "No prompt can be created, duplicated, imported or exported. The user's own prompts become read-only and are removed from the menus, but are never deleted. Built-in and organization prompts keep working. See <a href=\"#restrictions\">Restrictions</a>.",
-        "version": ""
+        "version": "5.1.0"
     },
     {
         "key": "_disable_default_prompts",
@@ -63,7 +63,7 @@
         "settable": true,
         "values": "true",
         "notes": "Removes the ThunderAI built-in prompts from the menus, typically leaving only the organization ones. Special features (tags, summarize, translate, spam filter, calendar, task) are not affected. See <a href=\"#restrictions\">Restrictions</a>.",
-        "version": ""
+        "version": "5.1.0"
     },
     {
         "key": "_disable_setup_wizard",
@@ -74,7 +74,7 @@
         "settable": true,
         "values": "true",
         "notes": "The setup wizard cannot be opened from anywhere, not even by its direct URL. Use it together with a locked connection. See <a href=\"#restrictions\">Restrictions</a>.",
-        "version": ""
+        "version": "5.1.0"
     },
     {
         "key": "add_tags",
@@ -82,7 +82,7 @@
         "default": "false",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "Features",
         "category": "feature",
         "settable": true
@@ -93,7 +93,7 @@
         "default": "false",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "Tagging",
         "category": "feature",
         "settable": true
@@ -104,7 +104,7 @@
         "default": "false",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "Tagging",
         "category": "feature",
         "settable": true
@@ -115,7 +115,7 @@
         "default": "false",
         "values": "",
         "notes": "Auto tagging normally skips the sent folder; this re-enables it.",
-        "version": "",
+        "version": "5.1.0",
         "group": "Tagging",
         "category": "feature",
         "settable": true
@@ -126,7 +126,7 @@
         "default": "true",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "Tagging",
         "category": "feature",
         "settable": true
@@ -137,7 +137,7 @@
         "default": "false",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "Tagging",
         "category": "feature",
         "settable": true
@@ -148,7 +148,7 @@
         "default": "\"\"",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "Tagging",
         "category": "feature",
         "settable": true
@@ -159,7 +159,7 @@
         "default": "\"chatgpt_api\"",
         "values": "chatgpt_web | chatgpt_api | google_gemini_api | anthropic_api | ollama_api | openai_comp_api",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "Per-feature connection overrides",
         "category": "override",
         "settable": true
@@ -170,7 +170,7 @@
         "default": "[]",
         "values": "",
         "notes": "Account identifiers, specific to a profile.",
-        "version": "",
+        "version": "5.1.0",
         "group": "Not settable by policy",
         "category": "excluded",
         "settable": false
@@ -181,7 +181,7 @@
         "default": "false",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "Tagging",
         "category": "feature",
         "settable": true
@@ -192,7 +192,7 @@
         "default": "true",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "Tagging",
         "category": "feature",
         "settable": true
@@ -203,7 +203,7 @@
         "default": "true",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "Tagging",
         "category": "feature",
         "settable": true
@@ -214,7 +214,7 @@
         "default": "false",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "Tagging",
         "category": "feature",
         "settable": true
@@ -225,7 +225,7 @@
         "default": "3",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "Tagging",
         "category": "feature",
         "settable": true
@@ -236,7 +236,7 @@
         "default": "false",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "Per-feature connection overrides",
         "category": "override",
         "settable": true
@@ -247,7 +247,7 @@
         "default": "\"\"",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "Anthropic / Claude",
         "category": "provider",
         "settable": true
@@ -258,7 +258,7 @@
         "default": "\"\"",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "Anthropic / Claude",
         "category": "provider",
         "settable": true
@@ -269,7 +269,7 @@
         "default": "0",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "Anthropic / Claude",
         "category": "provider",
         "settable": true
@@ -280,7 +280,7 @@
         "default": "4096",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "Anthropic / Claude",
         "category": "provider",
         "settable": true
@@ -291,7 +291,7 @@
         "default": "\"\"",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "Anthropic / Claude",
         "category": "provider",
         "settable": true
@@ -302,7 +302,7 @@
         "default": "\"\"",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "Anthropic / Claude",
         "category": "provider",
         "settable": true
@@ -313,7 +313,7 @@
         "default": "\"\"",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "Anthropic / Claude",
         "category": "provider",
         "settable": true
@@ -324,7 +324,7 @@
         "default": "\"2023-06-01\"",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "Anthropic / Claude",
         "category": "provider",
         "settable": true
@@ -335,7 +335,7 @@
         "default": "1",
         "values": "",
         "notes": "Local UI zoom.",
-        "version": "",
+        "version": "5.1.0",
         "group": "Not settable by policy",
         "category": "excluded",
         "settable": false
@@ -346,7 +346,7 @@
         "default": "false",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "Calendar and tasks",
         "category": "feature",
         "settable": true
@@ -357,7 +357,7 @@
         "default": "false",
         "values": "",
         "notes": "If true, do not ask for a selection but use the full prompt.",
-        "version": "",
+        "version": "5.1.0",
         "group": "Calendar and tasks",
         "category": "feature",
         "settable": true
@@ -368,7 +368,7 @@
         "default": "\"\"",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "Calendar and tasks",
         "category": "feature",
         "settable": true
@@ -379,7 +379,7 @@
         "default": "\"\"",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "OpenAI / ChatGPT API",
         "category": "provider",
         "settable": true
@@ -390,7 +390,7 @@
         "default": "\"\"",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "OpenAI / ChatGPT API",
         "category": "provider",
         "settable": true
@@ -401,7 +401,7 @@
         "default": "\"\"",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "OpenAI / ChatGPT API",
         "category": "provider",
         "settable": true
@@ -412,7 +412,7 @@
         "default": "\"\"",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "OpenAI / ChatGPT API",
         "category": "provider",
         "settable": true
@@ -423,7 +423,7 @@
         "default": "\"\"",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "OpenAI / ChatGPT API",
         "category": "provider",
         "settable": true
@@ -434,7 +434,7 @@
         "default": "\"\"",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "OpenAI / ChatGPT API",
         "category": "provider",
         "settable": true
@@ -445,7 +445,7 @@
         "default": "false",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "OpenAI / ChatGPT API",
         "category": "provider",
         "settable": true
@@ -456,7 +456,7 @@
         "default": "\"\"",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "OpenAI / ChatGPT API",
         "category": "provider",
         "settable": true
@@ -467,7 +467,7 @@
         "default": "\"\"",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "ChatGPT Web",
         "category": "provider",
         "settable": true
@@ -478,7 +478,7 @@
         "default": "1000",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "ChatGPT Web",
         "category": "provider",
         "settable": true
@@ -489,7 +489,7 @@
         "default": "\"\"",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "ChatGPT Web",
         "category": "provider",
         "settable": true
@@ -500,7 +500,7 @@
         "default": "\"\"",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "ChatGPT Web",
         "category": "provider",
         "settable": true
@@ -511,7 +511,7 @@
         "default": "false",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "ChatGPT Web",
         "category": "provider",
         "settable": true
@@ -522,7 +522,7 @@
         "default": "800",
         "values": "",
         "notes": "Window geometry and position, specific to a machine display.",
-        "version": "",
+        "version": "5.1.0",
         "group": "Not settable by policy",
         "category": "excluded",
         "settable": false
@@ -533,7 +533,7 @@
         "default": "\"\"",
         "values": "",
         "notes": "Window geometry and position, specific to a machine display.",
-        "version": "",
+        "version": "5.1.0",
         "group": "Not settable by policy",
         "category": "excluded",
         "settable": false
@@ -544,7 +544,7 @@
         "default": "false",
         "values": "",
         "notes": "Window geometry and position, specific to a machine display.",
-        "version": "",
+        "version": "5.1.0",
         "group": "Not settable by policy",
         "category": "excluded",
         "settable": false
@@ -555,7 +555,7 @@
         "default": "\"\"",
         "values": "",
         "notes": "Window geometry and position, specific to a machine display.",
-        "version": "",
+        "version": "5.1.0",
         "group": "Not settable by policy",
         "category": "excluded",
         "settable": false
@@ -566,7 +566,7 @@
         "default": "700",
         "values": "",
         "notes": "Window geometry and position, specific to a machine display.",
-        "version": "",
+        "version": "5.1.0",
         "group": "Not settable by policy",
         "category": "excluded",
         "settable": false
@@ -577,7 +577,7 @@
         "default": "\"\"",
         "values": "chatgpt_web | chatgpt_api | google_gemini_api | anthropic_api | ollama_api | openai_comp_api",
         "notes": "Empty means \"not configured\" and triggers the setup wizard - set it to skip onboarding entirely.",
-        "version": "",
+        "version": "5.1.0",
         "group": "Connection",
         "category": "connection",
         "settable": true
@@ -588,7 +588,7 @@
         "default": "\"split\"",
         "values": "split | table",
         "notes": "Layout of the Manage Prompts page.",
-        "version": "",
+        "version": "5.1.0",
         "group": "General",
         "category": "general",
         "settable": false
@@ -599,7 +599,7 @@
         "default": "\"\"",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "General",
         "category": "general",
         "settable": true
@@ -610,7 +610,7 @@
         "default": "\"\"",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "General",
         "category": "general",
         "settable": true
@@ -621,7 +621,7 @@
         "default": "\"words\"",
         "values": "words | sentences",
         "notes": "words or sentences.",
-        "version": "",
+        "version": "5.1.0",
         "group": "General",
         "category": "general",
         "settable": true
@@ -632,7 +632,7 @@
         "default": "false",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "General",
         "category": "general",
         "settable": true
@@ -643,7 +643,7 @@
         "default": "false",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "General",
         "category": "general",
         "settable": true
@@ -654,7 +654,7 @@
         "default": "true",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "Features",
         "category": "feature",
         "settable": true
@@ -665,7 +665,7 @@
         "default": "\"chatgpt_api\"",
         "values": "chatgpt_web | chatgpt_api | google_gemini_api | anthropic_api | ollama_api | openai_comp_api",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "Per-feature connection overrides",
         "category": "override",
         "settable": true
@@ -676,7 +676,7 @@
         "default": "false",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "Calendar and tasks",
         "category": "feature",
         "settable": true
@@ -687,7 +687,7 @@
         "default": "false",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "Per-feature connection overrides",
         "category": "override",
         "settable": true
@@ -698,7 +698,7 @@
         "default": "true",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "Features",
         "category": "feature",
         "settable": true
@@ -709,7 +709,7 @@
         "default": "\"chatgpt_api\"",
         "values": "chatgpt_web | chatgpt_api | google_gemini_api | anthropic_api | ollama_api | openai_comp_api",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "Per-feature connection overrides",
         "category": "override",
         "settable": true
@@ -720,7 +720,7 @@
         "default": "false",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "Per-feature connection overrides",
         "category": "override",
         "settable": true
@@ -731,7 +731,7 @@
         "default": "\"\"",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "Google Gemini",
         "category": "provider",
         "settable": true
@@ -742,7 +742,7 @@
         "default": "\"\"",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "Google Gemini",
         "category": "provider",
         "settable": true
@@ -753,7 +753,7 @@
         "default": "\"\"",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "Google Gemini",
         "category": "provider",
         "settable": true
@@ -764,7 +764,7 @@
         "default": "\"\"",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "Google Gemini",
         "category": "provider",
         "settable": true
@@ -775,7 +775,7 @@
         "default": "\"\"",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "Google Gemini",
         "category": "provider",
         "settable": true
@@ -786,7 +786,7 @@
         "default": "true",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "General",
         "category": "general",
         "settable": true
@@ -797,7 +797,7 @@
         "default": "30000",
         "values": "",
         "notes": "In characters.",
-        "version": "",
+        "version": "5.1.0",
         "group": "General",
         "category": "general",
         "settable": true
@@ -808,7 +808,7 @@
         "default": "false",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "Ollama",
         "category": "provider",
         "settable": true
@@ -819,7 +819,7 @@
         "default": "\"\"",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "Ollama",
         "category": "provider",
         "settable": true
@@ -830,7 +830,7 @@
         "default": "\"\"",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "Ollama",
         "category": "provider",
         "settable": true
@@ -841,7 +841,7 @@
         "default": "0",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "Ollama",
         "category": "provider",
         "settable": true
@@ -852,7 +852,7 @@
         "default": "\"\"",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "Ollama",
         "category": "provider",
         "settable": true
@@ -863,7 +863,7 @@
         "default": "false",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "Ollama",
         "category": "provider",
         "settable": true
@@ -874,7 +874,7 @@
         "default": "\"\"",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "OpenAI-compatible",
         "category": "provider",
         "settable": true
@@ -885,7 +885,7 @@
         "default": "\"OpenAI Comp\"",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "OpenAI-compatible",
         "category": "provider",
         "settable": true
@@ -896,7 +896,7 @@
         "default": "\"\"",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "OpenAI-compatible",
         "category": "provider",
         "settable": true
@@ -907,7 +907,7 @@
         "default": "\"\"",
         "values": "",
         "notes": "Point this at your internal gateway.",
-        "version": "",
+        "version": "5.1.0",
         "group": "OpenAI-compatible",
         "category": "provider",
         "settable": true
@@ -918,7 +918,7 @@
         "default": "\"\"",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "OpenAI-compatible",
         "category": "provider",
         "settable": true
@@ -929,7 +929,7 @@
         "default": "\"\"",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "OpenAI-compatible",
         "category": "provider",
         "settable": true
@@ -940,7 +940,7 @@
         "default": "true",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "OpenAI-compatible",
         "category": "provider",
         "settable": true
@@ -951,7 +951,7 @@
         "default": "false",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "General",
         "category": "general",
         "settable": true
@@ -962,7 +962,7 @@
         "default": "\"reply_all\"",
         "values": "reply_all | reply_sender",
         "notes": "reply_all or reply_sender.",
-        "version": "",
+        "version": "5.1.0",
         "group": "General",
         "category": "general",
         "settable": true
@@ -973,7 +973,7 @@
         "default": "false",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "Features",
         "category": "feature",
         "settable": true
@@ -984,7 +984,7 @@
         "default": "\"chatgpt_api\"",
         "values": "chatgpt_web | chatgpt_api | google_gemini_api | anthropic_api | ollama_api | openai_comp_api",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "Per-feature connection overrides",
         "category": "override",
         "settable": true
@@ -995,7 +995,7 @@
         "default": "[]",
         "values": "",
         "notes": "Account identifiers, specific to a profile.",
-        "version": "",
+        "version": "5.1.0",
         "group": "Not settable by policy",
         "category": "excluded",
         "settable": false
@@ -1006,7 +1006,7 @@
         "default": "false",
         "values": "",
         "notes": "If true, the automatic spam filter runs only on inbox folders.",
-        "version": "",
+        "version": "5.1.0",
         "group": "Spam filter",
         "category": "feature",
         "settable": true
@@ -1017,7 +1017,7 @@
         "default": "true",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "Spam filter",
         "category": "feature",
         "settable": true
@@ -1028,7 +1028,7 @@
         "default": "true",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "Spam filter",
         "category": "feature",
         "settable": true
@@ -1039,7 +1039,7 @@
         "default": "[]",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "Spam filter",
         "category": "feature",
         "settable": true
@@ -1050,7 +1050,7 @@
         "default": "70",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "Spam filter",
         "category": "feature",
         "settable": true
@@ -1061,7 +1061,7 @@
         "default": "false",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "Per-feature connection overrides",
         "category": "override",
         "settable": true
@@ -1072,7 +1072,7 @@
         "default": "120000",
         "values": "",
         "notes": "In milliseconds, before a hung special command is aborted.",
-        "version": "",
+        "version": "5.1.0",
         "group": "General",
         "category": "general",
         "settable": true
@@ -1083,7 +1083,7 @@
         "default": "false",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "Features",
         "category": "feature",
         "settable": true
@@ -1094,7 +1094,7 @@
         "default": "1",
         "values": "",
         "notes": "0 disabled, 1 manual button, 2 on message open, 3 on receive.",
-        "version": "",
+        "version": "5.1.0",
         "group": "Summarize",
         "category": "feature",
         "settable": true
@@ -1105,7 +1105,7 @@
         "default": "false",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "Summarize",
         "category": "feature",
         "settable": true
@@ -1116,7 +1116,7 @@
         "default": "[]",
         "values": "",
         "notes": "Sender addresses or domain patterns (\"@domain.com\", \"*@domain.com\").",
-        "version": "",
+        "version": "5.1.0",
         "group": "Summarize",
         "category": "feature",
         "settable": true
@@ -1127,7 +1127,7 @@
         "default": "\"chatgpt_api\"",
         "values": "chatgpt_web | chatgpt_api | google_gemini_api | anthropic_api | ollama_api | openai_comp_api",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "Per-feature connection overrides",
         "category": "override",
         "settable": true
@@ -1138,7 +1138,7 @@
         "default": "\"inline\"",
         "values": "inline | webchat",
         "notes": "inline or webchat.",
-        "version": "",
+        "version": "5.1.0",
         "group": "Summarize",
         "category": "feature",
         "settable": true
@@ -1149,7 +1149,7 @@
         "default": "0",
         "values": "",
         "notes": "0 = no limit, otherwise max characters shown inline.",
-        "version": "",
+        "version": "5.1.0",
         "group": "Summarize",
         "category": "feature",
         "settable": true
@@ -1160,7 +1160,7 @@
         "default": "20",
         "values": "",
         "notes": "Max messages summarized at once in webchat mode.",
-        "version": "",
+        "version": "5.1.0",
         "group": "Summarize",
         "category": "feature",
         "settable": true
@@ -1171,7 +1171,7 @@
         "default": "false",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "Summarize",
         "category": "feature",
         "settable": true
@@ -1182,7 +1182,7 @@
         "default": "false",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "Per-feature connection overrides",
         "category": "override",
         "settable": true
@@ -1193,7 +1193,7 @@
         "default": "true",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "Features",
         "category": "feature",
         "settable": true
@@ -1204,7 +1204,7 @@
         "default": "0",
         "values": "",
         "notes": "0 disabled, 1 manual button, 2 on message open, 3 on receive.",
-        "version": "",
+        "version": "5.1.0",
         "group": "Translate",
         "category": "feature",
         "settable": true
@@ -1215,7 +1215,7 @@
         "default": "\"chatgpt_api\"",
         "values": "chatgpt_web | chatgpt_api | google_gemini_api | anthropic_api | ollama_api | openai_comp_api",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "Per-feature connection overrides",
         "category": "override",
         "settable": true
@@ -1226,7 +1226,7 @@
         "default": "\"\"",
         "values": "",
         "notes": "Languages not to translate.",
-        "version": "",
+        "version": "5.1.0",
         "group": "Translate",
         "category": "feature",
         "settable": true
@@ -1237,7 +1237,7 @@
         "default": "\"\"",
         "values": "",
         "notes": "Target language; falls back on default_chatgpt_lang.",
-        "version": "",
+        "version": "5.1.0",
         "group": "Translate",
         "category": "feature",
         "settable": true
@@ -1248,7 +1248,7 @@
         "default": "0",
         "values": "",
         "notes": "0 = no limit, otherwise max characters shown inline.",
-        "version": "",
+        "version": "5.1.0",
         "group": "Translate",
         "category": "feature",
         "settable": true
@@ -1259,7 +1259,7 @@
         "default": "false",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "Per-feature connection overrides",
         "category": "override",
         "settable": true
@@ -1270,7 +1270,7 @@
         "default": "false",
         "values": "",
         "notes": "",
-        "version": "",
+        "version": "5.1.0",
         "group": "Connection",
         "category": "connection",
         "settable": true
