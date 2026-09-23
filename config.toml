@@ -43,7 +43,7 @@ defaultContentLanguageInSubdir = false
 
 [params]
    customCSS = ["css/micz.css"] # relative path to "static" directory
-   forceCSSReloadID = "20260916"
+   forceCSSReloadID = "20260917"
    Subtitle = "Silence is golden."
    style= "dark"
    env= "production"
