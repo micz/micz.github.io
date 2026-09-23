@@ -7,12 +7,14 @@ Type = "no-list"
 
 <p>
     For administrators deploying ThunderAI across an organization. It covers pre-configuring
-    settings, enforcing them so users cannot change them, and distributing a shared set of prompts.
+    settings, enforcing them so users cannot change them, distributing a shared set of prompts, and
+    restricting what users can do with prompts and the setup wizard.
 </p>
 <p>
     No add-on setting needs to be touched on each machine: everything here is driven by
     Thunderbird's own enterprise policy file.
 </p>
+<p class="small_text">Enterprise configuration is available from ThunderAI <strong>5.1.0</strong>.</p>
 
 <h2 id="before">Before you start</h2>
 
@@ -47,6 +49,7 @@ Type = "no-list"
     <a href="#enforced">Enforced values</a>
     <a href="#example">Example</a>
     <a href="#org-prompts">Org prompts</a>
+    <a href="#restrictions">Restrictions</a>
     <a href="#key-reference">Key reference</a>
     <a href="#troubleshooting">Troubleshooting</a>
 </nav>
@@ -122,7 +125,9 @@ Type = "no-list"
 
 <p>
     <strong>Every key you set is enforced by default.</strong> The user sees it in the settings, greyed
-    out and marked as managed, and cannot change it.
+    out with a padlock badge reading <em>Managed by &lt;_org_name&gt;</em> (or just <em>Managed</em>),
+    and cannot change it. A banner at the top of the page explains that some settings are managed by
+    the organization.
 </p>
 <p>To supply a <em>starting</em> value the user may then change, add a sibling <code>"&lt;key&gt;:locked": false</code>:</p>
 
@@ -145,7 +150,7 @@ Type = "no-list"
         </tr>
         <tr>
             <td>Control in settings</td>
-            <td>disabled, marked "Managed"</td>
+            <td>disabled, marked "Managed" with a padlock</td>
             <td>normal</td>
         </tr>
         <tr>
@@ -201,6 +206,8 @@ Type = "no-list"
           "spamfilter": false,
           "add_tags_auto": false,
 
+          "_disable_setup_wizard": true,
+
           "default_chatgpt_lang": "English",
           "default_chatgpt_lang:locked": false,
           "reply_type": "reply_all",
@@ -234,10 +241,10 @@ Type = "no-list"
 
 <p>
     What the user sees: the connection is pre-configured and locked, so they are never asked to run the
-    setup wizard. The spam filter and auto-tagging are off and cannot be turned on. Language and reply
-    style start at the organization's preference but can be changed. The two ACME prompts appear in a
-    labelled group, read-only, each with a <strong>Copy</strong> button for making an editable personal
-    version.
+    setup wizard — and cannot open it either. The spam filter and auto-tagging are off and cannot be
+    turned on. Language and reply style start at the organization's preference but can be changed. The
+    two ACME prompts appear on the Manage Prompts page with an <strong>Organization</strong> badge,
+    read-only, and can be <strong>Duplicated</strong> to make an editable personal version.
 </p>
 
 
@@ -338,13 +345,17 @@ Type = "no-list"
 <ul>
     <li><strong>Fully declarative.</strong> The policy is the only source of truth. Add, change or remove
         a prompt and it is reflected at the next Thunderbird start. Users' own prompts are never touched.</li>
-    <li><strong>Read-only, but copyable.</strong> Users cannot edit or delete them, but <strong>Copy</strong>
-        makes an ordinary editable personal prompt.</li>
+    <li><strong>Read-only, but duplicable.</strong> Users cannot edit or delete them, but
+        <strong>Duplicate</strong> (or <strong>Duplicate and edit</strong>) makes an ordinary editable
+        personal prompt — unless <a href="#restrictions"><code>_disable_prompt_management</code></a> is on.</li>
     <li><strong>Users control placement.</strong> Menu position and visibility are per-user, set in Menu
         Order like any other prompt.</li>
     <li><strong>If a user already has a prompt with the same id</strong>, yours takes precedence and theirs
         is disabled, with an explanation shown on the Manage Prompts page. Their prompt is not deleted and
         works again if you remove yours.</li>
+    <li><strong>Ship only your prompts.</strong> Combine <code>_org_prompts</code> with
+        <a href="#restrictions"><code>_disable_default_prompts</code></a> to take the built-in prompts out
+        of the menus, so users see only the organization set.</li>
 </ul>
 
 <h3>If a prompt is rejected</h3>
@@ -359,6 +370,76 @@ Type = "no-list"
     Rejections are reported in the Thunderbird Error Console (<strong>Tools → Developer Tools → Error
     Console</strong>), prefixed <code>[ThunderAI Logger | mzta-managed]</code>. Check it after changing a
     policy — these warnings appear whether or not debug logging is on.
+</p>
+
+
+<h2 id="restrictions">Restrictions</h2>
+
+<p>
+    Restrictions are policy-only switches that <em>take something away</em> instead of setting a value.
+    They have no counterpart in the settings, so the <code>:locked</code> convention does not apply to them.
+</p>
+
+<pre>"_disable_prompt_management": true,
+"_disable_default_prompts": true,
+"_disable_setup_wizard": true</pre>
+
+<p>
+    A restriction is either on (<code>true</code>) or off (<code>false</code>, the same as leaving it
+    out). Any other value — including the string <code>"true"</code> — is ignored with a warning and the
+    restriction stays <strong>off</strong>. A policy that sets only restrictions still counts as active:
+    users see the managed banner and an explanation next to every disabled control.
+</p>
+
+<table class="guides">
+    <thead>
+        <tr>
+            <th>Key</th>
+            <th>What the user loses</th>
+            <th>What keeps working</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>_disable_prompt_management</code></td>
+            <td>Creating, duplicating, importing and exporting prompts. Their own existing prompts become
+                read-only and disappear from the menus.</td>
+            <td>Built-in and organization prompts, fully usable. The user's prompts are
+                <strong>never deleted</strong>: they stay listed (read-only, with an explanation) and come
+                back exactly as they were when the restriction is lifted.</td>
+        </tr>
+        <tr>
+            <td><code>_disable_default_prompts</code></td>
+            <td>The ThunderAI built-in prompts, in every menu and in the popup. They stay listed, dimmed
+                and explained, on the prompt pages.</td>
+            <td>The special features — Add Tags, Summarize, Translate, Spam Filter, Calendar Event, Task
+                — plus the user's own prompts and the organization's. Menu positions and custom icons of
+                the built-ins are kept.</td>
+        </tr>
+        <tr>
+            <td><code>_disable_setup_wizard</code></td>
+            <td>The setup wizard: its buttons in the options page are disabled, the welcome-page banner is
+                hidden, and opening the wizard by its URL shows <em>Setup wizard unavailable</em>.</td>
+            <td>Everything else. In the popup, the "run the setup wizard" link is replaced by a note that
+                the connection is configured centrally.</td>
+        </tr>
+    </tbody>
+</table>
+
+<p>
+    The first two are independent and can be combined: they cover different prompts (the user's own and
+    the built-in ones), and each shows its own explanation.
+</p>
+<p>
+    <strong>Export is disabled on purpose</strong> under <code>_disable_prompt_management</code>: an
+    exported file carries the prompt texts and, with <em>include API settings</em>, can carry provider
+    credentials too.
+</p>
+<p>
+    <code>_disable_setup_wizard</code> only makes sense together with an <strong>enforced
+    connection</strong> (<code>connection_type</code> and its provider settings). On its own it just
+    leaves users with no guided way to configure ThunderAI. Custom data placeholders are not covered by
+    any restriction.
 </p>
 
 
@@ -428,6 +509,21 @@ Type = "no-list"
             <td>One prompt missing</td>
             <td>Missing <code>id</code>, <code>name</code> or <code>text</code>, a duplicate
                 <code>id</code>, or an invalid <code>api_type</code>.</td>
+        </tr>
+        <tr>
+            <td>A restriction has no effect</td>
+            <td>The value is not the boolean <code>true</code> — <code>"true"</code> or <code>1</code> is
+                ignored and the restriction stays off.</td>
+        </tr>
+        <tr>
+            <td>Users' own prompts vanished from the menus</td>
+            <td><code>_disable_prompt_management</code> is on. The prompts are not deleted: they are still
+                listed read-only and return when the restriction is removed.</td>
+        </tr>
+        <tr>
+            <td>Built-in prompts vanished from the menus</td>
+            <td><code>_disable_default_prompts</code> is on. Special features such as Summarize or Add
+                Tags are not affected.</td>
         </tr>
         <tr>
             <td>An unlocked value did not apply</td>

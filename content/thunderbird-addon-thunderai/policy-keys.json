@@ -51,7 +51,7 @@
         "category": "structural",
         "settable": true,
         "values": "true",
-        "notes": "Hides prompt creation, editing and deletion: users can only run the prompts they are given. A restriction is either on (true) or absent; any other value is ignored with a warning.",
+        "notes": "No prompt can be created, duplicated, imported or exported. The user's own prompts become read-only and are removed from the menus, but are never deleted. Built-in and organization prompts keep working. See <a href=\"#restrictions\">Restrictions</a>.",
         "version": ""
     },
     {
@@ -62,7 +62,7 @@
         "category": "structural",
         "settable": true,
         "values": "true",
-        "notes": "Removes the ThunderAI built-in prompts, leaving only the organization ones. A restriction is either on (true) or absent; any other value is ignored with a warning.",
+        "notes": "Removes the ThunderAI built-in prompts from the menus, typically leaving only the organization ones. Special features (tags, summarize, translate, spam filter, calendar, task) are not affected. See <a href=\"#restrictions\">Restrictions</a>.",
         "version": ""
     },
     {
@@ -73,7 +73,7 @@
         "category": "structural",
         "settable": true,
         "values": "true",
-        "notes": "Never shows the first-run setup wizard. A restriction is either on (true) or absent; any other value is ignored with a warning.",
+        "notes": "The setup wizard cannot be opened from anywhere, not even by its direct URL. Use it together with a locked connection. See <a href=\"#restrictions\">Restrictions</a>.",
         "version": ""
     },
     {
@@ -581,6 +581,17 @@
         "group": "Connection",
         "category": "connection",
         "settable": true
+    },
+    {
+        "key": "custom_prompts_view",
+        "type": "string",
+        "default": "\"split\"",
+        "values": "split | table",
+        "notes": "Layout of the Manage Prompts page.",
+        "version": "",
+        "group": "General",
+        "category": "general",
+        "settable": false
     },
     {
         "key": "default_chatgpt_lang",
