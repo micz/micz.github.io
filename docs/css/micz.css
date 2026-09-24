@@ -231,3 +231,138 @@ div.img_center{
     cursor: default;
     pointer-events: none;
 }
+details {
+    border: 1px solid var(--hr-color);
+    border-radius: 8px;
+    margin: 0.8em 0;
+    padding: 0 1em;
+}
+details > summary {
+    cursor: pointer;
+    font-weight: 600;
+    padding: 0.6em 0.2em;
+    margin: 0 -0.2em;
+    border-radius: 6px;
+}
+details > summary:hover {
+    background-color: color-mix(in srgb, var(--font-color) 8%, transparent);
+}
+details[open] > summary {
+    border-bottom: 1px solid var(--hr-color);
+    border-radius: 6px 6px 0 0;
+    margin-bottom: 0.8em;
+}
+details > summary:focus-visible {
+    outline: 2px solid var(--font-color);
+    outline-offset: 2px;
+}
+details > *:last-child {
+    margin-bottom: 1em;
+}
+.admon {
+    background-color: color-mix(in srgb, var(--font-color) 6%, var(--bg-color));
+    border-left: 4px solid var(--hr-color);
+    border-radius: 0 8px 8px 0;
+    padding: 0.8em 1.2em;
+    margin: 1.2em 0;
+}
+.admon h3 {
+    margin-top: 0.2em;
+}
+.admon > *:last-child {
+    margin-bottom: 0.2em;
+}
+.admon.warn {
+    border-left-color: color-mix(in srgb, #e8a317 70%, var(--font-color));
+    background-color: color-mix(in srgb, #e8a317 10%, var(--bg-color));
+}
+.admon.wip {
+    border-left-color: color-mix(in srgb, #e8620c 75%, var(--font-color));
+    background-color: color-mix(in srgb, #e8620c 14%, var(--bg-color));
+}
+.policy-key-filter {
+    display: flex;
+    align-items: center;
+    gap: 0.8em;
+    margin: 0.6em 0 1.2em 0;
+}
+#policy-key-search {
+    flex: 1 1 auto;
+    max-width: 22em;
+    font: inherit;
+    font-size: 0.9em;
+    color: var(--font-color);
+    background-color: var(--bg-color);
+    border: 1px solid var(--hr-color);
+    border-radius: 6px;
+    padding: 0.4em 0.7em;
+}
+#policy-key-search:focus-visible {
+    outline: 2px solid var(--font-color);
+    outline-offset: 1px;
+}
+table.policy-keys td:first-child {
+    word-break: break-word;
+}
+/* Sticky section nav (enterprise configuration guide) */
+html {
+    scroll-behavior: smooth;
+}
+#section-nav {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    display: flex;
+    gap: 2px;
+    margin: 1.5em 0 2em 0;
+    padding: 6px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    background-color: color-mix(in srgb, var(--bg-color) 92%, var(--font-color));
+    border: 1px solid var(--hr-color);
+    border-radius: 10px;
+    backdrop-filter: blur(8px);
+    font-size: 0.8em;
+}
+#section-nav::-webkit-scrollbar {
+    display: none;
+}
+#section-nav a {
+    flex: 0 0 auto;
+    padding: 0.45em 0.85em;
+    border-radius: 7px;
+    border-bottom: 0;
+    white-space: nowrap;
+    text-decoration: none;
+    color: color-mix(in srgb, var(--font-color) 68%, var(--bg-color));
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+#section-nav a:hover {
+    color: var(--font-color);
+    background-color: color-mix(in srgb, var(--font-color) 9%, transparent);
+    border-bottom: 0;
+}
+#section-nav a.current {
+    color: var(--font-color);
+    background-color: var(--bg-color);
+    font-weight: 600;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.22);
+}
+/* Headings must clear the sticky bar when jumped to. */
+#section-nav ~ h2[id],
+#section-nav ~ h3[id] {
+    scroll-margin-top: 4em;
+}
+@media (max-width: 480px) {
+    #section-nav {
+        font-size: 0.75em;
+        border-radius: 0;
+        margin-left: -1em;
+        margin-right: -1em;
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+}
