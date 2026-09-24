@@ -276,6 +276,10 @@ details > *:last-child {
     border-left-color: color-mix(in srgb, #e8a317 70%, var(--font-color));
     background-color: color-mix(in srgb, #e8a317 10%, var(--bg-color));
 }
+.admon.wip {
+    border-left-color: color-mix(in srgb, #e8620c 75%, var(--font-color));
+    background-color: color-mix(in srgb, #e8620c 14%, var(--bg-color));
+}
 .policy-key-filter {
     display: flex;
     align-items: center;
