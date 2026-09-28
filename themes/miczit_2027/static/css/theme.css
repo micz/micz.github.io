@@ -621,6 +621,23 @@ h1.page-title, h1.post_title {
     font-weight: 600;
     line-height: 1.35;
 }
+.card-grid .card-body {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+.card-grid .card-title,
+.card-grid .card-desc {
+    display: block;
+}
+.card-grid .card-desc,
+.card-grid a.card:hover .card-desc {
+    color: var(--ink-muted);
+    font-size: 12.5px;
+    font-weight: 400;
+    line-height: 1.45;
+    text-decoration: none;
+}
 .card-grid .card-sub {
     color: var(--ink-faint);
     font-family: var(--mono);

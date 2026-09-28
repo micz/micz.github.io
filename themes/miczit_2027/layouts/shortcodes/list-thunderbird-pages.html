@@ -6,7 +6,10 @@
         <li>
             <a class="card" href="{{ .Permalink }}">
                 {{ with .Params.addon_icon }}<img class="card-icon" src="{{ . | relURL }}" alt="" width="36" height="36" loading="lazy">{{ end }}
-                <span class="card-title">{{ $t.title }}</span>
+                <span class="card-body">
+                    <span class="card-title">{{ $t.title }}</span>
+                    {{ with .Params.addon_description }}<span class="card-desc">{{ . }}</span>{{ end }}
+                </span>
             </a>
         </li>
     {{ end }}
