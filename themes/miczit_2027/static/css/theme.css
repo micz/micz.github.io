@@ -6,7 +6,7 @@
      2. Tokens (:root = dark default, [data-theme="light"] overrides)
      3. Base / layout
      4. Header, breadcrumb, lang-switcher
-     5. Title block (eyebrow + status badge + h1, see page_title shortcode)
+     5. Title block (eyebrow + h1, see page_title shortcode)
      6. Content typography (links, lists, code, tables, figures, helpers)
      7. Addon hero + card grid (shortcodes) + go-back
      8. Home (full-bleed photo, wordmark, tagline)
@@ -262,21 +262,6 @@ a:hover { color: var(--accent-strong); }
     text-transform: uppercase;
     color: var(--ink-muted);
 }
-
-.badge {
-    display: inline-block;
-    padding: 3px 11px 2px;
-    border: 1px solid var(--hairline-strong);
-    border-radius: 999px;
-    font-family: var(--mono);
-    font-size: 10.5px;
-    font-weight: 600;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    line-height: 1.4;
-}
-.badge-active { color: var(--ok); border-color: color-mix(in srgb, var(--ok) 45%, transparent); }
-.badge-discontinued { color: var(--off); border-color: color-mix(in srgb, var(--off) 45%, transparent); }
 
 h1.page-title, h1.post_title {
     margin: 0 0 0.6em;
