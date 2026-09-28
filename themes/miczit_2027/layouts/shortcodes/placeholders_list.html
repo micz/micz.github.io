@@ -46,7 +46,7 @@
         {{ $gid := index $anchors $scope | default (urlize $scope) }}
         {{ $items := sort (where $data "scope" $scope) "id" }}
         <section class="ph-group" id="{{ $gid }}" aria-labelledby="{{ $gid }}-h">
-            <h2 class="ph-group-h" id="{{ $gid }}-h">{{ $scope }} <span class="ph-n">{{ len $items }}</span></h2>
+            <h3 class="ph-group-h" id="{{ $gid }}-h">{{ $scope }} <span class="ph-n">{{ len $items }}</span></h3>
             <ul class="ph-card">
             {{ range $items }}
                 {{ $pid := .id | replaceRE `^\{%|%\}$` "" | replaceRE `:.*$` "" }}
@@ -111,7 +111,7 @@
                 sec.className = 'ph-group';
                 sec.id = 'letter-' + letter.toLowerCase();
                 sec.setAttribute('aria-labelledby', sec.id + '-h');
-                var h = document.createElement('h2');
+                var h = document.createElement('h3');
                 h.className = 'ph-group-h';
                 h.id = sec.id + '-h';
                 h.appendChild(document.createTextNode(letter + ' '));
