@@ -1,7 +1,2 @@
-{{ $t := partial "title-split.html" .Page }}
-<div class="title-block">
-    {{ with $t.eyebrow }}
-        <p class="eyebrow">{{ . }}</p>
-    {{ end }}
-    <h1 class="page-title">{{ $t.title }}</h1>
-</div>
+{{/* The page title is rendered in the site header (partials/header.html), next to
+     the wordmark. Kept as a no-op so the 75 content files calling it need no edits. */}}

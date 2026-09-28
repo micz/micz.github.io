@@ -32,7 +32,7 @@ themes/miczit_2027/
 │   ├── index.html              (home: hero su foto, niente .Content — stub legacy)
 │   ├── robots.txt              (portato verbatim da anubis)
 │   ├── partials/               head, head-extra, theme-init, header, footer,
-│   │                           breadcrumb, lang-switcher, cookie-consent,
+│   │                           lang-switcher, cookie-consent,
 │   │                           theme-toggle, title-split
 │   └── shortcodes/             i 10 shortcode del progetto; page_title e
 │                               list-thunderbird-pages riscritti
@@ -47,9 +47,9 @@ Note architetturali:
 - `title-split.html` parsa esattamente due pattern di titolo
   (`Thunderbird Addon: <Name>` e `"<Addon>" Thunderbird Addon - <Page>`) e passa
   attraverso tutto il resto (titoli guide tradotte, Donate, ecc.).
-- Il breadcrumb usa `.Ancestors.Reverse`; **salta gli antenati senza titolo** (stub di
-  redirect di lingua come `_index.it.html`, che non ha front matter Title) e mostra
-  sempre la home come "Home" (i18n). Vedi la sezione bug sotto.
+- Niente breadcrumb: l'header mostra il titolo della pagina (via `title-split.html`)
+  a fianco del wordmark. Le pagine addon sono sorelle di `thunderbird-addons/` in
+  `content/`, quindi un breadcrumb basato su `.Ancestors` non rifletteva la gerarchia.
 
 ## Scelte e deviazioni dal piano
 

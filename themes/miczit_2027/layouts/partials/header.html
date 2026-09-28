@@ -1,6 +1,26 @@
 <header class="site-header">
     <div class="site-header-inner">
-        <a class="wordmark" href="{{ .Site.BaseURL | relLangURL }}" title="{{ .Site.Title }}">{{ replace .Site.Title "'" "’" }}</a>
+        <div class="site-header-lead">
+            <a class="wordmark" href="{{ .Site.BaseURL | relLangURL }}" title="{{ .Site.Title }}">{{ replace .Site.Title "'" "’" }}</a>
+            {{ with .Title }}
+            {{/* Parent pages (grey) before the current title. Home is skipped (the wordmark
+                 links there). Language redirect stubs have no Title: borrow it from the
+                 first translation that has one (the stub itself redirects there anyway). */}}
+            <div class="header-title">
+                {{ range $.Ancestors.Reverse }}{{ if not .IsHome }}
+                    {{ $src := . }}
+                    {{ if not .Title }}{{ range first 1 (where .Translations "Title" "!=" "") }}{{ $src = . }}{{ end }}{{ end }}
+                    {{ if $src.Title }}
+                        {{ $a := partial "title-split.html" $src }}
+                        <a class="header-parent" href="{{ .RelPermalink }}">{{ $a.title }}</a>
+                        <span class="header-sep" aria-hidden="true">/</span>
+                    {{ end }}
+                {{ end }}{{ end }}
+                {{ $t := partial "title-split.html" $ }}
+                <h1>{{ $t.title }}</h1>
+            </div>
+            {{ end }}
+        </div>
         {{ if .Site.Menus.main }}
             <nav class="site-nav">
                 {{ $currentPage := . }}
