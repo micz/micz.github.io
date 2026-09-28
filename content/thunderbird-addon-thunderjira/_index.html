@@ -7,7 +7,7 @@ addon_description = "Create Jira issues from any email and turn issue links into
 
 {{< page_title >}}
 
-<div class="addon-hero">
+<div class="addon-hero addon-hero--compact">
     <div class="addon-intro">
         <p>Do you want to manage your Jira issues without leaving Thunderbird?<br>ThunderJira integrates Jira Cloud and Jira Server / Data Center directly into your email client!<br>
         Create a new Jira issue directly from any email, and follow issue links enriched with a clickable badge that opens the issue in your browser.</p>
@@ -44,12 +44,19 @@ You can connect to both <strong>Jira Cloud</strong> (atlassian.net) and <strong>
 Once configured, you can create a new Jira issue directly from any email: the subject pre-fills the summary and the body pre-fills the description. Dynamic fields are loaded automatically based on the selected project and issue type.<br>
 Jira issue links found in email bodies are automatically enriched with a clickable badge that opens the issue directly in your browser.</p>
 
-<h3>Requirements</h3>
-<p>Thunderbird 140 or later is required.<br>
-You need a Jira Cloud or Jira Server / Data Center instance and valid credentials (API token for Cloud, Personal Access Token for Server).</p>
+<div class="info-grid">
+    <div class="info-card">
+        <span class="info-card-title">Requirements</span>
+        <p>Thunderbird 140 or later is required.</p>
+        <p>You need a Jira Cloud or Jira Server / Data Center instance and valid credentials (API token for Cloud, Personal Access Token for Server).</p>
+    </div>
+    <div class="info-card">
+        <span class="info-card-title">Privacy</span>
+        <p>All data processing is performed locally on your device. Your Jira credentials are stored only in your local Thunderbird profile and are never transmitted to any third-party service. All requests go directly from your Thunderbird to your Jira instance.</p>
+    </div>
+</div>
 
-<h3>Privacy</h3>
-<p>All data processing is performed locally on your device. Your Jira credentials are stored only in your local Thunderbird profile and are never transmitted to any third-party service. All requests go directly from your Thunderbird to your Jira instance.</p>
-
-<p><small><em>Thanks to <a href="https://icon-icons.com/authors/42-double-j-design" target="_blank">DoubleDesign</a> for the base image used to create the addon icon.</em></small>
-<br><small><em>Thanks to <a href="https://www.flaticon.com/authors/jessigue" target="_blank">JessiGue</a> for the show/hide icon used for API token fields.</em></small></p>
+<div class="addon-credits">
+    <p>Thanks to <a href="https://icon-icons.com/authors/42-double-j-design" target="_blank">DoubleDesign</a> for the base image used to create the addon icon.</p>
+    <p>Thanks to <a href="https://www.flaticon.com/authors/jessigue" target="_blank">JessiGue</a> for the show/hide icon used for API token fields.</p>
+</div>
