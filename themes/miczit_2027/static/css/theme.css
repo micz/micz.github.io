@@ -412,7 +412,7 @@ a:hover { color: var(--accent-strong); }
 .content .perm_desc { font-size: 0.9em; color: var(--ink-muted); }
 .content .small_text { font-size: 0.8em; font-style: italic; color: var(--ink-muted); }
 .content .paragraph-space { margin-top: 25px; }
-.content p.center, .content .center { text-align: center; }
+.content p.center, .content .center { text-align: center; margin-inline: auto; }
 .content a img.weblate_svg {
     display: inline;
     margin: 0 0 0 8px;
@@ -523,6 +523,18 @@ a:hover { color: var(--accent-strong); }
 }
 .side-card p { margin: 0 0 0.6em; }
 .side-card p:last-child { margin-bottom: 0; }
+.side-card-centered {
+    max-width: 360px;
+    margin: 2em auto;
+    text-align: center;
+}
+.side-card-title { font-size: 1.5em; line-height: 1.2; }
+.side-card-icon {
+    display: block;
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 0.6em;
+}
 
 /* buttons */
 .btn, .content .btn, a.btn {
@@ -554,6 +566,11 @@ a:hover { color: var(--accent-strong); }
     background: var(--accent-strong);
     border-color: var(--accent-strong);
     color: #101114;
+}
+[data-theme="light"] .btn-primary,
+[data-theme="light"] .content a.btn-primary,
+[data-theme="light"] .btn-primary:hover {
+    color: #fff;
 }
 .btn-sm { font-size: 12.5px; padding: 0.35em 1em; }
 
@@ -630,7 +647,8 @@ a:hover { color: var(--accent-strong); }
     gap: 14px;
     margin: 1.2em 0 1.8em;
 }
-.doc-grid a.doc-card {
+.doc-grid .doc-card {
+    position: relative;
     display: flex;
     flex-direction: column;
     gap: 5px;
@@ -641,9 +659,13 @@ a:hover { color: var(--accent-strong); }
     text-decoration: none;
     transition: border-color 0.15s ease;
 }
-.doc-grid a.doc-card:hover { border-color: var(--hairline-strong); }
+.doc-grid .doc-card:hover { border-color: var(--hairline-strong); }
 .doc-grid .doc-card-title { color: var(--ink); font-weight: 600; font-size: 16.5px; line-height: 1.4; }
 .doc-grid .doc-card-text { color: var(--ink-muted); font-size: 14.5px; line-height: 1.5; }
+.doc-grid .doc-card-link { text-decoration: none; }
+.doc-grid .doc-card-link::after { content: ""; position: absolute; inset: 0; border-radius: inherit; }
+.doc-grid .doc-card-flags { position: relative; z-index: 1; display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 6px; margin-top: auto; padding-top: 4px; font-size: 18px; line-height: 1; }
+.doc-grid .doc-card-flags a { text-decoration: none; }
 
 .addon-cta {
     display: flex;
