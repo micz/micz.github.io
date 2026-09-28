@@ -3,5 +3,14 @@ Title = "Thunderbird Addon development discontinued"
 Type = "no-list"
 +++
 
-<p><em>27/08/2018</em><br/><br/></p>
-<p>From Thunderbird 60.x, due to major changes made in Firefox by Mozilla, many patches are needed in Thunderbird Addons, just to be compatible with new Thunderbird versions, without adding any new features (see <a href="https://wiki.mozilla.org/Thunderbird/Add-ons_Guide_57" target="_blank" rel="noopener">https://wiki.mozilla.org/Thunderbird/Add-ons_Guide_57</a>).<br/>Also, the future architecture of Thunderbird is currently being discussed, with the goal to make its development autonomous from Mozilla. At the moment it's not clear how this will impact Addons.<br/><br/>For these reasons, since I haven't got enough time to put in it, I've discontinued the development of my addons.<br/>This was not an easy decision to make, after all those years.<br/>All the source code is available on <a href="https://github.com/micz" target="_blank" rel="noopener">GitHub</a>, for anyone who wants to help.<br/><br/>I want to thank everyone who helped and supported me.</p>
+<p>In August 2018 I decided to stop the development of my original Thunderbird addons.</p>
+
+<p>Starting with Thunderbird 60, the major changes Mozilla introduced in Firefox 57 also reached Thunderbird. The old "legacy" addon technology (XUL overlays and XPCOM) was being phased out, and keeping each addon working required a significant amount of patching with every new release, just to stay compatible and without adding any new features (see the <a href="https://wiki.mozilla.org/Thunderbird/Add-ons_Guide_57" target="_blank" rel="noopener">Thunderbird Add-ons Guide 57</a>).</p>
+
+<p>At the same time, the future architecture of Thunderbird was under discussion, with the goal of making its development independent from Mozilla, and it was not yet clear what this would mean for addons. Without enough time to keep up with those continuous changes, I chose to discontinue them. It was not an easy decision, after so many years.</p>
+
+<p>Since then, Thunderbird has adopted a new extension system: <a href="https://webextension-api.thunderbird.net/" target="_blank" rel="noopener">MailExtensions</a>, based on the same WebExtension technology used by modern browsers. It offers stable, documented APIs that make addons much easier to maintain across Thunderbird versions. My current addons are built on this new system: you can find them in the <a href="/thunderbird-addons/">Thunderbird addons</a> page.</p>
+
+<p>The source code of the discontinued addons is still available on <a href="https://github.com/micz" target="_blank" rel="noopener">GitHub</a>.</p>
+
+<p>Thanks again to everyone who helped and supported me over the years.</p>
