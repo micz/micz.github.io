@@ -7,6 +7,19 @@
                  links there). Language redirect stubs have no Title: borrow it from the
                  first translation that has one (the stub itself redirects there anyway). */}}
             <div class="header-title">
+                {{/* Addon pages sit at the content root, not under /thunderbird-addons/:
+                     if the top-level page of this path has addon_status, prepend the list
+                     page. Redirect stubs lack params: check their translations too. */}}
+                {{ $root := $ }}
+                {{ range $.Ancestors }}{{ if not .IsHome }}{{ $root = . }}{{ end }}{{ end }}
+                {{ $isAddon := $root.Params.addon_status }}
+                {{ if not $isAddon }}{{ range first 1 (where $root.Translations "Params.addon_status" "!=" nil) }}{{ $isAddon = true }}{{ end }}{{ end }}
+                {{ if $isAddon }}
+                    {{ with or (site.GetPage "/thunderbird-addons") (hugo.Sites.Default.GetPage "/thunderbird-addons") }}
+                        <a class="header-parent" href="{{ .RelPermalink }}">{{ .Title }}</a>
+                        <span class="header-sep" aria-hidden="true">/</span>
+                    {{ end }}
+                {{ end }}
                 {{ range $.Ancestors.Reverse }}{{ if not .IsHome }}
                     {{ $src := . }}
                     {{ if not .Title }}{{ range first 1 (where .Translations "Title" "!=" "") }}{{ $src = . }}{{ end }}{{ end }}
