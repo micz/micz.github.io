@@ -1,3 +1,8 @@
+{{/* ThunderAI enterprise policy key reference.
+
+     Data: content/thunderbird-addon-thunderai/policy-keys.json (single source).
+     "Grouped by Section | All Keys A-Z" switch and key filter via the inline script.
+     Styles: #placeholders-control, .policy-key-filter, table.policy-keys in theme.css. */}}
 {{ $jsonPath := "content/thunderbird-addon-thunderai/policy-keys.json" }}
 {{ $data := os.ReadFile $jsonPath | transform.Unmarshal }}
 
