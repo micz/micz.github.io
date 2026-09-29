@@ -59,6 +59,7 @@ Type = "no-list"
     <a href="#example">Example</a>
     <a href="#org-prompts">Org prompts</a>
     <a href="#restrictions">Restrictions</a>
+    <a href="#permissions">Permissions</a>
     <a href="#key-reference">Key reference</a>
     <a href="#troubleshooting">Troubleshooting</a>
 </nav>
@@ -183,6 +184,36 @@ Type = "no-list"
 <p>
     Nothing enforced is ever written into the user's profile, so <strong>removing a key from the policy
     cleanly restores</strong> whatever the user had before, or the ThunderAI default.
+</p>
+<p>
+    <strong>Both kinds of value are shown where the user looks for them.</strong> Enforced and initial
+    values appear in the options page and in every feature settings page — including the list fields
+    and the spam filter's address book option, which are locked on their pages like any other
+    control — and they also apply in the API chat window and in the popup.
+</p>
+<p>
+    <strong>Policy connection values are not copied into prompts.</strong> When a user turns on a
+    specific integration for a single feature (Add Tags, Summarize, Spam Filter…), or sets a
+    connection on a custom prompt, those fields start from the ThunderAI defaults, not from the host,
+    model or key in your policy. A copied value would outlive the policy.
+</p>
+
+<h3 id="api-keys">API keys set by policy</h3>
+
+<p>
+    <strong>An API key supplied by the policy is never displayed in the settings.</strong> The field
+    shows a masked placeholder, and from the settings pages the user cannot reveal the key, run the
+    connection test with it, or fetch the model list with it. ThunderAI itself still uses the key
+    normally, in the API chat window and in every feature. Because the model list cannot be fetched
+    with your key, set the model explicitly in the policy (for example <code>openai_comp_model</code>).
+</p>
+<p>
+    An unlocked key (<code>"&lt;key&gt;:locked": false</code>) stays masked until the user types a key
+    of their own, which is then stored and wins, like any other unlocked value.
+</p>
+<p>
+    This keeps the key out of the add-on's pages. It does <strong>not</strong> make it secret: it is
+    still readable in <code>policies.json</code> — see <a href="#before">Before you start</a>.
 </p>
 
 
@@ -452,12 +483,112 @@ Type = "no-list"
 </p>
 
 
+<h2 id="permissions">Settings that require a browser permission</h2>
+
+<div class="admon warn">
+    <h3>⚠️ A policy can switch these features on, but cannot grant their permission</h3>
+    <p>
+        Two ThunderAI features need an optional permission that the add-on can only request
+        <strong>interactively</strong>, when the user turns the feature on in its settings page. A policy
+        value does not go through that path: setting the key to <code>true</code> switches the feature on
+        but does <strong>not</strong> grant the permission. The feature then appears enabled and does
+        nothing until the permission has been granted.
+    </p>
+</div>
+
+<table class="guides">
+    <thead>
+        <tr>
+            <th>Key</th>
+            <th>Permission</th>
+            <th>Settings page</th>
+            <th>Without the permission</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>get_calendar_event_from_clipboard</code></td>
+            <td><code>clipboardRead</code></td>
+            <td>Calendar Event</td>
+            <td>The "calendar event from clipboard" menu item is shown, but cannot read the clipboard: using
+                it only shows the error <em>Could not read clipboard. Please check permissions.</em></td>
+        </tr>
+        <tr>
+            <td><code>spamfilter_skip_addressbook</code></td>
+            <td><code>addressBooks</code></td>
+            <td>Spam Filter</td>
+            <td>The spam filter cannot check whether a sender is in the user's address books, so those
+                senders are <strong>not</strong> skipped and are analyzed like any other. Nothing is reported
+                to the user. Note that this key defaults to <code>true</code>, so this applies even if you
+                leave it out of the policy.</td>
+        </tr>
+    </tbody>
+</table>
+
+<h3>What you can do</h3>
+
+<ol>
+    <li>
+        <strong>Grant the permission in advance</strong>, if your deployment method allows it. Thunderbird's
+        <code>ExtensionSettings</code> policy, as documented in the
+        <a href="https://thunderbird.github.io/policy-templates/" target="_blank">Thunderbird policy
+        templates</a>, controls how an add-on is installed and updated, but lists no setting to pre-grant an
+        add-on's optional permissions. This has not been verified for every Thunderbird version: check the
+        templates for the version you deploy. If your tooling can grant the permission some other way, the
+        feature works as soon as it is granted.
+    </li>
+    <li>
+        <strong>Otherwise, ask users to grant it once.</strong> Each user opens the ThunderAI settings page
+        listed above and turns the option on, then accepts the permission prompt. The prompt appears only
+        when the option is switched <em>on</em>: if it already shows as on, the user switches it off and on
+        again. This needs a control the user can change. <strong>If the key is locked by the policy, the
+        control is disabled and the prompt cannot be triggered from there.</strong> In that case either set
+        the key with <code>"&lt;key&gt;:locked": false</code>, so the user can grant the permission, or
+        leave the key out of the policy.
+    </li>
+    <li>
+        <strong>Check the result.</strong> Keys that ThunderAI rejects are reported in the Thunderbird
+        Error Console (<strong>Tools → Developer Tools → Error Console</strong>, filter on
+        <code>ThunderAI</code>), even with debug logging off — look there first. A missing permission,
+        though, is not reported: the key is valid, it is the permission that is absent. Confirm it on a
+        test machine using the symptom in the table above.
+    </li>
+</ol>
+
+<p>For example, both features on, as initial values the user can change to grant the permission:</p>
+
+<pre>"get_calendar_event_from_clipboard": true,
+"get_calendar_event_from_clipboard:locked": false,
+"spamfilter_skip_addressbook": true,
+"spamfilter_skip_addressbook:locked": false</pre>
+
+<p>
+    Keep in mind that an unlocked value is only a starting point: a user who already set the option keeps
+    their own value, and can turn the feature off again (see <a href="#enforced">Enforced vs. initial
+    values</a>).
+</p>
+<p>
+    <strong>As with every policy change, this takes effect only at the next Thunderbird restart</strong>
+    — see <a href="#before">Before you start</a>.
+</p>
+
+
 <h2 id="key-reference">Key reference</h2>
 
 <p>
     Every key below is a ThunderAI setting name, used verbatim as the policy key. Values must match the
     type shown: a wrong type is ignored with a warning and is <strong>not</strong> coerced —
     <code>"true"</code> is not <code>true</code>, and <code>"70"</code> is not <code>70</code>.
+</p>
+<p>
+    Array keys (<code>add_tags_exclusions</code>, <code>spamfilter_skip_addresses</code>,
+    <code>summarize_auto_senders_list</code>) must contain <strong>only strings</strong>. A single element
+    of another type makes ThunderAI ignore the whole value, with a warning — it is not filtered out.
+</p>
+<p>
+    101 of ThunderAI's 110 settings can be set by policy; the other nine are listed at the end.
+    Two settable keys need a permission the policy cannot grant — see
+    <a href="#permissions">Settings that require a browser permission</a>.
 </p>
 <p class="small_text">
     Use <b>Grouped by Section</b> to browse by area, or <b>All Keys A-Z</b> when you already have a key
@@ -495,6 +626,10 @@ Type = "no-list"
             <td>One key ignored, warning about its type</td>
             <td>Value type does not match — <code>"true"</code> is not <code>true</code>,
                 <code>"70"</code> is not <code>70</code>.</td>
+        </tr>
+        <tr>
+            <td>A list key ignored as a whole</td>
+            <td>One of its elements is not a string. Array keys must contain only strings.</td>
         </tr>
         <tr>
             <td>One key ignored, "cannot be set by policy"</td>
@@ -538,6 +673,21 @@ Type = "no-list"
             <td>An unlocked value did not apply</td>
             <td>The user had already set that preference; their value wins. Enforce it instead.</td>
         </tr>
+        <tr>
+            <td>Calendar from clipboard or address book skipping enabled, but not working</td>
+            <td>The feature's permission was never granted. See
+                <a href="#permissions">Settings that require a browser permission</a>.</td>
+        </tr>
+        <tr>
+            <td>Calendar Event ignores the message body, warning about <code>calendar_no_selection</code></td>
+            <td>The option is on but the Calendar Event prompt has neither
+                <code>{%mail_text_body_or_selected%}</code> nor <code>{%mail_html_body_or_selected%}</code>.</td>
+        </tr>
+        <tr>
+            <td>Users cannot test the connection or fetch models</td>
+            <td>Expected when the API key comes from the policy. Set the model in the policy. See
+                <a href="#api-keys">API keys set by policy</a>.</td>
+        </tr>
     </tbody>
 </table>
 
@@ -545,7 +695,9 @@ Type = "no-list"
 <h2 id="notes">Notes</h2>
 
 <ul>
-    <li>ThunderAI requests <strong>no additional permissions</strong> for any of this.</li>
+    <li>ThunderAI requests <strong>no additional permissions</strong> for any of this. Two features have a
+        permission of their own that a policy cannot grant — see
+        <a href="#permissions">Settings that require a browser permission</a>.</li>
     <li>With no policy installed, ThunderAI behaves exactly as it does for any individual user.</li>
 </ul>
 
