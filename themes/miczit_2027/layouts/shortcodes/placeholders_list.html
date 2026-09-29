@@ -2,7 +2,7 @@
 
      Data: content/thunderbird-addon-thunderai/placeholders.json (single source).
      Server-rendered grouped by category, so the full list is readable without JS.
-     The inline script adds search, the "Group by: Category | A–Z" switch and
+     The shared partial ph-list-script.html adds search, the "Group by: Category | A–Z" switch and
      click-to-copy. Anchors: one per category (#account, #content, …) and one per
      placeholder (#mail_subject, #additional_text, …). Styles: .ph-* in theme.css. */}}
 {{ $jsonPath := "content/thunderbird-addon-thunderai/placeholders.json" }}
@@ -23,7 +23,7 @@
 {{ range $data }}{{ $scopes = $scopes | append .scope }}{{ end }}
 {{ $scopes = sort (uniq $scopes) }}
 
-<div class="ph" data-view="category">
+<div class="ph" data-view="category" data-noun="placeholders">
     <div class="ph-bar" hidden>
         <div class="ph-search-wrap">
             <label for="ph-search" class="visually-hidden">Search placeholders by name or description</label>
@@ -50,7 +50,7 @@
             <ul class="ph-card">
             {{ range $items }}
                 {{ $pid := .id | replaceRE `^\{%|%\}$` "" | replaceRE `:.*$` "" }}
-                <li class="ph-row" id="{{ $pid }}">
+                <li class="ph-row" id="{{ $pid }}" data-name="{{ .id | replaceRE `^\{%|%\}$` "" }}">
                     <div class="ph-head">
                         <button type="button" class="ph-chip" data-copy="{{ .id }}" aria-label="Copy {{ .id }}" title="Click to copy"><code>{{ .id }}</code></button>
                         <span class="ph-tag">{{ .scope }}</span>
@@ -68,192 +68,4 @@
     <div class="ph-toast" role="status" aria-live="polite"></div>
 </div>
 
-<script>
-(function () {
-    var root = document.querySelector('.ph');
-    if (!root) { return; }
-
-    var bar = root.querySelector('.ph-bar');
-    var groupsEl = root.querySelector('.ph-groups');
-    var search = root.querySelector('#ph-search');
-    var countEl = root.querySelector('#ph-count');
-    var emptyEl = root.querySelector('.ph-empty');
-    var toast = root.querySelector('.ph-toast');
-    var switchBtns = root.querySelectorAll('.ph-switch-btn');
-
-    var catSections = Array.prototype.slice.call(groupsEl.children);
-    var rows = Array.prototype.slice.call(root.querySelectorAll('.ph-row'));
-    var total = rows.length;
-    var azSections = null;
-    var view = 'category';
-
-    rows.forEach(function (row) {
-        row._home = row.parentNode;
-        row._name = row.querySelector('.ph-chip').getAttribute('data-copy').replace(/^\{%|%\}$/g, '');
-        row._text = (row.querySelector('.ph-chip').textContent + ' ' +
-                     row.querySelector('.ph-desc').textContent).toLowerCase();
-    });
-
-    bar.hidden = false;
-
-    /* ---- Group by ---- */
-
-    function buildAz() {
-        var sorted = rows.slice().sort(function (a, b) {
-            return a._name.localeCompare(b._name);
-        });
-        var sections = [];
-        var current = null;
-        sorted.forEach(function (row) {
-            var letter = row._name.charAt(0).toUpperCase();
-            if (!current || current.letter !== letter) {
-                var sec = document.createElement('section');
-                sec.className = 'ph-group';
-                sec.id = 'letter-' + letter.toLowerCase();
-                sec.setAttribute('aria-labelledby', sec.id + '-h');
-                var h = document.createElement('h3');
-                h.className = 'ph-group-h';
-                h.id = sec.id + '-h';
-                h.appendChild(document.createTextNode(letter + ' '));
-                var n = document.createElement('span');
-                n.className = 'ph-n';
-                h.appendChild(n);
-                var ul = document.createElement('ul');
-                ul.className = 'ph-card';
-                sec.appendChild(h);
-                sec.appendChild(ul);
-                current = { letter: letter, list: ul, rows: [], section: sec };
-                sections.push(current);
-            }
-            current.rows.push(row);
-        });
-        return sections;
-    }
-
-    function setView(next) {
-        if (next === view) { return; }
-        view = next;
-        if (view === 'az') {
-            azSections = azSections || buildAz();
-            azSections.forEach(function (g) {
-                g.rows.forEach(function (row) { g.list.appendChild(row); });
-            });
-            groupsEl.replaceChildren.apply(groupsEl, azSections.map(function (g) { return g.section; }));
-        } else {
-            rows.forEach(function (row) { row._home.appendChild(row); });
-            groupsEl.replaceChildren.apply(groupsEl, catSections);
-        }
-        root.setAttribute('data-view', view);
-        switchBtns.forEach(function (btn) {
-            btn.setAttribute('aria-pressed', btn.getAttribute('data-view') === view ? 'true' : 'false');
-        });
-        applyFilter();
-    }
-
-    switchBtns.forEach(function (btn) {
-        btn.addEventListener('click', function () { setView(btn.getAttribute('data-view')); });
-    });
-
-    /* ---- Search ---- */
-
-    function applyFilter() {
-        var q = search.value.trim().toLowerCase();
-        var matches = 0;
-        rows.forEach(function (row) {
-            var hit = !q || row._text.indexOf(q) !== -1;
-            row.hidden = !hit;
-            if (hit) { matches++; }
-        });
-        Array.prototype.forEach.call(groupsEl.children, function (sec) {
-            var visible = sec.querySelectorAll('.ph-row:not([hidden])').length;
-            sec.querySelector('.ph-n').textContent = visible;
-            sec.hidden = visible === 0;
-        });
-        emptyEl.hidden = matches !== 0;
-        if (!q) {
-            countEl.textContent = total + ' placeholders';
-        } else if (matches === 0) {
-            countEl.textContent = 'No placeholders match';
-        } else {
-            countEl.textContent = matches + ' of ' + total + (matches === 1 ? ' matches' : ' match');
-        }
-    }
-
-    search.addEventListener('input', applyFilter);
-    search.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape' && search.value) {
-            e.preventDefault();
-            search.value = '';
-            applyFilter();
-        }
-    });
-    document.addEventListener('keydown', function (e) {
-        if (e.key !== '/' || e.ctrlKey || e.metaKey || e.altKey) { return; }
-        var t = e.target;
-        if (t && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))) { return; }
-        e.preventDefault();
-        search.focus();
-    });
-
-    /* ---- Anchors ---- */
-
-    function followHash() {
-        var id = decodeURIComponent(location.hash.slice(1));
-        if (!id) { return; }
-        var isCategory = catSections.some(function (s) { return s.id === id; });
-        if (isCategory && view !== 'category') { setView('category'); }
-        var target = document.getElementById(id);
-        if (!target || !root.contains(target)) { return; }
-        if (target.hidden || (target.closest('.ph-group') || {}).hidden) {
-            search.value = '';
-            applyFilter();
-        }
-        target.scrollIntoView();
-    }
-    window.addEventListener('hashchange', followHash);
-
-    /* ---- Copy ---- */
-
-    var toastTimer = null;
-    function showToast(text) {
-        toast.textContent = text;
-        toast.classList.add('is-visible');
-        clearTimeout(toastTimer);
-        toastTimer = setTimeout(function () {
-            toast.classList.remove('is-visible');
-        }, 1400);
-    }
-
-    function fallbackCopy(text) {
-        var ta = document.createElement('textarea');
-        ta.value = text;
-        ta.setAttribute('readonly', '');
-        ta.style.position = 'fixed';
-        ta.style.opacity = '0';
-        document.body.appendChild(ta);
-        ta.select();
-        var ok = false;
-        try { ok = document.execCommand('copy'); } catch (err) { ok = false; }
-        document.body.removeChild(ta);
-        return ok;
-    }
-
-    root.addEventListener('click', function (e) {
-        var chip = e.target.closest('.ph-chip');
-        if (!chip) { return; }
-        var text = chip.getAttribute('data-copy');
-        var done = function () { showToast('Copied ' + text); };
-        var fail = function () {
-            if (fallbackCopy(text)) { done(); } else { showToast('Copy failed: select the text and copy it'); }
-        };
-        if (navigator.clipboard && window.isSecureContext) {
-            navigator.clipboard.writeText(text).then(done, fail);
-        } else {
-            fail();
-        }
-    });
-
-    applyFilter();
-    followHash();
-})();
-</script>
+{{ partial "ph-list-script.html" . }}
