@@ -242,6 +242,17 @@
         "settable": true
     },
     {
+        "key": "_special_prompts_connection",
+        "type": "object",
+        "default": "{}",
+        "values": "add_tags | spamfilter | summarize | translate | get_calendar_event | get_task",
+        "notes": "The connection of each feature, enforced by the policy. See <a href=\"#feature-connections\">Per-feature connections</a>.",
+        "version": "5.1.0",
+        "group": "Per-feature connection overrides",
+        "category": "structural",
+        "settable": true
+    },
+    {
         "key": "add_tags_use_specific_integration",
         "type": "boolean",
         "default": "false",
