@@ -16,8 +16,9 @@ Type = "no-list"
 
 <p>
     For administrators deploying ThunderAI across an organization. It covers pre-configuring
-    settings, enforcing them so users cannot change them, distributing a shared set of prompts, and
-    restricting what users can do with prompts and the setup wizard.
+    settings, enforcing them so users cannot change them, distributing a shared set of prompts,
+    replacing the prompts of the special features and choosing their connection, limiting the automatic
+    features to some accounts, and restricting what users can do with prompts and the setup wizard.
 </p>
 <p>
     No add-on setting needs to be touched on each machine: everything here is driven by
@@ -58,7 +59,9 @@ Type = "no-list"
     <a href="#enforced">Enforced values</a>
     <a href="#example">Example</a>
     <a href="#org-prompts">Org prompts</a>
+    <a href="#special-prompt-texts">Prompt texts</a>
     <a href="#feature-connections">Feature connections</a>
+    <a href="#accounts">Accounts</a>
     <a href="#restrictions">Restrictions</a>
     <a href="#permissions">Permissions</a>
     <a href="#key-reference">Key reference</a>
@@ -414,6 +417,144 @@ Type = "no-list"
 </p>
 
 
+<h2 id="special-prompt-texts">Special prompt texts</h2>
+
+<p>
+    The special features (Add Tags, Spam Filter, Summarize, Translate, Calendar Event, Task) each run a
+    prompt whose text users can edit on the feature's settings page. <code>_special_prompts_text</code>
+    replaces that text with yours, for every user. For example, you can make the spam filter apply your
+    organization's own criteria:
+</p>
+
+<pre>"_special_prompts_text": {
+  "prompt_spamfilter": "Decide whether this email is spam for ACME. Treat any request to change bank details as spam. Answer only with a JSON object: {\"spamValue\": &lt;0-100&gt;, \"explanation\": \"&lt;one sentence&gt;\"}.\n\n{%mail_html_body%}"
+}</pre>
+
+<p>
+    Neither of the other mechanisms can do this. These texts are stored with the feature's prompt, not in
+    a preference, and <code>_org_prompts</code> only adds new prompts.
+</p>
+
+<h3>Prompt ids</h3>
+
+<table class="guides">
+    <thead>
+        <tr>
+            <th>Key</th>
+            <th>Text</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr><td><code>prompt_add_tags</code></td><td>Add Tags</td></tr>
+        <tr><td><code>prompt_spamfilter</code></td><td>Spam Filter</td></tr>
+        <tr><td><code>prompt_summarize</code></td><td>Summarize, the instruction</td></tr>
+        <tr><td><code>prompt_summarize_email_template</code></td><td>Summarize, how each message is presented
+            when several are summarized together</td></tr>
+        <tr><td><code>prompt_summarize_email_separator</code></td><td>Summarize, the separator between those
+            messages. Whitespace only is allowed here.</td></tr>
+        <tr><td><code>prompt_translate_this</code></td><td>Translate</td></tr>
+        <tr><td><code>prompt_get_calendar_event</code></td><td>Calendar Event</td></tr>
+        <tr><td><code>prompt_get_calendar_event_from_clipboard</code></td><td>Calendar Event from the
+            clipboard</td></tr>
+        <tr><td><code>prompt_get_task</code></td><td>Task</td></tr>
+    </tbody>
+</table>
+
+<p>
+    The Calendar Event settings page edits both calendar texts in one field. So a text you set for
+    <code>prompt_get_calendar_event</code> applies to the clipboard variant too, unless the policy also
+    names <code>prompt_get_calendar_event_from_clipboard</code>.
+</p>
+
+<h3>Behaviour</h3>
+
+<ul>
+    <li><strong>Always enforced.</strong> There is no initial-value form:
+        <code>"_special_prompts_text:locked"</code> is ignored with a warning.</li>
+    <li><strong>Only the text.</strong> Everything else about the feature (its icon, its menu visibility,
+        its connection) stays the user's. To set the connection, use
+        <a href="#feature-connections"><code>_special_prompts_connection</code></a>.</li>
+    <li><strong>Read-only on the settings page.</strong> The text is shown, marked as managed, and can be
+        selected and copied, but not edited. Save and Reset are disabled.</li>
+    <li><strong>Never written to the user's profile.</strong> Removing an entry, or the whole key, restores
+        each user's own text exactly as they had it, or the ThunderAI default.</li>
+</ul>
+
+<h3>The response format</h3>
+
+<p>
+    Most of these features read the AI's answer as JSON, and the text of the prompt is what asks for that
+    format. A text without it would break the feature for everyone. So a text is <strong>rejected</strong>
+    if it never names the response fields its feature reads:
+</p>
+
+<table class="guides">
+    <thead>
+        <tr>
+            <th>Key</th>
+            <th>Must name</th>
+            <th>Must contain</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>prompt_spamfilter</code></td>
+            <td><code>spamValue</code>, <code>explanation</code></td>
+            <td rowspan="2">a body placeholder, or no placeholder at all</td>
+        </tr>
+        <tr>
+            <td><code>prompt_add_tags</code></td>
+            <td><code>tags</code></td>
+        </tr>
+        <tr>
+            <td><code>prompt_get_calendar_event</code>, <code>…_from_clipboard</code></td>
+            <td><code>startDate</code>, <code>endDate</code>, <code>summary</code></td>
+            <td rowspan="2"><code>{%selected_text%}</code>, <code>{%selected_html%}</code>, a body placeholder,
+                or no placeholder at all</td>
+        </tr>
+        <tr>
+            <td><code>prompt_get_task</code></td>
+            <td><code>summary</code></td>
+        </tr>
+        <tr>
+            <td><code>prompt_translate_this</code></td>
+            <td><code>subject</code>, <code>body</code>, <code>status</code></td>
+            <td><code>{%mail_html_body%}</code> or <code>{%mail_text_body%}</code>, <strong>and</strong>
+                <code>{%thunderai_translate_lang%}</code></td>
+        </tr>
+        <tr>
+            <td><code>prompt_summarize_email_template</code></td>
+            <td>—</td>
+            <td>a body placeholder, or no placeholder at all</td>
+        </tr>
+        <tr>
+            <td><code>prompt_summarize</code>, <code>prompt_summarize_email_separator</code></td>
+            <td>—</td>
+            <td>—</td>
+        </tr>
+    </tbody>
+</table>
+
+<p class="small_text">
+    Body placeholders: <code>{%mail_text_body%}</code>, <code>{%mail_html_body%}</code>,
+    <code>{%mail_text_body_or_selected%}</code>, <code>{%mail_html_body_or_selected%}</code>. A text with no
+    placeholder at all gets the message appended automatically.
+</p>
+
+<p>
+    A field name is matched as a whole word, case-sensitive, anywhere in the text. This catches a text
+    rewritten without its output format; it does not check that the format itself is well formed. Start
+    from the ThunderAI default text, shown on each feature's settings page, and keep its format part.
+</p>
+<p>
+    If the value of <code>_special_prompts_text</code> is not an object, the whole key is ignored.
+    Otherwise each entry is checked on its own. An entry is <strong>skipped</strong>, with a warning, if its key is not
+    one of the ids above, if its value is not a non-empty string, or if it misses a response field: the
+    user's own text then stays in effect. A missing placeholder (the third column) is only a warning,
+    logged at every startup: the text is still enforced, but the message may not reach the AI.
+</p>
+
+
 <h2 id="feature-connections">Per-feature connections</h2>
 
 <p>
@@ -606,7 +747,7 @@ Type = "no-list"
     </li>
 </ul>
 
-<table class="guides">
+<table class="guides" id="connection-field-rules">
     <thead>
         <tr>
             <th>Field</th>
@@ -679,6 +820,81 @@ Type = "no-list"
     by field, including their switch and connection type. A user who had none goes back to the main
     connection. When the policy replaces a value a user had stored, a warning is logged at startup. It
     names the feature and the field, never the value.
+</p>
+
+
+<h2 id="accounts">Limiting features to some accounts</h2>
+
+<p>
+    The automatic spam filter and automatic Add Tags can be limited to some accounts. Users choose them
+    with checkboxes on the feature's settings page, stored in <code>spamfilter_enabled_accounts</code> and
+    <code>add_tags_enabled_accounts</code>. Those two keys cannot be set by policy: they hold account
+    identifiers that Thunderbird assigns separately in each profile, so no single value would be right on
+    every machine.
+</p>
+<p>
+    Use <code>spamfilter_enabled_accounts_match</code> and <code>add_tags_enabled_accounts_match</code>
+    instead. They name accounts by what is the same everywhere, and ThunderAI finds the matching accounts
+    in each profile:
+</p>
+
+<pre>"spamfilter_enabled_accounts_match": [
+  "support@acme.example",
+  "@sales.acme.example",
+  "local"
+],
+"add_tags_enabled_accounts_match": ["@acme.example"]</pre>
+
+<table class="guides">
+    <thead>
+        <tr>
+            <th>Entry</th>
+            <th>Matches</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>user@acme.example</code></td>
+            <td>an account with an identity of that address</td>
+        </tr>
+        <tr>
+            <td><code>@acme.example</code> or <code>*@acme.example</code></td>
+            <td>an account with an identity in that domain</td>
+        </tr>
+        <tr>
+            <td><code>local</code></td>
+            <td>Local Folders</td>
+        </tr>
+    </tbody>
+</table>
+
+<ul>
+    <li>Entries are case-insensitive. An account matches when any of its identities does.</li>
+    <li><strong>RSS feed accounts are never matched.</strong></li>
+    <li>An address with a <code>+</code> tag (<code>user+tag@acme.example</code>) is not accepted. Use the
+        domain form to cover it.</li>
+    <li><strong>Only the automatic runs are limited.</strong> Running the feature from the menu on a
+        message works as without a policy.</li>
+    <li><strong>Always enforced.</strong> <code>":locked": false</code> is ignored with a warning: there is
+        no control the user could change the value with.</li>
+    <li><strong>A list that matches nothing means no account</strong>, not every account. A warning is
+        logged when it happens. An empty array (<code>[]</code>) in the policy is different: it is the same
+        as leaving the key out.</li>
+    <li>Accounts are matched again each time new mail is processed, so an account added after startup is
+        picked up without a restart.</li>
+</ul>
+
+<p>
+    On the feature's settings page the account checkboxes show the matched accounts, disabled and marked
+    as managed, with a note explaining it. The user's own selection is never changed: removing the key
+    restores it.
+</p>
+<p>
+    Each entry is checked on its own: an entry that is not one of the forms above (including one that is
+    not a string) is skipped with a warning naming its position, and the others still apply. Unlike the
+    other list keys, one bad entry does not discard the whole list. That would fall back to the user's
+    selection, perhaps every account, for a key whose job is to limit where mail is sent. For the same
+    reason, a list whose entries are all invalid is kept as an empty list: no account.
 </p>
 
 
@@ -852,10 +1068,78 @@ Type = "no-list"
 <p>
     Array keys (<code>add_tags_exclusions</code>, <code>spamfilter_skip_addresses</code>,
     <code>summarize_auto_senders_list</code>) must contain <strong>only strings</strong>. A single element
-    of another type makes ThunderAI ignore the whole value, with a warning — it is not filtered out.
+    of another type makes ThunderAI ignore the whole value, with a warning — it is not filtered out. The
+    account lists (<code>*_enabled_accounts_match</code>) are the exception: they are checked entry by entry,
+    see <a href="#accounts">Limiting features to some accounts</a>.
+</p>
+
+<h3 id="content-rules">Values the add-on cannot use</h3>
+
+<p>
+    A value of the right type is also checked against what the setting accepts, and rejected the same
+    way — ignored with a warning naming the key, never adjusted:
+</p>
+
+<table class="guides">
+    <thead>
+        <tr>
+            <th>Keys</th>
+            <th>Must be</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>connection_type</code></td>
+            <td>one of the connection types listed in the key reference. Not <code>""</code>, which means
+                "not configured".</td>
+        </tr>
+        <tr>
+            <td><code>&lt;feature&gt;_connection_type</code></td>
+            <td>one of the five API types. Not <code>chatgpt_web</code>: the features cannot run on it.</td>
+        </tr>
+        <tr>
+            <td><code>reply_type</code>, <code>diff_granularity</code>, <code>summarize_display_mode</code>,
+                <code>summarize_auto</code>, <code>translate_auto</code></td>
+            <td>one of the values listed for the key: the choices its settings page offers</td>
+        </tr>
+        <tr>
+            <td>every number</td>
+            <td>an integer, 0 or more. <code>spamfilter_threshold</code>: 0 to 100.
+                <code>add_tags_maxnum</code>, <code>summarize_max_messages</code>,
+                <code>max_prompt_length</code>: 1 or more.</td>
+        </tr>
+        <tr>
+            <td><code>calendar_timezone</code></td>
+            <td><code>""</code>, or a time zone name as the Calendar Event settings list it, such as
+                <code>"Europe/Rome"</code> (case-sensitive)</td>
+        </tr>
+        <tr>
+            <td>the provider keys (<code>openai_comp_host</code>, <code>ollama_num_ctx</code>,
+                <code>chatgpt_temperature</code>…)</td>
+            <td>the same rules as the fields of a per-feature connection: hosts are
+                <code>http(s)://</code> URLs, models are not empty, temperatures are strings holding a number…
+                See the <a href="#connection-field-rules">rules table</a>.</td>
+        </tr>
+    </tbody>
+</table>
+
+<p>
+    Free-text keys (languages, signature name, system prompts…) accept any string. Provider-specific
+    choices such as <code>chatgpt_reasoning_effort</code> or <code>anthropic_effort</code> are not checked:
+    the values each provider accepts change with its models.
 </p>
 <p>
-    101 of ThunderAI's 110 settings can be set by policy; the other nine are listed at the end.
+    <strong>One rule spans two keys.</strong> An automatic summary is always shown inline. So when the
+    policy sets <code>summarize_auto</code> to <code>2</code> or <code>3</code> and also sets
+    <code>summarize_display_mode</code>, the display mode becomes <code>"inline"</code>, with a warning, and
+    takes the lock of <code>summarize_auto</code>: enforced if that is enforced, an initial value if it has
+    <code>":locked": false</code>.
+</p>
+
+<h3>All keys</h3>
+
+<p>
+    103 of ThunderAI's 112 settings can be set by policy; the other nine are listed at the end.
     Two settable keys need a permission the policy cannot grant — see
     <a href="#permissions">Settings that require a browser permission</a>.
 </p>
@@ -897,6 +1181,12 @@ Type = "no-list"
                 <code>"70"</code> is not <code>70</code>.</td>
         </tr>
         <tr>
+            <td>One key ignored, warning that it "must be" something</td>
+            <td>The type is right but the value is not usable: not one of the listed values, out of range, a
+                host that is not a URL, an unknown time zone. See
+                <a href="#content-rules">Values the add-on cannot use</a>.</td>
+        </tr>
+        <tr>
             <td>A list key ignored as a whole</td>
             <td>One of its elements is not a string. Array keys must contain only strings.</td>
         </tr>
@@ -922,6 +1212,27 @@ Type = "no-list"
             <td>One prompt missing</td>
             <td>Missing <code>id</code>, <code>name</code> or <code>text</code>, a duplicate
                 <code>id</code>, or an invalid <code>api_type</code>.</td>
+        </tr>
+        <tr>
+            <td>A special prompt text not applied</td>
+            <td>Unknown prompt id, an empty text, or a text that does not name the response fields its feature
+                reads (for example <code>spamValue</code>). The user's own text stays in effect. See
+                <a href="#special-prompt-texts">Special prompt texts</a>.</td>
+        </tr>
+        <tr>
+            <td>A special prompt text applied, but the feature ignores the message</td>
+            <td>The text has placeholders but none that brings in the message (or, for Translate, no
+                <code>{%thunderai_translate_lang%}</code>). A warning is logged at every startup.</td>
+        </tr>
+        <tr>
+            <td>Automatic spam filter or Add Tags runs on no account</td>
+            <td><code>*_enabled_accounts_match</code> matches no account in that profile, or all its entries
+                were rejected. See <a href="#accounts">Limiting features to some accounts</a>.</td>
+        </tr>
+        <tr>
+            <td>Summaries shown inline although the policy sets <code>webchat</code></td>
+            <td>Expected: <code>summarize_auto</code> is <code>2</code> or <code>3</code>, and automatic
+                summaries are always inline.</td>
         </tr>
         <tr>
             <td>A per-feature connection ignored as a whole</td>
