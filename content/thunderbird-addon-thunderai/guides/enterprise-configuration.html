@@ -54,19 +54,36 @@ Type = "no-list"
     </p>
 </div>
 
+<div id="section-nav-wrap">
 <nav id="section-nav" aria-label="On this page">
-    <a href="#where">Installing</a>
-    <a href="#enforced">Enforced values</a>
-    <a href="#example">Example</a>
+    <span class="nav-group">
+        <a href="#where" class="nav-parent" aria-haspopup="true">Setup ▾</a>
+        <span class="nav-sub">
+            <a href="#where">Installing</a>
+            <a href="#enforced">Enforced values</a>
+            <a href="#example">Example</a>
+        </span>
+    </span>
     <a href="#org-prompts">Org prompts</a>
-    <a href="#special-prompt-texts">Prompt texts</a>
-    <a href="#feature-connections">Feature connections</a>
-    <a href="#accounts">Accounts</a>
+    <span class="nav-group">
+        <a href="#special-prompt-texts" class="nav-parent" aria-haspopup="true">Special features ▾</a>
+        <span class="nav-sub">
+            <a href="#special-prompt-texts">Prompt texts</a>
+            <a href="#feature-connections">Connections</a>
+            <a href="#accounts">Accounts</a>
+        </span>
+    </span>
     <a href="#restrictions">Restrictions</a>
     <a href="#permissions">Permissions</a>
-    <a href="#key-reference">Key reference</a>
-    <a href="#troubleshooting">Troubleshooting</a>
+    <span class="nav-group">
+        <a href="#key-reference" class="nav-parent" aria-haspopup="true">Reference ▾</a>
+        <span class="nav-sub">
+            <a href="#key-reference">Key reference</a>
+            <a href="#troubleshooting">Troubleshooting</a>
+        </span>
+    </span>
 </nav>
+</div>
 
 <h2 id="where">Where <code>policies.json</code> goes</h2>
 
@@ -1302,8 +1319,11 @@ Type = "no-list"
         var nav = document.getElementById('section-nav');
         if (!nav) { return; }
 
+        var wrap = document.getElementById('section-nav-wrap') || nav;
         var links = Array.prototype.slice.call(nav.querySelectorAll('a'));
+        // A group parent only opens its submenu: the sub-entries are the sections.
         var sections = links
+            .filter(function (a) { return !a.classList.contains('nav-parent'); })
             .map(function (a) {
                 var el = document.getElementById(a.getAttribute('href').slice(1));
                 return el ? { link: a, el: el } : null;
@@ -1326,10 +1346,18 @@ Type = "no-list"
             entry.link.classList.add('current');
             entry.link.setAttribute('aria-current', 'true');
 
+            // A sub-section also highlights its group's parent, which is the visible chip.
+            var visible = entry.link;
+            var group = entry.link.closest('.nav-group');
+            if (group) {
+                visible = group.querySelector('.nav-parent');
+                visible.classList.add('current');
+            }
+
             // Keep the active chip visible when the bar itself scrolls horizontally.
             if (nav.scrollWidth > nav.clientWidth) {
                 var navBox = nav.getBoundingClientRect();
-                var chip = entry.link.getBoundingClientRect();
+                var chip = visible.getBoundingClientRect();
                 if (chip.left < navBox.left || chip.right > navBox.right) {
                     nav.scrollLeft += chip.left - navBox.left
                         - (navBox.width - chip.width) / 2;
@@ -1378,11 +1406,69 @@ Type = "no-list"
 
         links.forEach(function (a) {
             a.addEventListener('click', function () {
-                var target = sections.filter(function (s) { return s.link === a; })[0];
+                var href = a.getAttribute('href');
+                var target = sections.filter(function (s) {
+                    return s.link.getAttribute('href') === href;
+                })[0];
                 if (!target) { return; }
                 setActive(target);
                 pinnedUntil = Date.now() + 700;
+                // Choosing a sub-entry closes its submenu.
+                if (!a.classList.contains('nav-parent') && a.closest('.nav-group')) {
+                    a.closest('.nav-group').classList.remove('open');
+                    a.blur();
+                }
             });
+        });
+
+        // Submenus: open on hover or focus, placed under their parent chip. Closing on
+        // mouse leave is delayed so the pointer can cross the gap between chip and menu.
+        Array.prototype.slice.call(nav.querySelectorAll('.nav-group')).forEach(function (group) {
+            var parent = group.querySelector('.nav-parent');
+            var sub = group.querySelector('.nav-sub');
+            var closeTimer = null;
+
+            function place() {
+                var wrapBox = wrap.getBoundingClientRect();
+                var left = parent.getBoundingClientRect().left - wrapBox.left;
+                sub.style.left = '0px';
+                var maxLeft = wrapBox.width - sub.offsetWidth;
+                sub.style.left = Math.max(0, Math.min(left, maxLeft)) + 'px';
+            }
+            function open() {
+                clearTimeout(closeTimer);
+                group.classList.add('open');
+                place();
+            }
+            function close() {
+                clearTimeout(closeTimer);
+                group.classList.remove('open');
+            }
+
+            group.addEventListener('mouseenter', open);
+            group.addEventListener('mouseleave', function () {
+                closeTimer = setTimeout(close, 250);
+            });
+            group.addEventListener('focusin', place);
+            // With a mouse, hover already drives the menu: drop the focus a click leaves on
+            // the parent, or the menu would stay open after the pointer has left. On touch
+            // the focus is what keeps the menu open after the tap.
+            var lastPointer = '';
+            parent.addEventListener('pointerdown', function (e) { lastPointer = e.pointerType; });
+            parent.addEventListener('click', function () {
+                if (lastPointer === 'mouse') { parent.blur(); }
+            });
+            group.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape') {
+                    close();
+                    if (document.activeElement) { document.activeElement.blur(); }
+                }
+            });
+            nav.addEventListener('scroll', function () {
+                if (group.classList.contains('open') || group.contains(document.activeElement)) {
+                    place();
+                }
+            }, { passive: true });
         });
 
         var ticking = false;

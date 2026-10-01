@@ -308,21 +308,36 @@ table.policy-keys td:first-child {
 html {
     scroll-behavior: smooth;
 }
-#section-nav {
+/* The wrapper is sticky, draws the bar and is the containing block of the submenus, so
+   they are not clipped by the horizontal scrolling of the bar itself. The scrolling nav
+   must not carry backdrop-filter/filter/transform: any of them would make it the
+   containing block instead and clip the submenus. */
+#section-nav-wrap {
     position: sticky;
     top: 0;
     z-index: 20;
-    display: flex;
-    gap: 2px;
     margin: 1.5em 0 2em 0;
-    padding: 6px;
-    overflow-x: auto;
-    scrollbar-width: none;
     background-color: color-mix(in srgb, var(--bg-color) 92%, var(--font-color));
     border: 1px solid var(--hr-color);
     border-radius: 10px;
     backdrop-filter: blur(8px);
+}
+#section-nav {
+    display: flex;
+    gap: 2px;
+    padding: 6px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    border-radius: 10px;
     font-size: 0.8em;
+}
+/* Centered entries. Auto margins instead of justify-content: center, which would push
+   the first entries out of reach on the left when the bar scrolls on narrow screens. */
+#section-nav > :first-child {
+    margin-left: auto;
+}
+#section-nav > :last-child {
+    margin-right: auto;
 }
 #section-nav::-webkit-scrollbar {
     display: none;
@@ -348,17 +363,46 @@ html {
     font-weight: 600;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.22);
 }
+/* A parent entry that opens a submenu of its sub-sections on hover or focus. */
+#section-nav .nav-group {
+    display: flex;
+    flex: 0 0 auto;
+}
+#section-nav .nav-sub {
+    display: none;
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 11em;
+    padding: 6px;
+    background-color: color-mix(in srgb, var(--bg-color) 92%, var(--font-color));
+    border: 1px solid var(--hr-color);
+    border-radius: 10px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+}
+#section-nav .nav-group.open .nav-sub,
+#section-nav .nav-group:focus-within .nav-sub {
+    display: flex;
+}
+#section-nav .nav-sub a.current {
+    box-shadow: none;
+}
 /* Headings must clear the sticky bar when jumped to. */
-#section-nav ~ h2[id],
-#section-nav ~ h3[id] {
+#section-nav-wrap ~ h2[id],
+#section-nav-wrap ~ h3[id] {
     scroll-margin-top: 4em;
 }
 @media (max-width: 480px) {
+    #section-nav-wrap {
+        margin-left: -1em;
+        margin-right: -1em;
+        border-radius: 0;
+    }
     #section-nav {
         font-size: 0.75em;
         border-radius: 0;
-        margin-left: -1em;
-        margin-right: -1em;
     }
 }
 @media (prefers-reduced-motion: reduce) {
