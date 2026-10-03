@@ -16,8 +16,9 @@ Type = "no-list"
 
 <p>
     For administrators deploying ThunderAI across an organization. It covers pre-configuring
-    settings, enforcing them so users cannot change them, distributing a shared set of prompts, and
-    restricting what users can do with prompts and the setup wizard.
+    settings, enforcing them so users cannot change them, distributing a shared set of prompts,
+    replacing the prompts of the special features and choosing their connection, limiting the automatic
+    features to some accounts, and restricting what users can do with prompts and the setup wizard.
 </p>
 <p>
     No add-on setting needs to be touched on each machine: everything here is driven by
@@ -53,16 +54,36 @@ Type = "no-list"
     </p>
 </div>
 
+<div id="section-nav-wrap">
 <nav id="section-nav" aria-label="On this page">
-    <a href="#where">Installing</a>
-    <a href="#enforced">Enforced values</a>
-    <a href="#example">Example</a>
+    <span class="nav-group">
+        <a href="#where" class="nav-parent" aria-haspopup="true">Setup ▾</a>
+        <span class="nav-sub">
+            <a href="#where">Installing</a>
+            <a href="#enforced">Enforced values</a>
+            <a href="#example">Example</a>
+        </span>
+    </span>
     <a href="#org-prompts">Org prompts</a>
+    <span class="nav-group">
+        <a href="#special-prompt-texts" class="nav-parent" aria-haspopup="true">Special features ▾</a>
+        <span class="nav-sub">
+            <a href="#special-prompt-texts">Prompt texts</a>
+            <a href="#feature-connections">Connections</a>
+            <a href="#accounts">Accounts</a>
+        </span>
+    </span>
     <a href="#restrictions">Restrictions</a>
     <a href="#permissions">Permissions</a>
-    <a href="#key-reference">Key reference</a>
-    <a href="#troubleshooting">Troubleshooting</a>
+    <span class="nav-group">
+        <a href="#key-reference" class="nav-parent" aria-haspopup="true">Reference ▾</a>
+        <span class="nav-sub">
+            <a href="#key-reference">Key reference</a>
+            <a href="#troubleshooting">Troubleshooting</a>
+        </span>
+    </span>
 </nav>
+</div>
 
 <h2 id="where">Where <code>policies.json</code> goes</h2>
 
@@ -413,6 +434,545 @@ Type = "no-list"
 </p>
 
 
+<h2 id="special-prompt-texts">Special prompt texts</h2>
+
+<p>
+    The special features (Add Tags, Spam Filter, Summarize, Translate, Calendar Event, Task) each run a
+    prompt whose text users can edit on the feature's settings page. <code>_special_prompts_text</code>
+    replaces that text with yours, for every user. For example, you can make the spam filter apply your
+    organization's own criteria:
+</p>
+
+<pre>"_special_prompts_text": {
+  "prompt_spamfilter": "Decide whether this email is spam for ACME. Treat any request to change bank details as spam. Answer only with a JSON object: {\"spamValue\": &lt;0-100&gt;, \"explanation\": \"&lt;one sentence&gt;\"}.\n\n{%mail_html_body%}"
+}</pre>
+
+<p>
+    Neither of the other mechanisms can do this. These texts are stored with the feature's prompt, not in
+    a preference, and <code>_org_prompts</code> only adds new prompts.
+</p>
+
+<h3>Prompt ids</h3>
+
+<table class="guides">
+    <thead>
+        <tr>
+            <th>Key</th>
+            <th>Text</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr><td><code>prompt_add_tags</code></td><td>Add Tags</td></tr>
+        <tr><td><code>prompt_spamfilter</code></td><td>Spam Filter</td></tr>
+        <tr><td><code>prompt_summarize</code></td><td>Summarize, the instruction</td></tr>
+        <tr><td><code>prompt_summarize_email_template</code></td><td>Summarize, how each message is presented
+            when several are summarized together</td></tr>
+        <tr><td><code>prompt_summarize_email_separator</code></td><td>Summarize, the separator between those
+            messages. Whitespace only is allowed here.</td></tr>
+        <tr><td><code>prompt_translate_this</code></td><td>Translate</td></tr>
+        <tr><td><code>prompt_get_calendar_event</code></td><td>Calendar Event</td></tr>
+        <tr><td><code>prompt_get_calendar_event_from_clipboard</code></td><td>Calendar Event from the
+            clipboard</td></tr>
+        <tr><td><code>prompt_get_task</code></td><td>Task</td></tr>
+    </tbody>
+</table>
+
+<p>
+    The Calendar Event settings page edits both calendar texts in one field. So a text you set for
+    <code>prompt_get_calendar_event</code> applies to the clipboard variant too, unless the policy also
+    names <code>prompt_get_calendar_event_from_clipboard</code>.
+</p>
+
+<h3>Behaviour</h3>
+
+<ul>
+    <li><strong>Always enforced.</strong> There is no initial-value form:
+        <code>"_special_prompts_text:locked"</code> is ignored with a warning.</li>
+    <li><strong>Only the text.</strong> Everything else about the feature (its icon, its menu visibility,
+        its connection) stays the user's. To set the connection, use
+        <a href="#feature-connections"><code>_special_prompts_connection</code></a>.</li>
+    <li><strong>Read-only on the settings page.</strong> The text is shown, marked as managed, and can be
+        selected and copied, but not edited. Save and Reset are disabled.</li>
+    <li><strong>Never written to the user's profile.</strong> Removing an entry, or the whole key, restores
+        each user's own text exactly as they had it, or the ThunderAI default.</li>
+</ul>
+
+<h3>The response format</h3>
+
+<p>
+    Most of these features read the AI's answer as JSON, and the text of the prompt is what asks for that
+    format. A text without it would break the feature for everyone. So a text is <strong>rejected</strong>
+    if it never names the response fields its feature reads:
+</p>
+
+<table class="guides">
+    <thead>
+        <tr>
+            <th>Key</th>
+            <th>Must name</th>
+            <th>Must contain</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>prompt_spamfilter</code></td>
+            <td><code>spamValue</code>, <code>explanation</code></td>
+            <td rowspan="2">a body placeholder, or no placeholder at all</td>
+        </tr>
+        <tr>
+            <td><code>prompt_add_tags</code></td>
+            <td><code>tags</code></td>
+        </tr>
+        <tr>
+            <td><code>prompt_get_calendar_event</code>, <code>…_from_clipboard</code></td>
+            <td><code>startDate</code>, <code>endDate</code>, <code>summary</code></td>
+            <td rowspan="2"><code>{%selected_text%}</code>, <code>{%selected_html%}</code>, a body placeholder,
+                or no placeholder at all</td>
+        </tr>
+        <tr>
+            <td><code>prompt_get_task</code></td>
+            <td><code>summary</code></td>
+        </tr>
+        <tr>
+            <td><code>prompt_translate_this</code></td>
+            <td><code>subject</code>, <code>body</code>, <code>status</code></td>
+            <td><code>{%mail_html_body%}</code> or <code>{%mail_text_body%}</code>, <strong>and</strong>
+                <code>{%thunderai_translate_lang%}</code></td>
+        </tr>
+        <tr>
+            <td><code>prompt_summarize_email_template</code></td>
+            <td>—</td>
+            <td>a body placeholder, or no placeholder at all</td>
+        </tr>
+        <tr>
+            <td><code>prompt_summarize</code>, <code>prompt_summarize_email_separator</code></td>
+            <td>—</td>
+            <td>—</td>
+        </tr>
+    </tbody>
+</table>
+
+<p class="small_text">
+    Body placeholders: <code>{%mail_text_body%}</code>, <code>{%mail_html_body%}</code>,
+    <code>{%mail_text_body_or_selected%}</code>, <code>{%mail_html_body_or_selected%}</code>. A text with no
+    placeholder at all gets the message appended automatically.
+</p>
+
+<p>
+    A field name is matched as a whole word, case-sensitive, anywhere in the text. This catches a text
+    rewritten without its output format; it does not check that the format itself is well formed. Start
+    from the ThunderAI default text, shown on each feature's settings page, and keep its format part.
+</p>
+<p>
+    If the value of <code>_special_prompts_text</code> is not an object, the whole key is ignored.
+    Otherwise each entry is checked on its own. An entry is <strong>skipped</strong>, with a warning, if its key is not
+    one of the ids above, if its value is not a non-empty string, or if it misses a response field: the
+    user's own text then stays in effect. A missing placeholder (the third column) is only a warning,
+    logged at every startup: the text is still enforced, but the message may not reach the AI.
+</p>
+
+
+<h2 id="feature-connections">Per-feature connections</h2>
+
+<p>
+    Some features can use a connection of their own instead of the main one. In each feature's
+    settings page, users switch on <em>Use a specific integration</em> and pick a provider.
+    <code>_special_prompts_connection</code> lets you set that connection from the policy, feature by
+    feature. For example, you can send spam filtering to a small, cheap model and leave everything else
+    on the main connection.
+</p>
+<p>
+    This connection is stored with the feature's prompt, not in a preference. That is why the ordinary
+    keys cannot set it and this separate key exists.
+</p>
+
+<pre>"_special_prompts_connection": {
+  "spamfilter": {
+    "api_type": "openai_comp_api",
+    "openai_comp_host": "https://ai-gateway.acme.example/v1",
+    "openai_comp_api_key": "acme-gateway-token-REPLACE-ME",
+    "openai_comp_model": "gpt-4o-mini",
+    "openai_comp_model:locked": false
+  }
+}</pre>
+
+<h3>Shape</h3>
+
+<p>
+    The value is an object. Each key names a feature, and each value is that feature's connection:
+</p>
+
+<table class="guides">
+    <thead>
+        <tr>
+            <th>Key</th>
+            <th>Feature</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr><td><code>add_tags</code></td><td>Add Tags</td></tr>
+        <tr><td><code>spamfilter</code></td><td>Spam Filter</td></tr>
+        <tr><td><code>summarize</code></td><td>Summarize</td></tr>
+        <tr><td><code>translate</code></td><td>Translate</td></tr>
+        <tr><td><code>get_calendar_event</code></td><td>Calendar Event, including the "from clipboard" variant</td></tr>
+        <tr><td><code>get_task</code></td><td>Task</td></tr>
+    </tbody>
+</table>
+
+<p>
+    Inside each entry, <code>api_type</code> selects the provider. The other field names are
+    <strong>exactly the connection property names ThunderAI stores on the feature's prompt for that
+    <code>api_type</code></strong>. There is no renaming, and they match the provider's global key
+    names:
+</p>
+
+<table class="guides">
+    <thead>
+        <tr>
+            <th><code>api_type</code></th>
+            <th>Fields</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>openai_comp_api</code></td>
+            <td><code>openai_comp_host</code>, <code>openai_comp_model</code>, <code>openai_comp_api_key</code>,
+                <code>openai_comp_use_v1</code> <span class="sup_comment">(boolean)</span>,
+                <code>openai_comp_chat_name</code>, <code>openai_comp_temperature</code>,
+                <code>openai_comp_extra_body</code></td>
+        </tr>
+        <tr>
+            <td><code>chatgpt_api</code></td>
+            <td><code>chatgpt_api_key</code>, <code>chatgpt_model</code>, <code>chatgpt_developer_messages</code>,
+                <code>chatgpt_temperature</code>, <code>chatgpt_store</code> <span class="sup_comment">(boolean)</span>,
+                <code>chatgpt_reasoning_summary</code>, <code>chatgpt_reasoning_effort</code>,
+                <code>chatgpt_extra_body</code>,
+                <code>chatgpt_max_output_tokens</code> <span class="sup_comment">(number)</span>,
+                <code>chatgpt_verbosity</code>, <code>chatgpt_text_format</code>,
+                <code>chatgpt_text_format_schema_name</code>, <code>chatgpt_text_format_schema</code>,
+                <code>chatgpt_top_p</code>, <code>chatgpt_truncation</code>, <code>chatgpt_prompt_cache_key</code>,
+                <code>chatgpt_service_tier</code>, <code>chatgpt_safety_identifier</code>,
+                <code>chatgpt_include_encrypted_reasoning</code> <span class="sup_comment">(boolean)</span></td>
+        </tr>
+        <tr>
+            <td><code>anthropic_api</code></td>
+            <td><code>anthropic_api_key</code>, <code>anthropic_model</code>, <code>anthropic_version</code>,
+                <code>anthropic_max_tokens</code> <span class="sup_comment">(number)</span>,
+                <code>anthropic_system_prompt</code>, <code>anthropic_temperature</code>,
+                <code>anthropic_top_p</code>, <code>anthropic_top_k</code>, <code>anthropic_stop_sequences</code>,
+                <code>anthropic_extended_thinking_budget</code> <span class="sup_comment">(number)</span>,
+                <code>anthropic_effort</code></td>
+        </tr>
+        <tr>
+            <td><code>google_gemini_api</code></td>
+            <td><code>google_gemini_api_key</code>, <code>google_gemini_model</code>,
+                <code>google_gemini_system_instruction</code>, <code>google_gemini_thinking_budget</code>,
+                <code>google_gemini_temperature</code>,
+                <code>google_gemini_max_output_tokens</code> <span class="sup_comment">(number)</span>,
+                <code>google_gemini_top_p</code>, <code>google_gemini_top_k</code>,
+                <code>google_gemini_extra_body</code></td>
+        </tr>
+        <tr>
+            <td><code>ollama_api</code></td>
+            <td><code>ollama_host</code>, <code>ollama_api_key</code>, <code>ollama_model</code>,
+                <code>ollama_num_ctx</code> <span class="sup_comment">(number)</span>,
+                <code>ollama_temperature</code>, <code>ollama_think</code>,
+                <code>ollama_format_json</code> <span class="sup_comment">(boolean)</span>,
+                <code>ollama_keep_alive</code>, <code>ollama_system_prompt</code>,
+                <code>ollama_extra_options</code></td>
+        </tr>
+    </tbody>
+</table>
+
+<p>
+    Fields not marked otherwise are strings. <strong>That includes the temperatures,
+    <code>*_top_p</code>, <code>*_top_k</code>, <code>google_gemini_thinking_budget</code> and
+    <code>ollama_think</code>:</strong> write <code>"0.7"</code>, not <code>0.7</code>.
+    You can leave out any field except <code>api_type</code>. For a field the policy does not set, the
+    feature uses the user's own value if they have one, and otherwise the main connection's value, just
+    as it does without a policy.
+</p>
+
+<h3>Enforced and initial fields</h3>
+
+<ul>
+    <li><strong><code>api_type</code> is always enforced.</strong> <code>"api_type:locked": false</code>
+        is ignored with a warning. Leaving the provider open to change would make no sense while its
+        provider-specific fields are enforced.</li>
+    <li><strong>Every other field is enforced</strong> unless you add a sibling
+        <code>"&lt;field&gt;:locked": false</code>, as everywhere else in the policy. An unlocked field
+        works like other initial values, with one difference: it applies only while the user has no
+        value of their own for that field. It is never written to their profile. If the user sets a
+        value of their own, it is kept, and it stays after the policy is removed.</li>
+    <li>A top-level <code>"_special_prompts_connection:locked"</code> is ignored with a warning.</li>
+</ul>
+
+<h3>Implied switch and connection type</h3>
+
+<p>
+    Each accepted entry also switches the feature to its own connection and sets the connection type,
+    both locked. It is as if the policy also contained:
+</p>
+
+<pre>"spamfilter_use_specific_integration": true,
+"spamfilter_connection_type": "openai_comp_api"</pre>
+
+<p>
+    On the feature's settings page, the <em>Use a specific integration</em> switch is on and locked, and
+    the provider select shows your <code>api_type</code>, locked. Enforced fields are locked with the
+    padlock. Unlocked fields stay editable.
+</p>
+<p>If the same policy also sets those two keys explicitly:</p>
+
+<table class="guides">
+    <thead>
+        <tr>
+            <th>Explicit key in the same policy</th>
+            <th>Result</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>&lt;feature&gt;_use_specific_integration: false</code>, locked or not</td>
+            <td>The connection entry is <strong>skipped</strong>, with a warning. The explicit switch wins,
+                and the feature uses the main connection.</td>
+        </tr>
+        <tr>
+            <td><code>&lt;feature&gt;_use_specific_integration: true</code> with <code>:locked: false</code></td>
+            <td>Enforced anyway, with a warning.</td>
+        </tr>
+        <tr>
+            <td><code>&lt;feature&gt;_connection_type</code> that differs from <code>api_type</code>, or is
+                unlocked</td>
+            <td>Replaced by <code>api_type</code> and locked, with a warning.</td>
+        </tr>
+    </tbody>
+</table>
+
+<h3>Allowed types and validation</h3>
+
+<p>
+    Every feature accepts the same five <code>api_type</code> values: <code>chatgpt_api</code>,
+    <code>google_gemini_api</code>, <code>anthropic_api</code>, <code>ollama_api</code> and
+    <code>openai_comp_api</code>. <strong><code>chatgpt_web</code> is rejected for every
+    feature.</strong> The features cannot run on ChatGPT Web, and their settings pages don't offer it.
+</p>
+<p>
+    Each entry is checked on its own, and one bad entry never stops the rest of the policy:
+</p>
+<ul>
+    <li>If the value of <code>_special_prompts_connection</code> is not an object, the whole key is
+        ignored.</li>
+    <li>An entry is <strong>skipped as a whole</strong> if its key is not one of the six features, if it
+        is not an object, or if <code>api_type</code> is missing or not one of the five types above.</li>
+    <li>Every other problem skips <strong>only that field</strong>, and the rest of the entry
+        applies:
+        <ul>
+            <li>a field that belongs to a different provider, for example <code>ollama_host</code> under
+                <code>"api_type": "openai_comp_api"</code>;</li>
+            <li>a value of the wrong type. It is not converted: <code>"4096"</code> is not
+                <code>4096</code>;</li>
+            <li>a value that fails its content rule:</li>
+        </ul>
+    </li>
+</ul>
+
+<table class="guides" id="connection-field-rules">
+    <thead>
+        <tr>
+            <th>Field</th>
+            <th>Must be</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>*_host</code></td>
+            <td>an <code>http://</code> or <code>https://</code> URL</td>
+        </tr>
+        <tr>
+            <td><code>*_model</code></td>
+            <td>not empty</td>
+        </tr>
+        <tr>
+            <td><code>ollama_num_ctx</code>, <code>anthropic_extended_thinking_budget</code></td>
+            <td>an integer, 0 or more</td>
+        </tr>
+        <tr>
+            <td><code>anthropic_max_tokens</code></td>
+            <td>an integer, 1 or more</td>
+        </tr>
+        <tr>
+            <td><code>google_gemini_max_output_tokens</code></td>
+            <td>an integer, 0 or more (<code>0</code> means not set)</td>
+        </tr>
+        <tr>
+            <td><code>chatgpt_max_output_tokens</code></td>
+            <td><code>0</code> (not set), or an integer of 16 or more</td>
+        </tr>
+        <tr>
+            <td><code>*_temperature</code></td>
+            <td><code>""</code>, or a string holding a number of 0 or more</td>
+        </tr>
+        <tr>
+            <td><code>*_top_p</code></td>
+            <td><code>""</code>, or a string holding a number from 0 to 1</td>
+        </tr>
+        <tr>
+            <td><code>*_top_k</code></td>
+            <td><code>""</code>, or a string holding an integer, 0 or more</td>
+        </tr>
+        <tr>
+            <td><code>google_gemini_thinking_budget</code></td>
+            <td><code>""</code>, or a string holding an integer (<code>"-1"</code> is Gemini's "dynamic")</td>
+        </tr>
+        <tr>
+            <td><code>ollama_think</code></td>
+            <td><code>""</code>, <code>"false"</code>, <code>"true"</code>, or a level in lowercase letters such as
+                <code>"low"</code>, <code>"medium"</code>, <code>"high"</code>, <code>"max"</code>. The boolean
+                <code>true</code>/<code>false</code> used before 5.1.0 is still read, with a warning.</td>
+        </tr>
+        <tr>
+            <td><code>ollama_keep_alive</code></td>
+            <td><code>""</code>, a whole number of seconds, or a duration such as <code>"5m"</code> or
+                <code>"1h30m"</code></td>
+        </tr>
+        <tr>
+            <td><code>*_extra_body</code>, <code>ollama_extra_options</code>,
+                <code>chatgpt_text_format_schema</code></td>
+            <td><code>""</code>, or a string holding a JSON object</td>
+        </tr>
+        <tr>
+            <td><code>chatgpt_verbosity</code></td>
+            <td><code>""</code>, <code>"low"</code>, <code>"medium"</code> or <code>"high"</code></td>
+        </tr>
+        <tr>
+            <td><code>chatgpt_text_format</code></td>
+            <td><code>""</code>, <code>"json_object"</code> or <code>"json_schema"</code></td>
+        </tr>
+        <tr>
+            <td><code>chatgpt_truncation</code></td>
+            <td><code>""</code>, <code>"auto"</code> or <code>"disabled"</code></td>
+        </tr>
+        <tr>
+            <td><code>chatgpt_service_tier</code></td>
+            <td><code>""</code>, <code>"auto"</code>, <code>"default"</code>, <code>"flex"</code> or
+                <code>"priority"</code></td>
+        </tr>
+    </tbody>
+</table>
+
+<p>
+    <code>"&lt;field&gt;:locked"</code> must be a boolean. Any other value is ignored with a warning,
+    and the field stays enforced. A <code>":locked"</code> whose field is absent or was rejected is also
+    reported.
+</p>
+<p>
+    The settings pages don't apply these rules to what users type. The policy does, because a typo there
+    breaks the feature for everyone, and users cannot fix it themselves. Every skip is reported in the
+    Error Console and names the feature and the field (see
+    <a href="#troubleshooting">Troubleshooting</a>).
+</p>
+
+<h3>The organization's key</h3>
+
+<p>
+    An API key field works like any <a href="#api-keys">API key set by policy</a>. The feature uses it
+    normally, but the settings page shows only a masked placeholder. <strong>The user cannot reveal the
+    key, fetch the model list with it, or test the connection with it.</strong> So set the model
+    in the entry too, for example <code>openai_comp_model</code>. The key is never saved in the user's
+    profile and never included in an export.
+</p>
+
+<h3>Changing and removing it</h3>
+
+<p>
+    <strong>A change takes effect at the next Thunderbird restart</strong>, like every other policy
+    change (see <a href="#before">Before you start</a>).
+</p>
+<p>
+    Nothing the policy supplies is written into the user's profile. <strong>Removing an entry, or the
+    whole key, restores each user's own per-feature connection</strong> exactly as they had it, field
+    by field, including their switch and connection type. A user who had none goes back to the main
+    connection. When the policy replaces a value a user had stored, a warning is logged at startup. It
+    names the feature and the field, never the value.
+</p>
+
+
+<h2 id="accounts">Limiting features to some accounts</h2>
+
+<p>
+    The automatic spam filter and automatic Add Tags can be limited to some accounts. Users choose them
+    with checkboxes on the feature's settings page, stored in <code>spamfilter_enabled_accounts</code> and
+    <code>add_tags_enabled_accounts</code>. Those two keys cannot be set by policy: they hold account
+    identifiers that Thunderbird assigns separately in each profile, so no single value would be right on
+    every machine.
+</p>
+<p>
+    Use <code>spamfilter_enabled_accounts_match</code> and <code>add_tags_enabled_accounts_match</code>
+    instead. They name accounts by what is the same everywhere, and ThunderAI finds the matching accounts
+    in each profile:
+</p>
+
+<pre>"spamfilter_enabled_accounts_match": [
+  "support@acme.example",
+  "@sales.acme.example",
+  "local"
+],
+"add_tags_enabled_accounts_match": ["@acme.example"]</pre>
+
+<table class="guides">
+    <thead>
+        <tr>
+            <th>Entry</th>
+            <th>Matches</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>user@acme.example</code></td>
+            <td>an account with an identity of that address</td>
+        </tr>
+        <tr>
+            <td><code>@acme.example</code> or <code>*@acme.example</code></td>
+            <td>an account with an identity in that domain</td>
+        </tr>
+        <tr>
+            <td><code>local</code></td>
+            <td>Local Folders</td>
+        </tr>
+    </tbody>
+</table>
+
+<ul>
+    <li>Entries are case-insensitive. An account matches when any of its identities does.</li>
+    <li><strong>RSS feed accounts are never matched.</strong></li>
+    <li>An address with a <code>+</code> tag (<code>user+tag@acme.example</code>) is not accepted. Use the
+        domain form to cover it.</li>
+    <li><strong>Only the automatic runs are limited.</strong> Running the feature from the menu on a
+        message works as without a policy.</li>
+    <li><strong>Always enforced.</strong> <code>":locked": false</code> is ignored with a warning: there is
+        no control the user could change the value with.</li>
+    <li><strong>A list that matches nothing means no account</strong>, not every account. A warning is
+        logged when it happens. An empty array (<code>[]</code>) in the policy is different: it is the same
+        as leaving the key out.</li>
+    <li>Accounts are matched again each time new mail is processed, so an account added after startup is
+        picked up without a restart.</li>
+</ul>
+
+<p>
+    On the feature's settings page the account checkboxes show the matched accounts, disabled and marked
+    as managed, with a note explaining it. The user's own selection is never changed: removing the key
+    restores it.
+</p>
+<p>
+    Each entry is checked on its own: an entry that is not one of the forms above (including one that is
+    not a string) is skipped with a warning naming its position, and the others still apply. Unlike the
+    other list keys, one bad entry does not discard the whole list. That would fall back to the user's
+    selection, perhaps every account, for a key whose job is to limit where mail is sent. For the same
+    reason, a list whose entries are all invalid is kept as an empty list: no account.
+</p>
+
+
 <h2 id="restrictions">Restrictions</h2>
 
 <p>
@@ -582,11 +1142,82 @@ Type = "no-list"
 </p>
 <p>
     Array keys (<code>add_tags_exclusions</code>, <code>spamfilter_skip_addresses</code>,
-    <code>summarize_auto_senders_list</code>) must contain <strong>only strings</strong>. A single element
-    of another type makes ThunderAI ignore the whole value, with a warning — it is not filtered out.
+    <code>spamfilter_block_addresses</code>, <code>summarize_auto_senders_list</code>) must contain <strong>only strings</strong>. A single element
+    of another type makes ThunderAI ignore the whole value, with a warning — it is not filtered out. The
+    account lists (<code>*_enabled_accounts_match</code>) are the exception: they are checked entry by entry,
+    see <a href="#accounts">Limiting features to some accounts</a>.
+</p>
+
+<h3 id="content-rules">Values the add-on cannot use</h3>
+
+<p>
+    A value of the right type is also checked against what the setting accepts, and rejected the same
+    way — ignored with a warning naming the key, never adjusted:
+</p>
+
+<table class="guides">
+    <thead>
+        <tr>
+            <th>Keys</th>
+            <th>Must be</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>connection_type</code></td>
+            <td>one of the connection types listed in the key reference. Not <code>""</code>, which means
+                "not configured".</td>
+        </tr>
+        <tr>
+            <td><code>&lt;feature&gt;_connection_type</code></td>
+            <td>one of the five API types. Not <code>chatgpt_web</code>: the features cannot run on it.</td>
+        </tr>
+        <tr>
+            <td><code>reply_type</code>, <code>diff_granularity</code>, <code>summarize_display_mode</code>,
+                <code>summarize_auto</code>, <code>translate_auto</code></td>
+            <td>one of the values listed for the key: the choices its settings page offers</td>
+        </tr>
+        <tr>
+            <td>every number</td>
+            <td>an integer, 0 or more. <code>spamfilter_threshold</code>: 0 to 100.
+                <code>add_tags_maxnum</code>, <code>summarize_max_messages</code>,
+                <code>max_prompt_length</code>, <code>batch_max_concurrency</code>: 1 or more.</td>
+        </tr>
+        <tr>
+            <td><code>calendar_timezone</code></td>
+            <td><code>""</code>, or a time zone name as the Calendar Event settings list it, such as
+                <code>"Europe/Rome"</code> (case-sensitive)</td>
+        </tr>
+        <tr>
+            <td>the provider keys (<code>openai_comp_host</code>, <code>ollama_num_ctx</code>,
+                <code>chatgpt_temperature</code>…)</td>
+            <td>the same rules as the fields of a per-feature connection: hosts are
+                <code>http(s)://</code> URLs, models are not empty, temperatures are strings holding a number…
+                See the <a href="#connection-field-rules">rules table</a>.</td>
+        </tr>
+    </tbody>
+</table>
+
+<p>
+    Free-text keys (languages, signature name, system prompts…) accept any string. Provider-specific
+    choices such as <code>chatgpt_reasoning_effort</code> or <code>anthropic_effort</code> are not checked:
+    the values each provider accepts change with its models. The exceptions are the ChatGPT choices the
+    settings page offers as a fixed list (<code>chatgpt_verbosity</code>, <code>chatgpt_text_format</code>,
+    <code>chatgpt_truncation</code>, <code>chatgpt_service_tier</code>): those must be one of its values, see
+    the <a href="#connection-field-rules">rules table</a>.
 </p>
 <p>
-    101 of ThunderAI's 110 settings can be set by policy; the other nine are listed at the end.
+    <strong>One rule spans two keys.</strong> An automatic summary is always shown inline. So when the
+    policy sets <code>summarize_auto</code> to <code>2</code> or <code>3</code> and also sets
+    <code>summarize_display_mode</code>, the display mode becomes <code>"inline"</code>, with a warning, and
+    takes the lock of <code>summarize_auto</code>: enforced if that is enforced, an initial value if it has
+    <code>":locked": false</code>.
+</p>
+
+<h3>All keys</h3>
+
+<p>
+    137 of ThunderAI's 146 settings can be set by policy; the other nine are listed at the end.
     Two settable keys need a permission the policy cannot grant — see
     <a href="#permissions">Settings that require a browser permission</a>.
 </p>
@@ -628,6 +1259,12 @@ Type = "no-list"
                 <code>"70"</code> is not <code>70</code>.</td>
         </tr>
         <tr>
+            <td>One key ignored, warning that it "must be" something</td>
+            <td>The type is right but the value is not usable: not one of the listed values, out of range, a
+                host that is not a URL, an unknown time zone. See
+                <a href="#content-rules">Values the add-on cannot use</a>.</td>
+        </tr>
+        <tr>
             <td>A list key ignored as a whole</td>
             <td>One of its elements is not a string. Array keys must contain only strings.</td>
         </tr>
@@ -653,6 +1290,38 @@ Type = "no-list"
             <td>One prompt missing</td>
             <td>Missing <code>id</code>, <code>name</code> or <code>text</code>, a duplicate
                 <code>id</code>, or an invalid <code>api_type</code>.</td>
+        </tr>
+        <tr>
+            <td>A special prompt text not applied</td>
+            <td>Unknown prompt id, an empty text, or a text that does not name the response fields its feature
+                reads (for example <code>spamValue</code>). The user's own text stays in effect. See
+                <a href="#special-prompt-texts">Special prompt texts</a>.</td>
+        </tr>
+        <tr>
+            <td>A special prompt text applied, but the feature ignores the message</td>
+            <td>The text has placeholders but none that brings in the message (or, for Translate, no
+                <code>{%thunderai_translate_lang%}</code>). A warning is logged at every startup.</td>
+        </tr>
+        <tr>
+            <td>Automatic spam filter or Add Tags runs on no account</td>
+            <td><code>*_enabled_accounts_match</code> matches no account in that profile, or all its entries
+                were rejected. See <a href="#accounts">Limiting features to some accounts</a>.</td>
+        </tr>
+        <tr>
+            <td>Summaries shown inline although the policy sets <code>webchat</code></td>
+            <td>Expected: <code>summarize_auto</code> is <code>2</code> or <code>3</code>, and automatic
+                summaries are always inline.</td>
+        </tr>
+        <tr>
+            <td>A per-feature connection ignored as a whole</td>
+            <td>Unknown feature key, a missing <code>api_type</code>, <code>chatgpt_web</code>, or the same
+                policy sets <code>&lt;feature&gt;_use_specific_integration</code> to <code>false</code>. See
+                <a href="#feature-connections">Per-feature connections</a>.</td>
+        </tr>
+        <tr>
+            <td>One field of a per-feature connection ignored</td>
+            <td>It belongs to a different provider, has the wrong type (temperatures are strings), or fails
+                its content rule, such as a host that is not an <code>http(s)://</code> URL.</td>
         </tr>
         <tr>
             <td>A restriction has no effect</td>
@@ -710,8 +1379,11 @@ Type = "no-list"
         var nav = document.getElementById('section-nav');
         if (!nav) { return; }
 
+        var wrap = document.getElementById('section-nav-wrap') || nav;
         var links = Array.prototype.slice.call(nav.querySelectorAll('a'));
+        // A group parent only opens its submenu: the sub-entries are the sections.
         var sections = links
+            .filter(function (a) { return !a.classList.contains('nav-parent'); })
             .map(function (a) {
                 var el = document.getElementById(a.getAttribute('href').slice(1));
                 return el ? { link: a, el: el } : null;
@@ -734,10 +1406,18 @@ Type = "no-list"
             entry.link.classList.add('current');
             entry.link.setAttribute('aria-current', 'true');
 
+            // A sub-section also highlights its group's parent, which is the visible chip.
+            var visible = entry.link;
+            var group = entry.link.closest('.nav-group');
+            if (group) {
+                visible = group.querySelector('.nav-parent');
+                visible.classList.add('current');
+            }
+
             // Keep the active chip visible when the bar itself scrolls horizontally.
             if (nav.scrollWidth > nav.clientWidth) {
                 var navBox = nav.getBoundingClientRect();
-                var chip = entry.link.getBoundingClientRect();
+                var chip = visible.getBoundingClientRect();
                 if (chip.left < navBox.left || chip.right > navBox.right) {
                     nav.scrollLeft += chip.left - navBox.left
                         - (navBox.width - chip.width) / 2;
@@ -786,11 +1466,69 @@ Type = "no-list"
 
         links.forEach(function (a) {
             a.addEventListener('click', function () {
-                var target = sections.filter(function (s) { return s.link === a; })[0];
+                var href = a.getAttribute('href');
+                var target = sections.filter(function (s) {
+                    return s.link.getAttribute('href') === href;
+                })[0];
                 if (!target) { return; }
                 setActive(target);
                 pinnedUntil = Date.now() + 700;
+                // Choosing a sub-entry closes its submenu.
+                if (!a.classList.contains('nav-parent') && a.closest('.nav-group')) {
+                    a.closest('.nav-group').classList.remove('open');
+                    a.blur();
+                }
             });
+        });
+
+        // Submenus: open on hover or focus, placed under their parent chip. Closing on
+        // mouse leave is delayed so the pointer can cross the gap between chip and menu.
+        Array.prototype.slice.call(nav.querySelectorAll('.nav-group')).forEach(function (group) {
+            var parent = group.querySelector('.nav-parent');
+            var sub = group.querySelector('.nav-sub');
+            var closeTimer = null;
+
+            function place() {
+                var wrapBox = wrap.getBoundingClientRect();
+                var left = parent.getBoundingClientRect().left - wrapBox.left;
+                sub.style.left = '0px';
+                var maxLeft = wrapBox.width - sub.offsetWidth;
+                sub.style.left = Math.max(0, Math.min(left, maxLeft)) + 'px';
+            }
+            function open() {
+                clearTimeout(closeTimer);
+                group.classList.add('open');
+                place();
+            }
+            function close() {
+                clearTimeout(closeTimer);
+                group.classList.remove('open');
+            }
+
+            group.addEventListener('mouseenter', open);
+            group.addEventListener('mouseleave', function () {
+                closeTimer = setTimeout(close, 250);
+            });
+            group.addEventListener('focusin', place);
+            // With a mouse, hover already drives the menu: drop the focus a click leaves on
+            // the parent, or the menu would stay open after the pointer has left. On touch
+            // the focus is what keeps the menu open after the tap.
+            var lastPointer = '';
+            parent.addEventListener('pointerdown', function (e) { lastPointer = e.pointerType; });
+            parent.addEventListener('click', function () {
+                if (lastPointer === 'mouse') { parent.blur(); }
+            });
+            group.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape') {
+                    close();
+                    if (document.activeElement) { document.activeElement.blur(); }
+                }
+            });
+            nav.addEventListener('scroll', function () {
+                if (group.classList.contains('open') || group.contains(document.activeElement)) {
+                    place();
+                }
+            }, { passive: true });
         });
 
         var ticking = false;

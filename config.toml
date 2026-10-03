@@ -58,7 +58,7 @@ defaultContentLanguageInSubdir = false
       flag = "🇪🇸"
 
 [params]
-   forceCSSReloadID = "20260916"
+   forceCSSReloadID = "20261003"
    Subtitle = "Silence is golden."
    env= "production"
 

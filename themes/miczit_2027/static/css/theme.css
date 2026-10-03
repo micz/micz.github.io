@@ -774,6 +774,10 @@ html:has(#section-nav) { scroll-behavior: smooth; }
     font: 500 13px/1.4 var(--sans);
 }
 #section-nav::-webkit-scrollbar { display: none; }
+/* Centered entries. Auto margins instead of justify-content: center, which would push
+   the first entries out of reach on the left when the bar scrolls on narrow screens. */
+#section-nav > :first-child { margin-left: auto; }
+#section-nav > :last-child { margin-right: auto; }
 .content #section-nav a {
     flex: 0 0 auto;
     padding: 0.45em 0.85em;
@@ -794,9 +798,58 @@ html:has(#section-nav) { scroll-behavior: smooth; }
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
 }
 [data-theme="light"] #section-nav a.current { box-shadow: 0 1px 4px rgba(30, 28, 24, 0.15); }
+/* Grouped nav: #section-nav-wrap is the sticky bar and the containing block of the
+   submenus, so they are not clipped by the horizontal scrolling of the bar itself.
+   The scrolling nav must not carry backdrop-filter/filter/transform: any of them
+   would make it the containing block instead and clip the submenus. */
+#section-nav-wrap {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    margin: 1.6em 0 2em;
+    background: color-mix(in srgb, var(--bg) 92%, var(--ink));
+    border: 1px solid var(--hairline);
+    border-radius: 10px;
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+}
+#section-nav-wrap #section-nav {
+    position: static;
+    z-index: auto;
+    margin: 0;
+    background: none;
+    border: 0;
+    box-shadow: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+}
+/* A parent entry opens a submenu of its sub-sections on hover or focus. */
+#section-nav .nav-group { display: flex; flex: 0 0 auto; }
+#section-nav .nav-sub {
+    display: none;
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 11em;
+    padding: 6px;
+    background: color-mix(in srgb, var(--bg) 92%, var(--ink));
+    border: 1px solid var(--hairline);
+    border-radius: 10px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+}
+#section-nav .nav-group.open .nav-sub,
+#section-nav .nav-group:focus-within .nav-sub { display: flex; }
+#section-nav .nav-sub a.current { box-shadow: none; }
+[data-theme="light"] #section-nav .nav-sub { box-shadow: 0 4px 14px rgba(30, 28, 24, 0.18); }
 /* headings must clear the sticky bar when jumped to (read by the scroll-spy script) */
 #section-nav ~ h2[id],
-#section-nav ~ h3[id] { scroll-margin-top: 4.5em; }
+#section-nav ~ h3[id],
+#section-nav-wrap ~ h2[id],
+#section-nav-wrap ~ h3[id] { scroll-margin-top: 4.5em; }
 
 /* collapsible blocks */
 .content details {
@@ -872,9 +925,12 @@ html:has(#section-nav) { scroll-behavior: smooth; }
     }
 }
 /* the search bar sticks below the page's sticky #section-nav */
-#section-nav ~ .ph .ph-bar { top: 42px; }
+#section-nav ~ .ph .ph-bar,
+#section-nav-wrap ~ .ph .ph-bar { top: 42px; }
 #section-nav ~ .ph .ph-group,
-#section-nav ~ .ph .ph-row { scroll-margin-top: 190px; }
+#section-nav ~ .ph .ph-row,
+#section-nav-wrap ~ .ph .ph-group,
+#section-nav-wrap ~ .ph .ph-row { scroll-margin-top: 190px; }
 .content > .ph { margin-inline: 0; }
 
 /* 7. Addon hero + card grid + go-back ----------------------------------- */
@@ -1388,7 +1444,8 @@ body.home .page-shell::after {
 
     #cookie-notice { width: calc(100vw - 20px); bottom: 10px; }
 
-    .content > #section-nav {
+    .content > #section-nav,
+    .content > #section-nav-wrap {
         max-width: none;
         margin-inline: calc(-1 * var(--gutter));
         border-inline: 0;
