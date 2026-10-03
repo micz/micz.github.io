@@ -646,13 +646,20 @@ Type = "no-list"
             <td><code>chatgpt_api_key</code>, <code>chatgpt_model</code>, <code>chatgpt_developer_messages</code>,
                 <code>chatgpt_temperature</code>, <code>chatgpt_store</code> <span class="sup_comment">(boolean)</span>,
                 <code>chatgpt_reasoning_summary</code>, <code>chatgpt_reasoning_effort</code>,
-                <code>chatgpt_extra_body</code></td>
+                <code>chatgpt_extra_body</code>,
+                <code>chatgpt_max_output_tokens</code> <span class="sup_comment">(number)</span>,
+                <code>chatgpt_verbosity</code>, <code>chatgpt_text_format</code>,
+                <code>chatgpt_text_format_schema_name</code>, <code>chatgpt_text_format_schema</code>,
+                <code>chatgpt_top_p</code>, <code>chatgpt_truncation</code>, <code>chatgpt_prompt_cache_key</code>,
+                <code>chatgpt_service_tier</code>, <code>chatgpt_safety_identifier</code>,
+                <code>chatgpt_include_encrypted_reasoning</code> <span class="sup_comment">(boolean)</span></td>
         </tr>
         <tr>
             <td><code>anthropic_api</code></td>
             <td><code>anthropic_api_key</code>, <code>anthropic_model</code>, <code>anthropic_version</code>,
                 <code>anthropic_max_tokens</code> <span class="sup_comment">(number)</span>,
                 <code>anthropic_system_prompt</code>, <code>anthropic_temperature</code>,
+                <code>anthropic_top_p</code>, <code>anthropic_top_k</code>, <code>anthropic_stop_sequences</code>,
                 <code>anthropic_extended_thinking_budget</code> <span class="sup_comment">(number)</span>,
                 <code>anthropic_effort</code></td>
         </tr>
@@ -660,21 +667,27 @@ Type = "no-list"
             <td><code>google_gemini_api</code></td>
             <td><code>google_gemini_api_key</code>, <code>google_gemini_model</code>,
                 <code>google_gemini_system_instruction</code>, <code>google_gemini_thinking_budget</code>,
-                <code>google_gemini_temperature</code></td>
+                <code>google_gemini_temperature</code>,
+                <code>google_gemini_max_output_tokens</code> <span class="sup_comment">(number)</span>,
+                <code>google_gemini_top_p</code>, <code>google_gemini_top_k</code>,
+                <code>google_gemini_extra_body</code></td>
         </tr>
         <tr>
             <td><code>ollama_api</code></td>
-            <td><code>ollama_host</code>, <code>ollama_model</code>,
+            <td><code>ollama_host</code>, <code>ollama_api_key</code>, <code>ollama_model</code>,
                 <code>ollama_num_ctx</code> <span class="sup_comment">(number)</span>,
-                <code>ollama_temperature</code>, <code>ollama_think</code> <span class="sup_comment">(boolean)</span>,
-                <code>ollama_format_json</code> <span class="sup_comment">(boolean)</span></td>
+                <code>ollama_temperature</code>, <code>ollama_think</code>,
+                <code>ollama_format_json</code> <span class="sup_comment">(boolean)</span>,
+                <code>ollama_keep_alive</code>, <code>ollama_system_prompt</code>,
+                <code>ollama_extra_options</code></td>
         </tr>
     </tbody>
 </table>
 
 <p>
-    Fields not marked otherwise are strings. <strong>That includes the temperatures and
-    <code>google_gemini_thinking_budget</code>:</strong> write <code>"0.7"</code>, not <code>0.7</code>.
+    Fields not marked otherwise are strings. <strong>That includes the temperatures,
+    <code>*_top_p</code>, <code>*_top_k</code>, <code>google_gemini_thinking_budget</code> and
+    <code>ollama_think</code>:</strong> write <code>"0.7"</code>, not <code>0.7</code>.
     You can leave out any field except <code>api_type</code>. For a field the policy does not set, the
     feature uses the user's own value if they have one, and otherwise the main connection's value, just
     as it does without a policy.
@@ -789,16 +802,61 @@ Type = "no-list"
             <td>an integer, 1 or more</td>
         </tr>
         <tr>
+            <td><code>google_gemini_max_output_tokens</code></td>
+            <td>an integer, 0 or more (<code>0</code> means not set)</td>
+        </tr>
+        <tr>
+            <td><code>chatgpt_max_output_tokens</code></td>
+            <td><code>0</code> (not set), or an integer of 16 or more</td>
+        </tr>
+        <tr>
             <td><code>*_temperature</code></td>
             <td><code>""</code>, or a string holding a number of 0 or more</td>
+        </tr>
+        <tr>
+            <td><code>*_top_p</code></td>
+            <td><code>""</code>, or a string holding a number from 0 to 1</td>
+        </tr>
+        <tr>
+            <td><code>*_top_k</code></td>
+            <td><code>""</code>, or a string holding an integer, 0 or more</td>
         </tr>
         <tr>
             <td><code>google_gemini_thinking_budget</code></td>
             <td><code>""</code>, or a string holding an integer (<code>"-1"</code> is Gemini's "dynamic")</td>
         </tr>
         <tr>
-            <td><code>*_extra_body</code></td>
+            <td><code>ollama_think</code></td>
+            <td><code>""</code>, <code>"false"</code>, <code>"true"</code>, or a level in lowercase letters such as
+                <code>"low"</code>, <code>"medium"</code>, <code>"high"</code>, <code>"max"</code>. The boolean
+                <code>true</code>/<code>false</code> used before 5.1.0 is still read, with a warning.</td>
+        </tr>
+        <tr>
+            <td><code>ollama_keep_alive</code></td>
+            <td><code>""</code>, a whole number of seconds, or a duration such as <code>"5m"</code> or
+                <code>"1h30m"</code></td>
+        </tr>
+        <tr>
+            <td><code>*_extra_body</code>, <code>ollama_extra_options</code>,
+                <code>chatgpt_text_format_schema</code></td>
             <td><code>""</code>, or a string holding a JSON object</td>
+        </tr>
+        <tr>
+            <td><code>chatgpt_verbosity</code></td>
+            <td><code>""</code>, <code>"low"</code>, <code>"medium"</code> or <code>"high"</code></td>
+        </tr>
+        <tr>
+            <td><code>chatgpt_text_format</code></td>
+            <td><code>""</code>, <code>"json_object"</code> or <code>"json_schema"</code></td>
+        </tr>
+        <tr>
+            <td><code>chatgpt_truncation</code></td>
+            <td><code>""</code>, <code>"auto"</code> or <code>"disabled"</code></td>
+        </tr>
+        <tr>
+            <td><code>chatgpt_service_tier</code></td>
+            <td><code>""</code>, <code>"auto"</code>, <code>"default"</code>, <code>"flex"</code> or
+                <code>"priority"</code></td>
         </tr>
     </tbody>
 </table>
@@ -1084,7 +1142,7 @@ Type = "no-list"
 </p>
 <p>
     Array keys (<code>add_tags_exclusions</code>, <code>spamfilter_skip_addresses</code>,
-    <code>summarize_auto_senders_list</code>) must contain <strong>only strings</strong>. A single element
+    <code>spamfilter_block_addresses</code>, <code>summarize_auto_senders_list</code>) must contain <strong>only strings</strong>. A single element
     of another type makes ThunderAI ignore the whole value, with a warning — it is not filtered out. The
     account lists (<code>*_enabled_accounts_match</code>) are the exception: they are checked entry by entry,
     see <a href="#accounts">Limiting features to some accounts</a>.
@@ -1123,7 +1181,7 @@ Type = "no-list"
             <td>every number</td>
             <td>an integer, 0 or more. <code>spamfilter_threshold</code>: 0 to 100.
                 <code>add_tags_maxnum</code>, <code>summarize_max_messages</code>,
-                <code>max_prompt_length</code>: 1 or more.</td>
+                <code>max_prompt_length</code>, <code>batch_max_concurrency</code>: 1 or more.</td>
         </tr>
         <tr>
             <td><code>calendar_timezone</code></td>
@@ -1143,7 +1201,10 @@ Type = "no-list"
 <p>
     Free-text keys (languages, signature name, system prompts…) accept any string. Provider-specific
     choices such as <code>chatgpt_reasoning_effort</code> or <code>anthropic_effort</code> are not checked:
-    the values each provider accepts change with its models.
+    the values each provider accepts change with its models. The exceptions are the ChatGPT choices the
+    settings page offers as a fixed list (<code>chatgpt_verbosity</code>, <code>chatgpt_text_format</code>,
+    <code>chatgpt_truncation</code>, <code>chatgpt_service_tier</code>): those must be one of its values, see
+    the <a href="#connection-field-rules">rules table</a>.
 </p>
 <p>
     <strong>One rule spans two keys.</strong> An automatic summary is always shown inline. So when the
@@ -1156,7 +1217,7 @@ Type = "no-list"
 <h3>All keys</h3>
 
 <p>
-    103 of ThunderAI's 112 settings can be set by policy; the other nine are listed at the end.
+    137 of ThunderAI's 146 settings can be set by policy; the other nine are listed at the end.
     Two settable keys need a permission the policy cannot grant — see
     <a href="#permissions">Settings that require a browser permission</a>.
 </p>
