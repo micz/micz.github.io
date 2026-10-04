@@ -1307,6 +1307,8 @@ body.home .page-shell::after {
     text-decoration: none;
 }
 .footer-rail a:hover { color: var(--ink); }
+.footer-rail a.rail-privacy { color: var(--ink-faint); }
+.footer-rail a.rail-privacy:hover { color: var(--ink-muted); }
 .footer-rail .rail-sep {
     margin-inline: 2px;
     color: var(--ink-faint);
@@ -1354,6 +1356,8 @@ body.home .page-shell::after {
     text-underline-offset: 3px;
 }
 .site-footer.on-photo .footer-rail .rail-sep { color: rgba(244, 242, 238, 0.5); }
+.site-footer.on-photo .footer-rail a.rail-privacy { color: rgba(244, 242, 238, 0.55); }
+.site-footer.on-photo .footer-rail a.rail-privacy:hover { color: var(--photo-ink); }
 .site-footer.on-photo .footer-rail a,
 .site-footer.on-photo .footer-credit a,
 .site-footer.on-photo .theme-toggle {
