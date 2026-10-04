@@ -1,3 +1,10 @@
 <!--for overriding-->
 <link rel="shortcut icon" href="https://gravatar.com/userimage/3407550/6c447d46aa5aa65e02b2d010c1eb28be.jpeg?s=128">
 <link rel="apple-touch-icon" href="https://gravatar.com/userimage/3407550/6c447d46aa5aa65e02b2d010c1eb28be.jpeg?s=128">
+{{ if eq (getenv "HUGO_ENV") "production" | or (eq .Site.Params.env "production") }}
+{{- with .Site.Params.goatcounterURL }}
+<!-- GoatCounter: cookieless analytics, loaded independently of cookie consent -->
+<script data-goatcounter="{{ . }}"
+        async src="https://gc.zgo.at/count.js"></script>
+{{- end }}
+{{ end }}

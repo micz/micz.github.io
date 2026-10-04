@@ -49,6 +49,7 @@ defaultContentLanguageInSubdir = false
    env= "production"
    consentModeAdvanced = true
    privacyURL = "/privacy/"
+   goatcounterURL = "https://micz.goatcounter.com/count"
 
 
 [services]
