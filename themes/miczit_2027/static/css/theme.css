@@ -23,13 +23,6 @@
     font-display: swap;
 }
 @font-face {
-    font-family: "Newsreader";
-    src: url("../fonts/newsreader-latin-italic-var.woff2") format("woff2");
-    font-weight: 200 800;
-    font-style: italic;
-    font-display: swap;
-}
-@font-face {
     font-family: "JetBrains Mono";
     src: url("../fonts/jetbrains-mono-latin-var.woff2") format("woff2");
     font-weight: 100 800;
