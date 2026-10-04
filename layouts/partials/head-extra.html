@@ -1,6 +1,6 @@
 <!--for overriding-->
-<link rel="shortcut icon" href="https://gravatar.com/userimage/3407550/6c447d46aa5aa65e02b2d010c1eb28be.jpeg?s=128">
-<link rel="apple-touch-icon" href="https://gravatar.com/userimage/3407550/6c447d46aa5aa65e02b2d010c1eb28be.jpeg?s=128">
+<link rel="shortcut icon" href="{{ "images/favicon.jpeg" | absURL }}">
+<link rel="apple-touch-icon" href="{{ "images/favicon.jpeg" | absURL }}">
 {{ if eq (getenv "HUGO_ENV") "production" | or (eq .Site.Params.env "production") }}
 {{- with .Site.Params.goatcounterURL }}
 <!-- GoatCounter: cookieless analytics, loaded independently of cookie consent -->
