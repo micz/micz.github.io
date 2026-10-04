@@ -1,32 +1,23 @@
 {{- /*
-  layouts/partials/cookie-consent.html — micz.it
-  Banner consenso + Google Analytics 4 con Consent Mode v2.
+  layouts/partials/cookie-consent.html â€” micz.it
+  Consent banner + Google Analytics 4 with Consent Mode v2.
 
-  Parametri in config.toml, sezione [params]:
-    consentModeAdvanced = true   # true: gtag caricato sempre, con consenso "denied" finché l'utente non accetta
-                                 # false: gtag caricato SOLO dopo il consenso (come prima)
-    privacyURL = "/privacy/"     # pagina informativa privacy/cookie
+  Parameters in config.toml, [params] section:
+    consentModeAdvanced = true   # true: gtag always loaded, with consent "denied" until the user accepts
+                                 # false: gtag loaded ONLY after consent (as before)
+    privacyURL = "/privacy/"     # privacy/cookie policy page
 */ -}}
 {{- $gaID := site.Config.Services.GoogleAnalytics.ID -}}
 {{- $advanced := site.Params.consentModeAdvanced | default false -}}
 {{- $privacy := site.Params.privacyURL | default "/privacy/" -}}
-{{- $lang := site.Language.Lang -}}
-{{- $t := dict
-  "en" (dict "msg" "I use Google Analytics to count visits and understand which pages are useful. It sets cookies only if you allow it." "ok" "Allow analytics" "no" "Reject" "info" "Privacy policy")
-  "it" (dict "msg" "Uso Google Analytics per contare le visite e capire quali pagine sono utili. Imposta cookie solo se lo consenti." "ok" "Consenti statistiche" "no" "Rifiuta" "info" "Informativa privacy")
-  "de" (dict "msg" "Ich nutze Google Analytics, um Besuche zu zählen und zu sehen, welche Seiten nützlich sind. Cookies werden nur mit deiner Zustimmung gesetzt." "ok" "Statistik erlauben" "no" "Ablehnen" "info" "Datenschutz")
-  "fr" (dict "msg" "J'utilise Google Analytics pour compter les visites et savoir quelles pages sont utiles. Des cookies ne sont déposés qu'avec votre accord." "ok" "Autoriser les statistiques" "no" "Refuser" "info" "Confidentialité")
-  "es" (dict "msg" "Uso Google Analytics para contar las visitas y saber qué páginas son útiles. Solo instala cookies si lo permites." "ok" "Permitir estadísticas" "no" "Rechazar" "info" "Privacidad")
--}}
-{{- $s := index $t $lang | default (index $t "en") -}}
 
 <script>
-  /* 1. Consent Mode: il default va dichiarato PRIMA di caricare gtag.js */
+  /* 1. Consent Mode: the default must be declared BEFORE loading gtag.js */
   window.dataLayer = window.dataLayer || [];
   function gtag(){ dataLayer.push(arguments); }
 
   var MICZ_CONSENT_COOKIE = 'cookie-notice-option';
-  var MICZ_CONSENT_DAYS = 180; // il Garante chiede di non riproporre il banner prima di 6 mesi
+  var MICZ_CONSENT_DAYS = 180; // the Garante asks not to show the banner again before 6 months
 
   function miczReadConsent() {
     var m = document.cookie.match('(?:^|; )' + MICZ_CONSENT_COOKIE + '=([^;]*)');
@@ -69,20 +60,20 @@
   }
 
   {{ if $advanced }}
-  /* Modalità avanzata: gtag sempre caricato; senza consenso invia solo ping senza cookie */
+  /* Advanced mode: gtag always loaded; without consent it only sends cookieless pings */
   miczLoadGA();
   {{ else }}
-  /* Modalità base: gtag caricato solo dopo il consenso */
+  /* Basic mode: gtag loaded only after consent */
   if (miczConsent === 'true') miczLoadGA();
   {{ end }}
   if (miczConsent !== 'true') miczDeleteGaCookies();
 </script>
 
 <div id="cookie-notice" role="dialog" aria-live="polite" aria-label="Cookie" hidden>
-  <p>{{ $s.msg }} <a href="{{ $privacy | relLangURL }}">{{ $s.info }}</a></p>
+  <p>I use Google Analytics to count visits and understand which pages are useful. It sets cookies only if you allow it. <a href="{{ $privacy }}">Privacy policy</a></p>
   <div class="cookie-notice-buttons">
-    <button type="button" id="cookie-notice-deny">{{ $s.no }}</button>
-    <button type="button" id="cookie-notice-accept">{{ $s.ok }}</button>
+    <button type="button" id="cookie-notice-deny">Reject</button>
+    <button type="button" id="cookie-notice-accept">Allow analytics</button>
   </div>
 </div>
 
@@ -99,7 +90,7 @@
     document.getElementById('cookie-notice-accept').addEventListener('click', function () {
       miczWriteConsent('true');
       gtag('consent', 'update', { analytics_storage: 'granted' });
-      miczLoadGA(); // nessun reload: la pagina corrente viene contata subito
+      miczLoadGA(); // no reload: the current page is counted right away
       hide();
     });
 
@@ -110,7 +101,7 @@
       hide();
     });
 
-    /* Per un link "Preferenze cookie" nel footer: <a href="#" onclick="miczCookieSettings();return false;"> */
+    /* For a "Cookie settings" link in the footer: <a href="#" onclick="miczCookieSettings();return false;"> */
     window.miczCookieSettings = show;
   })();
 </script>
@@ -127,7 +118,7 @@
   #cookie-notice p { margin: 0 0 .8rem; }
   #cookie-notice a { color: #9cc8ff; text-decoration: underline; }
   #cookie-notice .cookie-notice-buttons { display: flex; gap: .5rem; flex-wrap: wrap; }
-  /* Stesso peso visivo per i due pulsanti: richiesto dalle linee guida del Garante */
+  /* Same visual weight for both buttons: required by the Garante guidelines */
   #cookie-notice button {
     flex: 1 1 auto; padding: .5rem .8rem; cursor: pointer;
     font: inherit; font-weight: 600; border-radius: 4px;
