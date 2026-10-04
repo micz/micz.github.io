@@ -55,6 +55,28 @@
         "version": "5.1.0"
     },
     {
+        "key": "_lock_unlisted",
+        "type": "boolean",
+        "default": "false",
+        "group": "Structure and organization",
+        "category": "structural",
+        "settable": true,
+        "values": "true",
+        "notes": "<code>true</code> turns strict mode on: every setting the policy does not set is locked at its default. See <a href=\"#strict-mode\">Strict mode</a>.",
+        "version": ""
+    },
+    {
+        "key": "_user_editable",
+        "type": "array",
+        "default": "[]",
+        "group": "Structure and organization",
+        "category": "structural",
+        "settable": true,
+        "values": "",
+        "notes": "Setting names that stay user-editable in strict mode. Only used when <code>_lock_unlisted</code> is <code>true</code>. See <a href=\"#strict-mode\">Strict mode</a>.",
+        "version": ""
+    },
+    {
         "key": "_disable_prompt_management",
         "type": "boolean",
         "default": "false",
