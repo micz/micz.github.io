@@ -1235,15 +1235,22 @@ body.home .page-shell::after {
     inset: 0;
     z-index: -1;
     background:
-        radial-gradient(ellipse 62% 46% at 50% 46%, rgba(9, 10, 12, 0.38) 0%, rgba(9, 10, 12, 0) 100%),
+        radial-gradient(ellipse 62% 46% at 50% 40%, rgba(9, 10, 12, 0.38) 0%, rgba(9, 10, 12, 0) 100%),
         linear-gradient(180deg, rgba(9, 10, 12, 0.22) 0%, rgba(9, 10, 12, 0.38) 52%, rgba(9, 10, 12, 0.70) 100%);
 }
 
+/* The photo's grey canopy spans roughly 20%-60% of the viewport height on any
+   aspect ratio (cover + center); the bright sky strip starts below it. Keep the
+   wordmark, rule and tagline packed together and centered at 40vh so the
+   tagline never drifts onto the sky. */
 .home-hero {
-    flex: 1;
-    display: grid;
-    place-items: center;
-    padding: clamp(24px, 4vw, 48px) var(--gutter);
+    flex: none;
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 0 var(--gutter);
     text-align: center;
 }
 
