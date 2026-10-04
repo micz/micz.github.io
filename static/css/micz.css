@@ -45,15 +45,23 @@ div.miczit_bg {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-    position: absolute;
+    position: fixed;
   top: 0;
   left: 0;
   height: 100%;
   width: 100%;
   z-index: -1000;
 }
-div.miczit_spacer {
-  height: calc(90vh - 150px);
+/* Home: the container fills the viewport exactly, main takes the free space and pushes
+   the footer to the bottom, so the page never scrolls. */
+.container:has(.miczit_spacer) {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+.container:has(.miczit_spacer) main {
+  flex: 1 0 auto;
 }
 .common-footer {
     padding-top: 1em;
