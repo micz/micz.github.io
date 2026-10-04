@@ -89,6 +89,10 @@
     --off: #cf9494;
     --code-bg: #101114;
     --code-ink: #dedbd4;
+    --syn-key: #8ab4e8;             /* code highlighting (.chroma): keys */
+    --syn-string: #e3c08a;          /* strings */
+    --syn-literal: #d4a2d8;         /* numbers, true / false / null */
+    --syn-punct: #a8a49c;           /* braces, brackets, colons, commas */
     --photo-ink: #f4f2ee;
     --photo-ink-muted: rgba(244, 242, 238, 0.75);
     --scrim:
@@ -125,6 +129,10 @@
     --off: #a04848;
     --code-bg: #f1efe9;
     --code-ink: #2c2b27;
+    --syn-key: #28618f;
+    --syn-string: #85570a;
+    --syn-literal: #87408c;
+    --syn-punct: #6b675f;
     --photo-ink: #f4f2ee;          /* the home photo zone keeps its own ink */
     --photo-ink-muted: rgba(244, 242, 238, 0.75);
     --shadow: 0 1px 2px rgba(30, 28, 24, 0.08), 0 10px 28px rgba(30, 28, 24, 0.08);
@@ -409,6 +417,12 @@ a:hover { color: var(--accent-strong); }
     font-size: 13.5px;
 }
 .content pre.tutorial { margin: 8px 0 16px; }
+
+/* code highlighting: Hugo's Chroma with classes (config.toml: markup.highlight.noClasses = false) */
+.chroma .nt { color: var(--syn-key); }
+.chroma .s, .chroma .s1, .chroma .s2, .chroma .l { color: var(--syn-string); }
+.chroma .m, .chroma .mi, .chroma .mf, .chroma .kc { color: var(--syn-literal); }
+.chroma .p, .chroma .o, .chroma .err { color: var(--syn-punct); }
 
 /* images and figures */
 .content img {

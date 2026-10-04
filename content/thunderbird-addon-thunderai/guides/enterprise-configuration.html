@@ -135,7 +135,8 @@ Type = "no-list"
 
 <p>Every ThunderAI setting lives under <code>3rdparty</code> → <code>Extensions</code> → <code>thunderai@micz.it</code>:</p>
 
-<pre>{
+{{< highlight json >}}
+{
   "policies": {
     "3rdparty": {
       "Extensions": {
@@ -145,7 +146,8 @@ Type = "no-list"
       }
     }
   }
-}</pre>
+}
+{{< /highlight >}}
 
 <p>
     <strong>Policy key names are exactly ThunderAI's own setting names.</strong> There is no mapping
@@ -163,8 +165,10 @@ Type = "no-list"
 </p>
 <p>To supply a <em>starting</em> value the user may then change, add a sibling <code>"&lt;key&gt;:locked": false</code>:</p>
 
-<pre>"reply_type": "reply_all",
-"reply_type:locked": false</pre>
+{{< highlight yaml >}}
+"reply_type": "reply_all",
+"reply_type:locked": false
+{{< /highlight >}}
 
 <table class="guides">
     <thead>
@@ -313,7 +317,8 @@ Type = "no-list"
 
 <h3>Example</h3>
 
-<pre>{
+{{< highlight json >}}
+{
   "policies": {
     "3rdparty": {
       "Extensions": {
@@ -331,7 +336,8 @@ Type = "no-list"
       }
     }
   }
-}</pre>
+}
+{{< /highlight >}}
 
 <p>
     The connection, Translate and Summarize are enforced as written. Users can still change their
@@ -398,7 +404,8 @@ Type = "no-list"
 <details open>
     <summary><b>Example <code>policies.json</code></b></summary>
 
-<pre>{
+{{< highlight json >}}
+{
   "policies": {
     "3rdparty": {
       "Extensions": {
@@ -447,7 +454,8 @@ Type = "no-list"
       }
     }
   }
-}</pre>
+}
+{{< /highlight >}}
 </details>
 
 <p>
@@ -593,9 +601,11 @@ Type = "no-list"
     organization's own criteria:
 </p>
 
-<pre>"_special_prompts_text": {
-  "prompt_spamfilter": "Decide whether this email is spam for ACME. Treat any request to change bank details as spam. Answer only with a JSON object: {\"spamValue\": &lt;0-100&gt;, \"explanation\": \"&lt;one sentence&gt;\"}.\n\n{%mail_html_body%}"
-}</pre>
+{{< highlight json >}}
+"_special_prompts_text": {
+  "prompt_spamfilter": "Decide whether this email is spam for ACME. Treat any request to change bank details as spam. Answer only with a JSON object: {\"spamValue\": <0-100>, \"explanation\": \"<one sentence>\"}.\n\n{%mail_html_body%}"
+}
+{{< /highlight >}}
 
 <p>
     Neither of the other mechanisms can do this. These texts are stored with the feature's prompt, not in
@@ -736,7 +746,8 @@ Type = "no-list"
     keys cannot set it and this separate key exists.
 </p>
 
-<pre>"_special_prompts_connection": {
+{{< highlight yaml >}}
+"_special_prompts_connection": {
   "spamfilter": {
     "api_type": "openai_comp_api",
     "openai_comp_host": "https://ai-gateway.acme.example/v1",
@@ -744,7 +755,8 @@ Type = "no-list"
     "openai_comp_model": "gpt-4o-mini",
     "openai_comp_model:locked": false
   }
-}</pre>
+}
+{{< /highlight >}}
 
 <h3>Shape</h3>
 
@@ -864,8 +876,10 @@ Type = "no-list"
     both locked. It is as if the policy also contained:
 </p>
 
-<pre>"spamfilter_use_specific_integration": true,
-"spamfilter_connection_type": "openai_comp_api"</pre>
+{{< highlight yaml >}}
+"spamfilter_use_specific_integration": true,
+"spamfilter_connection_type": "openai_comp_api"
+{{< /highlight >}}
 
 <p>
     On the feature's settings page, the <em>Use a specific integration</em> switch is on and locked, and
@@ -1063,12 +1077,14 @@ Type = "no-list"
     in each profile:
 </p>
 
-<pre>"spamfilter_enabled_accounts_match": [
+{{< highlight yaml >}}
+"spamfilter_enabled_accounts_match": [
   "support@acme.example",
   "@sales.acme.example",
   "local"
 ],
-"add_tags_enabled_accounts_match": ["@acme.example"]</pre>
+"add_tags_enabled_accounts_match": ["@acme.example"]
+{{< /highlight >}}
 
 <table class="guides">
     <thead>
@@ -1130,9 +1146,11 @@ Type = "no-list"
     They have no counterpart in the settings, so the <code>:locked</code> convention does not apply to them.
 </p>
 
-<pre>"_disable_prompt_management": true,
+{{< highlight yaml >}}
+"_disable_prompt_management": true,
 "_disable_default_prompts": true,
-"_disable_setup_wizard": true</pre>
+"_disable_setup_wizard": true
+{{< /highlight >}}
 
 <p>
     A restriction is either on (<code>true</code>) or off (<code>false</code>, the same as leaving it
@@ -1267,10 +1285,12 @@ Type = "no-list"
 
 <p>For example, both features on, as initial values the user can change to grant the permission:</p>
 
-<pre>"get_calendar_event_from_clipboard": true,
+{{< highlight yaml >}}
+"get_calendar_event_from_clipboard": true,
 "get_calendar_event_from_clipboard:locked": false,
 "spamfilter_skip_addressbook": true,
-"spamfilter_skip_addressbook:locked": false</pre>
+"spamfilter_skip_addressbook:locked": false
+{{< /highlight >}}
 
 <p>
     Keep in mind that an unlocked value is only a starting point: a user who already set the option keeps

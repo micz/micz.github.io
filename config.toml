@@ -52,3 +52,8 @@ defaultContentLanguageInSubdir = false
    Subtitle = "Silence is golden."
    env= "production"
    goatcounterURL = "https://micz.goatcounter.com/count"
+
+# Code highlighting: Chroma emits CSS classes, colored by the .chroma rules in theme.css
+# (dark and light tokens) instead of a fixed inline style.
+[markup.highlight]
+  noClasses = false
