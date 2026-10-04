@@ -48,13 +48,7 @@ defaultContentLanguageInSubdir = false
       flag = "🇪🇸"
 
 [params]
-   forceCSSReloadID = "20261004"
+   forceCSSReloadID = "20261005"
    Subtitle = "Silence is golden."
    env= "production"
-   consentModeAdvanced = false
-   privacyURL = "/privacy/"
    goatcounterURL = "https://micz.goatcounter.com/count"
-
-[services]
-  [services.googleAnalytics]
-    ID = "G-14PLEX7LGC"

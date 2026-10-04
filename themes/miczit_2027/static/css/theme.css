@@ -9,7 +9,7 @@
      6. Content typography (links, lists, code, tables, figures, helpers)
      7. Addon hero + card grid (shortcodes) + go-back
      8. Home (full-bleed photo, wordmark, tagline)
-     9. Footer + theme toggle + cookie notice
+     9. Footer + theme toggle
     10. Responsive / motion / focus
    ========================================================================== */
 
@@ -1278,7 +1278,7 @@ body.home .page-shell::after {
     color: var(--photo-ink-muted);
 }
 
-/* 9. Footer + toggle + cookie notice ------------------------------------- */
+/* 9. Footer + toggle ----------------------------------------------------- */
 
 .site-footer {
     border-top: 1px solid var(--hairline);
@@ -1390,44 +1390,6 @@ body.home .page-shell::after {
 [data-theme="dark"] .theme-toggle .icon-moon { display: none; }
 [data-theme="light"] .theme-toggle .icon-sun { display: none; }
 
-/* cookie notice (ids/classes are referenced by the consent script) */
-#cookie-notice {
-    position: fixed;
-    bottom: 16px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 50;
-    width: min(560px, calc(100vw - 32px));
-    padding: 16px 18px;
-    background: var(--bg-raised);
-    color: var(--ink);
-    border: 1px solid var(--hairline-strong);
-    border-radius: 12px;
-    box-shadow: var(--shadow);
-    font-family: var(--sans);
-    font-size: 14.5px;
-    line-height: 1.55;
-}
-#cookie-notice[hidden] { display: none; }
-#cookie-notice p { margin: 0 0 12px; }
-#cookie-notice a { color: var(--accent); text-underline-offset: 3px; }
-#cookie-notice a:hover { color: var(--accent-strong); }
-#cookie-notice .cookie-notice-buttons { display: flex; gap: 8px; flex-wrap: wrap; }
-/* same visual weight for both buttons: required by the Garante guidelines */
-#cookie-notice button {
-    flex: 1 1 auto;
-    padding: 8px 14px;
-    font: inherit;
-    font-weight: 600;
-    color: var(--ink);
-    background: var(--bg);
-    border: 1px solid var(--hairline-strong);
-    border-radius: 8px;
-    cursor: pointer;
-    transition: border-color 0.15s ease;
-}
-#cookie-notice button:hover { border-color: var(--accent); }
-
 /* 10. Responsive / motion / focus ---------------------------------------- */
 
 @media (max-width: 880px) {
@@ -1476,8 +1438,6 @@ body.home .page-shell::after {
         display: block;
         margin: 12px auto;
     }
-
-    #cookie-notice { width: calc(100vw - 20px); bottom: 10px; }
 
     .content > #section-nav,
     .content > #section-nav-wrap {

@@ -31,8 +31,7 @@ themes/miczit_2027/
 │   ├── index.html              (home: hero su foto, niente .Content — stub legacy)
 │   ├── robots.txt              (portato verbatim da anubis)
 │   ├── partials/               head, head-extra, theme-init, header, footer,
-│   │                           lang-switcher, cookie-consent,
-│   │                           theme-toggle, title-split
+│   │                           lang-switcher, theme-toggle, title-split
 │   └── shortcodes/             i 10 shortcode del progetto; page_title e
 │                               list-thunderbird-pages riscritti
 └── static/
@@ -65,7 +64,7 @@ Note architetturali:
    dello shot a 390px). A 390px reali il layout è a colonna singola (breakpoint 880px),
    larghezza interna 350px, nessun contenuto non spezzabile. Verificato a 500/1024/1440.
 3. **Zone foto home indipendenti dal tema**: la home usa `--photo-ink` (fisso) su foto +
-   scrim; il toggle non cambia la home. Il cookie banner invece segue il tema.
+   scrim; il toggle non cambia la home.
 
 ## Bug trovati e corretti durante la verifica
 

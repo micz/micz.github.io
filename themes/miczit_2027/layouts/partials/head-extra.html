@@ -3,7 +3,7 @@
 <link rel="apple-touch-icon" href="{{ "images/favicon.jpeg" | absURL }}">
 {{ if eq (getenv "HUGO_ENV") "production" | or (eq .Site.Params.env "production") }}
 {{- with .Site.Params.goatcounterURL }}
-<!-- GoatCounter: cookieless analytics, loaded independently of cookie consent -->
+<!-- GoatCounter: cookieless analytics, no consent banner needed -->
 <script data-goatcounter="{{ . }}"
         async src="https://gc.zgo.at/count.js"></script>
 {{- end }}
