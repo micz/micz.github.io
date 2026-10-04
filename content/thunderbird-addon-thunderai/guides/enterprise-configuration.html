@@ -61,6 +61,7 @@ Type = "no-list"
         <span class="nav-sub">
             <a href="#where">Installing</a>
             <a href="#enforced">Enforced values</a>
+            <a href="#strict-mode">Strict mode</a>
             <a href="#example">Example</a>
         </span>
     </span>
@@ -236,6 +237,145 @@ Type = "no-list"
     This keeps the key out of the add-on's pages. It does <strong>not</strong> make it secret: it is
     still readable in <code>policies.json</code> — see <a href="#before">Before you start</a>.
 </p>
+
+
+<h2 id="strict-mode">Strict mode</h2>
+
+<p>
+    By default a policy controls only the settings it names. Everything else stays the user's choice,
+    including settings added by future ThunderAI versions.
+</p>
+<p>
+    <strong>Strict mode reverses that.</strong> With <code>"_lock_unlisted": true</code>, every setting
+    your policy does not set is locked at ThunderAI's built-in default. The user sees it exactly like a
+    setting you enforce: disabled, with the <em>Managed</em> padlock badge. Settings introduced by an
+    update are locked at their default from the first start after the update.
+</p>
+
+<table class="guides">
+    <thead>
+        <tr>
+            <th>Key</th>
+            <th>Type</th>
+            <th>Meaning</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>_lock_unlisted</code></td>
+            <td>boolean (default <code>false</code>)</td>
+            <td><code>true</code> turns strict mode on.</td>
+        </tr>
+        <tr>
+            <td><code>_user_editable</code></td>
+            <td>array of setting names (default <code>[]</code>)</td>
+            <td>Settings that stay user-editable in strict mode. Only used when <code>_lock_unlisted</code> is
+                <code>true</code>.</td>
+        </tr>
+    </tbody>
+</table>
+
+<h3>How each setting is resolved</h3>
+
+<ol>
+    <li><strong>Per-machine settings are never affected.</strong> They stay user-editable: the API chat
+        window size and position, the chat font zoom, the layout of the custom prompts page, and the
+        per-profile account selection of the spam filter and Add Tags. These are the keys listed as
+        <a href="#key-reference">not settable by policy</a>.</li>
+    <li><strong>Settings you set in the policy</strong> behave exactly as without strict mode: enforced,
+        or only an initial value with <code>"&lt;key&gt;:locked": false</code>. The switch and connection
+        type implied by <a href="#feature-connections"><code>_special_prompts_connection</code></a> count as
+        set by the policy. If one of these settings also appears in <code>_user_editable</code>, your
+        value wins and a warning is logged.</li>
+    <li><strong>Settings listed in <code>_user_editable</code></strong> stay the user's: their own value,
+        or the default if they never changed it.</li>
+    <li><strong>Every other setting</strong> is locked at its default.</li>
+</ol>
+
+<p>
+    <strong>The two account-match keys are never locked by strict mode:</strong>
+    <code>spamfilter_enabled_accounts_match</code> and <code>add_tags_enabled_accounts_match</code>. Their
+    default means "not managed", and locking it would stop the automatic features on every account. The
+    features themselves (<code>spamfilter</code>, <code>add_tags</code>) are locked at their default, which
+    is off.
+</p>
+<p>
+    <strong>Users' own values are never deleted.</strong> If you turn strict mode off, they come back at
+    the next start. Without <code>_lock_unlisted</code>, or with it set to <code>false</code>, nothing
+    changes compared to earlier versions.
+</p>
+
+<h3>Example</h3>
+
+<pre>{
+  "policies": {
+    "3rdparty": {
+      "Extensions": {
+        "thunderai@micz.it": {
+          "_org_name": "ACME Corp",
+          "_lock_unlisted": true,
+          "_user_editable": ["default_sign_name", "default_chatgpt_lang", "do_debug"],
+          "connection_type": "openai_comp_api",
+          "openai_comp_host": "https://ai-gateway.acme.example",
+          "openai_comp_api_key": "sk-acme-...",
+          "openai_comp_model": "gpt-4o-mini",
+          "translate": true,
+          "summarize": true
+        }
+      }
+    }
+  }
+}</pre>
+
+<p>
+    The connection, Translate and Summarize are enforced as written. Users can still change their
+    signature name, their default language and debug logging. Every other setting, including any added
+    by future versions, is locked at its default.
+</p>
+
+<h3>Things to know</h3>
+
+<div class="admon warn">
+    <h3>⚠️ Set a connection</h3>
+    <p>
+        The default connection is "no connection". A strict policy must set <code>connection_type</code>
+        and the matching provider settings, or list them in <code>_user_editable</code>. Otherwise
+        ThunderAI stays unconfigured, and the setup wizard cannot save a connection.
+    </p>
+</div>
+
+<ul>
+    <li><strong>Some defaults are on.</strong> Translate, Create calendar event, Create task, showing token
+        usage in the chat, and hiding the model's thinking are on by default. If you don't want them, set
+        them to <code>false</code> explicitly.</li>
+    <li><strong>Prompts are not settings.</strong> Strict mode does not lock custom prompts, menu order,
+        custom placeholders, per-feature connections or special prompt texts. To control prompts, use
+        <a href="#restrictions"><code>_disable_prompt_management</code></a>,
+        <a href="#special-prompt-texts"><code>_special_prompts_text</code></a> and
+        <a href="#feature-connections"><code>_special_prompts_connection</code></a>.</li>
+    <li><strong>Debug logging is locked off</strong> (<code>do_debug</code>) unless you list it in
+        <code>_user_editable</code>. List it if your support team needs logs from users.</li>
+    <li><strong>A change takes effect at the next Thunderbird restart</strong>, like every other policy
+        change (see <a href="#before">Before you start</a>).</li>
+</ul>
+
+<h3>If strict mode is rejected</h3>
+
+<p>
+    Problems are reported in the Error Console (see <a href="#troubleshooting">Troubleshooting</a>), even
+    with debug logging off:
+</p>
+
+<ul>
+    <li><code>_lock_unlisted</code> must be <code>true</code> or <code>false</code>. Any other value is
+        ignored with a warning, and strict mode stays <strong>off</strong>.</li>
+    <li><code>_user_editable</code> must be an array. Any other value is ignored with a warning, and
+        strict mode is <strong>off</strong>.</li>
+    <li>An entry of <code>_user_editable</code> is skipped with a warning if it is not a string, if it
+        names an unknown setting, or if it names a per-machine setting (those are always editable).</li>
+    <li><code>_user_editable</code> without <code>"_lock_unlisted": true</code> is ignored with a
+        warning.</li>
+</ul>
 
 
 <h2 id="example">Worked example</h2>
@@ -1139,6 +1279,11 @@ Type = "no-list"
     Every key below is a ThunderAI setting name, used verbatim as the policy key. Values must match the
     type shown: a wrong type is ignored with a warning and is <strong>not</strong> coerced —
     <code>"true"</code> is not <code>true</code>, and <code>"70"</code> is not <code>70</code>.
+</p>
+<p>
+    In <a href="#strict-mode">strict mode</a>, every setting the policy does not set is locked at the
+    default shown in this reference, except the per-machine keys, listed at the end as not settable by
+    policy, and the two <code>*_enabled_accounts_match</code> keys.
 </p>
 <p>
     Array keys (<code>add_tags_exclusions</code>, <code>spamfilter_skip_addresses</code>,
