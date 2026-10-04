@@ -1,91 +1,107 @@
-<div id="cookie-notice">
-    <span>We would like to use third party cookies and scripts to improve the 
-    functionality of this website.</span><br/>
-    <a id="cookie-notice-accept" class="btn btn-primary btn-sm">Approve</a>
-    <a id="cookie-notice-deny" class="btn btn-primary btn-sm">Deny</a></div>
-    <script>
-        function createCookie(name,value,days) {
-            var expires = "";
-            if (days) {
-                var date = new Date();
-                date.setTime(date.getTime() + (days*24*60*60*1000));
-                expires = "; expires=" + date.toUTCString();
-            }
-            document.cookie = name + "=" + value + expires + "; path=/" + ";secure;SameSite=None";
-        }
-        function readCookie(name) {
-            var nameEQ = name + "=";
-            var ca = document.cookie.split(';');
-            for(var i=0;i < ca.length;i++) {
-                var c = ca[i];
-                while (c.charAt(0)==' ') c = c.substring(1,c.length);
-                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
-            }
-            return null;
-        }
-        
-        function deleteCookiesByPattern(pattern) {
-            const cookies = document.cookie.split(';');
+{{- /*
+  layouts/partials/cookie-consent.html — micz.it
+  Consent banner + Google Analytics 4 with Consent Mode v2.
 
-            for (let i = 0; i < cookies.length; i++) {
+  Parameters in config.toml, [params] section:
+    consentModeAdvanced = true   # true: gtag always loaded, with consent "denied" until the user accepts
+                                 # false: gtag loaded ONLY after consent (as before)
+    privacyURL = "/privacy/"     # privacy/cookie policy page
+*/ -}}
+{{- $gaID := site.Config.Services.GoogleAnalytics.ID -}}
+{{- $advanced := site.Params.consentModeAdvanced | default false -}}
+{{- $privacy := site.Params.privacyURL | default "/privacy/" -}}
 
-                const cookie = cookies[i];
-                const eqPos = cookie.indexOf("=");
-                const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+<script>
+  /* 1. Consent Mode: the default must be declared BEFORE loading gtag.js */
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){ dataLayer.push(arguments); }
 
-                if (name.includes(pattern)) {
-                    // ADD YOUR DOMAIN HERE! KEEP THE DOT INFRONT, OTHERWISE THE COOKIE WONT GET DELETED
-                    document.cookie = name + "=; Domain=.micz.it; Path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; secure; SameSite=None";
-                }
-            }
-        }
-        
-        if(readCookie('cookie-notice-option')=='true') {
-            document.getElementById('cookie-notice').style.display = 'none';
-            {{ if ((hugo.IsProduction) | or (eq .Site.Params.env "production")) }}
-            
-            function loadScriptAsync(scriptSrc, callback) {
-                if (typeof callback !== 'function') {
-                    throw new Error('Not a valid callback for async script load');
-                }
-                var script = document.createElement('script');
-                script.onload = callback;
-                script.src = scriptSrc;
-                document.head.appendChild(script);
-            }
-    
-            /* This is the part where you call the above defined function and "calls back" 
-            your code which gets executed after the script has loaded */
-            //REPLACE WITH YOUR GA TAG!
-            {{ $googleAnalyticsID := printf .Site.Config.Services.GoogleAnalytics.ID }}
+  var MICZ_CONSENT_COOKIE = 'cookie-notice-option';
+  var MICZ_CONSENT_DAYS = 180; // the Garante asks not to show the banner again before 6 months
 
-            loadScriptAsync('https://www.googletagmanager.com/gtag/js?id={{printf $googleAnalyticsID }}', function () {
-                window.dataLayer = window.dataLayer || [];
-                function gtag() { dataLayer.push(arguments); }
-                gtag('js', new Date());
-                //REPLACE WITH YOUR GA TAG!
-                gtag('config', '{{printf $googleAnalyticsID }}', { 'anonymize_ip': true, cookie_flags: 'secure;samesite=none' });
-            })
-    
-            {{ end }}
-        } else if (readCookie('cookie-notice-option')!='false'){
-            deleteCookiesByPattern("_ga");
-            document.getElementById('cookie-notice').style.display = 'block';
-        } else if (readCookie('cookie-notice-option')=='false'){
-            deleteCookiesByPattern("_ga");
-            document.getElementById('cookie-notice').style.display = 'none';
-        }
-    
-        document.getElementById('cookie-notice-accept').addEventListener("click",function() {
-            createCookie('cookie-notice-option','true',31);
-            document.getElementById('cookie-notice').style.display = 'none';
-            location.reload();
-        });
-    
-        document.getElementById('cookie-notice-deny').addEventListener("click",function() {
-            createCookie('cookie-notice-option','false',31);
-            document.getElementById('cookie-notice').style.display = 'none';
-            location.reload();
-        });
-    
-    </script>
+  function miczReadConsent() {
+    var m = document.cookie.match('(?:^|; )' + MICZ_CONSENT_COOKIE + '=([^;]*)');
+    return m ? m[1] : null; // 'true' | 'false' | null
+  }
+  function miczWriteConsent(v) {
+    var d = new Date(); d.setTime(d.getTime() + MICZ_CONSENT_DAYS * 864e5);
+    document.cookie = MICZ_CONSENT_COOKIE + '=' + v + '; expires=' + d.toUTCString() + '; path=/; Secure; SameSite=Lax';
+  }
+  function miczDeleteGaCookies() {
+    document.cookie.split(';').forEach(function (c) {
+      var name = c.split('=')[0].trim();
+      if (name.indexOf('_ga') === 0) {
+        document.cookie = name + '=; Domain=.micz.it; Path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+        document.cookie = name + '=; Path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+      }
+    });
+  }
+
+  var miczConsent = miczReadConsent();
+
+  gtag('consent', 'default', {
+    analytics_storage: miczConsent === 'true' ? 'granted' : 'denied',
+    ad_storage: 'denied',
+    ad_user_data: 'denied',
+    ad_personalization: 'denied',
+    wait_for_update: 500
+  });
+
+  var miczGaLoaded = false;
+  function miczLoadGA() {
+    if (miczGaLoaded) return;
+    miczGaLoaded = true;
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id={{ $gaID }}';
+    document.head.appendChild(s);
+    gtag('js', new Date());
+    gtag('config', '{{ $gaID }}');
+  }
+
+  {{ if $advanced }}
+  /* Advanced mode: gtag always loaded; without consent it only sends cookieless pings */
+  miczLoadGA();
+  {{ else }}
+  /* Basic mode: gtag loaded only after consent */
+  if (miczConsent === 'true') miczLoadGA();
+  {{ end }}
+  if (miczConsent !== 'true') miczDeleteGaCookies();
+</script>
+
+<div id="cookie-notice" role="dialog" aria-live="polite" aria-label="Cookie" hidden>
+  <p>I use Google Analytics to count visits and understand which pages are useful. It sets cookies only if you allow it. <a href="{{ $privacy }}">Privacy policy</a></p>
+  <div class="cookie-notice-buttons">
+    <button type="button" id="cookie-notice-deny">Reject</button>
+    <button type="button" id="cookie-notice-accept">Allow analytics</button>
+  </div>
+</div>
+
+<script>
+  (function () {
+    var box = document.getElementById('cookie-notice');
+    function show() { box.hidden = false; }
+    function hide() { box.hidden = true; }
+
+    if (miczConsent === null) {
+      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', show); else show();
+    }
+
+    document.getElementById('cookie-notice-accept').addEventListener('click', function () {
+      miczWriteConsent('true');
+      gtag('consent', 'update', { analytics_storage: 'granted' });
+      miczLoadGA(); // no reload: the current page is counted right away
+      hide();
+    });
+
+    document.getElementById('cookie-notice-deny').addEventListener('click', function () {
+      miczWriteConsent('false');
+      gtag('consent', 'update', { analytics_storage: 'denied' });
+      miczDeleteGaCookies();
+      hide();
+    });
+
+    /* For a "Cookie settings" link in the footer: <a href="#" onclick="miczCookieSettings();return false;"> */
+    window.miczCookieSettings = show;
+  })();
+</script>

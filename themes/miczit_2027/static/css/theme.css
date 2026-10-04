@@ -1382,17 +1382,35 @@ body.home .page-shell::after {
     transform: translateX(-50%);
     z-index: 50;
     width: min(560px, calc(100vw - 32px));
-    padding: 14px 18px;
-    text-align: center;
+    padding: 16px 18px;
     background: var(--bg-raised);
-    color: var(--ink-muted);
+    color: var(--ink);
     border: 1px solid var(--hairline-strong);
     border-radius: 12px;
     box-shadow: var(--shadow);
+    font-family: var(--sans);
     font-size: 14.5px;
     line-height: 1.55;
 }
-#cookie-notice a.btn { font-weight: 600; display: inline-flex; cursor: pointer; margin: 4px 4px 0; }
+#cookie-notice[hidden] { display: none; }
+#cookie-notice p { margin: 0 0 12px; }
+#cookie-notice a { color: var(--accent); text-underline-offset: 3px; }
+#cookie-notice a:hover { color: var(--accent-strong); }
+#cookie-notice .cookie-notice-buttons { display: flex; gap: 8px; flex-wrap: wrap; }
+/* same visual weight for both buttons: required by the Garante guidelines */
+#cookie-notice button {
+    flex: 1 1 auto;
+    padding: 8px 14px;
+    font: inherit;
+    font-weight: 600;
+    color: var(--ink);
+    background: var(--bg);
+    border: 1px solid var(--hairline-strong);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: border-color 0.15s ease;
+}
+#cookie-notice button:hover { border-color: var(--accent); }
 
 /* 10. Responsive / motion / focus ---------------------------------------- */
 
