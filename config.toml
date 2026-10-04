@@ -47,11 +47,4 @@ defaultContentLanguageInSubdir = false
    Subtitle = "Silence is golden."
    style= "dark"
    env= "production"
-   consentModeAdvanced = false
-   privacyURL = "/privacy/"
    goatcounterURL = "https://micz.goatcounter.com/count"
-
-
-[services]
-  [services.googleAnalytics]
-    ID = "G-14PLEX7LGC"
