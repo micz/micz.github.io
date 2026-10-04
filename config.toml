@@ -1,25 +1,15 @@
-# Preview/alternate build for the miczit_2027 theme.
+# Production build:
+#   hugo --gc --minify
 #
-# This config is fully independent from config.toml (anubis):
-#   hugo --config config.miczit_2027.toml
-#
-# - theme:    miczit_2027 (dark-first editorial theme)
-# - layoutDir:points to an intentionally empty directory, so the project-level
-#   layouts/ overrides written for anubis are NOT applied to this build.
-#   (Project layouts always win over theme layouts; the empty layoutDir
-#   neutralizes them. Verified: with layoutDir set, theme single.html wins and
-#   theme shortcodes resolve even when the project has same-named ones.)
-# - publishDir:docs_preview keeps the current production output (docs/, committed)
-#   untouched. Switching the published site to this theme is a separate,
-#   explicit decision: change publishDir in this file (or migrate config.toml).
+# - theme:     miczit_2027 (dark-first editorial theme)
+# - publishDir: docs/ (committed, deployed by .github/workflows/static.yml)
 
 baseURL = "https://micz.it/"
 languageCode = "en"
 title = "Mic's"
 
-publishDir = "docs_preview"
+publishDir = "docs"
 theme = "miczit_2027"
-layoutDir = "layouts_2027"
 
 enableRobotsTXT = true
 

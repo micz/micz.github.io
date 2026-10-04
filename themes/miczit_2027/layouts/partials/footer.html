@@ -5,13 +5,13 @@
             <span class="rail-sep" aria-hidden="true">·</span>
             <a href="https://github.com/micz/" title="github" target="_blank" rel="noopener noreferrer">github</a>
             <span class="rail-sep" aria-hidden="true">·</span>
-            <a href="{{ site.Params.privacyURL | default "/privacy/" }}" title="Privacy policy">privacy</a>
-            <span class="rail-sep" aria-hidden="true">·</span>
-            <a href="#" title="Cookie settings" onclick="if(window.miczCookieSettings){miczCookieSettings();}return false;">cookies</a>
-            <span class="rail-sep" aria-hidden="true">·</span>
             <a href="/thunderbird-addons/" title="Thunderbird Addons"><img src="/images/thunderbird-64px.png" width="16" height="16" alt="" loading="lazy" /> thunderbird addons</a>
         </div>
-        <div class="footer-toggle">{{ partial "theme-toggle.html" . }}</div>
+        <div class="footer-toggle footer-rail">
+            <a href="{{ site.Params.privacyURL | default "/privacy/" }}" title="Privacy policy">privacy</a>
+            {{ partial "theme-toggle.html" . }}
+            <a href="#" title="Cookie settings" onclick="if(window.miczCookieSettings){miczCookieSettings();}return false;">cookies</a>
+        </div>
         <p class="footer-credit">Made with <a target="_blank" rel="noopener noreferrer" href="https://gohugo.io/">Hugo</a>.</p>
     </div>
 </footer>

@@ -4,22 +4,21 @@ Documento di consegna. Data: 2026-09-19. Branch: `new_style`.
 
 ## Cos'è
 
-`miczit_2027` è un tema Hugo **parallelo** al tema vendored `anubis`, attivabile senza
-toccare `config.toml` né `themes/anubis/`. È dark di default con toggle (chiave
-localStorage `user-color-scheme`, continuità con il sito attuale), tipografia self-hosted
+`miczit_2027` è l'unico tema del sito (il vecchio tema `anubis`, i suoi override in
+`layouts/` e la config/anteprima parallela sono stati rimossi). È dark di default con
+toggle (chiave localStorage `user-color-scheme`), tipografia self-hosted
 (Newsreader + JetBrains Mono, OFL) e home full-bleed su foto B/N.
 
 ## Come si usa
 
-- **Build di anteprima** (non tocca `docs/`):
-  `hugo --config config.miczit_2027.toml --gc --minify -d docs_preview`
-- **Dev server**: `hugo server --config config.miczit_2027.toml --port 1314`
-- `config.miczit_2027.toml` usa `layoutDir = "layouts_2027"` (directory volutamente
-  vuota, solo `.gitkeep`): neutralizza gli override in `layouts/` di progetto e fa
-  risolvere gli shortcode al tema. `publishDir = "docs_preview"` (gitignored).
-- **Switch a produzione** (decisione separata, NON eseguita): aggiornare `docs/` con
-  `hugo --config config.miczit_2027.toml --gc --minify -d docs` e pubblicare. Il sito
-  attuale continua a essere generato con `config.toml` + anubis finché non si decide.
+- **Build di produzione**: `hugo --gc --minify` → scrive in `docs/` (committata,
+  pubblicata da `.github/workflows/static.yml` al push su `master`).
+- **Dev server**: `hugo server`
+- `CNAME` sta in `static/`, così finisce in `docs/` a ogni build.
+- Hugo non cancella i file obsoleti in `docs/`: per una build pulita usare
+  `hugo --gc --minify --cleanDestinationDir`.
+
+Le sezioni seguenti sono il diario della migrazione (riferimenti ad anubis storici).
 
 ## Struttura del tema
 

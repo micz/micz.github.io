@@ -1,6 +1,6 @@
 name = "miczit_2027"
 license = "MIT"
-description = "Dark-first editorial theme for micz.it. Runs alongside the vendored anubis theme: activate with `hugo --config config.miczit_2027.toml` (layoutDir points to the empty layouts_2027/ so the anubis project overrides are not applied)."
+description = "Dark-first editorial theme for micz.it."
 homepage = "https://micz.it/"
 tags = ["dark", "multilingual", "editorial"]
 min_version = "0.157.0"
