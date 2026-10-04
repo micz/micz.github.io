@@ -6,9 +6,13 @@ JetBrains Mono (variable, latin subset)               — SIL Open Font License 
   Source: Google Fonts, https://fonts.google.com/specimen/JetBrains+Mono
 IBM Plex Sans (400, 500, 600, latin subset)           — SIL Open Font License 1.1
   Source: Fontsource (@fontsource/ibm-plex-sans@5), https://fontsource.org/fonts/ibm-plex-sans
+Inter (variable, normal + italic, latin subset)       — SIL Open Font License 1.1
+  Source: Fontsource (@fontsource-variable/inter), https://fontsource.org/fonts/inter
+Inter Tight (variable, latin subset)                  — SIL Open Font License 1.1
+  Source: Fontsource (@fontsource-variable/inter-tight), https://fontsource.org/fonts/inter-tight
 
 All families are licensed under the SIL Open Font License 1.1
 (https://openfontlicense.org/). The files were downloaded from the
 Google Fonts css2 API on 2026-09-18 (IBM Plex Sans from
-Fontsource on 2026-09-29) and are served unmodified from
+Fontsource on 2026-09-29, Inter and Inter Tight from Fontsource on 2026-10-05) and are served unmodified from
 this directory.

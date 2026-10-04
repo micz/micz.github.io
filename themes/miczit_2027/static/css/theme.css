@@ -37,6 +37,27 @@
     font-display: swap;
 }
 @font-face {
+    font-family: "Inter";
+    src: url("../fonts/inter-latin-var.woff2") format("woff2");
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: "Inter";
+    src: url("../fonts/inter-latin-italic-var.woff2") format("woff2");
+    font-weight: 100 900;
+    font-style: italic;
+    font-display: swap;
+}
+@font-face {
+    font-family: "Inter Tight";
+    src: url("../fonts/inter-tight-latin-var.woff2") format("woff2");
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
     font-family: "IBM Plex Sans";
     src: url("../fonts/ibm-plex-sans-latin-400.woff2") format("woff2");
     font-weight: 400;
@@ -80,10 +101,15 @@
     --scrim:
         linear-gradient(180deg, rgba(9, 10, 12, 0.45) 0%, rgba(9, 10, 12, 0.66) 52%, rgba(9, 10, 12, 0.90) 100%);
     --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 10px 28px rgba(0, 0, 0, 0.35);
+    --header-ink: #f4f4f2;          /* internal page header: logo + current crumb */
+    --header-ink-muted: #8a8b90;    /* ancestor crumbs + separators */
+    --header-rule: #3a3b40;         /* logo | breadcrumb divider */
 
     --serif: "Newsreader", Georgia, "Times New Roman", serif;
     --mono: "JetBrains Mono", Consolas, "Courier New", monospace;
     --sans: "IBM Plex Sans", system-ui, "Segoe UI", Roboto, sans-serif;
+    --text: "Inter", system-ui, "Segoe UI", Roboto, sans-serif;   /* body copy */
+    --display-sans: "Inter Tight", "Inter", system-ui, sans-serif; /* header breadcrumb */
 
     --measure: 720px;   /* reading column */
     --wide: 1020px;     /* feature column (addon hero, header, footer) */
@@ -109,6 +135,9 @@
     --photo-ink: #f4f2ee;          /* the home photo zone keeps its own ink */
     --photo-ink-muted: rgba(244, 242, 238, 0.75);
     --shadow: 0 1px 2px rgba(30, 28, 24, 0.08), 0 10px 28px rgba(30, 28, 24, 0.08);
+    --header-ink: var(--ink);
+    --header-ink-muted: var(--ink-muted);
+    --header-rule: var(--hairline-strong);
     color-scheme: light;
 }
 
@@ -125,10 +154,9 @@ body {
     flex-direction: column;
     background: var(--bg);
     color: var(--ink);
-    font-family: var(--serif);
-    font-optical-sizing: auto;
-    font-size: 17.5px;
-    line-height: 1.65;
+    font-family: var(--text);
+    font-size: 17px;
+    line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
 }
@@ -198,57 +226,67 @@ a:hover { color: var(--accent-strong); }
 .site-header-inner {
     max-width: var(--wide);
     margin-inline: auto;
-    padding: 20px var(--gutter);
+    padding: 26px var(--gutter);
     display: flex;
-    align-items: baseline;
+    align-items: center;
     justify-content: space-between;
     gap: 20px;
 }
 
 .wordmark {
+    flex: none;
     font-family: var(--serif);
-    font-size: 26px;
-    font-weight: 500;
+    font-optical-sizing: auto;
+    font-size: 32px;
+    font-weight: 600;
     letter-spacing: -0.01em;
-    color: var(--ink);
+    line-height: 1.1;
+    color: var(--header-ink);
     text-decoration: none;
 }
-.wordmark:hover { color: var(--ink); }
+.wordmark:hover { color: var(--header-ink); }
 
+/* Logo | breadcrumb: the crumbs wrap inside their own box, the logo stays put */
 .site-header-lead {
     display: flex;
-    align-items: baseline;
-    flex-wrap: wrap;
-    gap: 6px 18px;
+    align-items: center;
+    gap: 20px;
     min-width: 0;
+}
+.header-divider {
+    flex: none;
+    width: 1px;
+    height: 28px;
+    background: var(--header-rule);
 }
 .header-title {
     display: flex;
     align-items: baseline;
     flex-wrap: wrap;
-    gap: 4px 10px;
-    font-family: var(--serif);
-    font-size: 24px;
+    gap: 4px 12px;
+    min-width: 0;
+    font-family: var(--display-sans);
+    font-size: 21px;
     font-weight: 400;
     letter-spacing: -0.01em;
-    line-height: 1.2;
-    color: var(--ink-muted);
-    border-left: 1px solid var(--hairline);
-    padding-left: 18px;
+    line-height: 1.3;
+    color: var(--header-ink-muted);
+    overflow-wrap: anywhere;
 }
 .header-title h1 {
     margin: 0;
     font: inherit;
+    font-weight: 500;
     letter-spacing: inherit;
-    color: var(--ink);
+    color: var(--header-ink);
 }
 .header-parent {
-    color: var(--ink-muted);
+    color: var(--header-ink-muted);
     text-decoration: none;
 }
-.header-parent:hover { color: var(--ink); }
+.header-parent:hover { color: var(--header-ink); }
 .header-sep {
-    color: var(--ink-faint);
+    color: var(--header-ink-muted);
     user-select: none;
 }
 
@@ -294,9 +332,9 @@ a:hover { color: var(--accent-strong); }
 .content h2 {
     margin: 1.7em 0 0.55em;
     font-size: 26px;
-    font-weight: 500;
+    font-weight: 600;
     line-height: 1.25;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.015em;
     text-wrap: balance;
 }
 .content h2.tutorial { margin-top: 1.6em; }
@@ -313,8 +351,8 @@ a:hover { color: var(--accent-strong); }
 }
 
 .content p { margin: 0 0 1.05em; text-wrap: pretty; }
-.content strong { font-weight: 700; }
-.content b { font-weight: 700; }
+.content strong { font-weight: 600; }
+.content b { font-weight: 600; }
 .content small { color: var(--ink-muted); }
 .content i, .content em { font-style: italic; }
 
@@ -1256,6 +1294,8 @@ body.home .page-shell::after {
 
 .home-wordmark {
     margin: 0;
+    font-family: var(--serif);
+    font-optical-sizing: auto;
     font-size: clamp(54px, 11vw, 100px);
     font-weight: 500;
     line-height: 1.05;
@@ -1423,10 +1463,12 @@ body.home .page-shell::after {
     .addon-hero { gap: 18px 16px; }
     .addon-icon { width: 64px; height: 64px; border-radius: 12px; }
 
-    .site-header-inner { flex-direction: column; gap: 8px; align-items: flex-start; }
+    .site-header-inner { flex-direction: column; gap: 8px; align-items: flex-start; padding-block: 20px; }
     .page-top { flex-direction: column; align-items: flex-start; }
-    .site-header-lead { flex-direction: column; gap: 4px; }
-    .header-title { border-left: 0; padding-left: 0; }
+    .site-header-lead { gap: 14px; }
+    .wordmark { font-size: 26px; }
+    .header-divider { height: 24px; }
+    .header-title { font-size: 17px; gap: 2px 8px; }
 
     .footer-inner {
         display: flex;

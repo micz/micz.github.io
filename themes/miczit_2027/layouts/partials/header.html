@@ -6,7 +6,8 @@
             {{/* Parent pages (grey) before the current title. Home is skipped (the wordmark
                  links there). Language redirect stubs have no Title: borrow it from the
                  first translation that has one (the stub itself redirects there anyway). */}}
-            <div class="header-title">
+            <span class="header-divider" aria-hidden="true"></span>
+            <nav class="header-title" aria-label="{{ i18n "breadcrumb" }}">
                 {{/* Addon pages sit at the content root, not under /thunderbird-addons/:
                      if the top-level page of this path has addon_status, prepend the list
                      page. Redirect stubs lack params: check their translations too. */}}
@@ -30,8 +31,8 @@
                     {{ end }}
                 {{ end }}{{ end }}
                 {{ $t := partial "title-split.html" $ }}
-                <h1>{{ $t.title }}</h1>
-            </div>
+                <h1 aria-current="page">{{ $t.title }}</h1>
+            </nav>
             {{ end }}
         </div>
         {{ if .Site.Menus.main }}
