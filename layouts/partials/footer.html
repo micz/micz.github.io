@@ -4,11 +4,13 @@
                <!-- | <a target="_blank" href="https://twitter.com/micz" title="twitter">@micz</a> -->
                | <a href="https://github.com/micz/" title="github" target="_blank">github</a>
                <!-- | <a href="https://www.instagram.com/miczphoto/" title="instagram" target="_blank">@miczphoto</a>-->
-               | <a href="/privacy/" title="Privacy policy">privacy</a>
-               | <a href="#" onclick="if(window.miczCookieSettings){miczCookieSettings();}return false;">cookie settings</a>
                | <a href="/thunderbird-addons/" title="Thunderbird Addons"><img src="/images/thunderbird-64px.png" style="width:16px;height:16px;position:relative;top:3px;" title="thunderbird addons" alt="thunderbird addons"/> thunderbird addons</a>
             </div>
-            <div class="themeSwitcher">{{ partial "themeSwitcher.html" . }}</div>
+            <div class="themeSwitcher footer_center">
+                <a class="footer_legal" href="/privacy/" title="Privacy policy">privacy</a>
+                {{ partial "themeSwitcher.html" . }}
+                <a class="footer_legal" href="#" title="Cookie settings" onclick="if(window.miczCookieSettings){miczCookieSettings();}return false;">cookies</a>
+            </div>
             <div id="other_footer">Made with <a target="_blank" rel="noopener noreferrer" href="https://gohugo.io/">Hugo</a> and <a target="_blank" rel="noopener noreferrer" href="https://github.com/mitrichius/hugo-theme-anubis">Anubis</a>.</div>
     </div>
 <div class="footer_spacer"></div>
