@@ -1321,6 +1321,11 @@ body.home .page-shell::after {
 }
 
 .footer-toggle { display: flex; align-items: center; gap: 22px; }
+.footer-toggle a {
+    font-size: 11.5px;
+    color: var(--ink-faint);
+}
+.footer-toggle a:hover { color: var(--ink-muted); }
 
 .footer-credit {
     margin: 0;
@@ -1354,6 +1359,8 @@ body.home .page-shell::after {
 .site-footer.on-photo .theme-toggle {
     text-shadow: 0 1px 10px rgba(9, 10, 12, 0.65);
 }
+.site-footer.on-photo .footer-toggle a { color: rgba(244, 242, 238, 0.55); }
+.site-footer.on-photo .footer-toggle a:hover { color: var(--photo-ink); }
 
 .theme-toggle {
     display: inline-flex;
