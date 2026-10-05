@@ -1079,7 +1079,12 @@ html:has(#section-nav) { scroll-behavior: smooth; }
     padding: 0;
     list-style: none;
 }
+.card-grid > li {
+    display: flex;
+    margin: 0;
+}
 .card-grid a.card {
+    flex: 1;
     display: flex;
     flex-direction: row;
     align-items: center;
