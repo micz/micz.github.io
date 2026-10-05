@@ -1,91 +1,141 @@
-<div id="cookie-notice">
-    <span>We would like to use third party cookies and scripts to improve the 
-    functionality of this website.</span><br/>
-    <a id="cookie-notice-accept" class="btn btn-primary btn-sm">Approve</a>
-    <a id="cookie-notice-deny" class="btn btn-primary btn-sm">Deny</a></div>
-    <script>
-        function createCookie(name,value,days) {
-            var expires = "";
-            if (days) {
-                var date = new Date();
-                date.setTime(date.getTime() + (days*24*60*60*1000));
-                expires = "; expires=" + date.toUTCString();
-            }
-            document.cookie = name + "=" + value + expires + "; path=/" + ";secure;SameSite=None";
-        }
-        function readCookie(name) {
-            var nameEQ = name + "=";
-            var ca = document.cookie.split(';');
-            for(var i=0;i < ca.length;i++) {
-                var c = ca[i];
-                while (c.charAt(0)==' ') c = c.substring(1,c.length);
-                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
-            }
-            return null;
-        }
-        
-        function deleteCookiesByPattern(pattern) {
-            const cookies = document.cookie.split(';');
+{{- /*
+  layouts/partials/cookie-consent.html — micz.it
+  Banner consenso + Google Analytics 4 con Consent Mode v2.
 
-            for (let i = 0; i < cookies.length; i++) {
+  Parametri in config.toml, sezione [params]:
+    consentModeAdvanced = true   # true: gtag caricato sempre, con consenso "denied" finché l'utente non accetta
+                                 # false: gtag caricato SOLO dopo il consenso (come prima)
+    privacyURL = "/privacy/"     # pagina informativa privacy/cookie
+*/ -}}
+{{- $gaID := site.Config.Services.GoogleAnalytics.ID -}}
+{{- $advanced := site.Params.consentModeAdvanced | default false -}}
+{{- $privacy := site.Params.privacyURL | default "/privacy/" -}}
+{{- $lang := site.Language.Lang -}}
+{{- $t := dict
+  "en" (dict "msg" "I use Google Analytics to count visits and understand which pages are useful. It sets cookies only if you allow it." "ok" "Allow analytics" "no" "Reject" "info" "Privacy policy")
+  "it" (dict "msg" "Uso Google Analytics per contare le visite e capire quali pagine sono utili. Imposta cookie solo se lo consenti." "ok" "Consenti statistiche" "no" "Rifiuta" "info" "Informativa privacy")
+  "de" (dict "msg" "Ich nutze Google Analytics, um Besuche zu zählen und zu sehen, welche Seiten nützlich sind. Cookies werden nur mit deiner Zustimmung gesetzt." "ok" "Statistik erlauben" "no" "Ablehnen" "info" "Datenschutz")
+  "fr" (dict "msg" "J'utilise Google Analytics pour compter les visites et savoir quelles pages sont utiles. Des cookies ne sont déposés qu'avec votre accord." "ok" "Autoriser les statistiques" "no" "Refuser" "info" "Confidentialité")
+  "es" (dict "msg" "Uso Google Analytics para contar las visitas y saber qué páginas son útiles. Solo instala cookies si lo permites." "ok" "Permitir estadísticas" "no" "Rechazar" "info" "Privacidad")
+-}}
+{{- $s := index $t $lang | default (index $t "en") -}}
 
-                const cookie = cookies[i];
-                const eqPos = cookie.indexOf("=");
-                const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+<script>
+  /* 1. Consent Mode: il default va dichiarato PRIMA di caricare gtag.js */
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){ dataLayer.push(arguments); }
 
-                if (name.includes(pattern)) {
-                    // ADD YOUR DOMAIN HERE! KEEP THE DOT INFRONT, OTHERWISE THE COOKIE WONT GET DELETED
-                    document.cookie = name + "=; Domain=.micz.it; Path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; secure; SameSite=None";
-                }
-            }
-        }
-        
-        if(readCookie('cookie-notice-option')=='true') {
-            document.getElementById('cookie-notice').style.display = 'none';
-            {{ if ((hugo.IsProduction) | or (eq .Site.Params.env "production")) }}
-            
-            function loadScriptAsync(scriptSrc, callback) {
-                if (typeof callback !== 'function') {
-                    throw new Error('Not a valid callback for async script load');
-                }
-                var script = document.createElement('script');
-                script.onload = callback;
-                script.src = scriptSrc;
-                document.head.appendChild(script);
-            }
-    
-            /* This is the part where you call the above defined function and "calls back" 
-            your code which gets executed after the script has loaded */
-            //REPLACE WITH YOUR GA TAG!
-            {{ $googleAnalyticsID := printf .Site.Config.Services.GoogleAnalytics.ID }}
+  var MICZ_CONSENT_COOKIE = 'cookie-notice-option';
+  var MICZ_CONSENT_DAYS = 180; // il Garante chiede di non riproporre il banner prima di 6 mesi
 
-            loadScriptAsync('https://www.googletagmanager.com/gtag/js?id={{printf $googleAnalyticsID }}', function () {
-                window.dataLayer = window.dataLayer || [];
-                function gtag() { dataLayer.push(arguments); }
-                gtag('js', new Date());
-                //REPLACE WITH YOUR GA TAG!
-                gtag('config', '{{printf $googleAnalyticsID }}', { 'anonymize_ip': true, cookie_flags: 'secure;samesite=none' });
-            })
-    
-            {{ end }}
-        } else if (readCookie('cookie-notice-option')!='false'){
-            deleteCookiesByPattern("_ga");
-            document.getElementById('cookie-notice').style.display = 'block';
-        } else if (readCookie('cookie-notice-option')=='false'){
-            deleteCookiesByPattern("_ga");
-            document.getElementById('cookie-notice').style.display = 'none';
-        }
-    
-        document.getElementById('cookie-notice-accept').addEventListener("click",function() {
-            createCookie('cookie-notice-option','true',31);
-            document.getElementById('cookie-notice').style.display = 'none';
-            location.reload();
-        });
-    
-        document.getElementById('cookie-notice-deny').addEventListener("click",function() {
-            createCookie('cookie-notice-option','false',31);
-            document.getElementById('cookie-notice').style.display = 'none';
-            location.reload();
-        });
-    
-    </script>
+  function miczReadConsent() {
+    var m = document.cookie.match('(?:^|; )' + MICZ_CONSENT_COOKIE + '=([^;]*)');
+    return m ? m[1] : null; // 'true' | 'false' | null
+  }
+  function miczWriteConsent(v) {
+    var d = new Date(); d.setTime(d.getTime() + MICZ_CONSENT_DAYS * 864e5);
+    document.cookie = MICZ_CONSENT_COOKIE + '=' + v + '; expires=' + d.toUTCString() + '; path=/; Secure; SameSite=Lax';
+  }
+  function miczDeleteGaCookies() {
+    document.cookie.split(';').forEach(function (c) {
+      var name = c.split('=')[0].trim();
+      if (name.indexOf('_ga') === 0) {
+        document.cookie = name + '=; Domain=.micz.it; Path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+        document.cookie = name + '=; Path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+      }
+    });
+  }
+
+  var miczConsent = miczReadConsent();
+
+  gtag('consent', 'default', {
+    analytics_storage: miczConsent === 'true' ? 'granted' : 'denied',
+    ad_storage: 'denied',
+    ad_user_data: 'denied',
+    ad_personalization: 'denied',
+    wait_for_update: 500
+  });
+
+  var miczGaLoaded = false;
+  function miczLoadGA() {
+    if (miczGaLoaded) return;
+    miczGaLoaded = true;
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id={{ $gaID }}';
+    document.head.appendChild(s);
+    gtag('js', new Date());
+    gtag('config', '{{ $gaID }}');
+  }
+
+  {{ if $advanced }}
+  /* Modalità avanzata: gtag sempre caricato; senza consenso invia solo ping senza cookie */
+  miczLoadGA();
+  {{ else }}
+  /* Modalità base: gtag caricato solo dopo il consenso */
+  if (miczConsent === 'true') miczLoadGA();
+  {{ end }}
+  if (miczConsent !== 'true') miczDeleteGaCookies();
+</script>
+
+<div id="cookie-notice" role="dialog" aria-live="polite" aria-label="Cookie" hidden>
+  <p>{{ $s.msg }} <a href="{{ $privacy | relLangURL }}">{{ $s.info }}</a></p>
+  <div class="cookie-notice-buttons">
+    <button type="button" id="cookie-notice-deny">{{ $s.no }}</button>
+    <button type="button" id="cookie-notice-accept">{{ $s.ok }}</button>
+  </div>
+</div>
+
+<script>
+  (function () {
+    var box = document.getElementById('cookie-notice');
+    function show() { box.hidden = false; }
+    function hide() { box.hidden = true; }
+
+    if (miczConsent === null) {
+      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', show); else show();
+    }
+
+    document.getElementById('cookie-notice-accept').addEventListener('click', function () {
+      miczWriteConsent('true');
+      gtag('consent', 'update', { analytics_storage: 'granted' });
+      miczLoadGA(); // nessun reload: la pagina corrente viene contata subito
+      hide();
+    });
+
+    document.getElementById('cookie-notice-deny').addEventListener('click', function () {
+      miczWriteConsent('false');
+      gtag('consent', 'update', { analytics_storage: 'denied' });
+      miczDeleteGaCookies();
+      hide();
+    });
+
+    /* Per un link "Preferenze cookie" nel footer: <a href="#" onclick="miczCookieSettings();return false;"> */
+    window.miczCookieSettings = show;
+  })();
+</script>
+
+<style>
+  #cookie-notice {
+    position: fixed; left: 1rem; bottom: 1rem; z-index: 1000;
+    max-width: 24rem; padding: 1rem 1.1rem;
+    background: #2b2b2b; color: #f2f2f2;
+    border-radius: 6px; box-shadow: 0 4px 18px rgba(0,0,0,.35);
+    font-size: 15px; line-height: 1.45;
+  }
+  #cookie-notice[hidden] { display: none; }
+  #cookie-notice p { margin: 0 0 .8rem; }
+  #cookie-notice a { color: #9cc8ff; text-decoration: underline; }
+  #cookie-notice .cookie-notice-buttons { display: flex; gap: .5rem; flex-wrap: wrap; }
+  /* Stesso peso visivo per i due pulsanti: richiesto dalle linee guida del Garante */
+  #cookie-notice button {
+    flex: 1 1 auto; padding: .5rem .8rem; cursor: pointer;
+    font: inherit; font-weight: 600; border-radius: 4px;
+    background: #f2f2f2; color: #1a1a1a; border: 1px solid #f2f2f2;
+  }
+  #cookie-notice button:hover { background: #ffffff; }
+  #cookie-notice button:focus-visible { outline: 2px solid #9cc8ff; outline-offset: 2px; }
+  @media (max-width: 600px) {
+    #cookie-notice { left: .5rem; right: .5rem; bottom: .5rem; max-width: none; }
+  }
+</style>

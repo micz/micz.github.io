@@ -47,6 +47,8 @@ defaultContentLanguageInSubdir = false
    Subtitle = "Silence is golden."
    style= "dark"
    env= "production"
+   consentModeAdvanced = false
+   privacyURL = "/privacy/"
 
 
 [services]
