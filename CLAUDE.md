@@ -75,6 +75,8 @@ themes/miczit_2027/
 - The `guides/*` and `ollama-cors-*` pages have inline `<style>` blocks for their tables. They are
   kept on purpose: overriding them breaks the borderless ollama-cors table layouts.
 - The ThunderAI status pages (`status.html`, `status_archive.html`) center their header with
-  inline CSS on `.title-block`.
+  inline CSS on `.title-block`. Each issue notice is an `<h1>` that opens and closes with `<br>`.
+  `.content h1` in `theme.css` styles these notices and hides those two `<br>`. The archive page
+  sets a smaller size inline.
 - Headless Edge has a minimum layout width of about 500px. A "390px" screenshot is a crop of a
   wider page, so overflow seen in it is not real.
