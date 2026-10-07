@@ -9,6 +9,8 @@ env:
   # Set the build time zone
   TZ: Europe/Rome
 on:
+  push:
+    branches: ["master"]
   workflow_dispatch:
 permissions:
   contents: read
