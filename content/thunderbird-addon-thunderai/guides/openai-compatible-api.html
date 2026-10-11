@@ -11,19 +11,21 @@ multilang = true
     This covers local servers like <strong>LM Studio</strong>, hosted services like <strong>DeepSeek</strong>, <strong>Grok</strong>, <strong>Mistral AI</strong>, <strong>OpenRouter</strong>, and <strong>Perplexity</strong>, as well as any custom or self-hosted endpoint.
 </p>
 
-<table>
-    <tr>
-        <td><strong>API key required</strong></td>
-        <td>Depends on the service</td>
-    </tr>
-    <tr>
-        <td><strong>Free option</strong></td>
-        <td>Depends on the service (local servers are free)</td>
-    </tr>
-    <tr>
-        <td><strong>Best for</strong></td>
-        <td>Flexibility: local servers, alternative providers, custom endpoints</td>
-    </tr>
+<table class="guides">
+    <thead>
+        <tr>
+            <th>API key required</th>
+            <th>Free option</th>
+            <th>Best for</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Depends on the service</td>
+            <td>Depends on the service (local servers are free)</td>
+            <td>Flexibility: local servers, alternative providers, custom endpoints</td>
+        </tr>
+    </tbody>
 </table>
 
 <br>
@@ -31,7 +33,7 @@ multilang = true
 <h2>Predefined configurations</h2>
 <p>ThunderAI includes ready-made presets for the most popular OpenAI-compatible services. If you are using one of these, select the preset and only provide your API key:</p>
 
-<table>
+<table class="guides">
     <thead>
         <tr>
             <th>Preset</th>
@@ -66,91 +68,98 @@ multilang = true
 
 <h2>Setup</h2>
 
-<h3>1. Open ThunderAI Options</h3>
 <p>
-    In Thunderbird, click the ThunderAI menu and select <strong>Options</strong>, or go to<br>
-    <strong>Tools → Add-ons and Themes → ThunderAI → Preferences</strong>.
+    The quickest way is the <strong>Setup Wizard</strong>: open it from the ThunderAI welcome page, the toolbar popup or the
+    settings page, choose <strong>OpenAI Compatible API</strong>, pick a service or enter your server address, choose a model and test the connection.
+    The wizard then lets you turn on the AI features you want.<br>
+    To set it up by hand, follow the steps below.
+</p>
+
+<h3>1. Open the ThunderAI settings</h3>
+<p>
+    In Thunderbird, go to <strong>Tools → Add-ons and Themes → ThunderAI → Preferences</strong>.
 </p>
 
 <h3>2. Select the OpenAI Compatible API integration</h3>
-<p>In the <strong>Connection</strong> section, choose <strong>OpenAI Compatible API</strong> from the integration dropdown.</p>
+<p>In the <strong>Connection Settings</strong> panel, choose <strong>OpenAI Compatible API</strong> in the <strong>Connection Type</strong> dropdown.</p>
 
 <h3>3a. Using a preset</h3>
-<p>If your provider has a preset, select it from the preset list. The API URL will be filled in automatically. Enter your API key and skip to step 5.</p>
+<p>
+    If your provider has a preset, select it in <strong>Available Services</strong> and confirm. ThunderAI fills in the server address,
+    the "v1" setting and the chat name, and empties the models list. Enter your API key and continue from step 5.
+</p>
 
-<h3>3b. Manual configuration</h3>
-<p>If your provider is not in the preset list, configure it manually:</p>
+<h3 id="manual">3b. Manual configuration</h3>
+<p>If your provider is not in the list, choose <strong>Custom</strong> and configure it by hand:</p>
 <ul>
-    <li><strong>API URL</strong>: Enter the base URL of your server. For LM Studio running locally, this is typically <code>http://localhost:1234/v1</code>. For hosted providers, check their documentation.</li>
-    <li><strong>Remove "v1" from URL</strong>: Enable this if your provider's documentation instructs you to use the base URL without the <code>/v1</code> segment.</li>
+    <li><strong>Host Address</strong>: the base URL of your server, <strong>without</strong> <code>/v1</code>. For LM Studio running locally this is typically
+        <code>http://localhost:1234</code>. A remote server address works too.</li>
+    <li><strong>Keep the "v1" compatibility</strong> (in the advanced options, checked by default): ThunderAI adds <code>/v1</code> to the address,
+        as in <code>http://localhost:1234/v1/chat/completions</code>. Uncheck it if your provider's endpoints have no <code>/v1</code> segment.</li>
 </ul>
 
 <h3>4. Enter your API key (if required)</h3>
-<p>Local servers like LM Studio usually do not require an API key, so you can leave this field empty or enter any placeholder value. Hosted services will require a valid key.</p>
+<p>Enter it in the <strong>OpenAI Comp API Key</strong> field, which is optional. Local servers like LM Studio usually do not require an API key, so you can leave it empty. Hosted services require a valid key.</p>
 
 <h3>5. Choose a model</h3>
-<p>Select your model from the <strong>Model</strong> dropdown. Use the button to refresh the list.</p>
-<p>If the server does not expose a models list endpoint, enable the <strong>Set model name manually</strong> option and type the model name as specified by your provider.</p>
+<p>Click <strong>Update list</strong> next to <strong>OpenAI Compatible API Models</strong>, then select your model from the list.</p>
+<p>If the server does not provide a models list, click <strong>Add manually</strong> and type the model name as specified by your provider. <strong>Clear list</strong> empties the list.</p>
 
-<h3>6. Save and test</h3>
-<p>Click <strong>Save</strong>. Open any email, use the ThunderAI menu, and run a prompt to verify everything works.</p>
+<h3>6. Test the connection</h3>
+<p>
+    Settings are saved as soon as you change them: there is no Save button.<br>
+    Click <strong>Test now</strong> in the bar below the connection settings and accept Thunderbird's permission request, if it appears.
+    When everything is fine, the bar shows <em>"Connected — OpenAI Compatible API reachable"</em>.
+    Then open any email, click the ThunderAI toolbar button and run a prompt.
+</p>
+
+<h2>Advanced options</h2>
+<p>Click <strong>Advanced options</strong> in the <strong>Connection Settings</strong> panel to show these settings:</p>
+<ul>
+    <li><strong>Keep the "v1" compatibility</strong>: see <a href="#manual">step 3b</a>.</li>
+    <li><strong>Chat Name</strong>: the name shown for the AI in the ThunderAI chat window.</li>
+    <li><strong>Temperature</strong>: between 0 and 2. Higher values make the output more random, lower values more focused.</li>
+    <li><strong>Extra body data</strong>: additional parameters as a JSON object, for options the service supports but ThunderAI does not show,
+        e.g. <code>{"top_p": 0.9}</code>, or <code>{"chat_template_kwargs": {"thinking": false}}</code> to turn off the thinking mode on the servers that support it.</li>
+</ul>
+<p>
+    You can also set these options on a single prompt, in the custom prompts page, and on each AI feature (Add Tags, Spam Filter,
+    Summarize, Translate, Calendar Event, Task), with the <strong>Advanced options</strong> button of its specific connection.
+</p>
 
 <h2>LM Studio — quick setup</h2>
 <p><a href="https://lmstudio.ai" target="_blank">LM Studio</a> provides a local server with an OpenAI-compatible API and a graphical interface to download and manage models.</p>
 <ol>
     <li>Download and install LM Studio from <a href="https://lmstudio.ai" target="_blank">lmstudio.ai</a></li>
-    <li>In LM Studio, go to the <strong>Local Server</strong> tab and start the server</li>
     <li>Download a model of your choice from LM Studio's model browser</li>
-    <li>In ThunderAI, set the API URL to <code>http://localhost:1234/v1</code>, leave the API key empty, and select your model</li>
+    <li>In LM Studio, start the local server</li>
+    <li>In ThunderAI, choose <strong>Custom</strong>, set the <strong>Host Address</strong> to <code>http://localhost:1234</code>, keep the "v1" compatibility checked, leave the API key empty, and select your model</li>
 </ol>
 
 <h2>Tips</h2>
 <ul>
     <li><strong>OpenRouter</strong> is a great option if you want to access many different models (including Claude, Gemini, and Mistral) through a single API key and billing account.</li>
     <li>When using local servers, performance depends on your hardware — see the <a href="../ollama/">Ollama guide</a> for hardware tips.</li>
-    <li>If requests fail with a CORS error and you can't add the proper configuration on the server, use the <strong>"All URLs"</strong> optional permission in ThunderAI settings as a workaround.</li>
+    <li>If requests fail with a CORS error and you can't change the server configuration, click <strong>Give permission to the current host</strong> in the ThunderAI settings
+        (under <em>"Problems setting CORS?"</em>). For a server on <code>localhost</code> or <code>127.0.0.1</code>, Thunderbird asks for access to all websites (<code>&lt;all_urls&gt;</code>).</li>
+    <li>If the service's rate limit or quota is exceeded while ThunderAI processes several emails (Add Tags, Spam Filter, Summarize, Translate), the processing stops by itself and tells you how many messages were processed.</li>
 </ul>
 
 <h2>Troubleshooting</h2>
 
 <h3>"Connection refused" on a local server</h3>
-<p>Make sure the local server (e.g. LM Studio) is actually running and the server URL in ThunderAI matches the port it is listening on.</p>
+<p>Make sure the local server (e.g. LM Studio) is actually running and the <strong>Host Address</strong> in ThunderAI matches the port it is listening on.</p>
 
 <h3>"401 Unauthorized" error</h3>
 <p>Check your API key. For local servers that do not require a key, try entering a dummy value like <code>none</code>. Some servers reject empty key fields.</p>
 
 <h3>Empty model list</h3>
-<p>Enable the <strong>Set model name manually</strong> option and type the model name as specified by your provider or server documentation.</p>
+<p>Click <strong>Add manually</strong> and type the model name as specified by your provider or server documentation.</p>
 
-<h3>The "v1" in the URL causes errors</h3>
-<p>Enable the <strong>Remove "v1" from URL</strong> option in ThunderAI settings.</p>
+<h3>"404 Not Found", or errors caused by "v1" in the URL</h3>
+<p>Check that the <strong>Host Address</strong> does not end with <code>/v1</code>, since ThunderAI adds it when <strong>Keep the "v1" compatibility</strong> is checked. If your provider's endpoints have no <code>/v1</code> segment, uncheck that option.</p>
 
 <br>
 <div style="text-align: center">
     <a href="../">Back to guides</a>
 </div>
-
-
-<style>
-table {
-    border-collapse: collapse;
-    margin: 10px 0;
-    width: 100%;
-}
-th, td {
-    border: 1px solid #ccc;
-    padding: 7px 14px;
-    text-align: left;
-}
-th {
-    font-weight: bold;
-}
-h3 {
-    margin-bottom: 4px;
-}
-pre {
-    margin: 5px;
-    padding: 10px;
-    border-radius: 9px;
-}
-</style>

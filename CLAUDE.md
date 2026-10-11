@@ -81,9 +81,8 @@ themes/miczit_2027/
   overriding them breaks the borderless ollama-cors table layouts.
 - ThunderAI setup guides (`guides/*`): the summary table at the top uses `class="guides"`, the
   same theme style as the comparison table in the guides index: one `<thead>` row with the labels
-  and one body row with the values, and no inline `<style>`. The
-  guides not yet reviewed for v5.1.0 still have the old inline `<style>` block (bordered table, `h3`
-  margin), to be removed when each one is updated.
+  and one body row with the values. Every table in the guides uses `class="guides"`, and the guides
+  have no inline `<style>`.
 - The ThunderAI status pages (`status.html`, `status_archive.html`) center their header with
   inline CSS on `.title-block`. Each issue notice is an `<h1>` that opens and closes with `<br>`.
   `.content h1` in `theme.css` styles these notices and hides those two `<br>`. The archive page
