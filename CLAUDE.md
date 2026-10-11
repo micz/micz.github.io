@@ -95,6 +95,9 @@ themes/miczit_2027/
 - GitHub icon: `theme.css` puts the GitHub mark in front of every link whose `href` contains
   `//github.com/` (on `.doc-card` links it goes before `.doc-card-title`). It is a CSS mask filled
   with `currentColor`, so one icon works in both themes. No markup is needed in the content.
+- External links: every other `http(s)` link outside `micz.it` gets an external-link arrow after
+  it, made the same way. Links that hold only an image (the PayPal donate buttons) are skipped;
+  the Weblate badge links keep the arrow.
 
 ## Known quirks (not theme bugs)
 

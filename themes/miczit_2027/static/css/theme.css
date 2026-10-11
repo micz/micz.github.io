@@ -1148,6 +1148,21 @@ a.doc-card[href*="//github.com/"] .doc-card-title::before {
     mask: var(--gh-icon) no-repeat center / contain;
 }
 
+/* external-link arrow after every other link that leaves the site (GitHub links have their own icon;
+   image-only links such as the PayPal donate buttons are skipped) */
+a[href^="http"]:not([href*="//github.com/"]):not([href*="//micz.it"]):not([href*="//www.micz.it"]):not(:has(> img:not(.weblate_svg)))::after {
+    content: "";
+    display: inline-block;
+    width: 0.75em;
+    height: 0.75em;
+    margin-left: 0.2em;
+    vertical-align: 0;
+    background-color: currentColor;
+    --ext-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M15 3h6v6'/%3E%3Cpath d='M10 14 21 3'/%3E%3Cpath d='M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6'/%3E%3C/svg%3E");
+    -webkit-mask: var(--ext-icon) no-repeat center / contain;
+    mask: var(--ext-icon) no-repeat center / contain;
+}
+
 .go-back {
     text-align: center;
     margin-top: 3em;
@@ -1288,8 +1303,6 @@ a.doc-card[href*="//github.com/"] .doc-card-title::before {
 }
 .doc-grid + .doc-grid-single { margin-top: calc(14px - 1.8em); }
 .doc-grid .doc-card,
-.info-grid .doc-card,
-.info-grid .info-card,
 .steps > li {
     position: relative;
     display: flex;
@@ -1302,13 +1315,9 @@ a.doc-card[href*="//github.com/"] .doc-card-title::before {
     text-decoration: none;
     transition: border-color 0.15s ease;
 }
-.doc-grid .doc-card:hover,
-.info-grid .doc-card:hover { border-color: var(--hairline-strong); }
-.doc-grid .doc-card-title,
-.info-grid .doc-card-title,
-.info-grid .info-card-title { color: var(--ink); font-weight: 600; font-size: 16.5px; line-height: 1.4; }
-.doc-grid .doc-card-text,
-.info-grid .doc-card-text { color: var(--ink-muted); font-size: 14.5px; line-height: 1.5; }
+.doc-grid .doc-card:hover { border-color: var(--hairline-strong); }
+.doc-grid .doc-card-title { color: var(--ink); font-weight: 600; font-size: 16.5px; line-height: 1.4; }
+.doc-grid .doc-card-text { color: var(--ink-muted); font-size: 14.5px; line-height: 1.5; }
 .doc-grid .doc-card-link { text-decoration: none; }
 .doc-grid .doc-card-link::after { content: ""; position: absolute; inset: 0; border-radius: inherit; }
 .doc-grid .doc-card-flags { position: relative; z-index: 1; display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 6px; margin-top: auto; padding-top: 4px; font-size: 18px; line-height: 1; }
@@ -1322,12 +1331,27 @@ a.doc-card[href*="//github.com/"] .doc-card-title::before {
 }
 .addon-cta a.btn { margin: 0; }
 
-/* info cards (short sections on addon pages) */
+/* info blocks (short non-clickable sections on addon pages): plain text with a side rule, not cards */
 .info-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 14px;
-    margin: 1.2em 0 1.8em;
+    gap: 18px 32px;
+    margin: 2em 0 1.8em;
+}
+.info-grid .info-card {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 2px 0 2px 16px;
+    border-left: 2px solid var(--hairline-strong);
+}
+.info-grid .info-card-title {
+    color: var(--ink-faint);
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
 }
 .info-grid .info-card p { margin: 0; color: var(--ink-muted); font-size: 15px; line-height: 1.55; }
 .info-grid .info-card p + p { margin-top: 0.6em; }
