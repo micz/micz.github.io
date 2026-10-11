@@ -493,7 +493,6 @@ html:not([data-theme="light"]) .only-light { display: none !important; }
 
 /* helper classes used by the content files */
 .content .sup_comment { font-size: 0.8em; font-style: italic; color: var(--ink-muted); }
-.content .perm_desc { font-size: 0.9em; color: var(--ink-muted); }
 .content .small_text { font-size: 0.8em; font-style: italic; color: var(--ink-muted); }
 .content .paragraph-space { margin-top: 25px; }
 .content p.center, .content .center { text-align: center; margin-inline: auto; }
@@ -1012,6 +1011,40 @@ html:has(#section-nav) { scroll-behavior: smooth; }
 #section-nav-wrap ~ .ph .ph-group,
 #section-nav-wrap ~ .ph .ph-row { scroll-margin-top: 190px; }
 .content > .ph { margin-inline: 0; }
+
+/* ThunderAI permissions (permissions_list): .ph list grouped by status */
+.ph-perms { --pm-required: #7fb8e6; --pm-optional: #8fcf9a; --pm-removed: #e08a7f; }
+[data-theme="light"] .ph-perms { --pm-required: #1f5f99; --pm-optional: #2d7a3a; --pm-removed: #a63d30; }
+.ph-perms .ph-group-h::before {
+    content: "";
+    align-self: center;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--pm-dot);
+}
+.pm-required { --pm-dot: var(--pm-required); }
+.pm-optional { --pm-dot: var(--pm-optional); }
+.pm-removed { --pm-dot: var(--pm-removed); }
+.ph .pm-note { margin: -4px 0 12px; font-size: 14px; line-height: 1.5; color: var(--ph-meta); }
+.pm-title { font: 600 16px/1.45 var(--sans); color: var(--ph-ink); }
+.pm-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px 12px;
+    margin-top: 8px;
+}
+.pm-meta .ph-chip { font-size: 13px; padding: 2px 7px; }
+.ph .pm-meta .ph-since { margin: 0; }
+.ph .pm-meta .ph-since + .ph-since::before { content: "· "; }
+.content .pm-row-removed .pm-title { text-decoration: line-through; color: var(--ph-meta); }
+.ph .pm-row-removed .ph-desc { color: var(--ph-meta); }
+.ph .pm-why { margin-top: 4px; font-style: italic; }
+.ph-perms[data-view="az"] .ph-tag { border-color: color-mix(in srgb, var(--pm-tag) 45%, transparent); color: var(--pm-tag); }
+.pm-tag-required { --pm-tag: var(--pm-required); }
+.pm-tag-optional { --pm-tag: var(--pm-optional); }
+.pm-tag-removed { --pm-tag: var(--pm-removed); }
 
 /* 7. Addon hero + card grid + go-back ----------------------------------- */
 

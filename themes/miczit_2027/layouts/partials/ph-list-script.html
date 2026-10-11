@@ -1,5 +1,5 @@
 <script>
-/* Shared by the placeholders_list and policy_keys_list shortcodes.
+/* Shared by the placeholders_list, policy_keys_list and permissions_list shortcodes.
    Root: .ph[data-noun] (plural noun for the counter, e.g. "placeholders").
    Rows: .ph-row[data-name] (sort name for A–Z, leading symbols ignored). Adds search, the
    "Group by" switch, anchor following and click-to-copy on .ph-chip. */
@@ -28,7 +28,7 @@
             row._home = row.parentNode;
             row._name = row.getAttribute('data-name').replace(/^[^a-z0-9]+/i, '');
             row._text = Array.prototype.map.call(
-                row.querySelectorAll('.ph-chip, .ph-ctx, .ph-values, .ph-desc'),
+                row.querySelectorAll('.pm-title, .ph-chip, .ph-ctx, .ph-values, .ph-desc'),
                 function (el) { return el.textContent; }
             ).join(' ').toLowerCase();
         });
