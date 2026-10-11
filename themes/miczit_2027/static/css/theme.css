@@ -1346,7 +1346,7 @@ a[href^="http"]:not([href*="//github.com/"]):not([href*="//micz.it"]):not([href*
     border-left: 2px solid var(--hairline-strong);
 }
 .info-grid .info-card-title {
-    color: var(--ink-faint);
+    color: var(--ink);
     font-family: var(--mono);
     font-size: 12px;
     font-weight: 600;
