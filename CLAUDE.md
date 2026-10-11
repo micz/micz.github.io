@@ -92,6 +92,9 @@ themes/miczit_2027/
   `light/` subfolder. The `only-dark` / `only-light` classes in `theme.css` show the one that matches
   the site theme. `ui_button` puts a button image in a line of text, at its real size (captured at 1x).
   `themed_screenshot` puts a screenshot linked to its full-size file.
+- GitHub icon: `theme.css` puts the GitHub mark in front of every link whose `href` contains
+  `//github.com/` (on `.doc-card` links it goes before `.doc-card-title`). It is a CSS mask filled
+  with `currentColor`, so one icon works in both themes. No markup is needed in the content.
 
 ## Known quirks (not theme bugs)
 
