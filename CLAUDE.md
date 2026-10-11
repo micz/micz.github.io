@@ -46,7 +46,8 @@ themes/miczit_2027/
 │   ├── robots.txt
 │   ├── partials/           head, head-extra, theme-init, header, footer, lang-switcher,
 │   │                       theme-toggle, title-split, ph-list-script
-│   └── shortcodes/         project shortcodes (page_title, list-thunderbird-pages, *_list, lang_*)
+│   └── shortcodes/         project shortcodes (page_title, list-thunderbird-pages, *_list, lang_*,
+│                           ui_button: an add-on button image inline in the text, at real size)
 └── static/
     ├── css/theme.css       dark tokens on :root, light tokens on [data-theme="light"]
     └── fonts/
