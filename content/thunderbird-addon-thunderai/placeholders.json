@@ -7,7 +7,7 @@
     },
     {
         "id": "{%additional_text:<Placeholder-ID>%}",
-        "description": "the text added by the user before sending the prompt. To use this placeholder the \"<i>Ask for additional text</i>\" flag must be set in the prompt configuration. You can define more instances of this placeholder, defining different &lt;Placeholder-ID&gt;, that will be shown in the form used to ask the value to the user. This placeholder is not available in the \"Add tags\" and \"Add Calendar Event\" special prompts.",
+        "description": "the text added by the user before sending the prompt. To use this placeholder the \"<i>Ask for additional text</i>\" flag must be set in the prompt configuration. You can define more instances of this placeholder, defining different &lt;Placeholder-ID&gt;, that will be shown in the form used to ask the value to the user. A field left empty is replaced by an empty text. This placeholder is not available in the \"Add tags\" and \"Add Calendar Event\" special prompts.",
         "scope": "User Input",
         "version": "4.0.0"
     },
@@ -19,7 +19,7 @@
     },
     {
         "id": "{%cc_list%}",
-        "description": "the list of addresses of the CC field of the email, separated by a comma.",
+        "description": "the list of addresses of the CC field of the email, separated by a comma. When composing, the addresses typed in the Cc field are used.",
         "scope": "Email Metadata",
         "version": ""
     },
@@ -72,6 +72,12 @@
         "version": "4.0.0"
     },
     {
+        "id": "{%mail_plain_text_part%}",
+        "description": "the original plain text part of the email, exactly as the sender wrote it, with no conversion from the HTML part. Blank lines and column alignment are preserved, so it is well suited to business mail, invoices and automated notifications, and it usually costs fewer tokens than <i>{%mail_text_body%}</i>. It is empty when the email has no plain text part, and some newsletters only include a stub there.",
+        "scope": "Email Content",
+        "version": "5.0.0"
+    },
+    {
         "id": "{%mail_quoted_text%}",
         "description": "this placeholders autoselects the quoted text only when is after the reply text, removing any previous manual made selection.",
         "scope": "Email Content",
@@ -103,7 +109,7 @@
     },
     {
         "id": "{%recipients%}",
-        "description": "the list of recipients of the email, separated by a comma.",
+        "description": "the list of recipients of the email, separated by a comma. When composing, the addresses typed in the To field are used.",
         "scope": "Email Metadata",
         "version": ""
     },
@@ -145,7 +151,7 @@
     },
     {
         "id": "{%thunderai_translate_lang%}",
-        "description": "the language defined in the translation settings.",
+        "description": "the language defined in the translation settings. If it is empty, the default language defined in the ThunderAI options page is used.",
         "scope": "ThunderAI Settings",
         "version": "4.1.0"
     },
@@ -157,7 +163,7 @@
     },
     {
         "id": "{%mail_headers:<Header-ID>%}",
-        "description": "use this placeholder to get the value of any mail header, replacing &lt;Header-ID&gt; with the ID of the header you wish to retrieve. For example, use <i>{%mail_headers:Received-SPF%}</i> to use the value of <i>Received-SPF</i>.",
+        "description": "use this placeholder to get the value of any mail header, replacing &lt;Header-ID&gt; with the ID of the header you wish to retrieve. For example, use <i>{%mail_headers:Received-SPF%}</i> to use the value of <i>Received-SPF</i>. Spaces around the colon are ignored.",
         "scope": "Email Metadata",
         "version": "3.8.0"
     },
@@ -169,7 +175,7 @@
     },
     {
         "id": "{%empty%}",
-        "description": "this placeholder will be replaced by an empty string. This allows you to use a prompt that doesn't include any information from the email and prevents the email body from being automatically appended at the end.",
+        "description": "this placeholder is always replaced by an empty string. This allows you to use a prompt that doesn't include any information from the email and prevents the email body from being automatically appended at the end.",
         "scope": "General",
         "version": "3.4.0"
     }
