@@ -4,7 +4,8 @@
      Server-rendered grouped by category, so the full list is readable without JS.
      The shared partial ph-list-script.html adds search, the "Group by: Category | A–Z" switch and
      click-to-copy. Anchors: one per category (#account, #content, …) and one per
-     placeholder (#mail_subject, #additional_text, …). Styles: .ph-* in theme.css. */}}
+     placeholder (#mail_subject, #additional_text, …). Each row shows context chips (.ph-ctx) from
+     the "type" field. Styles: .ph-* in theme.css. */}}
 {{ $jsonPath := "content/thunderbird-addon-thunderai/placeholders.json" }}
 {{ $data := os.ReadFile $jsonPath | transform.Unmarshal }}
 
@@ -17,6 +18,18 @@
     "Tags" "tags"
     "ThunderAI Settings" "settings"
     "User Input" "input"
+}}
+
+{{/* Where a placeholder works: "type" in the JSON (add-on type 0 = both, 1 = reading, 2 = compose).
+     A missing type counts as "both", as in the add-on. "both" shows the Reading and the Compose chips. */}}
+{{ $contexts := dict
+    "reading" (dict "key" "reading" "label" "Reading" "title" "Works when reading an email")
+    "compose" (dict "key" "compose" "label" "Compose" "title" "Works when composing an email")
+}}
+{{ $typeChips := dict
+    "both" (slice "reading" "compose")
+    "reading" (slice "reading")
+    "compose" (slice "compose")
 }}
 
 {{ $scopes := slice }}
@@ -52,7 +65,10 @@
                 {{ $pid := .id | replaceRE `^\{%|%\}$` "" | replaceRE `:.*$` "" }}
                 <li class="ph-row" id="{{ $pid }}" data-name="{{ .id | replaceRE `^\{%|%\}$` "" }}">
                     <div class="ph-head">
-                        <button type="button" class="ph-chip" data-copy="{{ .id }}" aria-label="Copy {{ .id }}" title="Click to copy"><code>{{ .id }}</code></button>
+                        <span class="ph-name">
+                            <button type="button" class="ph-chip" data-copy="{{ .id }}" aria-label="Copy {{ .id }}" title="Click to copy"><code>{{ .id }}</code></button>
+                            {{ range index $typeChips (.type | default "both") }}{{ with index $contexts . }}<span class="ph-ctx ph-ctx-{{ .key }}" title="{{ .title }}">{{ .label }}</span>{{ end }}{{ end }}
+                        </span>
                         <span class="ph-tag">{{ .scope }}</span>
                     </div>
                     {{ with .version }}<p class="ph-since">since v{{ . }}</p>{{ end }}

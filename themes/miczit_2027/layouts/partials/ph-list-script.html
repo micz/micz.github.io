@@ -28,7 +28,7 @@
             row._home = row.parentNode;
             row._name = row.getAttribute('data-name').replace(/^[^a-z0-9]+/i, '');
             row._text = Array.prototype.map.call(
-                row.querySelectorAll('.ph-chip, .ph-values, .ph-desc'),
+                row.querySelectorAll('.ph-chip, .ph-ctx, .ph-values, .ph-desc'),
                 function (el) { return el.textContent; }
             ).join(' ').toLowerCase();
         });

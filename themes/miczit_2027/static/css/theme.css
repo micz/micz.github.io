@@ -735,6 +735,27 @@ html:not([data-theme="light"]) body:has(.ph-doc) { --bg: #17181c; }
     padding: 0;
     word-break: normal;
 }
+/* name + context chips (Reading, Compose, or both) */
+.ph-name {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 10px;
+    min-width: 0;
+}
+.ph-ctx {
+    font: 500 12px/1.4 var(--sans);
+    padding: 2px 8px;
+    border: 1px solid color-mix(in srgb, var(--ph-ctx) 45%, transparent);
+    border-radius: 999px;
+    color: var(--ph-ctx);
+    background: color-mix(in srgb, var(--ph-ctx) 10%, transparent);
+    white-space: nowrap;
+}
+.ph-ctx-reading { --ph-ctx: #7fb8e6; }
+.ph-ctx-compose { --ph-ctx: #8fcf9a; }
+[data-theme="light"] .ph-ctx-reading { --ph-ctx: #1f5f99; }
+[data-theme="light"] .ph-ctx-compose { --ph-ctx: #2d7a3a; }
 .ph-tag { display: none; }
 .ph[data-view="az"] .ph-tag {
     display: inline-block;
