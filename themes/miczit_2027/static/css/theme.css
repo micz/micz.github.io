@@ -1178,6 +1178,11 @@ html:has(#section-nav) { scroll-behavior: smooth; }
     gap: 14px;
     margin: 1.2em 0 1.8em;
 }
+.doc-grid-single {
+    grid-template-columns: minmax(0, 340px);
+    justify-content: center;
+}
+.doc-grid + .doc-grid-single { margin-top: calc(14px - 1.8em); }
 .doc-grid .doc-card,
 .info-grid .doc-card,
 .info-grid .info-card,
