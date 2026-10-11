@@ -25,13 +25,11 @@
                     {{ $src := . }}
                     {{ if not .Title }}{{ range first 1 (where .Translations "Title" "!=" "") }}{{ $src = . }}{{ end }}{{ end }}
                     {{ if $src.Title }}
-                        {{ $a := partial "title-split.html" $src }}
-                        <a class="header-parent" href="{{ .RelPermalink }}">{{ $a.title }}</a>
+                        <a class="header-parent" href="{{ .RelPermalink }}">{{ $src.Title }}</a>
                         <span class="header-sep" aria-hidden="true">/</span>
                     {{ end }}
                 {{ end }}{{ end }}
-                {{ $t := partial "title-split.html" $ }}
-                <h1 aria-current="page">{{ $t.title }}</h1>
+                <h1 aria-current="page">{{ $.Title }}</h1>
             </nav>
             {{ end }}
         </div>

@@ -3,7 +3,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="referrer" content="no-referrer-when-downgrade">
 
-<title>{{ if .Title }}{{ .Title }} - {{ end }}{{ .Site.Title }}</title>
+<title>{{ partial "doc-title.html" . }}</title>
 <meta name="description" content="{{ .Site.Params.Description }}">
 
 <link rel="stylesheet" href="{{ "css/theme.css" | relURL }}?v={{ site.Params.forceCSSReloadID }}">

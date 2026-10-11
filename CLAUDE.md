@@ -45,7 +45,7 @@ themes/miczit_2027/
 │   ├── index.html          home hero on the photo (does not render .Content)
 │   ├── robots.txt
 │   ├── partials/           head, head-extra, theme-init, header, footer, lang-switcher,
-│   │                       theme-toggle, title-split, ph-list-script, addon-nav
+│   │                       theme-toggle, doc-title, ph-list-script, addon-nav
 │   └── shortcodes/         project shortcodes (page_title, list-thunderbird-pages, *_list, lang_*,
 │                           ui_button, themed_screenshot)
 └── static/
@@ -57,8 +57,13 @@ themes/miczit_2027/
   `--display-sans` (Inter Tight, header breadcrumb).
 - `_default/redirect.html` builds the language redirect stubs (`/it/`, `/de/`, `/fr/`, `/es/`, …)
   and the legacy `thunderdbird-addon-*` aliases. Do not change this behavior.
-- `partials/title-split.html` recognizes exactly two title patterns, `Thunderbird Addon: <Name>`
-  and `"<Addon>" Thunderbird Addon - <Page>`. It leaves every other title unchanged.
+- Page titles are short: `Title` is the page's own name only ("Ollama", "Setup guides", "ThunderAI",
+  "Donate"), with no add-on name or "Thunderbird Addon" in it. Breadcrumb, add-on cards and sidebar
+  show it as is. `partials/doc-title.html` builds the `<title>` tag: the page, its ancestors up to
+  the top-level page, then the site title ("Ollama - Setup guides - ThunderAI - Mic's"); the main
+  page of an add-on also gets the i18n "Thunderbird Addon" ("ThunderAI - Thunderbird Addon - Mic's").
+- Hugo sorts pages by `linkTitle` (after weight and date): `list-thunderbird-pages` sorts by
+  `Title` explicitly, so the "Overview" linkTitle of ThunderAI does not move its card.
 - `partials/header.html` shows the wordmark and then a breadcrumb:
   - it skips Home, because the wordmark already links there;
   - language stubs have no Title, so it takes the title from a translation;
@@ -71,11 +76,14 @@ themes/miczit_2027/
 - Mobile breakpoint: 880px (one column below it).
 - Add-on sidebar (`partials/addon-nav.html`, used by `single.html` and `list.html`): shown on every
   page of a top-level section that has `content/<section>/addon-nav.json` (today only ThunderAI),
-  except the section's own page and redirect stubs. The JSON lists groups and entries (`page` path
-  relative to the section, `title` per language with `en` as fallback, optional `children` and
-  `also` = other pages that mark the entry as current). An entry links the page in the current
-  language, or the default-language page when there is no translation or it is a redirect stub.
-  Add new pages to the JSON. The sidebar widens the layout, so the reading column keeps its width.
+  except the section's own page and redirect stubs. The JSON holds only the structure: groups (the
+  title is an i18n key, e.g. `addonNavSetup`) and entries (`page` path relative to the section,
+  optional `children` and `also` = other pages that mark the entry as current). An entry links the
+  page in the current language, or the default-language page when there is no translation or it is
+  a redirect stub, and shows that page's `LinkTitle`, i.e. its short `Title` (a `linkTitle` is set
+  only where the entry differs: "Overview" on the ThunderAI page). So pages in English only show an
+  English entry in every language. To add a page: list it in the JSON. The sidebar widens the
+  layout, so the reading column keeps its width.
   At 1100px and below it becomes a collapsed box above the page. Do not use `merge` on a dict
   that holds a Page: the build hangs. The "Go back" / "Next" links at the bottom of the pages stay.
 - Add-on screenshots come in two versions: the dark file, and the light one with the same name in a

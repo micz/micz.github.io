@@ -2,47 +2,46 @@
   "name": "ThunderAI",
   "groups": [
     {
-      "title": { "en": "Get started", "it": "Inizia", "de": "Erste Schritte", "fr": "Démarrer", "es": "Primeros pasos" },
+      "title": "addonNavGetStarted",
       "items": [
-        { "page": "", "title": { "en": "Overview", "it": "Panoramica", "de": "Übersicht", "fr": "Présentation", "es": "Presentación" } },
-        { "page": "tutorial", "title": { "en": "Tutorial", "fr": "Tutoriel" } }
+        { "page": "" },
+        { "page": "tutorial" }
       ]
     },
     {
-      "title": { "en": "Setup", "it": "Configurazione", "de": "Einrichtung", "fr": "Configuration", "es": "Configuración" },
+      "title": "addonNavSetup",
       "items": [
         {
           "page": "guides",
-          "title": { "en": "Setup guides", "it": "Guide di configurazione", "de": "Einrichtungsanleitungen", "fr": "Guides de configuration", "es": "Guías de configuración" },
           "children": [
-            { "page": "guides/chatgpt-web", "title": { "en": "ChatGPT Web" } },
-            { "page": "guides/openai-api", "title": { "en": "OpenAI API" } },
-            { "page": "guides/openai-compatible-api", "title": { "en": "OpenAI Compatible API" } },
-            { "page": "guides/claude-api", "title": { "en": "Claude API" } },
-            { "page": "guides/google-gemini", "title": { "en": "Google Gemini" } },
-            { "page": "guides/ollama", "title": { "en": "Ollama" } }
+            { "page": "guides/chatgpt-web" },
+            { "page": "guides/openai-api" },
+            { "page": "guides/openai-compatible-api" },
+            { "page": "guides/claude-api" },
+            { "page": "guides/google-gemini" },
+            { "page": "guides/ollama" }
           ]
         },
-        { "page": "guides/enterprise-configuration", "title": { "en": "Enterprise Configuration" } }
+        { "page": "guides/enterprise-configuration" }
       ]
     },
     {
-      "title": { "en": "Usage", "it": "Uso", "de": "Verwendung", "fr": "Utilisation", "es": "Uso" },
+      "title": "addonNavUsage",
       "items": [
-        { "page": "custom-prompts", "title": { "en": "Custom prompts", "it": "Prompt personalizzati", "de": "Benutzerdefinierte Prompts", "fr": "Prompts personnalisés", "es": "Prompts personalizados" } },
-        { "page": "data-placeholders", "title": { "en": "Data placeholders", "it": "Segnaposto dati", "de": "Datenplatzhalter", "fr": "Espaces réservés de données", "es": "Marcadores de datos" } },
-        { "page": "dynamic-menu", "title": { "en": "Dynamic menu", "it": "Menu dinamico", "de": "Dynamisches Menü", "fr": "Menu dynamique", "es": "Menú dinámico" } }
+        { "page": "custom-prompts" },
+        { "page": "data-placeholders" },
+        { "page": "dynamic-menu" }
       ]
     },
     {
-      "title": { "en": "Resources", "it": "Risorse", "de": "Ressourcen", "fr": "Ressources", "es": "Recursos" },
+      "title": "addonNavResources",
       "items": [
-        { "page": "status", "also": ["status_archive"], "title": { "en": "ChatGPT Web status", "it": "Stato di ChatGPT Web", "de": "ChatGPT-Web-Status", "fr": "État de ChatGPT Web", "es": "Estado de ChatGPT Web" } },
-        { "page": "ollama-cors-information", "title": { "en": "Ollama CORS" } },
-        { "page": "privacy", "title": { "en": "Privacy", "it": "Privacy", "de": "Datenschutz", "fr": "Confidentialité", "es": "Privacidad" } },
-        { "page": "permissions", "title": { "en": "Permissions", "it": "Permessi", "de": "Berechtigungen", "fr": "Autorisations", "es": "Permisos" } },
-        { "page": "translate", "title": { "en": "Help translate", "it": "Aiuta a tradurre", "de": "Beim Übersetzen helfen", "fr": "Aider à traduire", "es": "Ayudar a traducir" } },
-        { "page": "donate", "title": { "en": "Donate", "it": "Dona", "de": "Spenden", "fr": "Faire un don", "es": "Donar" } }
+        { "page": "status", "also": ["status_archive"] },
+        { "page": "ollama-cors-information" },
+        { "page": "privacy" },
+        { "page": "permissions" },
+        { "page": "translate" },
+        { "page": "donate" }
       ]
     }
   ]
