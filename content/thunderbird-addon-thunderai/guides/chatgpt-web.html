@@ -11,19 +11,21 @@ multilang = true
     ThunderAI interacts directly with the ChatGPT website on your behalf, so a free ChatGPT account is all you need.
 </p>
 
-<table>
-    <tr>
-        <td><strong>API key required</strong></td>
-        <td>No</td>
-    </tr>
-    <tr>
-        <td><strong>Free option</strong></td>
-        <td>Yes [Also with a free ChatGPT account]</td>
-    </tr>
-    <tr>
-        <td><strong>Best for</strong></td>
-        <td>Getting started quickly, no billing setup</td>
-    </tr>
+<table class="guides">
+    <thead>
+        <tr>
+            <th>API key required</th>
+            <th>Free option</th>
+            <th>Best for</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>No</td>
+            <td>Yes (also with a free ChatGPT account)</td>
+            <td>Getting started quickly, no billing setup</td>
+        </tr>
+    </tbody>
 </table>
 
 <br>
@@ -36,42 +38,80 @@ multilang = true
 
 <h2>Setup</h2>
 
-<h3>1. Open ThunderAI Options</h3>
 <p>
-    In Thunderbird, click the ThunderAI menu and select <strong>Options</strong>, or go to<br>
-    <strong>Tools → Add-ons and Themes → ThunderAI → Preferences</strong>.
+    The quickest way is the <strong>Setup Wizard</strong>: open it from the ThunderAI welcome page, the toolbar popup or the
+    settings page, and choose <strong>ChatGPT Web Interface</strong>. Then continue from step 3.<br>
+    To set it up by hand, follow all the steps below.
+</p>
+
+<h3>1. Open the ThunderAI settings</h3>
+<p>
+    In Thunderbird, go to <strong>Tools → Add-ons and Themes → ThunderAI → Preferences</strong>.
 </p>
 
 <h3>2. Select the ChatGPT Web Interface</h3>
-<p>In the <strong>Connection</strong> section, choose <strong>ChatGPT Web Interface</strong> from the integration dropdown.</p>
+<p>In the <strong>Connection Settings</strong> panel, choose <strong>ChatGPT Web Interface</strong> in the <strong>Connection Type</strong> dropdown.</p>
 
-<h3>3. Grant the required permission</h3>
+<h3 id="permission">3. Grant the required permission</h3>
 <p>
-    ThunderAI needs permission to access <code>chatgpt.com</code>.
+    ThunderAI needs permission to access <code>chatgpt.com</code>. The settings page does not ask for it: the ThunderAI popup does.
+</p>
+<ol>
+    <li>Click the ThunderAI toolbar button. While the permission is missing, the popup shows
+        <em>"To use the ChatGPT Web integration, you need to grant the required permission."</em> instead of the prompts list.</li>
+    <li>Click that message: the ThunderAI welcome page opens in a new tab.</li>
+    <li>Click the same message at the top of the welcome page and accept Thunderbird's permission request.</li>
+    <li>When <em>"Permission granted"</em> appears, click it to close the tab.</li>
+</ol>
+<p>
+    Once ChatGPT Web Interface is selected, you can also open the welcome page from the <strong>Open the Welcome Page</strong>
+    card at the top of the settings page: it shows the same request.
 </p>
 <p><em>This permission is optional and only used to interact with the ChatGPT website on your behalf. ThunderAI does not collect or store any of your data.</em></p>
 
-<h3>4. Log in to ChatGPT in Thunderbird</h3>
+<h3>4. Log in to ChatGPT</h3>
 <p>
-    You only need to do this once, Thunderbird will keep the session active.<br>
-    Use the button in the ThunderAI preferences page to open a new Thunderbird tab and visit <i>chatgpt.com</i>. Log in with your account.
+    You only need to do this once: Thunderbird keeps the session active.<br>
+    The first time you use a prompt, ThunderAI opens the ChatGPT window. If you are not logged in, it tells you so: log in with
+    your account in that window, close it, and run the prompt again.<br>
+    If logging in from that window does not work, use the <strong>Open ChatGPT Tab</strong> button in the ThunderAI settings: it opens
+    <i>chatgpt.com</i> in a Thunderbird tab, where you can log in. Then close the tab and go back to using ThunderAI.
 </p>
 
 <h3>5. Test the integration</h3>
-<p>Open any email, click on the ThunderAI toolbar button, and select a prompt (e.g. <strong>Summarize</strong>). ThunderAI will open a panel and interact with ChatGPT.</p>
+<p>Open any email, click the ThunderAI toolbar button, and select a prompt (e.g. <strong>Summarize</strong>). ThunderAI opens a ChatGPT window, sends the prompt and shows the answer there.</p>
+
+<h2>Advanced options</h2>
+<p>Click <strong>Advanced options</strong> in the <strong>Connection Settings</strong> panel to show these settings:</p>
+<ul>
+    <li><strong>ChatGPT Web Model</strong>: the model to use. If it is empty or not valid, ChatGPT uses its default. It does not work with a free ChatGPT account.</li>
+    <li><strong>ChatGPT Web Project</strong> and <strong>ChatGPT Web Custom GPT</strong>: a Project or Custom GPT to always use.
+        Copy the value from the browser address bar when the Project (<code>/g/PROJECT-ID-PROJECT-NAME/project</code>) or the
+        Custom GPT (<code>/g/CUSTOM-GPT-ID</code>) is open in ChatGPT. You can also set them on a single prompt, in the custom prompts page.</li>
+    <li><strong>ChatGPT Web temporary chat</strong>: use a temporary chat.</li>
+    <li><strong>Wait time for page load</strong>: how long, in milliseconds, ThunderAI waits for the ChatGPT page to load (default 1000). With a Project or Custom GPT, 1000&nbsp;ms are added.</li>
+</ul>
+<p>The <strong>Open ChatGPT Tab</strong> button also applies the configured model, Project and Custom GPT.</p>
 
 <h2>Tips and known limitations</h2>
 <ul>
     <li>Response speed depends on the ChatGPT website and may vary. The API integration is generally faster and more reliable.</li>
     <li>Free accounts are subject to ChatGPT's own usage limits (rate limits, model availability).</li>
     <li>If ChatGPT changes its website layout, the integration may temporarily stop working until ThunderAI is updated. Check the <a href="../../status/">status page</a> for any known issues.</li>
-    <li>You can define to use a Custom GPT or Project globally in the preferences window or on the single prompt configuration./li>
+    <li>The AI features listed in the settings page (Add Tags, Spam Filter, Summarize, Translate, Calendar Event and Task) need an API integration and do not work with the ChatGPT Web Interface.
+        You can keep ChatGPT Web as the main connection and give each of these features its own API connection in its settings page. Your prompts from the toolbar menu keep working with ChatGPT Web.</li>
 </ul>
 
 <h2>Troubleshooting</h2>
 
-<h3>ThunderAI shows an error or no response</h3>
-<p>Make sure you are logged in to ChatGPT in a Thunderbird tab. Try visiting <i>chatgpt.com</i> directly from Thunderbird and check that the session is active. Use the button in the ThunderAI preferences page to do this.</p>
+<h3>The popup asks for a permission instead of showing the prompts</h3>
+<p>The <code>chatgpt.com</code> permission has not been granted yet. See <a href="#permission">step 3</a>.</p>
+
+<h3>ThunderAI says you are not logged in, or shows no response</h3>
+<p>Log in to ChatGPT in the ChatGPT window opened by ThunderAI, close it and try again. If that does not work, log in from the tab opened by the <strong>Open ChatGPT Tab</strong> button in the ThunderAI settings.</p>
+
+<h3>"Could not locate the ChatGPT message box"</h3>
+<p>ThunderAI could not find the ChatGPT text box, usually after a change to the ChatGPT website. Click inside the ChatGPT text box within one minute and ThunderAI continues. If it happens every time, check the <a href="../../status/">status page</a>.</p>
 
 <h3>Responses are slow or time out</h3>
 <p>This is usually a temporary issue with the ChatGPT website. Wait a moment and try again, or consider switching to the <a href="../openai-api/">OpenAI API</a> integration for more reliable performance.</p>
@@ -80,19 +120,3 @@ multilang = true
 <div style="text-align: center">
     <a href="../">Back to guides</a> &nbsp;|&nbsp; <a href="../openai-api/">Next: OpenAI API →</a>
 </div>
-
-
-<style>
-table {
-    border-collapse: collapse;
-    margin: 10px 0;
-}
-th, td {
-    border: 1px solid #ccc;
-    padding: 7px 14px;
-    text-align: left;
-}
-h3 {
-    margin-bottom: 4px;
-}
-</style>

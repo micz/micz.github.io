@@ -11,19 +11,21 @@ multilang = true
     ThunderAI interagisce direttamente con il sito ChatGPT per tuo conto, quindi è sufficiente un account ChatGPT gratuito.
 </p>
 
-<table>
-    <tr>
-        <td><strong>Chiave API richiesta</strong></td>
-        <td>No</td>
-    </tr>
-    <tr>
-        <td><strong>Opzione gratuita</strong></td>
-        <td>Sì [Anche con un account ChatGPT gratuito]</td>
-    </tr>
-    <tr>
-        <td><strong>Ideale per</strong></td>
-        <td>Iniziare subito, senza configurazioni di pagamento</td>
-    </tr>
+<table class="guides">
+    <thead>
+        <tr>
+            <th>Chiave API richiesta</th>
+            <th>Opzione gratuita</th>
+            <th>Ideale per</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>No</td>
+            <td>Sì (anche con un account ChatGPT gratuito)</td>
+            <td>Iniziare subito, senza configurazioni di pagamento</td>
+        </tr>
+    </tbody>
 </table>
 
 <br>
@@ -36,42 +38,80 @@ multilang = true
 
 <h2>Configurazione</h2>
 
-<h3>1. Apri le opzioni di ThunderAI</h3>
 <p>
-    In Thunderbird, clicca sul menu ThunderAI e seleziona <strong>Options</strong>, oppure vai su<br>
-    <strong>Strumenti → Componenti aggiuntivi e temi → ThunderAI → Preferenze</strong>.
+    Il modo più rapido è il <strong>Setup Wizard</strong>: aprilo dalla pagina di benvenuto di ThunderAI, dal popup della barra
+    degli strumenti o dalla pagina delle impostazioni, e scegli <strong>ChatGPT Web Interface</strong>. Poi prosegui dal passo 3.<br>
+    Per configurarla a mano, segui tutti i passi qui sotto.
+</p>
+
+<h3>1. Apri le impostazioni di ThunderAI</h3>
+<p>
+    In Thunderbird, vai su <strong>Strumenti → Componenti aggiuntivi e temi → ThunderAI → Preferenze</strong>.
 </p>
 
 <h3>2. Seleziona la ChatGPT Web Interface</h3>
-<p>Nella sezione <strong>Connection</strong>, scegli <strong>ChatGPT Web Interface</strong> dal menu a tendina delle integrazioni.</p>
+<p>Nel pannello <strong>Connection Settings</strong>, scegli <strong>ChatGPT Web Interface</strong> nel menu a tendina <strong>Connection Type</strong>.</p>
 
-<h3>3. Concedi il permesso richiesto</h3>
+<h3 id="permission">3. Concedi il permesso richiesto</h3>
 <p>
-    ThunderAI necessita del permesso per accedere a <code>chatgpt.com</code>.
+    ThunderAI necessita del permesso per accedere a <code>chatgpt.com</code>. Non lo chiede la pagina delle impostazioni, ma il popup di ThunderAI.
+</p>
+<ol>
+    <li>Clicca sul pulsante ThunderAI nella barra degli strumenti. Finché il permesso manca, al posto dell'elenco dei prompt il popup mostra
+        <em>"To use the ChatGPT Web integration, you need to grant the required permission."</em></li>
+    <li>Clicca su quel messaggio: la pagina di benvenuto di ThunderAI si apre in una nuova scheda.</li>
+    <li>Clicca sullo stesso messaggio in cima alla pagina di benvenuto e accetta la richiesta di permesso di Thunderbird.</li>
+    <li>Quando compare <em>"Permission granted"</em>, cliccaci sopra per chiudere la scheda.</li>
+</ol>
+<p>
+    Dopo aver selezionato la ChatGPT Web Interface, puoi aprire la pagina di benvenuto anche dalla scheda <strong>Open the Welcome Page</strong>
+    in cima alla pagina delle impostazioni: mostra la stessa richiesta.
 </p>
 <p><em>Questo permesso è opzionale e viene utilizzato esclusivamente per interagire con il sito ChatGPT per tuo conto. ThunderAI non raccoglie né memorizza alcun dato.</em></p>
 
-<h3>4. Accedi a ChatGPT in Thunderbird</h3>
+<h3>4. Accedi a ChatGPT</h3>
 <p>
-    Devi farlo solo una volta; Thunderbird manterrà la sessione attiva.<br>
-    Usa il pulsante nella pagina delle preferenze di ThunderAI per aprire una nuova scheda Thunderbird e visitare <i>chatgpt.com</i>. Accedi con il tuo account.
+    Devi farlo solo una volta: Thunderbird mantiene la sessione attiva.<br>
+    La prima volta che usi un prompt, ThunderAI apre la finestra di ChatGPT. Se non hai effettuato l'accesso te lo segnala: accedi con il
+    tuo account in quella finestra, chiudila e lancia di nuovo il prompt.<br>
+    Se l'accesso da quella finestra non funziona, usa il pulsante <strong>Open ChatGPT Tab</strong> nelle impostazioni di ThunderAI: apre
+    <i>chatgpt.com</i> in una scheda di Thunderbird, dove puoi accedere. Poi chiudi la scheda e torna a usare ThunderAI.
 </p>
 
 <h3>5. Testa l'integrazione</h3>
-<p>Apri una qualsiasi email, clicca sul pulsante ThunderAI nella barra degli strumenti e seleziona un prompt (ad es. <strong>Summarize</strong>). ThunderAI aprirà un pannello e interagirà con ChatGPT.</p>
+<p>Apri una qualsiasi email, clicca sul pulsante ThunderAI nella barra degli strumenti e seleziona un prompt (ad es. <strong>Summarize</strong>). ThunderAI apre una finestra di ChatGPT, invia il prompt e vi mostra la risposta.</p>
+
+<h2>Opzioni avanzate</h2>
+<p>Clicca su <strong>Advanced options</strong> nel pannello <strong>Connection Settings</strong> per mostrare queste impostazioni:</p>
+<ul>
+    <li><strong>ChatGPT Web Model</strong>: il modello da usare. Se è vuoto o non valido, ChatGPT usa quello predefinito. Non funziona con un account ChatGPT gratuito.</li>
+    <li><strong>ChatGPT Web Project</strong> e <strong>ChatGPT Web Custom GPT</strong>: un Progetto o un Custom GPT da usare sempre.
+        Copia il valore dalla barra degli indirizzi quando il Progetto (<code>/g/PROJECT-ID-PROJECT-NAME/project</code>) o il
+        Custom GPT (<code>/g/CUSTOM-GPT-ID</code>) è aperto in ChatGPT. Puoi impostarli anche sul singolo prompt, nella pagina dei prompt personalizzati.</li>
+    <li><strong>ChatGPT Web temporary chat</strong>: usa una chat temporanea.</li>
+    <li><strong>Wait time for page load</strong>: quanti millisecondi ThunderAI attende il caricamento della pagina di ChatGPT (predefinito 1000). Con un Progetto o un Custom GPT si aggiungono 1000&nbsp;ms.</li>
+</ul>
+<p>Anche il pulsante <strong>Open ChatGPT Tab</strong> applica il modello, il Progetto e il Custom GPT configurati.</p>
 
 <h2>Suggerimenti e limitazioni note</h2>
 <ul>
     <li>La velocità di risposta dipende dal sito ChatGPT e può variare. L'integrazione via API è generalmente più veloce e affidabile.</li>
     <li>Gli account gratuiti sono soggetti ai limiti di utilizzo di ChatGPT (rate limit, disponibilità dei modelli).</li>
     <li>Se ChatGPT modifica il layout del suo sito, l'integrazione potrebbe smettere di funzionare temporaneamente fino all'aggiornamento di ThunderAI. Consulta la <a href="../../status/">pagina di stato</a> per eventuali problemi noti.</li>
-    <li>Puoi configurare l'uso di un Custom GPT o di un Progetto sia globalmente nelle preferenze sia nella configurazione del singolo prompt.</li>
+    <li>Le funzioni AI elencate nella pagina delle impostazioni (Add Tags, Spam Filter, Summarize, Translate, Calendar Event e Task) richiedono un'integrazione API e non funzionano con la ChatGPT Web Interface.
+        Puoi mantenere ChatGPT Web come connessione principale e assegnare a ciascuna di queste funzioni una propria connessione API nella sua pagina delle impostazioni. I tuoi prompt dal menu della barra degli strumenti continuano a funzionare con ChatGPT Web.</li>
 </ul>
 
 <h2>Risoluzione dei problemi</h2>
 
-<h3>ThunderAI mostra un errore o nessuna risposta</h3>
-<p>Assicurati di essere connesso a ChatGPT in una scheda Thunderbird. Prova a visitare direttamente <i>chatgpt.com</i> da Thunderbird e verifica che la sessione sia attiva. Usa il pulsante nella pagina delle preferenze di ThunderAI.</p>
+<h3>Il popup chiede un permesso invece di mostrare i prompt</h3>
+<p>Il permesso per <code>chatgpt.com</code> non è ancora stato concesso. Vedi il <a href="#permission">passo 3</a>.</p>
+
+<h3>ThunderAI dice che non hai effettuato l'accesso, o non mostra nessuna risposta</h3>
+<p>Accedi a ChatGPT nella finestra di ChatGPT aperta da ThunderAI, chiudila e riprova. Se non funziona, accedi dalla scheda aperta dal pulsante <strong>Open ChatGPT Tab</strong> nelle impostazioni di ThunderAI.</p>
+
+<h3>"Could not locate the ChatGPT message box"</h3>
+<p>ThunderAI non ha trovato la casella di testo di ChatGPT, di solito dopo una modifica al sito ChatGPT. Clicca dentro la casella di testo di ChatGPT entro un minuto e ThunderAI prosegue. Se succede ogni volta, consulta la <a href="../../status/">pagina di stato</a>.</p>
 
 <h3>Le risposte sono lente o vanno in timeout</h3>
 <p>Di solito si tratta di un problema temporaneo con il sito ChatGPT. Attendi un momento e riprova, oppure considera di passare all'integrazione <a href="../openai-api/">OpenAI API</a> per prestazioni più affidabili.</p>
@@ -80,19 +120,3 @@ multilang = true
 <div style="text-align: center">
     <a href="../">Torna alle guide</a> &nbsp;|&nbsp; <a href="../openai-api/">Avanti: OpenAI API →</a>
 </div>
-
-
-<style>
-table {
-    border-collapse: collapse;
-    margin: 10px 0;
-}
-th, td {
-    border: 1px solid #ccc;
-    padding: 7px 14px;
-    text-align: left;
-}
-h3 {
-    margin-bottom: 4px;
-}
-</style>
