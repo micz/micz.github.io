@@ -10,7 +10,7 @@ Type = "no-list"
 <p>Open the <b>Manage Prompts</b> page with the {{< ui_button "thunderai/customprompts/buttons/manage-prompts.png" "Manage your prompts" >}} button in the add-on options.</p>
 
 <figure>
-    <a href="{{< base_url >}}images/thunderai/customprompts/manage-prompts.png" target="_blank"><img src="{{< base_url >}}images/thunderai/customprompts/manage-prompts.png" alt="The Manage Prompts page: the prompt list on the left, the selected prompt on the right"></a>
+    {{< themed_screenshot "thunderai/customprompts/manage-prompts.png" "The Manage Prompts page: the prompt list on the left, the selected prompt on the right" >}}
     <figcaption>The Manage Prompts page in the Detail view</figcaption>
 </figure>
 
@@ -29,7 +29,7 @@ Type = "no-list"
 </ul>
 
 <figure>
-    <a href="{{< base_url >}}images/thunderai/customprompts/table-view.png" target="_blank"><img src="{{< base_url >}}images/thunderai/customprompts/table-view.png" alt="The Table view of the Manage Prompts page"></a>
+    {{< themed_screenshot "thunderai/customprompts/table-view.png" "The Table view of the Manage Prompts page" >}}
     <figcaption>The Table view</figcaption>
 </figure>
 
@@ -72,7 +72,7 @@ If you leave a prompt with changes you have not saved, ThunderAI asks whether to
 <h3>A connection for each prompt</h3>
 <p>By default, a prompt uses the connection set in the add-on options. Open the <b>Connection [API]</b> section to choose a different AI service, model or server for one prompt only. {{< ui_button "thunderai/customprompts/buttons/reset.png" "Reset" >}} clears these settings: after you click {{< ui_button "thunderai/customprompts/buttons/save.png" "Save" >}}, the prompt goes back to the global connection.</p>
 <figure>
-    <a href="{{< base_url >}}images/thunderai/customprompts/prompt-connection.png" target="_blank"><img src="{{< base_url >}}images/thunderai/customprompts/prompt-connection.png" alt="The Connection section of a prompt, set to use a different Ollama server"></a>
+    {{< themed_screenshot "thunderai/customprompts/prompt-connection.png" "The Connection section of a prompt, set to use a different Ollama server" >}}
     <figcaption>A prompt that uses its own Ollama server</figcaption>
 </figure>
 <p>When the global connection is ChatGPT Web and the prompt has no connection of its own, a <b>ChatGPT Web</b> section lets you choose a model, a project or a custom GPT for this prompt.</p>
@@ -81,7 +81,7 @@ If you leave a prompt with changes you have not saved, ThunderAI asks whether to
 <p>The built-in (<b>System</b>) prompts cannot be changed. The only option you can change is <b>Ask for additional text</b>. The other options are marked "<i>fixed by the prompt</i>".</p>
 <p>To make your own version of a built-in prompt, click {{< ui_button "thunderai/customprompts/buttons/duplicate-edit.png" "Duplicate and edit" >}}. The copy is a new personal prompt, with the same text and options, that you can change freely.</p>
 <figure>
-    <a href="{{< base_url >}}images/thunderai/customprompts/system-prompt.png" target="_blank"><img src="{{< base_url >}}images/thunderai/customprompts/system-prompt.png" alt="A built-in prompt open in the Detail view, read-only"></a>
+    {{< themed_screenshot "thunderai/customprompts/system-prompt.png" "A built-in prompt open in the Detail view, read-only" >}}
     <figcaption>A built-in prompt is read-only</figcaption>
 </figure>
 
