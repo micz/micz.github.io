@@ -47,7 +47,7 @@ themes/miczit_2027/
 │   ├── partials/           head, head-extra, theme-init, header, footer, lang-switcher,
 │   │                       theme-toggle, title-split, ph-list-script
 │   └── shortcodes/         project shortcodes (page_title, list-thunderbird-pages, *_list, lang_*,
-│                           ui_button: an add-on button image inline in the text, at real size)
+│                           ui_button, themed_screenshot)
 └── static/
     ├── css/theme.css       dark tokens on :root, light tokens on [data-theme="light"]
     └── fonts/
@@ -69,6 +69,10 @@ themes/miczit_2027/
   (`body.home .page-shell::before`) needs this class. Areas on the photo use the fixed
   `--photo-ink` color, so the theme toggle does not change the home page.
 - Mobile breakpoint: 880px (one column below it).
+- Add-on screenshots come in two versions: the dark file, and the light one with the same name in a
+  `light/` subfolder. The `only-dark` / `only-light` classes in `theme.css` show the one that matches
+  the site theme. `ui_button` puts a button image in a line of text, at its real size (captured at 1x).
+  `themed_screenshot` puts a screenshot linked to its full-size file.
 
 ## Known quirks (not theme bugs)
 

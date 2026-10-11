@@ -48,7 +48,7 @@ defaultContentLanguageInSubdir = false
       flag = "🇪🇸"
 
 [params]
-   forceCSSReloadID = "20261012"
+   forceCSSReloadID = "20261013"
    Subtitle = "Silence is golden."
    env= "production"
    goatcounterURL = "https://micz.goatcounter.com/count"

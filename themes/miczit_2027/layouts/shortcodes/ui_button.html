@@ -1,3 +1,10 @@
-{{- /* An add-on button shown inline in the text, at its real size. Usage: {{< ui_button "thunderai/customprompts/buttons/save.png" "Save" >}} (path under static/images/). */ -}}
-<img src="{{ .Site.BaseURL }}images/{{ .Get 0 }}" alt="{{ .Get 1 }}" title="{{ .Get 1 }}" style="display:inline;margin:0 0.1em;vertical-align:middle;">
+{{- /* An add-on button shown inline in the text, at its real size, in the site's current theme.
+       Usage: {{< ui_button "thunderai/customprompts/buttons/save.png" "Save" >}} (path under static/images/).
+       The light version is the same file in a light/ subfolder. */ -}}
+{{- $p := .Get 0 -}}
+{{- $light := printf "%s/light/%s" (path.Dir $p) (path.Base $p) -}}
+{{- $style := "display:inline;margin:0 0.1em;vertical-align:middle;" -}}
+<img loading="lazy" class="only-dark" src="{{ .Site.BaseURL }}images/{{ $p }}" alt="{{ .Get 1 }}" title="{{ .Get 1 }}" style="{{ $style | safeCSS }}">
+{{- /**/ -}}
+<img loading="lazy" class="only-light" src="{{ .Site.BaseURL }}images/{{ $light }}" alt="{{ .Get 1 }}" title="{{ .Get 1 }}" style="{{ $style | safeCSS }}">
 {{- /**/ -}}
