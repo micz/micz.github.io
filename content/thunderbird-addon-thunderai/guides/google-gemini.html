@@ -8,22 +8,24 @@ multilang = true
 
 <p>
     The <strong>Google Gemini</strong> integration connects ThunderAI to Google's Gemini AI models via the Gemini API.<br>
-    It includes support for advanced options like <strong>System Instructions</strong> and <strong>thinkingBudget</strong>, useful for power users who want more control over the model's behavior.
+    It includes support for advanced options like <strong>System Instruction</strong> and <strong>Thinking Budget</strong>, useful for power users who want more control over the model's behavior.
 </p>
 
-<table>
-    <tr>
-        <td><strong>API key required</strong></td>
-        <td>Yes</td>
-    </tr>
-    <tr>
-        <td><strong>Free option</strong></td>
-        <td>Yes [Generous free tier available]</td>
-    </tr>
-    <tr>
-        <td><strong>Best for</strong></td>
-        <td>Users who prefer Google's ecosystem, or want a free API option</td>
-    </tr>
+<table class="guides">
+    <thead>
+        <tr>
+            <th>API key required</th>
+            <th>Free option</th>
+            <th>Best for</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Yes</td>
+            <td>Yes (generous free tier available)</td>
+            <td>Users who prefer Google's ecosystem, or want a free API option</td>
+        </tr>
+    </tbody>
 </table>
 
 <br>
@@ -46,64 +48,72 @@ multilang = true
 
 <h2>Setup</h2>
 
-<h3>1. Open ThunderAI Options</h3>
 <p>
-    In Thunderbird, click the ThunderAI menu and select <strong>Options</strong>, or go to<br>
-    <strong>Tools → Add-ons and Themes → ThunderAI → Preferences</strong>.
+    The quickest way is the <strong>Setup Wizard</strong>: open it from the ThunderAI welcome page, the toolbar popup or the
+    settings page, choose <strong>Google Gemini API</strong>, paste your API key, choose a model and test the connection.
+    The wizard then lets you turn on the AI features you want.<br>
+    To set it up by hand, follow the steps below.
+</p>
+
+<h3>1. Open the ThunderAI settings</h3>
+<p>
+    In Thunderbird, go to <strong>Tools → Add-ons and Themes → ThunderAI → Preferences</strong>.
 </p>
 
 <h3>2. Select the Google Gemini integration</h3>
-<p>In the <strong>Connection</strong> section, choose <strong>Google Gemini</strong> from the integration dropdown.</p>
+<p>In the <strong>Connection Settings</strong> panel, choose <strong>Google Gemini API</strong> in the <strong>Connection Type</strong> dropdown.</p>
 
 <h3>3. Enter your API key</h3>
-<p>Paste your API key in the <strong>API Key</strong> field.</p>
+<p>Paste your API key in the <strong>API Key</strong> field. The key is stored locally in Thunderbird and never sent anywhere other than Google's servers.</p>
 
 <h3>4. Choose a model</h3>
-<p>Select the Gemini model from the <strong>Model</strong> dropdown. Click the button to refresh the list.</p>
+<p>Click <strong>Update list</strong> next to <strong>Google Gemini API Models</strong>, then select the model you want to use from the list.</p>
 
-<h3>5. (Optional) Configure System Instructions</h3>
+<h3>5. Test the connection</h3>
 <p>
-    System Instructions let you set a persistent context for all your prompts. For example, telling the model to always respond formally, in a specific language, or to assume a certain role.<br>
-    Enter your instructions in the <strong>System Instructions</strong> field on the options page.
+    Settings are saved as soon as you change them: there is no Save button.<br>
+    Click <strong>Test now</strong> in the bar below the connection settings. If Thunderbird asks for permission to access
+    <code>generativelanguage.googleapis.com</code>, accept it. When everything is fine, the bar shows
+    <em>"Connected — Google Gemini API reachable"</em>. Then open any email, click the ThunderAI toolbar button and run a prompt.
 </p>
 
-<h3>6. (Optional) Configure thinkingBudget</h3>
-<p>The <strong>thinkingBudget</strong> option controls how much internal reasoning the model does before responding. A higher value can improve quality on complex tasks at the cost of speed and quota. Leave it at the default unless you have specific needs.</p>
-
-<h3>7. Save and test</h3>
-<p>Click <strong>Save</strong>. Open any email, use the ThunderAI menu, and run a prompt to verify the connection.</p>
+<h2>Advanced options</h2>
+<p>
+    Click <strong>Advanced options</strong> in the <strong>Connection Settings</strong> panel to show the settings below.
+    Leave a field empty to let the model use its default.
+</p>
+<ul>
+    <li><strong>System Instruction</strong>: a persistent context for all your prompts, for example to always answer formally, in a specific language, or in a certain role.</li>
+    <li><strong>Thinking Budget</strong>: how many tokens the model can use to reason before answering. Enter <code>0</code> to turn thinking off, or <code>-1</code> for dynamic thinking. Leave it empty if the model does not support thinking.</li>
+    <li><strong>Temperature</strong> (0.0–2.0), <strong>Top P</strong> and <strong>Top K</strong>: how random or focused the answer is. Not every model supports Top K.</li>
+    <li><strong>Max output tokens</strong>: the maximum length of the answer. Empty or 0 lets the model decide.</li>
+    <li><strong>Extra body data</strong>: additional parameters for the Gemini API, as a JSON object, for options ThunderAI does not show, e.g. <code>{"generationConfig": {"seed": 42}}</code>.
+        The keys inside <code>generationConfig</code> are merged into the ones built by ThunderAI.</li>
+</ul>
+<p>
+    You can also set these options on a single prompt, in the custom prompts page, and on each AI feature (Add Tags, Spam Filter,
+    Summarize, Translate, Calendar Event, Task), with the <strong>Advanced options</strong> button of its specific connection.
+</p>
 
 <h2>Tips</h2>
 <ul>
-    <li>The free tier is refreshed monthly and is generally sufficient for personal use.</li>
-    <li>System Instructions are particularly useful if you need to specify general rules for your email assistant.</li>
+    <li>The free tier has per-minute and per-day request limits, generally enough for personal use. Check the current limits in <a href="https://aistudio.google.com" target="_blank">Google AI Studio</a>.</li>
+    <li>If the limit is reached while ThunderAI processes several emails (Add Tags, Spam Filter, Summarize, Translate), the processing stops by itself and tells you how many messages were processed and, when Google says so, how long to wait.</li>
+    <li>The System Instruction is particularly useful if you need to specify general rules for your email assistant.</li>
 </ul>
 
 <h2>Troubleshooting</h2>
 
-<h3>"API key not valid" error</h3>
+<h3>"Authentication failed — check your API key" or "API key not valid" error</h3>
 <p>Verify the key was copied correctly. Regenerate a new key from AI Studio if needed.</p>
 
 <h3>"Model not found" or empty model list</h3>
 <p>Ensure your API key has access to Gemini models. Some keys created in restricted Google Cloud projects may have limited model access.</p>
 
+<h3>Requests fail after changing the advanced options</h3>
+<p>Some models do not accept every option (for example Top K, or a Thinking Budget on a model without thinking). Empty the option and try again.</p>
+
 <br>
 <div style="text-align: center">
     <a href="../">Back to guides</a> &nbsp;|&nbsp; <a href="../claude-api/">Next: Claude API →</a>
 </div>
-
-
-<style>
-table {
-    border-collapse: collapse;
-    margin: 10px 0;
-}
-th, td {
-    border: 1px solid #ccc;
-    padding: 7px 14px;
-    text-align: left;
-}
-h3 {
-    margin-bottom: 4px;
-}
-</style>
