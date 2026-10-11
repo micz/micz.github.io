@@ -1,0 +1,58 @@
+{{/* Add-on sidebar: rendered when the page's top-level section has content/<section>/addon-nav.json.
+     Not on the section's own page (its cards already link everything) nor on redirect stubs.
+     Each entry links the page in the current language; untranslated pages and redirect stubs fall
+     back to the default language. The entry of the current page (or of one of its "also" pages)
+     is marked as current. Below 1100px the sidebar becomes a collapsed box above the page. */}}
+{{ with .FirstSection }}
+{{ $file := printf "content/%s/addon-nav.json" .Section }}
+{{ if and (not $.IsHome) (not ($.Eq .)) (ne $.Layout "redirect") (fileExists $file) }}
+{{ $data := os.ReadFile $file | transform.Unmarshal }}
+{{ $ctx := dict "page" $ "base" (printf "/%s" .Section) }}
+<nav class="addon-nav" aria-label="{{ $data.name }}">
+    <details open>
+        <summary>{{ $data.name }} <span>{{ i18n "addonNavMenu" }}</span></summary>
+        <div class="addon-nav-groups">
+        {{ range $data.groups }}
+        <div class="addon-nav-group">
+            <p class="addon-nav-group-title">{{ index .title site.Language.Lang | default .title.en }}</p>
+            <ul>
+                {{ range .items }}{{ partial "addon-nav-item" (dict "page" $ctx.page "base" $ctx.base "item" .) }}{{ end }}
+            </ul>
+        </div>
+        {{ end }}
+        </div>
+    </details>
+</nav>
+<script>
+    // Wide screens: the sidebar is always open (the summary is hidden by the CSS).
+    // Narrow screens: it starts closed above the page.
+    (function () {
+        var box = document.currentScript.previousElementSibling.querySelector('details');
+        var wide = window.matchMedia('(min-width: 1101px)');
+        function sync() { box.open = wide.matches; }
+        sync();
+        wide.addEventListener('change', sync);
+    })();
+</script>
+{{ end }}
+{{ end }}
+
+{{ define "partials/addon-nav-item" }}
+{{ $path := path.Join .base .item.page }}
+{{ $p := site.GetPage $path }}
+{{ if or (not $p) (eq $p.Layout "redirect") }}{{ $p = hugo.Sites.Default.GetPage $path }}{{ end }}
+{{ if $p }}
+    {{ $current := eq .page.Path $p.Path }}
+    {{ range .item.also }}{{ if eq $.page.Path (path.Join $.base .) }}{{ $current = true }}{{ end }}{{ end }}
+    <li>
+        <a href="{{ $p.RelPermalink }}"{{ if $current }} aria-current="page"{{ end }}>{{ index .item.title site.Language.Lang | default .item.title.en }}</a>
+        {{ with .item.children }}
+        <ul>
+            {{ range . }}{{ partial "addon-nav-item" (dict "page" $.page "base" $.base "item" .) }}{{ end }}
+        </ul>
+        {{ end }}
+    </li>
+{{ else }}
+    {{ warnf "addon-nav: no page at %s" $path }}
+{{ end }}
+{{ end }}

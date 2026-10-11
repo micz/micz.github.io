@@ -45,7 +45,7 @@ themes/miczit_2027/
 │   ├── index.html          home hero on the photo (does not render .Content)
 │   ├── robots.txt
 │   ├── partials/           head, head-extra, theme-init, header, footer, lang-switcher,
-│   │                       theme-toggle, title-split, ph-list-script
+│   │                       theme-toggle, title-split, ph-list-script, addon-nav
 │   └── shortcodes/         project shortcodes (page_title, list-thunderbird-pages, *_list, lang_*,
 │                           ui_button, themed_screenshot)
 └── static/
@@ -69,6 +69,15 @@ themes/miczit_2027/
   (`body.home .page-shell::before`) needs this class. Areas on the photo use the fixed
   `--photo-ink` color, so the theme toggle does not change the home page.
 - Mobile breakpoint: 880px (one column below it).
+- Add-on sidebar (`partials/addon-nav.html`, used by `single.html` and `list.html`): shown on every
+  page of a top-level section that has `content/<section>/addon-nav.json` (today only ThunderAI),
+  except the section's own page and redirect stubs. The JSON lists groups and entries (`page` path
+  relative to the section, `title` per language with `en` as fallback, optional `children` and
+  `also` = other pages that mark the entry as current). An entry links the page in the current
+  language, or the default-language page when there is no translation or it is a redirect stub.
+  Add new pages to the JSON. The sidebar widens the layout, so the reading column keeps its width.
+  At 1100px and below it becomes a collapsed box above the page. Do not use `merge` on a dict
+  that holds a Page: the build hangs. The "Go back" / "Next" links at the bottom of the pages stay.
 - Add-on screenshots come in two versions: the dark file, and the light one with the same name in a
   `light/` subfolder. The `only-dark` / `only-light` classes in `theme.css` show the one that matches
   the site theme. `ui_button` puts a button image in a line of text, at its real size (captured at 1x).
