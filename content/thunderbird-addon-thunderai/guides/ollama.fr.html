@@ -8,26 +8,27 @@ multilang = true
 
 <p>
     L'intégration <strong>Ollama</strong> vous permet d'exécuter des modèles AI localement sur votre propre machine.<br>
-    Vos e-mails ne quittent jamais votre ordinateur&nbsp;: aucune clé API, aucun service cloud, aucun coût au-delà de votre matériel.
+    Avec une installation locale, vos e-mails ne quittent jamais votre ordinateur&nbsp;: aucune clé API, aucun service cloud, aucun coût au-delà de votre matériel.<br>
+    Une clé API n'est nécessaire que si vous utilisez l'API hébergée d'Ollama, ou un serveur derrière un proxy qui exige une authentification.
 </p>
 
-<table>
-    <tr>
-        <td><strong>Clé API requise</strong></td>
-        <td>Non</td>
-    </tr>
-    <tr>
-        <td><strong>Option gratuite</strong></td>
-        <td>Oui [Entièrement gratuit, vous utilisez votre matériel]</td>
-    </tr>
-    <tr>
-        <td><strong>Privé / Local&nbsp;?</strong></td>
-        <td>Oui [Tout reste sur votre machine]</td>
-    </tr>
-    <tr>
-        <td><strong>Idéal pour</strong></td>
-        <td>Utilisateurs soucieux de la confidentialité, e-mails sensibles, usage hors ligne</td>
-    </tr>
+<table class="guides">
+    <thead>
+        <tr>
+            <th>Clé API requise</th>
+            <th>Option gratuite</th>
+            <th>Privé / Local&nbsp;?</th>
+            <th>Idéal pour</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Non (optionnelle)</td>
+            <td>Oui (entièrement gratuit, vous utilisez votre matériel)</td>
+            <td>Oui (tout reste sur votre machine)</td>
+            <td>Utilisateurs soucieux de la confidentialité, e-mails sensibles, usage hors ligne</td>
+        </tr>
+    </tbody>
 </table>
 
 <br>
@@ -47,75 +48,99 @@ multilang = true
     <li>Vérifiez qu'Ollama est en cours d'exécution&nbsp;:<br><pre>ollama list</pre></li>
 </ol>
 
-<h2>Configuration de CORS</h2>
+<h2 id="cors">Configuration de CORS</h2>
 <p>
-    Les extensions Thunderbird s'exécutent dans un environnement sandbox, Ollama doit donc être configuré pour accepter les requêtes provenant des extensions de navigateur.<br>
-    Vous devez définir la variable d'environnement <code>OLLAMA_ORIGINS</code> sur <code>moz-extension://*</code>.
+    Les extensions Thunderbird s'exécutent dans un environnement isolé, Ollama doit donc accepter leurs requêtes. Il y a deux façons de faire&nbsp;:
 </p>
-<p>Pour des configurations CORS plus détaillées, consultez la <a href="../../ollama-cors-information/">page d'information CORS d'Ollama</a>.</p>
+<ul>
+    <li>Définissez la variable d'environnement <code>OLLAMA_ORIGINS</code> sur <code>moz-extension://*</code> et redémarrez Ollama.</li>
+    <li>Ou donnez à ThunderAI la permission d'accéder à votre serveur Ollama, avec le bouton <strong>Give permission to the current host</strong>
+        dans les paramètres de ThunderAI (sous <em>"Problems setting CORS?"</em>), ou en acceptant la demande qui apparaît quand vous testez la connexion.
+        Pour un serveur sur <code>localhost</code> ou <code>127.0.0.1</code>, Thunderbird demande l'accès à tous les sites (<code>&lt;all_urls&gt;</code>).</li>
+</ul>
+<p>Pour des configurations CORS plus détaillées, consultez la <a href="../../ollama-cors-information/">page d'information sur Ollama et CORS</a>.</p>
 
 <h2>Configuration</h2>
 
-<h3>1. Ouvrir les options de ThunderAI</h3>
 <p>
-    Dans Thunderbird, cliquez sur le menu ThunderAI et sélectionnez <strong>Options</strong>, ou accédez à<br>
-    <strong>Outils → Modules complémentaires et thèmes → ThunderAI → Préférences</strong>.
+    Le plus rapide est le <strong>Setup Wizard</strong>&nbsp;: ouvrez-le depuis la page d'accueil de ThunderAI, le popup de la barre d'outils
+    ou la page des paramètres, choisissez <strong>Ollama API (Local LLM)</strong>, saisissez l'adresse du serveur, choisissez un modèle et testez la connexion.
+    L'assistant vous permet ensuite d'activer les fonctions IA souhaitées.<br>
+    Pour une configuration manuelle, suivez les étapes ci-dessous.
+</p>
+
+<h3>1. Ouvrir les paramètres de ThunderAI</h3>
+<p>
+    Dans Thunderbird, accédez à <strong>Outils → Modules complémentaires et thèmes → ThunderAI → Préférences</strong>.
 </p>
 
 <h3>2. Sélectionner l'intégration Ollama</h3>
-<p>Dans la section <strong>Connection</strong>, choisissez <strong>Ollama</strong> dans le menu déroulant des intégrations.</p>
+<p>Dans le panneau <strong>Connection Settings</strong>, choisissez <strong>Ollama API (Local LLM)</strong> dans la liste déroulante <strong>Connection Type</strong>.</p>
 
-<h3>3. Définir l'URL du serveur</h3>
-<p>Saisissez l'URL de votre serveur Ollama. La valeur par défaut est&nbsp;:</p>
+<h3>3. Définir l'adresse du serveur</h3>
+<p>Saisissez l'URL de votre serveur Ollama dans le champ <strong>Host Address</strong>. La valeur par défaut est&nbsp;:</p>
 <pre>http://localhost:11434</pre>
-<p>Si Ollama s'exécute sur une autre machine de votre réseau, remplacez <code>localhost</code> par l'adresse IP de cette machine.</p>
+<p>Si Ollama tourne sur une autre machine de votre réseau, remplacez <code>localhost</code> par l'adresse IP de cette machine.</p>
+<p>
+    Laissez le champ <strong>Ollama API Key</strong> vide pour une installation locale standard. Il n'est nécessaire que pour l'API hébergée sur
+    <code>ollama.com</code>, ou pour un serveur auto-hébergé derrière un proxy qui exige une authentification.
+</p>
 
 <h3>4. Choisir un modèle</h3>
-<p>Sélectionnez un modèle dans le menu déroulant <strong>Model</strong>. Cliquez sur le bouton pour actualiser la liste.</p>
+<p>Cliquez sur <strong>Update list</strong> à côté de <strong>Ollama Models</strong>, puis sélectionnez le modèle à utiliser dans la liste.</p>
 
-<h3>5. Enregistrer et tester</h3>
-<p>Cliquez sur <strong>Save</strong>. Ouvrez n'importe quel e-mail, utilisez le menu ThunderAI et exécutez un prompt pour vérifier la connexion.</p>
+<h3>5. Tester la connexion</h3>
+<p>
+    Les paramètres sont enregistrés dès que vous les modifiez&nbsp;: il n'y a pas de bouton Enregistrer.<br>
+    Cliquez sur <strong>Test now</strong> dans la barre sous les paramètres de connexion et acceptez la demande de permission de Thunderbird, si elle apparaît
+    (voir <a href="#cors">Configuration de CORS</a>). Si tout va bien, la barre affiche <em>"Connected — Ollama API (Local LLM) reachable"</em>.
+    Ouvrez ensuite n'importe quel e-mail, cliquez sur le bouton ThunderAI dans la barre d'outils et lancez un prompt.
+</p>
+
+<h2>Options avancées</h2>
+<p>
+    Cliquez sur <strong>Advanced options</strong> dans le panneau <strong>Connection Settings</strong> pour afficher les paramètres ci-dessous.
+    Ils s'adaptent au modèle sélectionné.
+</p>
+<ul>
+    <li><strong>System Prompt</strong>&nbsp;: envoyé au début de chaque conversation, pour donner au modèle un rôle ou des instructions permanentes.</li>
+    <li><strong>Enable thinking</strong>&nbsp;: fait raisonner le modèle avant de répondre. Les niveaux de raisonnement disponibles dépendent du modèle et apparaissent une fois celui-ci sélectionné.
+        <em>Model default</em> n'envoie rien et laisse le modèle décider, ce qui sur certains modèles signifie qu'il raisonne quand même&nbsp;: choisissez <em>Off</em> pour désactiver le raisonnement.</li>
+    <li><strong>Temperature</strong>&nbsp;: des valeurs plus élevées rendent les réponses plus créatives. La valeur par défaut est 0.8&nbsp;; des valeurs entre 0 et 1 sont recommandées.</li>
+    <li><strong>Number of context tokens</strong>&nbsp;: la quantité de texte que le modèle peut prendre en compte. ThunderAI affiche le maximum pris en charge par le modèle sélectionné. Mettez 0 pour utiliser la valeur par défaut du serveur.</li>
+    <li><strong>Keep model loaded</strong>&nbsp;: combien de temps Ollama garde le modèle en mémoire après une requête, par ex. <code>5m</code> ou <code>30m</code>, <code>-1</code> pour le garder chargé, <code>0</code> pour le décharger aussitôt.
+        Vide utilise la valeur par défaut du serveur (5 minutes). Augmentez-la si Add Tags, le filtre antispam ou le résumé automatique s'exécutent sur le courrier entrant&nbsp;: sinon le modèle est rechargé pour chaque message.</li>
+    <li><strong>Force JSON output</strong>&nbsp;: force Ollama à renvoyer du JSON valide, avec les modèles qui prennent en charge la sortie structurée.</li>
+    <li><strong>Extra options</strong>&nbsp;: paramètres supplémentaires pour Ollama, sous forme d'objet JSON, par ex. <code>{"top_p": 0.9, "seed": 42}</code> ou <code>{"num_predict": 512}</code>.</li>
+</ul>
+<p>
+    Vous pouvez aussi définir ces options pour un seul prompt, dans la page des prompts personnalisés, et pour chaque fonction IA (Add Tags, Spam Filter,
+    Summarize, Translate, Calendar Event, Task), avec le bouton <strong>Advanced options</strong> de sa connexion spécifique.
+</p>
 
 <h2>Conseils</h2>
 <ul>
-    <li>Les performances dépendent de votre matériel. Une machine moderne avec au moins 16 Go de RAM gérera confortablement des modèles comme <code>llama3</code> ou <code>mistral</code>. Un GPU accélère considérablement le traitement.</li>
-    <li>Les modèles plus petits (7B paramètres) sont plus rapides mais moins capables&nbsp;; les modèles plus grands (13B, 70B) produisent de meilleurs résultats mais nécessitent plus de ressources.</li>
-    <li>Pour les tâches e-mail, <code>mistral</code> et <code>llama3</code> sont des choix populaires offrant un bon équilibre entre qualité et vitesse.</li>
+    <li>Les performances dépendent de votre matériel. Une machine moderne avec au moins 16 Go de RAM gère sans difficulté des modèles comme <code>llama3</code> ou <code>mistral</code>. Un GPU accélère nettement le traitement.</li>
+    <li>Les petits modèles (7B paramètres) sont plus rapides mais moins performants&nbsp;; les plus grands (13B, 70B) donnent de meilleurs résultats mais demandent plus de ressources.</li>
+    <li>Pour les e-mails, <code>mistral</code> et <code>llama3</code> sont des choix populaires, avec un bon équilibre entre qualité et vitesse.</li>
+    <li>Si les fonctions automatiques (Add Tags, Spam Filter, Summarize, Translate) s'arrêtent sur un délai dépassé avec un modèle lent, augmentez <strong>Special command timeout (ms)</strong> dans les paramètres de ThunderAI.</li>
 </ul>
 
 <h2>Dépannage</h2>
 
-<h3>«&nbsp;Failed to connect&nbsp;» ou aucune réponse</h3>
-<p>Vérifiez qu'Ollama est bien en cours d'exécution (<code>ollama list</code> dans un terminal). Vérifiez que l'URL du serveur dans les options ThunderAI correspond à votre configuration Ollama.</p>
+<h3>"Failed to connect" ou aucune réponse</h3>
+<p>Vérifiez qu'Ollama est bien en cours d'exécution (<code>ollama list</code> dans un terminal). Vérifiez que le champ <strong>Host Address</strong> dans les paramètres de ThunderAI correspond à votre installation d'Ollama.</p>
 
 <h3>Erreur CORS</h3>
-<p>La variable <code>OLLAMA_ORIGINS</code> n'est pas définie ou Ollama n'a pas été redémarré après la définition. Répétez les étapes ci-dessus, ou utilisez la permission «&nbsp;All URLs&nbsp;» comme solution de contournement.</p>
+<p>La variable <code>OLLAMA_ORIGINS</code> n'est pas définie, ou Ollama n'a pas été redémarré après l'avoir définie. Refaites les étapes de <a href="#cors">Configuration de CORS</a>, ou utilisez plutôt le bouton <strong>Give permission to the current host</strong>.</p>
 
 <h3>Liste de modèles vide</h3>
-<p>Assurez-vous d'avoir téléchargé au moins un modèle avec <code>ollama pull &lt;nomdumodèle&gt;</code> et qu'Ollama est en cours d'exécution.</p>
+<p>Assurez-vous d'avoir téléchargé au moins un modèle avec <code>ollama pull &lt;nommodèle&gt;</code> et qu'Ollama est en cours d'exécution.</p>
+
+<h3>Le modèle raisonne alors que vous ne le souhaitez pas</h3>
+<p>Certains modèles raisonnent par défaut. Réglez <strong>Enable thinking</strong> sur <em>Off</em> dans les options avancées.</p>
 
 <br>
 <div style="text-align: center">
     <a href="../">Retour aux guides</a> &nbsp;|&nbsp; <a href="../openai-compatible-api/">Suivant&nbsp;: OpenAI Compatible API →</a>
 </div>
-
-
-<style>
-table {
-    border-collapse: collapse;
-    margin: 10px 0;
-}
-th, td {
-    border: 1px solid #ccc;
-    padding: 7px 14px;
-    text-align: left;
-}
-h3 {
-    margin-bottom: 4px;
-}
-pre {
-    margin: 5px;
-    padding: 10px;
-    border-radius: 9px;
-}
-</style>

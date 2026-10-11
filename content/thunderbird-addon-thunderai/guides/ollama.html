@@ -8,26 +8,27 @@ multilang = true
 
 <p>
     The <strong>Ollama</strong> integration lets you run AI models locally on your own machine.<br>
-    Your emails never leave your computer: there are no API keys, no cloud services, no costs beyond your hardware.
+    With a local installation your emails never leave your computer: no API key, no cloud services, no costs beyond your hardware.<br>
+    An API key is only needed if you use Ollama's hosted API, or a server behind a proxy that requires authentication.
 </p>
 
-<table>
-    <tr>
-        <td><strong>API key required</strong></td>
-        <td>No</td>
-    </tr>
-    <tr>
-        <td><strong>Free option</strong></td>
-        <td>Yes [Completely free, you use your hardware]</td>
-    </tr>
-    <tr>
-        <td><strong>Private / Local?</strong></td>
-        <td>Yes [Everything stays on your machine]</td>
-    </tr>
-    <tr>
-        <td><strong>Best for</strong></td>
-        <td>Privacy-conscious users, sensitive emails, offline use</td>
-    </tr>
+<table class="guides">
+    <thead>
+        <tr>
+            <th>API key required</th>
+            <th>Free option</th>
+            <th>Private / Local?</th>
+            <th>Best for</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>No (optional)</td>
+            <td>Yes (completely free, you use your hardware)</td>
+            <td>Yes (everything stays on your machine)</td>
+            <td>Privacy-conscious users, sensitive emails, offline use</td>
+        </tr>
+    </tbody>
 </table>
 
 <br>
@@ -47,75 +48,99 @@ multilang = true
     <li>Verify Ollama is running:<br><pre>ollama list</pre></li>
 </ol>
 
-<h2>Configuring CORS</h2>
+<h2 id="cors">Configuring CORS</h2>
 <p>
-    Thunderbird extensions run in a sandboxed environment, so Ollama needs to be configured to accept requests from browser extensions.<br>
-    You need to set the <code>OLLAMA_ORIGINS</code> environment variable to <code>moz-extension://*</code>.
+    Thunderbird extensions run in a sandboxed environment, so Ollama needs to accept requests from them. There are two ways:
 </p>
+<ul>
+    <li>Set the <code>OLLAMA_ORIGINS</code> environment variable to <code>moz-extension://*</code> and restart Ollama.</li>
+    <li>Or give ThunderAI the permission to access your Ollama server, with the <strong>Give permission to the current host</strong> button
+        in the ThunderAI settings (under <em>"Problems setting CORS?"</em>), or by accepting the request that appears when you test the connection.
+        For a server on <code>localhost</code> or <code>127.0.0.1</code>, Thunderbird asks for access to all websites (<code>&lt;all_urls&gt;</code>).</li>
+</ul>
 <p>For more detailed CORS configurations, see the <a href="../../ollama-cors-information/">Ollama CORS Information page</a>.</p>
 
 <h2>Setup</h2>
 
-<h3>1. Open ThunderAI Options</h3>
 <p>
-    In Thunderbird, click the ThunderAI menu and select <strong>Options</strong>, or go to<br>
-    <strong>Tools → Add-ons and Themes → ThunderAI → Preferences</strong>.
+    The quickest way is the <strong>Setup Wizard</strong>: open it from the ThunderAI welcome page, the toolbar popup or the
+    settings page, choose <strong>Ollama API (Local LLM)</strong>, enter the server address, choose a model and test the connection.
+    The wizard then lets you turn on the AI features you want.<br>
+    To set it up by hand, follow the steps below.
+</p>
+
+<h3>1. Open the ThunderAI settings</h3>
+<p>
+    In Thunderbird, go to <strong>Tools → Add-ons and Themes → ThunderAI → Preferences</strong>.
 </p>
 
 <h3>2. Select the Ollama integration</h3>
-<p>In the <strong>Connection</strong> section, choose <strong>Ollama</strong> from the integration dropdown.</p>
+<p>In the <strong>Connection Settings</strong> panel, choose <strong>Ollama API (Local LLM)</strong> in the <strong>Connection Type</strong> dropdown.</p>
 
-<h3>3. Set the server URL</h3>
-<p>Enter the URL of your Ollama server. The default is:</p>
+<h3>3. Set the server address</h3>
+<p>Enter the URL of your Ollama server in the <strong>Host Address</strong> field. The default is:</p>
 <pre>http://localhost:11434</pre>
 <p>If Ollama is running on another machine on your network, replace <code>localhost</code> with that machine's IP address.</p>
+<p>
+    Leave the <strong>Ollama API Key</strong> field empty for a standard local installation. It is only needed for the hosted API at
+    <code>ollama.com</code>, or for a self-hosted server behind a proxy that requires authentication.
+</p>
 
 <h3>4. Choose a model</h3>
-<p>Select a model from the <strong>Model</strong> dropdown. Click the button to refresh the list.</p>
+<p>Click <strong>Update list</strong> next to <strong>Ollama Models</strong>, then select the model you want to use from the list.</p>
 
-<h3>5. Save and test</h3>
-<p>Click <strong>Save</strong>. Open any email, use the ThunderAI menu, and run a prompt to verify the connection.</p>
+<h3>5. Test the connection</h3>
+<p>
+    Settings are saved as soon as you change them: there is no Save button.<br>
+    Click <strong>Test now</strong> in the bar below the connection settings and accept Thunderbird's permission request, if it appears
+    (see <a href="#cors">Configuring CORS</a>). When everything is fine, the bar shows <em>"Connected — Ollama API (Local LLM) reachable"</em>.
+    Then open any email, click the ThunderAI toolbar button and run a prompt.
+</p>
+
+<h2>Advanced options</h2>
+<p>
+    Click <strong>Advanced options</strong> in the <strong>Connection Settings</strong> panel to show the settings below.
+    They adapt to the selected model.
+</p>
+<ul>
+    <li><strong>System Prompt</strong>: sent at the start of every conversation, to give the model a role or standing instructions.</li>
+    <li><strong>Enable thinking</strong>: makes the model reason before answering. The available reasoning levels depend on the model and are listed once it is selected.
+        <em>Model default</em> sends nothing and lets the model decide, which on some models means it reasons anyway: choose <em>Off</em> to turn the reasoning off.</li>
+    <li><strong>Temperature</strong>: higher values make the answers more creative. The default is 0.8; values between 0 and 1 are recommended.</li>
+    <li><strong>Number of context tokens</strong>: how much text the model can take into account. ThunderAI shows the maximum the selected model supports. Set 0 to use the server default.</li>
+    <li><strong>Keep model loaded</strong>: how long Ollama keeps the model in memory after a request, e.g. <code>5m</code> or <code>30m</code>, <code>-1</code> to keep it loaded, <code>0</code> to unload it at once.
+        Empty uses the server default (5 minutes). Raise it if Add Tags, the spam filter or the automatic summary run on incoming mail: otherwise the model is reloaded for every message.</li>
+    <li><strong>Force JSON output</strong>: makes Ollama return valid JSON, with the models that support structured output.</li>
+    <li><strong>Extra options</strong>: additional parameters for Ollama, as a JSON object, e.g. <code>{"top_p": 0.9, "seed": 42}</code> or <code>{"num_predict": 512}</code>.</li>
+</ul>
+<p>
+    You can also set these options on a single prompt, in the custom prompts page, and on each AI feature (Add Tags, Spam Filter,
+    Summarize, Translate, Calendar Event, Task), with the <strong>Advanced options</strong> button of its specific connection.
+</p>
 
 <h2>Tips</h2>
 <ul>
     <li>Performance depends on your hardware. A modern machine with at least 16 GB of RAM will handle models like <code>llama3</code> or <code>mistral</code> comfortably. A GPU significantly speeds things up.</li>
     <li>Smaller models (7B parameters) are faster but less capable; larger models (13B, 70B) produce better results but require more resources.</li>
     <li>For email tasks, <code>mistral</code> and <code>llama3</code> are popular choices offering a good balance of quality and speed.</li>
+    <li>If the automatic features (Add Tags, Spam Filter, Summarize, Translate) stop with a timeout on a slow model, increase <strong>Special command timeout (ms)</strong> in the ThunderAI settings.</li>
 </ul>
 
 <h2>Troubleshooting</h2>
 
 <h3>"Failed to connect" or no response</h3>
-<p>Check that Ollama is actually running (<code>ollama list</code> in a terminal). Verify the server URL in ThunderAI options matches your Ollama setup.</p>
+<p>Check that Ollama is actually running (<code>ollama list</code> in a terminal). Verify that the <strong>Host Address</strong> in the ThunderAI settings matches your Ollama setup.</p>
 
 <h3>CORS error</h3>
-<p>The <code>OLLAMA_ORIGINS</code> variable is either not set or Ollama was not restarted after setting it. Follow the steps above again, or use the "All URLs" permission as a workaround.</p>
+<p>The <code>OLLAMA_ORIGINS</code> variable is either not set or Ollama was not restarted after setting it. Follow the steps in <a href="#cors">Configuring CORS</a> again, or use the <strong>Give permission to the current host</strong> button instead.</p>
 
 <h3>Empty model list</h3>
 <p>Make sure you have pulled at least one model with <code>ollama pull &lt;modelname&gt;</code> and that Ollama is running.</p>
+
+<h3>The model reasons even if you do not want it to</h3>
+<p>Some models reason by default. Set <strong>Enable thinking</strong> to <em>Off</em> in the advanced options.</p>
 
 <br>
 <div style="text-align: center">
     <a href="../">Back to guides</a> &nbsp;|&nbsp; <a href="../openai-compatible-api/">Next: OpenAI Compatible API →</a>
 </div>
-
-
-<style>
-table {
-    border-collapse: collapse;
-    margin: 10px 0;
-}
-th, td {
-    border: 1px solid #ccc;
-    padding: 7px 14px;
-    text-align: left;
-}
-h3 {
-    margin-bottom: 4px;
-}
-pre {
-    margin: 5px;
-    padding: 10px;
-    border-radius: 9px;
-}
-</style>
