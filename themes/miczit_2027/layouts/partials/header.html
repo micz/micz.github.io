@@ -10,13 +10,16 @@
             <nav class="header-title" aria-label="{{ i18n "breadcrumb" }}">
                 {{/* Addon pages sit at the content root, not under /thunderbird-addons/:
                      if the top-level page of this path has addon_status, prepend the list
-                     page. Redirect stubs lack params: check their translations too. */}}
+                     page. Redirect stubs lack params: check their translations too.
+                     Any other top-level page can name its parent with breadcrumb_parent. */}}
                 {{ $root := $ }}
                 {{ range $.Ancestors }}{{ if not .IsHome }}{{ $root = . }}{{ end }}{{ end }}
                 {{ $isAddon := $root.Params.addon_status }}
                 {{ if not $isAddon }}{{ range first 1 (where $root.Translations "Params.addon_status" "!=" nil) }}{{ $isAddon = true }}{{ end }}{{ end }}
-                {{ if $isAddon }}
-                    {{ with or (site.GetPage "/thunderbird-addons") (hugo.Sites.Default.GetPage "/thunderbird-addons") }}
+                {{ $parentPath := $root.Params.breadcrumb_parent }}
+                {{ if $isAddon }}{{ $parentPath = "/thunderbird-addons" }}{{ end }}
+                {{ if $parentPath }}
+                    {{ with or (site.GetPage $parentPath) (hugo.Sites.Default.GetPage $parentPath) }}
                         <a class="header-parent" href="{{ .RelPermalink }}">{{ .Title }}</a>
                         <span class="header-sep" aria-hidden="true">/</span>
                     {{ end }}

@@ -1,9 +1,9 @@
 {{/* Text of the <title> tag. Page titles are short ("Ollama"), so the full title is built here:
      the page, then its ancestors up to the top-level page (Home excluded), then the site title,
      e.g. "Ollama - Setup guides - ThunderAI - Mic's". The main page of an add-on (a top-level
-     page with addon_status) also gets "Thunderbird Addon". Language redirect stubs have no
-     Title: an ancestor stub borrows it from a translation, a page without Title shows the site
-     title only. */}}
+     page with addon_status) also gets "Thunderbird Addon"; a top-level page with breadcrumb_parent
+     gets that page's title. Language redirect stubs have no Title: an ancestor stub borrows it
+     from a translation, a page without Title shows the site title only. */}}
 {{ $parts := slice }}
 {{ if .Title }}
     {{ $chain := slice . }}
@@ -14,6 +14,9 @@
         {{ with $src.Title }}{{ $parts = $parts | append . }}{{ end }}
     {{ end }}
     {{ if and (eq (len $chain) 1) .Params.addon_status }}{{ $parts = $parts | append (i18n "thunderbirdAddon") }}{{ end }}
+    {{ with (index (last 1 $chain) 0).Params.breadcrumb_parent }}
+        {{ with or (site.GetPage .) (hugo.Sites.Default.GetPage .) }}{{ $parts = $parts | append .Title }}{{ end }}
+    {{ end }}
 {{ end }}
 {{ $parts = $parts | append site.Title }}
 {{ return delimit $parts " - " }}

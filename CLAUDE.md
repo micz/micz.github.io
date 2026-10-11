@@ -69,7 +69,9 @@ themes/miczit_2027/
   - language stubs have no Title, so it takes the title from a translation;
   - add-on pages are siblings of `thunderbird-addons/` in `content/`, not children of it. So when
     the top-level ancestor has `addon_status`, the breadcrumb puts the `/thunderbird-addons` page
-    in front.
+    in front. Another top-level page can name a parent with `breadcrumb_parent = "/<path>"` in its
+    front matter (used by `thunderbird-addon-development-discontinued`): the parent goes in the
+    breadcrumb and in the `<title>`.
 - `baseof.html` adds `class="home"` to `<body>` on the home page. The photo background
   (`body.home .page-shell::before`) needs this class. Areas on the photo use the fixed
   `--photo-ink` color, so the theme toggle does not change the home page.
