@@ -1302,6 +1302,17 @@ a[href^="http"]:not([href*="//github.com/"]):not([href*="//micz.it"]):not([href*
     justify-content: center;
 }
 .doc-grid + .doc-grid-single { margin-top: calc(14px - 1.8em); }
+/* three equal columns; a lone card on the last row is centered with the same width */
+.doc-grid-3 { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+.doc-grid-3 > * { grid-column: span 2; }
+.doc-grid-3 > :last-child:nth-child(3n+1) { grid-column: 3 / span 2; }
+@media (max-width: 880px) {
+    .doc-grid-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .doc-grid-3 > *, .doc-grid-3 > :last-child:nth-child(3n+1) { grid-column: auto; }
+}
+@media (max-width: 560px) {
+    .doc-grid-3 { grid-template-columns: minmax(0, 1fr); }
+}
 .doc-grid .doc-card,
 .steps > li {
     position: relative;
