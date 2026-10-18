@@ -2,7 +2,7 @@
 #   hugo --gc --minify
 #
 # - theme:     miczit_2027 (dark-first editorial theme)
-# - publishDir: docs/ (committed, deployed by .github/workflows/static.yml)
+# - publishDir: docs/ (local builds only, gitignored; the site is built and deployed on push by .github/workflows/hugo.yml)
 
 baseURL = "https://micz.it/"
 languageCode = "en"

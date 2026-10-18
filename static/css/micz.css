@@ -10,6 +10,9 @@ article header h1 {font-size: 25px;line-height: 1.25;margin-top: .5em;margin-bot
 div.content strong {font-weight: 700;}
 p.center{text-align:center;}
 div.common-footer-bottom{display:flex;justify-content:space-between;}
+div.footer_center{display:flex;align-items:center;gap:10px;}
+div.footer_center .theme-switcher{position:static;margin:0;}
+a.footer_legal{color:var(--post-info-color);}
 div.footer_spacer{width:100%;padding-top:1em;height:1em;}
 .paragraph-space{margin-top:25px;}
 div.themeSwitcher{position:relative;}
@@ -42,15 +45,23 @@ div.miczit_bg {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-    position: absolute;
+    position: fixed;
   top: 0;
   left: 0;
   height: 100%;
   width: 100%;
   z-index: -1000;
 }
-div.miczit_spacer {
-  height: calc(90vh - 150px);
+/* Home: the container fills the viewport exactly, main takes the free space and pushes
+   the footer to the bottom, so the page never scrolls. */
+.container:has(.miczit_spacer) {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+.container:has(.miczit_spacer) main {
+  flex: 1 0 auto;
 }
 .common-footer {
     padding-top: 1em;
@@ -60,28 +71,6 @@ div.miczit_spacer {
     font-size: 0.8em;
     font-style: italic;
 }
-
-  #cookie-notice {
-    text-align: center;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    width: 17%;
-    background: rgb(70, 70, 70);
-    color: rgba(255,255,255,0.8);
-    font-size: 15px;
-  }
-    
-    #cookie-notice a {font-weight: 600; display: inline-flex; cursor: pointer; margin-left: 0.5rem;}
-    #cookie-notice-accept {color:rgb(121, 121, 121)}
-    #cookie-notice-deny {color:rgb(44, 44, 44)}
-    @media (max-width: 767px) {
-        #cookie-notice span {display: block; padding-top: 3px; margin-bottom: 1rem;}
-        #cookie-notice a {position: relative; bottom: 4px;}
-        #cookie-notice {left: 0px;}
-    }
 
     /* Thunderbird Addon Translate page*/
     .thtr-help-normal {
@@ -230,4 +219,183 @@ div.img_center{
     color: var(--font-color);
     cursor: default;
     pointer-events: none;
+}
+details {
+    border: 1px solid var(--hr-color);
+    border-radius: 8px;
+    margin: 0.8em 0;
+    padding: 0 1em;
+}
+details > summary {
+    cursor: pointer;
+    font-weight: 600;
+    padding: 0.6em 0.2em;
+    margin: 0 -0.2em;
+    border-radius: 6px;
+}
+details > summary:hover {
+    background-color: color-mix(in srgb, var(--font-color) 8%, transparent);
+}
+details[open] > summary {
+    border-bottom: 1px solid var(--hr-color);
+    border-radius: 6px 6px 0 0;
+    margin-bottom: 0.8em;
+}
+details > summary:focus-visible {
+    outline: 2px solid var(--font-color);
+    outline-offset: 2px;
+}
+details > *:last-child {
+    margin-bottom: 1em;
+}
+.admon {
+    background-color: color-mix(in srgb, var(--font-color) 6%, var(--bg-color));
+    border-left: 4px solid var(--hr-color);
+    border-radius: 0 8px 8px 0;
+    padding: 0.8em 1.2em;
+    margin: 1.2em 0;
+}
+.admon h3 {
+    margin-top: 0.2em;
+}
+.admon > *:last-child {
+    margin-bottom: 0.2em;
+}
+.admon.warn {
+    border-left-color: color-mix(in srgb, #e8a317 70%, var(--font-color));
+    background-color: color-mix(in srgb, #e8a317 10%, var(--bg-color));
+}
+.admon.wip {
+    border-left-color: color-mix(in srgb, #e8620c 75%, var(--font-color));
+    background-color: color-mix(in srgb, #e8620c 14%, var(--bg-color));
+}
+.policy-key-filter {
+    display: flex;
+    align-items: center;
+    gap: 0.8em;
+    margin: 0.6em 0 1.2em 0;
+}
+#policy-key-search {
+    flex: 1 1 auto;
+    max-width: 22em;
+    font: inherit;
+    font-size: 0.9em;
+    color: var(--font-color);
+    background-color: var(--bg-color);
+    border: 1px solid var(--hr-color);
+    border-radius: 6px;
+    padding: 0.4em 0.7em;
+}
+#policy-key-search:focus-visible {
+    outline: 2px solid var(--font-color);
+    outline-offset: 1px;
+}
+table.policy-keys td:first-child {
+    word-break: break-word;
+}
+/* Sticky section nav (enterprise configuration guide) */
+html {
+    scroll-behavior: smooth;
+}
+/* The wrapper is sticky, draws the bar and is the containing block of the submenus, so
+   they are not clipped by the horizontal scrolling of the bar itself. The scrolling nav
+   must not carry backdrop-filter/filter/transform: any of them would make it the
+   containing block instead and clip the submenus. */
+#section-nav-wrap {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    margin: 1.5em 0 2em 0;
+    background-color: color-mix(in srgb, var(--bg-color) 92%, var(--font-color));
+    border: 1px solid var(--hr-color);
+    border-radius: 10px;
+    backdrop-filter: blur(8px);
+}
+#section-nav {
+    display: flex;
+    gap: 2px;
+    padding: 6px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    border-radius: 10px;
+    font-size: 0.8em;
+}
+/* Centered entries. Auto margins instead of justify-content: center, which would push
+   the first entries out of reach on the left when the bar scrolls on narrow screens. */
+#section-nav > :first-child {
+    margin-left: auto;
+}
+#section-nav > :last-child {
+    margin-right: auto;
+}
+#section-nav::-webkit-scrollbar {
+    display: none;
+}
+#section-nav a {
+    flex: 0 0 auto;
+    padding: 0.45em 0.85em;
+    border-radius: 7px;
+    border-bottom: 0;
+    white-space: nowrap;
+    text-decoration: none;
+    color: color-mix(in srgb, var(--font-color) 68%, var(--bg-color));
+    transition: background-color 0.15s ease, color 0.15s ease;
+}
+#section-nav a:hover {
+    color: var(--font-color);
+    background-color: color-mix(in srgb, var(--font-color) 9%, transparent);
+    border-bottom: 0;
+}
+#section-nav a.current {
+    color: var(--font-color);
+    background-color: var(--bg-color);
+    font-weight: 600;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.22);
+}
+/* A parent entry that opens a submenu of its sub-sections on hover or focus. */
+#section-nav .nav-group {
+    display: flex;
+    flex: 0 0 auto;
+}
+#section-nav .nav-sub {
+    display: none;
+    position: absolute;
+    top: calc(100% + 4px);
+    left: 0;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 11em;
+    padding: 6px;
+    background-color: color-mix(in srgb, var(--bg-color) 92%, var(--font-color));
+    border: 1px solid var(--hr-color);
+    border-radius: 10px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+}
+#section-nav .nav-group.open .nav-sub,
+#section-nav .nav-group:focus-within .nav-sub {
+    display: flex;
+}
+#section-nav .nav-sub a.current {
+    box-shadow: none;
+}
+/* Headings must clear the sticky bar when jumped to. */
+#section-nav-wrap ~ h2[id],
+#section-nav-wrap ~ h3[id] {
+    scroll-margin-top: 4em;
+}
+@media (max-width: 480px) {
+    #section-nav-wrap {
+        margin-left: -1em;
+        margin-right: -1em;
+        border-radius: 0;
+    }
+    #section-nav {
+        font-size: 0.75em;
+        border-radius: 0;
+    }
+}
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
 }
