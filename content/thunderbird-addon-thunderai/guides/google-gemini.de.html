@@ -1,5 +1,5 @@
 +++
-Title = "\"ThunderAI\" Einrichtungsanleitung - Google Gemini"
+Title = "Google Gemini"
 Type = "no-list"
 multilang = true
 +++
@@ -8,22 +8,24 @@ multilang = true
 
 <p>
     Die Integration mit <strong>Google Gemini</strong> verbindet ThunderAI über die Gemini API mit Googles Gemini-KI-Modellen.<br>
-    Sie unterstützt erweiterte Optionen wie <strong>System Instructions</strong> und <strong>thinkingBudget</strong>, die für Nutzer nützlich sind, die das Verhalten des Modells genauer steuern möchten.
+    Sie unterstützt erweiterte Optionen wie <strong>System Instruction</strong> und <strong>Thinking Budget</strong>, die für Nutzer nützlich sind, die das Verhalten des Modells genauer steuern möchten.
 </p>
 
-<table>
-    <tr>
-        <td><strong>API-Schlüssel erforderlich</strong></td>
-        <td>Ja</td>
-    </tr>
-    <tr>
-        <td><strong>Kostenlose Option</strong></td>
-        <td>Ja [Großzügiges kostenloses Kontingent verfügbar]</td>
-    </tr>
-    <tr>
-        <td><strong>Geeignet für</strong></td>
-        <td>Nutzer des Google-Ökosystems oder wer eine kostenlose API-Option sucht</td>
-    </tr>
+<table class="guides">
+    <thead>
+        <tr>
+            <th>API-Schlüssel erforderlich</th>
+            <th>Kostenlose Option</th>
+            <th>Geeignet für</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Ja</td>
+            <td>Ja (großzügiges kostenloses Kontingent verfügbar)</td>
+            <td>Nutzer des Google-Ökosystems oder wer eine kostenlose API-Option sucht</td>
+        </tr>
+    </tbody>
 </table>
 
 <br>
@@ -46,64 +48,72 @@ multilang = true
 
 <h2>Einrichtung</h2>
 
-<h3>1. ThunderAI-Optionen öffnen</h3>
 <p>
-    Klicken Sie in Thunderbird auf das ThunderAI-Menü und wählen Sie <strong>Options</strong>, oder gehen Sie zu<br>
-    <strong>Extras → Add-ons und Themes → ThunderAI → Einstellungen</strong>.
+    Am schnellsten geht es mit dem <strong>Setup Wizard</strong>: Öffnen Sie ihn über die Willkommensseite von ThunderAI, das Popup in der
+    Symbolleiste oder die Einstellungsseite, wählen Sie <strong>Google Gemini API</strong>, fügen Sie Ihren API-Schlüssel ein, wählen Sie ein Modell
+    und testen Sie die Verbindung. Anschließend können Sie im Wizard die gewünschten KI-Funktionen aktivieren.<br>
+    Für die manuelle Einrichtung folgen Sie den Schritten unten.
 </p>
 
-<h3>2. Google Gemini-Integration auswählen</h3>
-<p>Wählen Sie im Bereich <strong>Connection</strong> die Option <strong>Google Gemini</strong> aus dem Integrations-Dropdown.</p>
+<h3>1. ThunderAI-Einstellungen öffnen</h3>
+<p>
+    Gehen Sie in Thunderbird zu <strong>Extras → Add-ons und Themes → ThunderAI → Einstellungen</strong>.
+</p>
+
+<h3>2. Google-Gemini-Integration auswählen</h3>
+<p>Wählen Sie im Bereich <strong>Connection Settings</strong> im Dropdown <strong>Connection Type</strong> die Option <strong>Google Gemini API</strong>.</p>
 
 <h3>3. API-Schlüssel eingeben</h3>
-<p>Fügen Sie Ihren API-Schlüssel in das Feld <strong>API Key</strong> ein.</p>
+<p>Fügen Sie Ihren API-Schlüssel in das Feld <strong>API Key</strong> ein. Der Schlüssel wird lokal in Thunderbird gespeichert und nur an die Server von Google gesendet.</p>
 
 <h3>4. Modell auswählen</h3>
-<p>Wählen Sie das Gemini-Modell aus dem Dropdown <strong>Model</strong>. Klicken Sie auf die Schaltfläche, um die Liste zu aktualisieren.</p>
+<p>Klicken Sie neben <strong>Google Gemini API Models</strong> auf <strong>Update list</strong> und wählen Sie dann das gewünschte Modell aus der Liste.</p>
 
-<h3>5. (Optional) System Instructions konfigurieren</h3>
+<h3>5. Verbindung testen</h3>
 <p>
-    System Instructions ermöglichen es Ihnen, einen persistenten Kontext für alle Ihre Prompts festzulegen. Zum Beispiel, dem Modell anzuweisen, immer formell zu antworten, in einer bestimmten Sprache oder in einer bestimmten Rolle zu agieren.<br>
-    Geben Sie Ihre Anweisungen in das Feld <strong>System Instructions</strong> auf der Optionsseite ein.
+    Einstellungen werden gespeichert, sobald Sie sie ändern: Es gibt keine Speichern-Schaltfläche.<br>
+    Klicken Sie in der Leiste unter den Verbindungseinstellungen auf <strong>Test now</strong>. Wenn Thunderbird nach der Berechtigung fragt, auf
+    <code>generativelanguage.googleapis.com</code> zuzugreifen, bestätigen Sie sie. Wenn alles in Ordnung ist, zeigt die Leiste
+    <em>"Connected — Google Gemini API reachable"</em>. Öffnen Sie dann eine beliebige E-Mail, klicken Sie auf die ThunderAI-Schaltfläche in der Symbolleiste und führen Sie einen Prompt aus.
 </p>
 
-<h3>6. (Optional) thinkingBudget konfigurieren</h3>
-<p>Die Option <strong>thinkingBudget</strong> steuert, wie viel internes Reasoning das Modell vor der Antwort durchführt. Ein höherer Wert kann die Qualität bei komplexen Aufgaben verbessern, kostet aber mehr Zeit und Kontingent. Belassen Sie den Standardwert, sofern Sie keine besonderen Anforderungen haben.</p>
-
-<h3>7. Speichern und testen</h3>
-<p>Klicken Sie auf <strong>Save</strong>. Öffnen Sie eine beliebige E-Mail, verwenden Sie das ThunderAI-Menü und führen Sie einen Prompt aus, um die Verbindung zu überprüfen.</p>
+<h2>Erweiterte Optionen</h2>
+<p>
+    Klicken Sie im Bereich <strong>Connection Settings</strong> auf <strong>Advanced options</strong>, um die folgenden Einstellungen anzuzeigen.
+    Lassen Sie ein Feld leer, damit das Modell seinen Standardwert verwendet.
+</p>
+<ul>
+    <li><strong>System Instruction</strong>: ein fester Kontext für alle Ihre Prompts, zum Beispiel immer förmlich, in einer bestimmten Sprache oder in einer bestimmten Rolle zu antworten.</li>
+    <li><strong>Thinking Budget</strong>: wie viele Tokens das Modell zum Nachdenken vor der Antwort verwenden darf. Geben Sie <code>0</code> ein, um das Nachdenken auszuschalten, oder <code>-1</code> für dynamisches Nachdenken. Lassen Sie das Feld leer, wenn das Modell kein Nachdenken unterstützt.</li>
+    <li><strong>Temperature</strong> (0.0–2.0), <strong>Top P</strong> und <strong>Top K</strong>: wie zufällig oder fokussiert die Antwort ist. Nicht jedes Modell unterstützt Top K.</li>
+    <li><strong>Max output tokens</strong>: die maximale Länge der Antwort. Leer oder 0 überlässt die Entscheidung dem Modell.</li>
+    <li><strong>Extra body data</strong>: zusätzliche Parameter für die Gemini API als JSON-Objekt, für Optionen, die ThunderAI nicht anzeigt, z.&nbsp;B. <code>{"generationConfig": {"seed": 42}}</code>.
+        Die Schlüssel in <code>generationConfig</code> werden mit denen zusammengeführt, die ThunderAI erzeugt.</li>
+</ul>
+<p>
+    Sie können diese Optionen auch für einen einzelnen Prompt festlegen, auf der Seite der benutzerdefinierten Prompts, sowie für jede KI-Funktion (Add Tags, Spam Filter,
+    Summarize, Translate, Calendar Event, Task), mit der Schaltfläche <strong>Advanced options</strong> ihrer spezifischen Verbindung.
+</p>
 
 <h2>Tipps</h2>
 <ul>
-    <li>Das kostenlose Kontingent wird monatlich erneuert und ist in der Regel für den persönlichen Gebrauch ausreichend.</li>
-    <li>System Instructions sind besonders nützlich, wenn Sie allgemeine Regeln für Ihren E-Mail-Assistenten festlegen möchten.</li>
+    <li>Das kostenlose Kontingent hat Anfragelimits pro Minute und pro Tag, die für die private Nutzung in der Regel ausreichen. Die aktuellen Limits finden Sie in <a href="https://aistudio.google.com" target="_blank">Google AI Studio</a>.</li>
+    <li>Wird das Limit erreicht, während ThunderAI mehrere E-Mails verarbeitet (Add Tags, Spam Filter, Summarize, Translate), stoppt die Verarbeitung von selbst und meldet, wie viele Nachrichten verarbeitet wurden und, wenn Google es angibt, wie lange zu warten ist.</li>
+    <li>Die System Instruction ist besonders nützlich, wenn Sie allgemeine Regeln für Ihren E-Mail-Assistenten festlegen möchten.</li>
 </ul>
 
 <h2>Fehlerbehebung</h2>
 
-<h3>Fehler „API key not valid"</h3>
-<p>Prüfen Sie, ob der Schlüssel korrekt kopiert wurde. Generieren Sie bei Bedarf einen neuen Schlüssel aus AI Studio.</p>
+<h3>Fehler "Authentication failed — check your API key" oder "API key not valid"</h3>
+<p>Prüfen Sie, ob der Schlüssel korrekt kopiert wurde. Erzeugen Sie bei Bedarf in AI Studio einen neuen.</p>
 
-<h3>„Model not found" oder leere Modellliste</h3>
-<p>Stellen Sie sicher, dass Ihr API-Schlüssel Zugang zu Gemini-Modellen hat. Einige in eingeschränkten Google Cloud-Projekten erstellte Schlüssel haben möglicherweise begrenzten Modellzugang.</p>
+<h3>"Model not found" oder leere Modellliste</h3>
+<p>Stellen Sie sicher, dass Ihr API-Schlüssel Zugriff auf die Gemini-Modelle hat. Schlüssel aus eingeschränkten Google-Cloud-Projekten können nur begrenzten Zugriff auf Modelle haben.</p>
+
+<h3>Anfragen schlagen fehl, nachdem die erweiterten Optionen geändert wurden</h3>
+<p>Manche Modelle akzeptieren nicht jede Option (zum Beispiel Top K oder ein Thinking Budget bei einem Modell ohne Nachdenken). Leeren Sie die Option und versuchen Sie es erneut.</p>
 
 <br>
 <div style="text-align: center">
     <a href="../">Zurück zu den Anleitungen</a> &nbsp;|&nbsp; <a href="../claude-api/">Weiter: Claude API →</a>
 </div>
-
-
-<style>
-table {
-    border-collapse: collapse;
-    margin: 10px 0;
-}
-th, td {
-    border: 1px solid #ccc;
-    padding: 7px 14px;
-    text-align: left;
-}
-h3 {
-    margin-bottom: 4px;
-}
-</style>

@@ -1,0 +1,48 @@
+{
+  "name": "ThunderAI",
+  "groups": [
+    {
+      "title": "addonNavGetStarted",
+      "items": [
+        { "page": "" },
+        { "page": "tutorial" }
+      ]
+    },
+    {
+      "title": "addonNavSetup",
+      "items": [
+        {
+          "page": "guides",
+          "children": [
+            { "page": "guides/chatgpt-web" },
+            { "page": "guides/openai-api" },
+            { "page": "guides/openai-compatible-api" },
+            { "page": "guides/claude-api" },
+            { "page": "guides/google-gemini" },
+            { "page": "guides/ollama" }
+          ]
+        },
+        { "page": "guides/enterprise-configuration" }
+      ]
+    },
+    {
+      "title": "addonNavUsage",
+      "items": [
+        { "page": "custom-prompts" },
+        { "page": "data-placeholders" },
+        { "page": "dynamic-menu" }
+      ]
+    },
+    {
+      "title": "addonNavResources",
+      "items": [
+        { "page": "status", "also": ["status_archive"] },
+        { "page": "ollama-cors-information" },
+        { "page": "privacy" },
+        { "page": "permissions" },
+        { "page": "translate" },
+        { "page": "donate" }
+      ]
+    }
+  ]
+}

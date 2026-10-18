@@ -1,5 +1,5 @@
 +++
-Title = "\"ThunderAI\" Tutorial - Crea tu primer prompt personalizado"
+Title = "Tutorial"
 Type = "no-list"
 multilang = true
 +++
@@ -16,7 +16,7 @@ multilang = true
 <h2 class="tutorial">Qué vamos a construir</h2>
 <p>El prompt final:</p>
 <ol>
-    <li>Dirigirá la respuesta al remitente original por su nombre, extraído automáticamente del correo electrónico.</li>
+    <li>Dirigirá la respuesta al remitente original, tomado automáticamente del correo electrónico.</li>
     <li>Te pedirá un <strong>tono</strong> (p. ej. "formal", "amistoso", "breve") cada vez que lo uses.</li>
     <li>Firmará la respuesta con tu nombre, almacenado una sola vez como marcador de datos personalizado.</li>
 </ol>
@@ -24,35 +24,38 @@ multilang = true
 <pre class="tutorial">Write a reply to the following email.
 Address the reply to: {%author%}
 Tone: {%additional_text:tone%}
-Sign the reply with: {%thunderai_my_name%}
+Sign the reply with: {%thunderai_custom_my_name%}
 
 {%mail_text_body%}</pre>
 
 <h2 class="tutorial">Paso 1 — Crea un marcador de datos personalizado para tu nombre</h2>
 <p>
     Primero, almacena tu nombre como un marcador reutilizable para no tener que escribirlo en cada prompt que crees.<br>
-    Abre las <strong>Opciones de ThunderAI</strong> y haz clic en el botón
-    <img src="{{< base_url >}}images/thunderai/custom-data-placeholders-button.png" style="display:inline;margin:0;position:relative;top:0.25em;"/>
-    para abrir la pestaña de marcadores de datos personalizados.
+    Abre las <strong>Opciones de ThunderAI</strong> y haz clic en el botón {{< ui_button "thunderai/tutorial/buttons/manage-data-ph.png" "Manage your data placeholders" >}}.
+    Se abre la página <strong>Manage Data Placeholders</strong>. Haz clic en {{< ui_button "thunderai/tutorial/buttons/add-new.png" "Add New" >}} y rellena el formulario con estos valores:
 </p>
-<p>Añade un nuevo marcador con estos valores:</p>
 <ul>
-    <li><strong>ID</strong>: <code>my_name</code> — Esto se convierte en <code>{%thunderai_my_name%}</code> en tus prompts.</li>
+    <li><strong>ID</strong>: <code>my_name</code> — ThunderAI añade el prefijo <code>thunderai_custom_</code>, así que en tus prompts este marcador es <code>{%thunderai_custom_my_name%}</code>.</li>
     <li><strong>Name</strong>: <code>My Name</code> — Un nombre descriptivo que te resulte útil.</li>
     <li><strong>Data Placeholder Text</strong>: tu nombre completo, p. ej. <code>Juan García</code>.</li>
-    <li><strong>Usable in prompts added to menu</strong>: <code>Composing an email</code> — Solo lo necesitamos al redactar un correo.</li>
+    <li><strong>Usable in prompts added to menu</strong>: <em>Always</em> — Así puedes usarlo en cualquier prompt, tanto al leer como al redactar un correo.</li>
 </ul>
 
-<div class="img_center">
-    <img src="{{< base_url >}}images/thunderai/tutorial/thunderai_tutorial_custom_data_placeholder.png" />
-</div>
+<figure>
+    {{< themed_screenshot "thunderai/tutorial/custom-data-placeholder.png" "El formulario de un nuevo marcador de datos personalizado, rellenado" >}}
+    <figcaption>El nuevo marcador de datos</figcaption>
+</figure>
 
-<p>Guárdalo. Ahora puedes usar <code>{%thunderai_my_name%}</code> en cualquier prompt y ThunderAI lo reemplazará automáticamente con tu nombre.</p>
+<p>
+    Haz clic en {{< ui_button "thunderai/tutorial/buttons/add-ph.png" "Add the Data Placeholder" >}} y después en {{< ui_button "thunderai/tutorial/buttons/save-all.png" "Save All" >}}: en esta página los cambios solo se guardan cuando tú los guardas.<br>
+    Ahora puedes usar <code>{%thunderai_custom_my_name%}</code> en cualquier prompt y ThunderAI lo sustituirá automáticamente por tu nombre.
+</p>
 
 <h2 class="tutorial">Paso 2 — Crea el prompt personalizado</h2>
-<p>Ve a la pestaña <strong>Custom Prompts</strong> en las Opciones de ThunderAI y añade un nuevo prompt.</p>
-
-<p>Completa los campos de la siguiente manera:</p>
+<p>
+    Vuelve a las Opciones de ThunderAI y haz clic en el botón {{< ui_button "thunderai/customprompts/buttons/manage-prompts.png" "Manage your prompts" >}} para abrir la página <strong>Manage Prompts</strong>.
+    Haz clic en {{< ui_button "thunderai/customprompts/buttons/new-prompt.png" "+ New prompt" >}} y rellena los campos de la siguiente manera:
+</p>
 <ul>
     <li><strong>ID</strong>: <code>formal_reply</code></li>
     <li><strong>Name</strong>: <code>Redactar una respuesta...</code> — El nombre aparecerá en el menú de ThunderAI. Los <code>...</code> son una convención útil para indicar que el prompt pedirá una entrada antes de ejecutarse.</li>
@@ -60,54 +63,59 @@ Sign the reply with: {%thunderai_my_name%}
         <pre class="tutorial">Write a reply to the following email.
 Address the reply to: {%author%}
 Tone: {%additional_text:tone%}
-Sign the reply with: {%thunderai_my_name%}
+Sign the reply with: {%thunderai_custom_my_name%}
 
 {%mail_text_body%}</pre>
     </li>
 </ul>
+<p>Cuando escribes <code>{%</code> en el texto del prompt, ThunderAI te sugiere los marcadores disponibles, y cada marcador que reconoce queda resaltado. Si uno aparece en rojo, revisa cómo lo has escrito.</p>
 <p>Una nota sobre los marcadores utilizados:</p>
 <ul>
-    <li><code>{%author%}</code> — Un marcador estándar que inserta el nombre y la dirección de correo del remitente desde la cabecera del mensaje.</li>
-    <li><code>{%additional_text:tone%}</code> — Un marcador de entrada del usuario: ThunderAI te pedirá que escribas el tono cada vez que ejecutes este prompt. El ID <code>tone</code> es la etiqueta que se muestra en el campo de entrada.</li>
-    <li><code>{%thunderai_my_name%}</code> — El marcador de datos personalizado que creaste en el Paso 1.</li>
-    <li><code>{%mail_text_body%}</code> — El cuerpo completo del correo electrónico, para que la IA tenga el contexto necesario.</li>
+    <li><code>{%author%}</code> — Un marcador estándar que inserta el autor del correo (nombre y dirección de correo).</li>
+    <li><code>{%additional_text:tone%}</code> — Un marcador de entrada del usuario: ThunderAI te pedirá que escribas el tono cada vez que ejecutes este prompt. El ID <code>tone</code> se muestra junto al campo de entrada, para que sepas qué escribir.</li>
+    <li><code>{%thunderai_custom_my_name%}</code> — El marcador de datos personalizado que creaste en el Paso 1.</li>
+    <li><code>{%mail_text_body%}</code> — El cuerpo del correo en texto plano, para que la IA tenga el contexto que necesita.</li>
 </ul>
 
 <h2 class="tutorial">Paso 3 — Configura las opciones del prompt</h2>
-<p>Aún en el formulario del nuevo prompt, establece las siguientes opciones:</p>
+<p>En el mismo prompt nuevo, configura las siguientes opciones:</p>
 <ul>
-    <li><strong>Add to menu</strong>: <em>Reading an email</em> — Quieres responder a correos recibidos, no usar esto mientras redactas.</li>
-    <li><strong>Action</strong>: <em>Do reply</em> — Esto abrirá una ventana de redacción ya rellenada con el borrador de la IA.</li>
-    <li><strong>Ask for additional text</strong>: actívalo — Es necesario para que el marcador <code>{%additional_text:tone%}</code> funcione.</li>
-    <li><strong>Always add the signature</strong>: déjalo desactivado — Ya estamos añadiendo el nombre a través del propio prompt. Actívalo si también quieres que se añada la firma de ThunderAI definida en las preferencias.</li>
+    <li><strong>Add to menu</strong>: <em>Reading an email</em> — Quieres responder a correos recibidos, no usarlo mientras redactas.</li>
+    <li><strong>Action</strong>: <em>Do reply</em> — La respuesta de la IA se usará para responder al correo.</li>
+    <li><strong>Ask for additional text</strong>: actívalo — Es necesario para que funcione el marcador <code>{%additional_text:tone%}</code>. Si lo dejas desactivado, ThunderAI resalta el interruptor.</li>
+    <li><strong>Always add the signature</strong>: déjalo desactivado — Ya estamos añadiendo el nombre con el propio prompt. Actívalo si también quieres la firma definida en las opciones de ThunderAI.</li>
 </ul>
 
-<div class="img_center">
-    <img src="{{< base_url >}}images/thunderai/tutorial/thunderai_tutorial_customprompt.png" />
-</div>
+<figure>
+    {{< themed_screenshot "thunderai/tutorial/custom-prompt.png" "El prompt Draft a reply... en la página Manage Prompts" >}}
+    <figcaption>El prompt terminado</figcaption>
+</figure>
 
-<p>Haciendo clic en <strong>Show additional properties</strong> también puedes definir configuraciones específicas para las APIs o la interfaz web de ChatGPT (como un Modelo específico o un Custom GPT) que solo se aplicarán a este prompt.</p>
+<p>En la sección <strong>Connection [API]</strong> también puedes elegir otro servicio de IA, otro modelo u otro servidor, que solo usará este prompt. No lo necesitas para este tutorial: por defecto el prompt usa la conexión configurada en las opciones.</p>
 
-<p>Añade el prompt y haz clic en el botón <strong>Save All</strong>.</p>
+<p>Haz clic en {{< ui_button "thunderai/customprompts/buttons/save.png" "Save" >}}. El prompt se guarda en el momento y se añade al menú.</p>
 
 <h2 class="tutorial">Paso 4 — Pruébalo</h2>
 <ol>
-    <li>Abre cualquier correo electrónico recibido en Thunderbird.</li>
+    <li>Abre cualquier correo recibido en Thunderbird.</li>
     <li>Abre el <a href="/thunderbird-addon-thunderai/dynamic-menu/" target="_blank">menú de ThunderAI</a> y selecciona <strong>Redactar una respuesta...</strong>
-        <div class="img_center">
-            <img src="{{< base_url >}}images/thunderai/tutorial/thunderai_tutorial_menu.png" />
-        </div>
+        <figure>
+            {{< themed_screenshot "thunderai/tutorial/menu.png" "El menú de ThunderAI con el prompt Draft a reply... seleccionado" >}}
+            <figcaption>El nuevo prompt en el menú de ThunderAI</figcaption>
+        </figure>
     </li>
-    <li>ThunderAI mostrará un campo de entrada con la etiqueta <strong>tone</strong>; escribe algo como <code>formal y conciso</code> y confirma.
-        <div class="img_center">
-            <img src="{{< base_url >}}images/thunderai/tutorial/thunderai_tutorial_additional_text.png" />
-        </div>
+    <li>Se abre la ventana de chat de IA, que pide el texto adicional mostrando la etiqueta <strong>[ID: tone]</strong>. Escribe algo como <code>formal y conciso</code> y haz clic en {{< ui_button "thunderai/tutorial/buttons/send.png" "Send" >}}.
+        <figure>
+            {{< themed_screenshot "thunderai/tutorial/additional-text.png" "La ventana de chat de IA pidiendo el texto adicional con ID tone" >}}
+            <figcaption>ThunderAI pide el tono</figcaption>
+        </figure>
     </li>
-    <li>El prompt se envía a la IA con todos los marcadores resueltos.</li>
-    <li>Cuando la IA responda, haz clic en el botón <strong>Use this answer</strong> para importar el texto en una nueva ventana de redacción.
-        <div class="img_center">
-            <img src="{{< base_url >}}images/thunderai/tutorial/thunderai_tutorial_reply_button.png" />
-        </div>
+    <li>El prompt se envía a la IA con todos los marcadores resueltos: puedes leerlo en la ventana de chat.</li>
+    <li>Cuando la IA responda, haz clic en {{< ui_button "thunderai/tutorial/buttons/use-answer.png" "Use this answer" >}} para abrir una respuesta con el texto de la IA. La segunda línea del botón indica si responde a todos o solo al remitente, según lo configurado en las opciones. La flecha de al lado te da la otra opción.
+        <figure>
+            {{< themed_screenshot "thunderai/tutorial/answer.png" "La ventana de chat de IA con el prompt resuelto, la respuesta y el botón Use this answer" >}}
+            <figcaption>La respuesta, lista para usar</figcaption>
+        </figure>
     </li>
 </ol>
 
@@ -115,12 +123,11 @@ Sign the reply with: {%thunderai_my_name%}
 <p>Ahora que sabes cómo encajan las piezas, aquí tienes algunas ideas para explorar:</p>
 <ul>
     <li><strong>Añade más marcadores personalizados</strong> — Almacena tu cargo, el nombre de tu empresa o un aviso legal estándar, y reutilízalos en todos tus prompts.</li>
-    <li><strong>Añade más campos de entrada</strong> — Puedes tener varios marcadores <code>{%additional_text:&lt;id&gt;%}</code> en el mismo prompt, cada uno con un ID diferente. Cada uno se convierte en un campo de entrada independiente.</li>
-    <li><strong>Activa el visor de diferencias</strong> — Si creas un prompt de corrección o reescritura con la acción <em>Substitute the original text</em>, activar el visor de diferencias te permite revisar los cambios antes de aceptarlos.</li>
+    <li><strong>Añade más campos de entrada</strong> — Puedes tener varios marcadores <code>{%additional_text:&lt;id&gt;%}</code> en el mismo prompt, cada uno con un ID diferente. ThunderAI los pide uno tras otro.</li>
+    <li><strong>Activa la comparación de textos</strong> — Si creas un prompt de corrección o reescritura con la acción <em>Substitute text</em>, activa <strong>Enable the text comparison viewer</strong> para revisar los cambios propuestos por la IA antes de usarlos.</li>
 </ul>
 
-<br>
-<div style="text-align: center">
+<p class="go-back">
     <a href="/es/thunderbird-addon-thunderai/guides/">Volver a las guías</a><br>
     <a href="/thunderbird-addon-thunderai/">Volver a la página del addon</a>
-</div>
+</p>

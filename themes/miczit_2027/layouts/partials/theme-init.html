@@ -1,0 +1,10 @@
+<script>
+(function () {
+    var theme = 'dark';
+    try {
+        var stored = localStorage.getItem('user-color-scheme');
+        if (stored === 'light' || stored === 'dark') { theme = stored; }
+    } catch (e) {}
+    document.documentElement.setAttribute('data-theme', theme);
+})();
+</script>

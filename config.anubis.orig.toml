@@ -1,0 +1,54 @@
+baseURL = "https://micz.it/"
+languageCode = "en"
+title = "Mic's"
+
+publishDir = "docs"
+theme = "anubis"
+
+enableRobotsTXT = true
+
+disableKinds = ["RSS","taxonomy","sitemap"]
+ignoreErrors = ["error-disable-taxonomy"]
+ignoreFiles = ["\\.json$"]
+
+defaultContentLanguage = "en"
+defaultContentLanguageInSubdir = false
+
+[languages]
+  [languages.en]
+    languageName = "English"
+    weight = 1
+    [languages.en.params]
+      flag = "🇬🇧"
+  [languages.it]
+    languageName = "Italiano"
+    weight = 2
+    [languages.it.params]
+      flag = "🇮🇹"
+  [languages.de]
+    languageName = "Deutsch"
+    weight = 3
+    [languages.de.params]
+      flag = "🇩🇪"
+  [languages.fr]
+    languageName = "Français"
+    weight = 4
+    [languages.fr.params]
+      flag = "🇫🇷"
+  [languages.es]
+    languageName = "Español"
+    weight = 5
+    [languages.es.params]
+      flag = "🇪🇸"
+
+[params]
+   customCSS = ["css/micz.css"] # relative path to "static" directory
+   forceCSSReloadID = "20260916"
+   Subtitle = "Silence is golden."
+   style= "dark"
+   env= "production"
+
+
+[services]
+  [services.googleAnalytics]
+    ID = "G-14PLEX7LGC"

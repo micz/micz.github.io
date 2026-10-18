@@ -1,0 +1,13 @@
+{{ define "main" }}
+    {{ $nav := partial "addon-nav.html" . | strings.TrimSpace | safeHTML }}
+    {{ if $nav }}<div class="with-addon-nav">{{ $nav }}{{ end }}
+    <article class="post">
+        <div class="page-top">
+            {{ partial "lang-switcher.html" . }}
+        </div>
+        <div class="content">
+            {{ .Content }}
+        </div>
+    </article>
+    {{ if $nav }}</div>{{ end }}
+{{ end }}

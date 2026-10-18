@@ -1,9 +1,15 @@
+# Production build:
+#   hugo --gc --minify
+#
+# - theme:     miczit_2027 (dark-first editorial theme)
+# - publishDir: docs/ (local builds only, gitignored; the site is built and deployed on push by .github/workflows/hugo.yml)
+
 baseURL = "https://micz.it/"
 languageCode = "en"
 title = "Mic's"
 
 publishDir = "docs"
-theme = "anubis"
+theme = "miczit_2027"
 
 enableRobotsTXT = true
 
@@ -42,9 +48,12 @@ defaultContentLanguageInSubdir = false
       flag = "🇪🇸"
 
 [params]
-   forceCSSReloadID = "20261004"
-   customCSS = ["css/micz.css"] # relative path to "static" directory
+   forceCSSReloadID = "20261019"
    Subtitle = "Silence is golden."
-   style= "dark"
    env= "production"
    goatcounterURL = "https://micz.goatcounter.com/count"
+
+# Code highlighting: Chroma emits CSS classes, colored by the .chroma rules in theme.css
+# (dark and light tokens) instead of a fixed inline style.
+[markup.highlight]
+  noClasses = false

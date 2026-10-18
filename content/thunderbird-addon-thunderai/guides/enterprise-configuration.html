@@ -1,18 +1,9 @@
 +++
-Title = "\"ThunderAI\" Thunderbird Addon - Enterprise Configuration"
+Title = "Enterprise Configuration"
 Type = "no-list"
 +++
 
 {{< page_title >}}
-
-<div class="admon wip">
-    <h3>🚧 Work in progress</h3>
-    <p>
-        Enterprise configuration is still a work in progress: details on this page may change.
-        Follow the development and share feedback in
-        <a href="https://github.com/micz/ThunderAI/issues/880" target="_blank">issue #880</a>.
-    </p>
-</div>
 
 <p>
     For administrators deploying ThunderAI across an organization. It covers pre-configuring
@@ -135,7 +126,8 @@ Type = "no-list"
 
 <p>Every ThunderAI setting lives under <code>3rdparty</code> → <code>Extensions</code> → <code>thunderai@micz.it</code>:</p>
 
-<pre>{
+{{< highlight json >}}
+{
   "policies": {
     "3rdparty": {
       "Extensions": {
@@ -145,7 +137,8 @@ Type = "no-list"
       }
     }
   }
-}</pre>
+}
+{{< /highlight >}}
 
 <p>
     <strong>Policy key names are exactly ThunderAI's own setting names.</strong> There is no mapping
@@ -163,8 +156,10 @@ Type = "no-list"
 </p>
 <p>To supply a <em>starting</em> value the user may then change, add a sibling <code>"&lt;key&gt;:locked": false</code>:</p>
 
-<pre>"reply_type": "reply_all",
-"reply_type:locked": false</pre>
+{{< highlight yaml >}}
+"reply_type": "reply_all",
+"reply_type:locked": false
+{{< /highlight >}}
 
 <table class="guides">
     <thead>
@@ -239,7 +234,7 @@ Type = "no-list"
 </p>
 
 
-<h2 id="strict-mode">Strict mode</h2>
+<h2 id="strict-mode">Strict mode: <code>_lock_unlisted</code> and <code>_user_editable</code></h2>
 
 <p>
     By default a policy controls only the settings it names. Everything else stays the user's choice,
@@ -247,9 +242,9 @@ Type = "no-list"
 </p>
 <p>
     <strong>Strict mode reverses that.</strong> With <code>"_lock_unlisted": true</code>, every setting
-    your policy does not set is locked at ThunderAI's built-in default. The user sees it exactly like a
-    setting you enforce: disabled, with the <em>Managed</em> padlock badge. Settings introduced by an
-    update are locked at their default from the first start after the update.
+    your policy does not set is locked at ThunderAI's built-in default. In the settings pages it looks and
+    behaves exactly like a setting you lock explicitly: disabled, and marked as managed with the padlock.
+    Settings added by a future version are locked at their default from the first start after the update.
 </p>
 
 <table class="guides">
@@ -269,45 +264,52 @@ Type = "no-list"
         <tr>
             <td><code>_user_editable</code></td>
             <td>array of setting names (default <code>[]</code>)</td>
-            <td>Settings that stay user-editable in strict mode. Only used when <code>_lock_unlisted</code> is
-                <code>true</code>.</td>
+            <td>The settings that stay user-editable in strict mode. Only used when
+                <code>_lock_unlisted</code> is <code>true</code>.</td>
         </tr>
     </tbody>
 </table>
 
 <h3>How each setting is resolved</h3>
 
+<p>In strict mode, in order of precedence:</p>
+
 <ol>
     <li><strong>Per-machine settings are never affected.</strong> They stay user-editable: the API chat
         window size and position, the chat font zoom, the layout of the custom prompts page, and the
-        per-profile account selection of the spam filter and Add Tags. These are the keys listed as
-        <a href="#key-reference">not settable by policy</a>.</li>
-    <li><strong>Settings you set in the policy</strong> behave exactly as without strict mode: enforced,
-        or only an initial value with <code>"&lt;key&gt;:locked": false</code>. The switch and connection
-        type implied by <a href="#feature-connections"><code>_special_prompts_connection</code></a> count as
-        set by the policy. If one of these settings also appears in <code>_user_editable</code>, your
-        value wins and a warning is logged.</li>
-    <li><strong>Settings listed in <code>_user_editable</code></strong> stay the user's: their own value,
-        or the default if they never changed it.</li>
+        per-profile account selection of the spam filter and Add Tags (see
+        <a href="#key-reference">Keys that cannot be set by policy</a>).</li>
+    <li><strong>A setting your policy sets</strong> keeps its usual behaviour: enforced, or only an
+        initial value with <code>"&lt;key&gt;:locked": false</code>, exactly as without strict mode. The
+        settings implied by <a href="#feature-connections"><code>_special_prompts_connection</code></a>
+        (the feature's <em>Use a specific integration</em> switch and its connection type) count as set by
+        the policy. If such a setting also appears in <code>_user_editable</code>, the policy value wins
+        and a warning is logged.</li>
+    <li><strong>A setting listed in <code>_user_editable</code></strong> stays the user's: their own
+        value, or the default if they never changed it.</li>
     <li><strong>Every other setting</strong> is locked at its default.</li>
 </ol>
 
 <p>
-    <strong>The two account-match keys are never locked by strict mode:</strong>
-    <code>spamfilter_enabled_accounts_match</code> and <code>add_tags_enabled_accounts_match</code>. Their
-    default means "not managed", and locking it would stop the automatic features on every account. The
-    features themselves (<code>spamfilter</code>, <code>add_tags</code>) are locked at their default, which
-    is off.
+    Without <code>_lock_unlisted</code>, or with it set to <code>false</code>, nothing changes compared
+    to earlier versions.
+</p>
+<p>
+    <strong>The account lists are never locked by strict mode:</strong>
+    <code>spamfilter_enabled_accounts_match</code> and <code>add_tags_enabled_accounts_match</code>.
+    Their default means "not managed", and locking them would stop those automatic features on every
+    account. The features themselves (<code>spamfilter</code>, <code>add_tags</code>) are locked at their
+    default, which is off.
 </p>
 <p>
     <strong>Users' own values are never deleted.</strong> If you turn strict mode off, they come back at
-    the next start. Without <code>_lock_unlisted</code>, or with it set to <code>false</code>, nothing
-    changes compared to earlier versions.
+    the next start.
 </p>
 
 <h3>Example</h3>
 
-<pre>{
+{{< highlight json >}}
+{
   "policies": {
     "3rdparty": {
       "Extensions": {
@@ -325,54 +327,59 @@ Type = "no-list"
       }
     }
   }
-}</pre>
+}
+{{< /highlight >}}
 
 <p>
     The connection, Translate and Summarize are enforced as written. Users can still change their
-    signature name, their default language and debug logging. Every other setting, including any added
-    by future versions, is locked at its default.
+    signature name, default language and debug logging. Every other setting, including any added by
+    future versions, is locked at its default.
 </p>
 
-<h3>Things to know</h3>
+<h3>Before you turn it on</h3>
 
 <div class="admon warn">
     <h3>⚠️ Set a connection</h3>
     <p>
-        The default connection is "no connection". A strict policy must set <code>connection_type</code>
-        and the matching provider settings, or list them in <code>_user_editable</code>. Otherwise
-        ThunderAI stays unconfigured, and the setup wizard cannot save a connection.
+        The default is "no connection". A strict policy must set <code>connection_type</code> and the
+        matching provider settings, or list them in <code>_user_editable</code>. Otherwise ThunderAI stays
+        unconfigured, and the setup wizard cannot save a connection.
     </p>
 </div>
 
 <ul>
-    <li><strong>Some defaults are on.</strong> Translate, Create calendar event, Create task, showing token
-        usage in the chat, and hiding the model's thinking are on by default. If you don't want them, set
-        them to <code>false</code> explicitly.</li>
+    <li><strong>Some defaults are on.</strong> Translate (<code>translate</code>), Create calendar event
+        (<code>get_calendar_event</code>), Create task (<code>get_task</code>), showing token usage in the
+        chat (<code>chat_show_usage_data</code>) and hiding the model's thinking
+        (<code>hide_thinking</code>) are on by default. If you don't want them, set them to
+        <code>false</code> explicitly.</li>
     <li><strong>Prompts are not settings.</strong> Strict mode does not lock custom prompts, menu order,
-        custom placeholders, per-feature connections or special prompt texts. To control prompts, use
+        custom placeholders, per-feature connections or special prompt texts. To control those, use
         <a href="#restrictions"><code>_disable_prompt_management</code></a>,
         <a href="#special-prompt-texts"><code>_special_prompts_text</code></a> and
         <a href="#feature-connections"><code>_special_prompts_connection</code></a>.</li>
     <li><strong>Debug logging is locked off</strong> (<code>do_debug</code>) unless you list it in
         <code>_user_editable</code>. List it if your support team needs logs from users.</li>
-    <li><strong>A change takes effect at the next Thunderbird restart</strong>, like every other policy
-        change (see <a href="#before">Before you start</a>).</li>
+    <li><strong>Restart required.</strong> As for every policy change, strict mode takes effect at the
+        next Thunderbird start.</li>
 </ul>
 
-<h3>If strict mode is rejected</h3>
+<h3>Validation</h3>
 
 <p>
-    Problems are reported in the Error Console (see <a href="#troubleshooting">Troubleshooting</a>), even
-    with debug logging off:
+    Problems are reported as warnings in the Thunderbird Error Console, even with debug logging off (see
+    <a href="#troubleshooting">Troubleshooting</a>):
 </p>
 
 <ul>
-    <li><code>_lock_unlisted</code> must be <code>true</code> or <code>false</code>. Any other value is
-        ignored with a warning, and strict mode stays <strong>off</strong>.</li>
-    <li><code>_user_editable</code> must be an array. Any other value is ignored with a warning, and
-        strict mode is <strong>off</strong>.</li>
-    <li>An entry of <code>_user_editable</code> is skipped with a warning if it is not a string, if it
-        names an unknown setting, or if it names a per-machine setting (those are always editable).</li>
+    <li><code>_lock_unlisted</code> must be <code>true</code> or <code>false</code>. Any other value
+        is ignored with a warning, and strict mode stays <strong>off</strong>.</li>
+    <li><code>_user_editable</code> must be an array. Otherwise it is ignored with a warning, and strict
+        mode is <strong>off</strong>.</li>
+    <li>An entry of <code>_user_editable</code> that is not a string, or that names an unknown setting,
+        is skipped with a warning.</li>
+    <li>An entry naming a per-machine setting is skipped with a warning: those settings are always
+        editable.</li>
     <li><code>_user_editable</code> without <code>"_lock_unlisted": true</code> is ignored with a
         warning.</li>
 </ul>
@@ -388,7 +395,8 @@ Type = "no-list"
 <details open>
     <summary><b>Example <code>policies.json</code></b></summary>
 
-<pre>{
+{{< highlight json >}}
+{
   "policies": {
     "3rdparty": {
       "Extensions": {
@@ -437,7 +445,8 @@ Type = "no-list"
       }
     }
   }
-}</pre>
+}
+{{< /highlight >}}
 </details>
 
 <p>
@@ -583,9 +592,11 @@ Type = "no-list"
     organization's own criteria:
 </p>
 
-<pre>"_special_prompts_text": {
-  "prompt_spamfilter": "Decide whether this email is spam for ACME. Treat any request to change bank details as spam. Answer only with a JSON object: {\"spamValue\": &lt;0-100&gt;, \"explanation\": \"&lt;one sentence&gt;\"}.\n\n{%mail_html_body%}"
-}</pre>
+{{< highlight json >}}
+"_special_prompts_text": {
+  "prompt_spamfilter": "Decide whether this email is spam for ACME. Treat any request to change bank details as spam. Answer only with a JSON object: {\"spamValue\": <0-100>, \"explanation\": \"<one sentence>\"}.\n\n{%mail_html_body%}"
+}
+{{< /highlight >}}
 
 <p>
     Neither of the other mechanisms can do this. These texts are stored with the feature's prompt, not in
@@ -726,7 +737,8 @@ Type = "no-list"
     keys cannot set it and this separate key exists.
 </p>
 
-<pre>"_special_prompts_connection": {
+{{< highlight yaml >}}
+"_special_prompts_connection": {
   "spamfilter": {
     "api_type": "openai_comp_api",
     "openai_comp_host": "https://ai-gateway.acme.example/v1",
@@ -734,7 +746,8 @@ Type = "no-list"
     "openai_comp_model": "gpt-4o-mini",
     "openai_comp_model:locked": false
   }
-}</pre>
+}
+{{< /highlight >}}
 
 <h3>Shape</h3>
 
@@ -854,8 +867,10 @@ Type = "no-list"
     both locked. It is as if the policy also contained:
 </p>
 
-<pre>"spamfilter_use_specific_integration": true,
-"spamfilter_connection_type": "openai_comp_api"</pre>
+{{< highlight yaml >}}
+"spamfilter_use_specific_integration": true,
+"spamfilter_connection_type": "openai_comp_api"
+{{< /highlight >}}
 
 <p>
     On the feature's settings page, the <em>Use a specific integration</em> switch is on and locked, and
@@ -1053,12 +1068,14 @@ Type = "no-list"
     in each profile:
 </p>
 
-<pre>"spamfilter_enabled_accounts_match": [
+{{< highlight yaml >}}
+"spamfilter_enabled_accounts_match": [
   "support@acme.example",
   "@sales.acme.example",
   "local"
 ],
-"add_tags_enabled_accounts_match": ["@acme.example"]</pre>
+"add_tags_enabled_accounts_match": ["@acme.example"]
+{{< /highlight >}}
 
 <table class="guides">
     <thead>
@@ -1120,9 +1137,11 @@ Type = "no-list"
     They have no counterpart in the settings, so the <code>:locked</code> convention does not apply to them.
 </p>
 
-<pre>"_disable_prompt_management": true,
+{{< highlight yaml >}}
+"_disable_prompt_management": true,
 "_disable_default_prompts": true,
-"_disable_setup_wizard": true</pre>
+"_disable_setup_wizard": true
+{{< /highlight >}}
 
 <p>
     A restriction is either on (<code>true</code>) or off (<code>false</code>, the same as leaving it
@@ -1257,10 +1276,12 @@ Type = "no-list"
 
 <p>For example, both features on, as initial values the user can change to grant the permission:</p>
 
-<pre>"get_calendar_event_from_clipboard": true,
+{{< highlight yaml >}}
+"get_calendar_event_from_clipboard": true,
 "get_calendar_event_from_clipboard:locked": false,
 "spamfilter_skip_addressbook": true,
-"spamfilter_skip_addressbook:locked": false</pre>
+"spamfilter_skip_addressbook:locked": false
+{{< /highlight >}}
 
 <p>
     Keep in mind that an unlocked value is only a starting point: a user who already set the option keeps
@@ -1279,11 +1300,6 @@ Type = "no-list"
     Every key below is a ThunderAI setting name, used verbatim as the policy key. Values must match the
     type shown: a wrong type is ignored with a warning and is <strong>not</strong> coerced —
     <code>"true"</code> is not <code>true</code>, and <code>"70"</code> is not <code>70</code>.
-</p>
-<p>
-    In <a href="#strict-mode">strict mode</a>, every setting the policy does not set is locked at the
-    default shown in this reference, except the per-machine keys, listed at the end as not settable by
-    policy, and the two <code>*_enabled_accounts_match</code> keys.
 </p>
 <p>
     Array keys (<code>add_tags_exclusions</code>, <code>spamfilter_skip_addresses</code>,
@@ -1366,9 +1382,14 @@ Type = "no-list"
     Two settable keys need a permission the policy cannot grant — see
     <a href="#permissions">Settings that require a browser permission</a>.
 </p>
+<p>
+    In <a href="#strict-mode">strict mode</a>, every key not set by the policy is locked at the default
+    shown in this reference, except the per-machine keys, which the reference marks as not settable by
+    policy at the end of the list, and the two <code>*_enabled_accounts_match</code> keys.
+</p>
 <p class="small_text">
-    Use <b>Grouped by Section</b> to browse by area, or <b>All Keys A-Z</b> when you already have a key
-    name and need its type. The filter box searches key names in the view you are in.
+    Group by <b>Section</b> to browse by area, or <b>A–Z</b> when you already have a key name and need
+    its type. The search box matches key names and descriptions; click a key to copy it.
 </p>
 
 {{< policy_keys_list >}}
@@ -1515,8 +1536,7 @@ Type = "no-list"
     <li>With no policy installed, ThunderAI behaves exactly as it does for any individual user.</li>
 </ul>
 
-<br>
-<div style="text-align: center"><a href="../">Back to guides</a></div>
+<p class="go-back"><a href="../">Back to guides</a></p>
 
 <script>
     // Scroll spy for #section-nav: highlights the section currently being read and keeps

@@ -1,47 +1,111 @@
 +++
-Title = "\"ThunderAI\" Thunderbird Addon Custom Prompts"
+Title = "Custom prompts"
 aliases = ['/thunderdbird-addon-thunderai/custom-prompts/']
 Type = "no-list"
 +++
 
 {{< page_title >}}
 
-<p>With Custom Prompts, it is possible to define the text to send to the AI service to process the selected email. The added custom prompts will be displayed in the context menu.</p>
-<p>Costom Prompts can be exported and imported.</p>
-<p>Default custom prompts cannot be modified, but they can be disabled.</p>
-<p>These are the fields used to add a new prompt:
-    <br><br>
-    <img src="{{< base_url >}}images/thunderai/customprompts/newform1.png" />
-    <ul>
-        <li><strong>ID</strong>: the unique identification string.</li>
-        <li><strong>Name</strong>: the string added to the menu.</li>
-        <li><strong>Prompt Text</strong>: the text sent to the AI service with the email content. Here you can use also the <a href="../data-placeholders/">data placeholders</a>.</li>
-    </ul>
-    <br>
-    <img src="{{< base_url >}}images/thunderai/customprompts/newform2.png" />
-    <ul>
-        <li><strong>Add to menu</strong>: choose when show this prompt:
+<p>With Custom Prompts you define the text that ThunderAI sends to the AI service, together with the email you are reading or writing. Your prompts appear in the ThunderAI menus next to the built-in ones.</p>
+<p>Open the <b>Manage Prompts</b> page with the {{< ui_button "thunderai/customprompts/buttons/manage-prompts.png" "Manage your prompts" >}} button in the add-on options.</p>
+
+<figure>
+    {{< themed_screenshot "thunderai/customprompts/manage-prompts.png" "The Manage Prompts page: the prompt list on the left, the selected prompt on the right" >}}
+    <figcaption>The Manage Prompts page in the Detail view</figcaption>
+</figure>
+
+<h2>The page</h2>
+<p>The page shows all your prompts and the built-in ones in a single list. Next to the name, each prompt has a badge:</p>
+<ul>
+    <li><b>Personal</b>: a prompt you created. You can change it or delete it.</li>
+    <li><b>System</b>: a built-in prompt. It is read-only and is marked with a padlock.</li>
+    <li><b>Organization</b>: a prompt set by your organization's configuration (see <a href="#organization">below</a>). It is read-only.</li>
+</ul>
+<p>The search box filters the list by name, ID or prompt text.</p>
+<p>The list has two views, and you switch between them with the {{< ui_button "thunderai/customprompts/buttons/view-detail.png" "Detail" >}} and {{< ui_button "thunderai/customprompts/buttons/view-table.png" "Table" >}} buttons:</p>
+<ul>
+    <li><b>Detail</b>: the list is on the left, and the selected prompt opens on the right, where you can change it.</li>
+    <li><b>Table</b>: one row per prompt, with its text, the menu it is in, the action and its options. Click {{< ui_button "thunderai/customprompts/buttons/row-edit.png" "Edit" >}} (or {{< ui_button "thunderai/customprompts/buttons/row-open.png" "Open" >}} on a read-only prompt) to open it in the Detail view. The {{< ui_button "thunderai/customprompts/buttons/row-menu.png" "More actions" >}} button gives more actions: Duplicate, Export and Delete.</li>
+</ul>
+
+<figure>
+    {{< themed_screenshot "thunderai/customprompts/table-view.png" "The Table view of the Manage Prompts page" >}}
+    <figcaption>The Table view</figcaption>
+</figure>
+
+<p><b>Every change is saved immediately.</b> There is no "Save all" button. When you click {{< ui_button "thunderai/customprompts/buttons/save.png" "Save" >}} on a prompt, or delete or import prompts, the change is stored and the menus are updated at once.<br>
+If you leave a prompt with changes you have not saved, ThunderAI asks whether to apply them or discard them.</p>
+
+<h2>Creating a prompt</h2>
+<p>Click {{< ui_button "thunderai/customprompts/buttons/new-prompt.png" "+ New prompt" >}}, fill in the fields, then click {{< ui_button "thunderai/customprompts/buttons/save.png" "Save" >}}.</p>
+<ul>
+    <li><b>ID</b>: the unique identifier of the prompt. It must be lowercase, with no spaces. While the field is empty, ThunderAI builds the ID from the name as you type it.</li>
+    <li><b>Name</b>: the text shown in the menus. It cannot contain the <code>%</code> character.</li>
+    <li><b>Prompt Text</b>: the text sent to the AI service. You can use the <a href="../data-placeholders/">data placeholders</a> here: type <code>{%</code> to get the list of the available ones. A known placeholder is highlighted. An unknown one is shown in red, and one that does not work with the menu you chose (for example a compose-only placeholder in a prompt shown when reading) is shown in amber.</li>
+    <li><b>Add to menu</b>: when the prompt is shown:
         <ul>
-            <li>Only when composing an email.</li>
-            <li>Only when reading an email.</li>
-            <li>In both cases.</li>
-        </ul></li>
-        <li><strong>Action</strong>: this is the action to be excuted after the AI service reply:
-            <ul>
-                <li>Only close the AI chat window.</li>
-                <li>Use the AI service answer to create a reply. It will open a new compose window replying to the original selected message (as the "<pre style="display:inline; margin:0; padding:0;">Reply to this</pre>" default prompt).</li>
-                <li>Substitute the original selected message with the AI service answer.</li>
-            </ul></li>
-        <li><strong>Other properties</strong>: there are four other properties that can be set:
-            <ul>
-                <li><b>Text selection needed</b>: to use this prompt a text must be selected.</li>
-                <li><b>Always add the signature</b>: it will always add the signature, as defined in the preferences.</li>
-                <li><b>Ask for additional text</b>: after opening the AI chat window, it will ask for additional text, that it will be added to the prompt.</li>
-                <li><b>Define the reponse languange in the prompt</b>: if checked, a statement specifing the default language will be added to the prompt. The default language can be defined in the addon options. If no language is set, it will be added the statement "<i>Reply in the same language</i>".</li>
-                <li><b>Enable the diff viewer</b>: if checked, a new button will be added to the AI dialog window, allowing users to view the differences between the original text and the one proposed by the AI. This is especially useful for <i>"rewrite"</i> prompts.</li>
-            </ul></li>
-    </ul>
-</p>
+            <li><i>Always</i>: when reading and when composing an email.</li>
+            <li><i>Reading an email</i>: only when reading.</li>
+            <li><i>Composing an email</i>: only when composing.</li>
+        </ul>
+    </li>
+    <li><b>Action</b>: what happens with the answer of the AI service:
+        <ul>
+            <li><i>Close button</i>: the answer is only shown, and the AI chat window can be closed.</li>
+            <li><i>Do reply</i>: a new compose window opens, replying to the selected message with the answer (as the built-in "Reply to this email" prompt does).</li>
+            <li><i>Substitute text</i>: the answer replaces the original text in the email you are writing.</li>
+        </ul>
+    </li>
+</ul>
+
+<h3>Options</h3>
+<p>Five switches change how the prompt works:</p>
+<ul>
+    <li><b>Text selection needed</b>: the prompt works only on the selected text.</li>
+    <li><b>Always add the signature</b>: the signature defined in the options is always added.</li>
+    <li><b>Ask for additional text</b>: after the AI chat window opens, ThunderAI asks for some text, which is added to the prompt. Use it with the <code>{%additional_text%}</code> placeholder.</li>
+    <li><b>Define the response language in the prompt</b>: a statement with the default language, set in the add-on options, is added to the prompt. If no default language is set, the statement is "<i>Reply in the same language</i>".</li>
+    <li><b>Enable the text comparison viewer</b>: it adds a button to the AI chat window that shows the differences between the original text and the one proposed by the AI. It is useful for "rewrite" prompts. It is available only when the Action is <i>Substitute text</i>.</li>
+</ul>
+<p>If the prompt text uses <code>{%additional_text%}</code>, <code>{%selected_text%}</code> or <code>{%selected_html%}</code> but the matching switch is off, the switch is highlighted.</p>
+
+<h3>A connection for each prompt</h3>
+<p>By default, a prompt uses the connection set in the add-on options. Open the <b>Connection [API]</b> section to choose a different AI service, model or server for one prompt only. {{< ui_button "thunderai/customprompts/buttons/reset.png" "Reset" >}} clears these settings: after you click {{< ui_button "thunderai/customprompts/buttons/save.png" "Save" >}}, the prompt goes back to the global connection.</p>
+<figure>
+    {{< themed_screenshot "thunderai/customprompts/prompt-connection.png" "The Connection section of a prompt, set to use a different Ollama server" >}}
+    <figcaption>A prompt that uses its own Ollama server</figcaption>
+</figure>
+<p>When the global connection is ChatGPT Web and the prompt has no connection of its own, a <b>ChatGPT Web</b> section lets you choose a model, a project or a custom GPT for this prompt.</p>
+
+<h2>Built-in prompts</h2>
+<p>The built-in (<b>System</b>) prompts cannot be changed. The only option you can change is <b>Ask for additional text</b>. The other options are marked "<i>fixed by the prompt</i>".</p>
+<p>To make your own version of a built-in prompt, click {{< ui_button "thunderai/customprompts/buttons/duplicate-edit.png" "Duplicate and edit" >}}. The copy is a new personal prompt, with the same text and options, that you can change freely.</p>
+<figure>
+    {{< themed_screenshot "thunderai/customprompts/system-prompt.png" "A built-in prompt open in the Detail view, read-only" >}}
+    <figcaption>A built-in prompt is read-only</figcaption>
+</figure>
+
+<h2>Showing, hiding and ordering the prompts</h2>
+<p>This page defines what a prompt does. Where it appears is set on the <b>Menu Order</b> page, opened with the {{< ui_button "thunderai/customprompts/buttons/menu-order.png" "Manage menu order settings" >}} button in the add-on options: there you can reorder the prompts in the menus, and hide a prompt (built-in ones too) by dragging it into the "Hidden items" section.<br>
+The {{< ui_button "thunderai/customprompts/buttons/menu-position.png" "Menu position" >}} button at the top of a prompt opens the Menu Order page and highlights that prompt.</p>
+
+<h2>Other actions</h2>
+<ul>
+    <li>{{< ui_button "thunderai/customprompts/buttons/duplicate.png" "Duplicate" >}}: creates a copy of a personal prompt.</li>
+    <li>{{< ui_button "thunderai/customprompts/buttons/delete.png" "Delete" >}}: deletes a personal prompt, after a confirmation.</li>
+    <li>{{< ui_button "thunderai/customprompts/buttons/export-all.png" "Export all prompts" >}}: saves all the prompts to a file. ThunderAI asks whether to include the connection settings: if you include them, the file also contains the API keys. You can also export a single prompt from the {{< ui_button "thunderai/customprompts/buttons/row-menu.png" "More actions" >}} menu in the Table view.</li>
+    <li>{{< ui_button "thunderai/customprompts/buttons/import.png" "Import new prompts" >}}: loads prompts from an exported file. Prompts with an ID already in the list are overwritten, and prompts with a new ID are added. The imported prompts are saved immediately, so ThunderAI asks for a confirmation first.</li>
+    <li>{{< ui_button "thunderai/customprompts/buttons/manage-data-ph.png" "Manage your data placeholders" >}}: opens the page where you define your own <a href="../data-placeholders/">data placeholders</a>.</li>
+</ul>
+
+<h2 id="organization">Prompts managed by your organization</h2>
+<p>If your organization configures ThunderAI with a policy, the page can show some differences:</p>
+<ul>
+    <li><b>Organization</b> prompts are read-only. If one has the same ID as one of your prompts, yours is kept but disabled, and it works again if the organization prompt is removed.</li>
+    <li>If prompt management is disabled, you cannot create, duplicate, import or export prompts, and your own prompts are read-only and are not shown in the menus. They are not deleted.</li>
+    <li>If the built-in prompts are disabled, they are still listed here, but they are not shown in the menus.</li>
+</ul>
+<p>Administrators can find the details in the <a href="../guides/enterprise-configuration/#org-prompts">Enterprise Configuration Guide</a>.</p>
 
 <br>
-<div style="text-align: center"><a href="../">Go back to addon page</a></div>
+<p class="go-back"><a href="../">Go back to addon page</a></p>

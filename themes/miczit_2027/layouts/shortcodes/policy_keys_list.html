@@ -1,0 +1,107 @@
+{{/* ThunderAI enterprise policy key reference.
+
+     Data: content/thunderbird-addon-thunderai/policy-keys.json (single source).
+     Same UI as placeholders_list: server-rendered grouped by section, the shared
+     partial ph-list-script.html adds search, the "Group by: Section | A–Z" switch
+     and click-to-copy. Anchors: one per section (#keys-tagging, …) and one per key
+     (#openai_comp_host, …). Styles: .ph-* and .pk-* in theme.css. */}}
+{{ $jsonPath := "content/thunderbird-addon-thunderai/policy-keys.json" }}
+{{ $data := os.ReadFile $jsonPath | transform.Unmarshal }}
+
+{{ $settable := where $data "settable" true }}
+{{ $excluded := where $data "settable" false }}
+
+{{/* Display order of the groups: connection first, then providers, features, general. */}}
+{{ $groupOrder := slice
+    "Structure and organization"
+    "Restrictions"
+    "Connection"
+    "OpenAI-compatible"
+    "OpenAI / ChatGPT API"
+    "Anthropic / Claude"
+    "Google Gemini"
+    "Ollama"
+    "ChatGPT Web"
+    "Features"
+    "Tagging"
+    "Spam filter"
+    "Summarize"
+    "Translate"
+    "Calendar and tasks"
+    "Per-feature connection overrides"
+    "General"
+}}
+
+<div class="ph ph-keys" data-view="category" data-noun="keys" data-az-prefix="keys-letter-">
+    <div class="ph-bar" hidden>
+        <div class="ph-search-wrap">
+            <label for="policy-key-search" class="visually-hidden">Search keys by name or description</label>
+            <input id="policy-key-search" class="ph-search" type="search" placeholder="Search keys…" autocomplete="off" spellcheck="false" aria-describedby="policy-key-count">
+            <kbd class="ph-kbd" aria-hidden="true">/</kbd>
+        </div>
+        <div class="ph-bar-row">
+            <p id="policy-key-count" class="ph-count" aria-live="polite">{{ len $settable }} keys</p>
+            <div class="ph-switch" role="group" aria-labelledby="policy-key-switch-label">
+                <span id="policy-key-switch-label" class="ph-switch-label">Group by:</span>
+                <button type="button" class="ph-switch-btn" data-view="category" aria-pressed="true">Section</button>
+                <button type="button" class="ph-switch-btn" data-view="az" aria-pressed="false">A–Z</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="ph-groups">
+    {{ range $groupOrder }}
+        {{ $group := . }}
+        {{ $items := where $settable "group" $group }}
+        {{ with $items }}
+        {{ $gid := printf "keys-%s" (lower $group | replaceRE `[^a-z0-9]+` "-") }}
+        <section class="ph-group" id="{{ $gid }}" aria-labelledby="{{ $gid }}-h">
+            <h3 class="ph-group-h" id="{{ $gid }}-h">{{ $group }} <span class="ph-n">{{ len $items }}</span></h3>
+            <div class="ph-cols pk-grid" aria-hidden="true"><span>Key</span><span>Type</span><span>Default</span></div>
+            <ul class="ph-card">
+            {{ range sort $items "key" }}
+                <li class="ph-row pk-row pk-grid" id="{{ .key }}" data-name="{{ .key }}">
+                    <div class="pk-main">
+                        <div class="ph-head">
+                            <button type="button" class="ph-chip" data-copy="{{ .key }}" aria-label="Copy {{ .key }}" title="Click to copy"><code>{{ .key }}</code></button>
+                            <span class="ph-tag">{{ .group }}</span>
+                        </div>
+                        {{ with .version }}<p class="ph-since">since v{{ . }}</p>{{ end }}
+                        {{ with .values }}<p class="ph-values">Values: {{ . }}</p>{{ end }}
+                        {{ with .notes }}<p class="ph-desc">{{ . | safeHTML }}</p>{{ end }}
+                    </div>
+                    <div class="pk-type"><span class="pk-label">Type</span>{{ .type }}</div>
+                    <div class="pk-default"><span class="pk-label">Default</span><code>{{ .default }}</code></div>
+                </li>
+            {{ end }}
+            </ul>
+        </section>
+        {{ end }}
+    {{ end }}
+    </div>
+
+    <p class="ph-empty" hidden>No keys match your search.</p>
+    <div class="ph-toast" role="status" aria-live="polite"></div>
+</div>
+
+{{/* ---------- Keys that cannot be set ---------- */}}
+<h3>Keys that cannot be set by policy</h3>
+<p>These are per-machine or per-profile state, not configuration. Setting them is ignored with a warning.</p>
+<table class="guides">
+    <thead>
+        <tr>
+            <th>Key</th>
+            <th>Why</th>
+        </tr>
+    </thead>
+    <tbody>
+    {{ range sort $excluded "key" }}
+        <tr>
+            <td><code>{{ .key }}</code></td>
+            <td>{{ .notes }}</td>
+        </tr>
+    {{ end }}
+    </tbody>
+</table>
+
+{{ partial "ph-list-script.html" . }}

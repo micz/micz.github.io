@@ -1,0 +1,87 @@
+{{/* ThunderAI data placeholders list.
+
+     Data: content/thunderbird-addon-thunderai/placeholders.json (single source).
+     Server-rendered grouped by category, so the full list is readable without JS.
+     The shared partial ph-list-script.html adds search, the "Group by: Category | A–Z" switch and
+     click-to-copy. Anchors: one per category (#account, #content, …) and one per
+     placeholder (#mail_subject, #additional_text, …). Each row shows context chips (.ph-ctx) from
+     the "type" field. Styles: .ph-* in theme.css. */}}
+{{ $jsonPath := "content/thunderbird-addon-thunderai/placeholders.json" }}
+{{ $data := os.ReadFile $jsonPath | transform.Unmarshal }}
+
+{{/* Stable group anchors; unknown categories fall back to urlize. */}}
+{{ $anchors := dict
+    "Account & Folder" "account"
+    "Email Content" "content"
+    "Email Metadata" "metadata"
+    "General" "general"
+    "Tags" "tags"
+    "ThunderAI Settings" "settings"
+    "User Input" "input"
+}}
+
+{{/* Where a placeholder works: "type" in the JSON (add-on type 0 = both, 1 = reading, 2 = compose).
+     A missing type counts as "both", as in the add-on. "both" shows the Reading and the Compose chips. */}}
+{{ $contexts := dict
+    "reading" (dict "key" "reading" "label" "Reading" "title" "Works when reading an email")
+    "compose" (dict "key" "compose" "label" "Compose" "title" "Works when composing an email")
+}}
+{{ $typeChips := dict
+    "both" (slice "reading" "compose")
+    "reading" (slice "reading")
+    "compose" (slice "compose")
+}}
+
+{{ $scopes := slice }}
+{{ range $data }}{{ $scopes = $scopes | append .scope }}{{ end }}
+{{ $scopes = sort (uniq $scopes) }}
+
+<div class="ph" data-view="category" data-noun="placeholders">
+    <div class="ph-bar" hidden>
+        <div class="ph-search-wrap">
+            <label for="ph-search" class="visually-hidden">Search placeholders by name or description</label>
+            <input id="ph-search" class="ph-search" type="search" placeholder="Search placeholders…" autocomplete="off" spellcheck="false" aria-describedby="ph-count">
+            <kbd class="ph-kbd" aria-hidden="true">/</kbd>
+        </div>
+        <div class="ph-bar-row">
+            <p id="ph-count" class="ph-count" aria-live="polite">{{ len $data }} placeholders</p>
+            <div class="ph-switch" role="group" aria-labelledby="ph-switch-label">
+                <span id="ph-switch-label" class="ph-switch-label">Group by:</span>
+                <button type="button" class="ph-switch-btn" data-view="category" aria-pressed="true">Category</button>
+                <button type="button" class="ph-switch-btn" data-view="az" aria-pressed="false">A–Z</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="ph-groups">
+    {{ range $scopes }}
+        {{ $scope := . }}
+        {{ $gid := index $anchors $scope | default (urlize $scope) }}
+        {{ $items := sort (where $data "scope" $scope) "id" }}
+        <section class="ph-group" id="{{ $gid }}" aria-labelledby="{{ $gid }}-h">
+            <h3 class="ph-group-h" id="{{ $gid }}-h">{{ $scope }} <span class="ph-n">{{ len $items }}</span></h3>
+            <ul class="ph-card">
+            {{ range $items }}
+                {{ $pid := .id | replaceRE `^\{%|%\}$` "" | replaceRE `:.*$` "" }}
+                <li class="ph-row" id="{{ $pid }}" data-name="{{ .id | replaceRE `^\{%|%\}$` "" }}">
+                    <div class="ph-head">
+                        <span class="ph-name">
+                            <button type="button" class="ph-chip" data-copy="{{ .id }}" aria-label="Copy {{ .id }}" title="Click to copy"><code>{{ .id }}</code></button>
+                            {{ range index $typeChips (.type | default "both") }}{{ with index $contexts . }}<span class="ph-ctx ph-ctx-{{ .key }}" title="{{ .title }}">{{ .label }}</span>{{ end }}{{ end }}
+                        </span>
+                        <span class="ph-tag">{{ .scope }}</span>
+                    </div>
+                    {{ with .version }}<p class="ph-since">since v{{ . }}</p>{{ end }}
+                    <p class="ph-desc">{{ .description | strings.FirstUpper | safeHTML }}</p>
+                </li>
+            {{ end }}
+            </ul>
+        </section>
+    {{ end }}
+    </div>
+
+    <p class="ph-empty" hidden>No placeholders match your search.</p>
+    <div class="ph-toast" role="status" aria-live="polite"></div>
+</div>
+
+{{ partial "ph-list-script.html" . }}

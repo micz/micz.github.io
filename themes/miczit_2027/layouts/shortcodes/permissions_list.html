@@ -1,0 +1,75 @@
+{{/* ThunderAI permissions list.
+
+     Data: content/thunderbird-addon-thunderai/permissions.json (single source).
+     Same UI as placeholders_list: server-rendered grouped by status (Required, Optional, Removed),
+     the shared partial ph-list-script.html adds search, the "Group by: Status | A–Z" switch and
+     click-to-copy on the permission ID. Anchors: one per group (#required, #optional, #removed)
+     and one per permission (#accountsRead, #all_urls, #chatgpt-com, …; removed ones get the
+     "removed-" prefix). Styles: .ph-* and .pm-* in theme.css. */}}
+{{ $jsonPath := "content/thunderbird-addon-thunderai/permissions.json" }}
+{{ $data := os.ReadFile $jsonPath | transform.Unmarshal }}
+
+{{ $active := where $data "dismissed" false }}
+{{ $groups := slice
+    (dict "id" "required" "label" "Required" "note" "Granted when you install ThunderAI." "items" (where $active "optional" false))
+    (dict "id" "optional" "label" "Optional" "note" "Asked for only when you turn on a feature that needs them." "items" (where $active "optional" true))
+    (dict "id" "removed" "label" "Removed" "note" "No longer requested by current versions of ThunderAI." "items" (where $data "dismissed" true))
+}}
+
+<div class="ph ph-perms" data-view="category" data-noun="permissions" data-az-prefix="perms-letter-">
+    <div class="ph-bar" hidden>
+        <div class="ph-search-wrap">
+            <label for="perm-search" class="visually-hidden">Search permissions by name, ID or description</label>
+            <input id="perm-search" class="ph-search" type="search" placeholder="Search permissions…" autocomplete="off" spellcheck="false" aria-describedby="perm-count">
+            <kbd class="ph-kbd" aria-hidden="true">/</kbd>
+        </div>
+        <div class="ph-bar-row">
+            <p id="perm-count" class="ph-count" aria-live="polite">{{ len $data }} permissions</p>
+            <div class="ph-switch" role="group" aria-labelledby="perm-switch-label">
+                <span id="perm-switch-label" class="ph-switch-label">Group by:</span>
+                <button type="button" class="ph-switch-btn" data-view="category" aria-pressed="true">Status</button>
+                <button type="button" class="ph-switch-btn" data-view="az" aria-pressed="false">A–Z</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="ph-groups">
+    {{ range $groups }}
+        {{ $group := . }}
+        {{ with .items }}
+        <section class="ph-group pm-{{ $group.id }}" id="{{ $group.id }}" aria-labelledby="{{ $group.id }}-h">
+            <h3 class="ph-group-h" id="{{ $group.id }}-h">{{ $group.label }} <span class="ph-n">{{ len . }}</span></h3>
+            <p class="pm-note">{{ $group.note }}</p>
+            <ul class="ph-card">
+            {{ range sort . "name" }}
+                {{ $pid := .id | replaceRE `^https://\*\.|/\*$|[<>]` "" | replaceRE `\.` "-" }}
+                {{ if .dismissed }}{{ $pid = printf "removed-%s" $pid }}{{ end }}
+                <li class="ph-row pm-row pm-row-{{ $group.id }}" id="{{ $pid }}" data-name="{{ .name }}">
+                    <div class="ph-head">
+                        <span class="pm-title">{{ .name }}</span>
+                        <span class="ph-tag pm-tag-{{ $group.id }}">{{ $group.label }}</span>
+                    </div>
+                    <div class="pm-meta">
+                        <button type="button" class="ph-chip" data-copy="{{ .id }}" aria-label="Copy {{ .id }}" title="Click to copy"><code>{{ .id }}</code></button>
+                        {{ if .dismissed }}
+                        <span class="ph-since">removed in v{{ .version }}</span>
+                        {{ else }}
+                        {{ with .version }}<span class="ph-since">since v{{ . }}</span>{{ end }}
+                        {{ with .optional_from_version }}<span class="ph-since">optional since v{{ . }}</span>{{ end }}
+                        {{ end }}
+                    </div>
+                    <p class="ph-desc">{{ .description | safeHTML }}</p>
+                    {{ with .note }}<p class="ph-desc pm-why">{{ . }}</p>{{ end }}
+                </li>
+            {{ end }}
+            </ul>
+        </section>
+        {{ end }}
+    {{ end }}
+    </div>
+
+    <p class="ph-empty" hidden>No permissions match your search.</p>
+    <div class="ph-toast" role="status" aria-live="polite"></div>
+</div>
+
+{{ partial "ph-list-script.html" . }}

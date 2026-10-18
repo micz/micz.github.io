@@ -1,5 +1,5 @@
 +++
-Title = "Guida di configurazione per \"ThunderAI\" - Ollama (AI locale)"
+Title = "Ollama"
 Type = "no-list"
 multilang = true
 +++
@@ -8,26 +8,27 @@ multilang = true
 
 <p>
     L'integrazione con <strong>Ollama</strong> ti permette di eseguire modelli AI localmente sul tuo computer.<br>
-    Le tue email non lasciano mai il tuo dispositivo: nessuna chiave API, nessun servizio cloud, nessun costo oltre all'hardware.
+    Con un'installazione locale le tue email non lasciano mai il tuo computer: nessuna chiave API, nessun servizio cloud, nessun costo oltre all'hardware.<br>
+    Una chiave API serve solo se usi l'API ospitata da Ollama, o un server dietro un proxy che richiede l'autenticazione.
 </p>
 
-<table>
-    <tr>
-        <td><strong>Chiave API richiesta</strong></td>
-        <td>No</td>
-    </tr>
-    <tr>
-        <td><strong>Opzione gratuita</strong></td>
-        <td>Sì [Completamente gratuito, utilizzi il tuo hardware]</td>
-    </tr>
-    <tr>
-        <td><strong>Privato / Locale?</strong></td>
-        <td>Sì [Tutto rimane sul tuo computer]</td>
-    </tr>
-    <tr>
-        <td><strong>Ideale per</strong></td>
-        <td>Utenti attenti alla privacy, email sensibili, uso offline</td>
-    </tr>
+<table class="guides">
+    <thead>
+        <tr>
+            <th>Chiave API richiesta</th>
+            <th>Opzione gratuita</th>
+            <th>Privato / Locale?</th>
+            <th>Ideale per</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>No (opzionale)</td>
+            <td>Sì (completamente gratuito, utilizzi il tuo hardware)</td>
+            <td>Sì (tutto rimane sul tuo computer)</td>
+            <td>Utenti attenti alla privacy, email sensibili, uso offline</td>
+        </tr>
+    </tbody>
 </table>
 
 <br>
@@ -47,75 +48,99 @@ multilang = true
     <li>Verifica che Ollama sia in esecuzione:<br><pre>ollama list</pre></li>
 </ol>
 
-<h2>Configurazione di CORS</h2>
+<h2 id="cors">Configurazione di CORS</h2>
 <p>
-    Le estensioni Thunderbird vengono eseguite in un ambiente isolato, quindi Ollama deve essere configurato per accettare richieste dalle estensioni del browser.<br>
-    È necessario impostare la variabile d'ambiente <code>OLLAMA_ORIGINS</code> su <code>moz-extension://*</code>.
+    Le estensioni di Thunderbird vengono eseguite in un ambiente isolato, quindi Ollama deve accettare le loro richieste. Ci sono due modi:
 </p>
+<ul>
+    <li>Imposta la variabile d'ambiente <code>OLLAMA_ORIGINS</code> su <code>moz-extension://*</code> e riavvia Ollama.</li>
+    <li>Oppure dai a ThunderAI il permesso di accedere al tuo server Ollama, con il pulsante <strong>Give permission to the current host</strong>
+        nelle impostazioni di ThunderAI (sotto <em>"Problems setting CORS?"</em>), o accettando la richiesta che compare quando testi la connessione.
+        Per un server su <code>localhost</code> o <code>127.0.0.1</code>, Thunderbird chiede l'accesso a tutti i siti (<code>&lt;all_urls&gt;</code>).</li>
+</ul>
 <p>Per configurazioni CORS più dettagliate, consulta la <a href="../../ollama-cors-information/">pagina informativa su Ollama e CORS</a>.</p>
 
 <h2>Configurazione</h2>
 
-<h3>1. Apri le opzioni di ThunderAI</h3>
 <p>
-    In Thunderbird, clicca sul menu ThunderAI e seleziona <strong>Options</strong>, oppure vai su<br>
-    <strong>Strumenti → Componenti aggiuntivi e temi → ThunderAI → Preferenze</strong>.
+    Il modo più rapido è il <strong>Setup Wizard</strong>: aprilo dalla pagina di benvenuto di ThunderAI, dal popup della barra degli
+    strumenti o dalla pagina delle impostazioni, scegli <strong>Ollama API (Local LLM)</strong>, inserisci l'indirizzo del server, scegli un modello e
+    testa la connessione. Poi il wizard ti permette di attivare le funzioni AI che ti servono.<br>
+    Per configurarla a mano, segui i passi qui sotto.
+</p>
+
+<h3>1. Apri le impostazioni di ThunderAI</h3>
+<p>
+    In Thunderbird, vai su <strong>Strumenti → Componenti aggiuntivi e temi → ThunderAI → Preferenze</strong>.
 </p>
 
 <h3>2. Seleziona l'integrazione Ollama</h3>
-<p>Nella sezione <strong>Connection</strong>, scegli <strong>Ollama</strong> dal menu a tendina delle integrazioni.</p>
+<p>Nel pannello <strong>Connection Settings</strong>, scegli <strong>Ollama API (Local LLM)</strong> nel menu a tendina <strong>Connection Type</strong>.</p>
 
-<h3>3. Imposta l'URL del server</h3>
-<p>Inserisci l'URL del tuo server Ollama. Il valore predefinito è:</p>
+<h3>3. Imposta l'indirizzo del server</h3>
+<p>Inserisci l'URL del tuo server Ollama nel campo <strong>Host Address</strong>. Il valore predefinito è:</p>
 <pre>http://localhost:11434</pre>
 <p>Se Ollama è in esecuzione su un altro computer della tua rete, sostituisci <code>localhost</code> con l'indirizzo IP di quel computer.</p>
+<p>
+    Lascia vuoto il campo <strong>Ollama API Key</strong> per una normale installazione locale. Serve solo per l'API ospitata su
+    <code>ollama.com</code>, o per un server installato da te dietro un proxy che richiede l'autenticazione.
+</p>
 
 <h3>4. Scegli un modello</h3>
-<p>Seleziona un modello dal menu a tendina <strong>Model</strong>. Clicca sul pulsante per aggiornare l'elenco.</p>
+<p>Clicca su <strong>Update list</strong> accanto a <strong>Ollama Models</strong>, poi seleziona dall'elenco il modello che vuoi usare.</p>
 
-<h3>5. Salva e testa</h3>
-<p>Clicca su <strong>Save</strong>. Apri una qualsiasi email, usa il menu ThunderAI ed esegui un prompt per verificare la connessione.</p>
+<h3>5. Testa la connessione</h3>
+<p>
+    Le impostazioni vengono salvate appena le modifichi: non c'è un pulsante Salva.<br>
+    Clicca su <strong>Test now</strong> nella barra sotto le impostazioni di connessione e accetta la richiesta di permesso di Thunderbird, se compare
+    (vedi <a href="#cors">Configurazione di CORS</a>). Se è tutto a posto, la barra mostra <em>"Connected — Ollama API (Local LLM) reachable"</em>.
+    Poi apri una qualsiasi email, clicca sul pulsante ThunderAI nella barra degli strumenti e lancia un prompt.
+</p>
+
+<h2>Opzioni avanzate</h2>
+<p>
+    Clicca su <strong>Advanced options</strong> nel pannello <strong>Connection Settings</strong> per mostrare le impostazioni qui sotto.
+    Si adattano al modello selezionato.
+</p>
+<ul>
+    <li><strong>System Prompt</strong>: inviato all'inizio di ogni conversazione, per dare al modello un ruolo o istruzioni fisse.</li>
+    <li><strong>Enable thinking</strong>: fa ragionare il modello prima di rispondere. I livelli di ragionamento disponibili dipendono dal modello e compaiono dopo averlo selezionato.
+        <em>Model default</em> non invia nulla e lascia decidere al modello, che in alcuni casi ragiona comunque: scegli <em>Off</em> per disattivare il ragionamento.</li>
+    <li><strong>Temperature</strong>: valori più alti rendono le risposte più creative. Il valore predefinito è 0.8; sono consigliati valori tra 0 e 1.</li>
+    <li><strong>Number of context tokens</strong>: quanto testo il modello può considerare. ThunderAI mostra il massimo supportato dal modello selezionato. Imposta 0 per usare il valore predefinito del server.</li>
+    <li><strong>Keep model loaded</strong>: per quanto tempo Ollama tiene il modello in memoria dopo una richiesta, ad es. <code>5m</code> o <code>30m</code>, <code>-1</code> per tenerlo sempre caricato, <code>0</code> per scaricarlo subito.
+        Vuoto usa il valore predefinito del server (5 minuti). Aumentalo se Add Tags, il filtro antispam o il riassunto automatico lavorano sulla posta in arrivo: altrimenti il modello viene ricaricato per ogni messaggio.</li>
+    <li><strong>Force JSON output</strong>: fa restituire a Ollama un JSON valido, con i modelli che supportano l'output strutturato.</li>
+    <li><strong>Extra options</strong>: parametri aggiuntivi per Ollama, in formato JSON, ad es. <code>{"top_p": 0.9, "seed": 42}</code> o <code>{"num_predict": 512}</code>.</li>
+</ul>
+<p>
+    Puoi impostare queste opzioni anche sul singolo prompt, nella pagina dei prompt personalizzati, e su ciascuna funzione AI (Add Tags, Spam Filter,
+    Summarize, Translate, Calendar Event, Task), con il pulsante <strong>Advanced options</strong> della sua connessione specifica.
+</p>
 
 <h2>Suggerimenti</h2>
 <ul>
-    <li>Le prestazioni dipendono dall'hardware. Un computer moderno con almeno 16 GB di RAM gestirà comodamente modelli come <code>llama3</code> o <code>mistral</code>. Una GPU accelera notevolmente il processo.</li>
-    <li>I modelli più piccoli (7B parametri) sono più veloci ma meno capaci; i modelli più grandi (13B, 70B) producono risultati migliori ma richiedono più risorse.</li>
-    <li>Per le attività email, <code>mistral</code> e <code>llama3</code> sono scelte popolari che offrono un buon equilibrio tra qualità e velocità.</li>
+    <li>Le prestazioni dipendono dal tuo hardware. Un computer moderno con almeno 16 GB di RAM gestisce senza problemi modelli come <code>llama3</code> o <code>mistral</code>. Una GPU velocizza molto l'elaborazione.</li>
+    <li>I modelli più piccoli (7B parametri) sono più veloci ma meno capaci; quelli più grandi (13B, 70B) danno risultati migliori ma richiedono più risorse.</li>
+    <li>Per le email, <code>mistral</code> e <code>llama3</code> sono scelte diffuse, con un buon equilibrio tra qualità e velocità.</li>
+    <li>Se le funzioni automatiche (Add Tags, Spam Filter, Summarize, Translate) si fermano per timeout con un modello lento, aumenta <strong>Special command timeout (ms)</strong> nelle impostazioni di ThunderAI.</li>
 </ul>
 
 <h2>Risoluzione dei problemi</h2>
 
 <h3>"Failed to connect" o nessuna risposta</h3>
-<p>Verifica che Ollama sia effettivamente in esecuzione (<code>ollama list</code> in un terminale). Controlla che l'URL del server nelle opzioni di ThunderAI corrisponda alla configurazione di Ollama.</p>
+<p>Verifica che Ollama sia effettivamente in esecuzione (<code>ollama list</code> in un terminale). Controlla che l'<strong>Host Address</strong> nelle impostazioni di ThunderAI corrisponda alla tua installazione di Ollama.</p>
 
 <h3>Errore CORS</h3>
-<p>La variabile <code>OLLAMA_ORIGINS</code> non è impostata oppure Ollama non è stato riavviato dopo averla impostata. Ripeti i passaggi precedenti, oppure usa il permesso "All URLs" come soluzione alternativa.</p>
+<p>La variabile <code>OLLAMA_ORIGINS</code> non è impostata, oppure Ollama non è stato riavviato dopo averla impostata. Ripeti i passi di <a href="#cors">Configurazione di CORS</a>, oppure usa al suo posto il pulsante <strong>Give permission to the current host</strong>.</p>
 
-<h3>Elenco modelli vuoto</h3>
+<h3>Elenco dei modelli vuoto</h3>
 <p>Assicurati di aver scaricato almeno un modello con <code>ollama pull &lt;nomemodello&gt;</code> e che Ollama sia in esecuzione.</p>
+
+<h3>Il modello ragiona anche quando non vuoi</h3>
+<p>Alcuni modelli ragionano per impostazione predefinita. Imposta <strong>Enable thinking</strong> su <em>Off</em> nelle opzioni avanzate.</p>
 
 <br>
 <div style="text-align: center">
     <a href="../">Torna alle guide</a> &nbsp;|&nbsp; <a href="../openai-compatible-api/">Avanti: OpenAI Compatible API →</a>
 </div>
-
-
-<style>
-table {
-    border-collapse: collapse;
-    margin: 10px 0;
-}
-th, td {
-    border: 1px solid #ccc;
-    padding: 7px 14px;
-    text-align: left;
-}
-h3 {
-    margin-bottom: 4px;
-}
-pre {
-    margin: 5px;
-    padding: 10px;
-    border-radius: 9px;
-}
-</style>
