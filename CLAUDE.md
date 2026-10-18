@@ -45,8 +45,9 @@ themes/miczit_2027/
 │   ├── index.html          home hero on the photo (does not render .Content)
 │   ├── robots.txt
 │   ├── partials/           head, head-extra, theme-init, header, footer, lang-switcher,
-│   │                       theme-toggle, title-split, ph-list-script
-│   └── shortcodes/         project shortcodes (page_title, list-thunderbird-pages, *_list, lang_*)
+│   │                       theme-toggle, doc-title, ph-list-script, addon-nav
+│   └── shortcodes/         project shortcodes (page_title, list-thunderbird-pages, *_list, lang_*,
+│                           ui_button, themed_screenshot)
 └── static/
     ├── css/theme.css       dark tokens on :root, light tokens on [data-theme="light"]
     └── fonts/
@@ -56,24 +57,63 @@ themes/miczit_2027/
   `--display-sans` (Inter Tight, header breadcrumb).
 - `_default/redirect.html` builds the language redirect stubs (`/it/`, `/de/`, `/fr/`, `/es/`, …)
   and the legacy `thunderdbird-addon-*` aliases. Do not change this behavior.
-- `partials/title-split.html` recognizes exactly two title patterns, `Thunderbird Addon: <Name>`
-  and `"<Addon>" Thunderbird Addon - <Page>`. It leaves every other title unchanged.
+- Page titles are short: `Title` is the page's own name only ("Ollama", "Setup guides", "ThunderAI",
+  "Donate"), with no add-on name or "Thunderbird Addon" in it. Breadcrumb, add-on cards and sidebar
+  show it as is. `partials/doc-title.html` builds the `<title>` tag: the page, its ancestors up to
+  the top-level page, then the site title ("Ollama - Setup guides - ThunderAI - Mic's"); the main
+  page of an add-on also gets the i18n "Thunderbird Addon" ("ThunderAI - Thunderbird Addon - Mic's").
+- Hugo sorts pages by `linkTitle` (after weight and date): `list-thunderbird-pages` sorts by
+  `Title` explicitly, so the "Overview" linkTitle of ThunderAI does not move its card.
 - `partials/header.html` shows the wordmark and then a breadcrumb:
   - it skips Home, because the wordmark already links there;
   - language stubs have no Title, so it takes the title from a translation;
   - add-on pages are siblings of `thunderbird-addons/` in `content/`, not children of it. So when
     the top-level ancestor has `addon_status`, the breadcrumb puts the `/thunderbird-addons` page
-    in front.
+    in front. Another top-level page can name a parent with `breadcrumb_parent = "/<path>"` in its
+    front matter (used by `thunderbird-addon-development-discontinued`): the parent goes in the
+    breadcrumb and in the `<title>`.
 - `baseof.html` adds `class="home"` to `<body>` on the home page. The photo background
   (`body.home .page-shell::before`) needs this class. Areas on the photo use the fixed
   `--photo-ink` color, so the theme toggle does not change the home page.
 - Mobile breakpoint: 880px (one column below it).
+- Add-on sidebar (`partials/addon-nav.html`, used by `single.html` and `list.html`): shown on every
+  page of a top-level section that has `content/<section>/addon-nav.json` (today only ThunderAI),
+  except the section's own page and redirect stubs. The JSON holds only the structure: groups (the
+  title is an i18n key, e.g. `addonNavSetup`) and entries (`page` path relative to the section,
+  optional `children` and `also` = other pages that mark the entry as current). An entry links the
+  page in the current language, or the default-language page when there is no translation or it is
+  a redirect stub, and shows that page's `LinkTitle`, i.e. its short `Title` (a `linkTitle` is set
+  only where the entry differs: "Overview" on the ThunderAI page). So pages in English only show an
+  English entry in every language. To add a page: list it in the JSON. The sidebar widens the
+  layout, so the reading column keeps its width.
+  At 1100px and below it becomes a collapsed box above the page. Do not use `merge` on a dict
+  that holds a Page: the build hangs. The "Go back" / "Next" links at the bottom of the pages stay.
+- Add-on screenshots come in two versions: the dark file, and the light one with the same name in a
+  `light/` subfolder. The `only-dark` / `only-light` classes in `theme.css` show the one that matches
+  the site theme. `ui_button` puts a button image in a line of text, at its real size (captured at 1x).
+  `themed_screenshot` puts a screenshot linked to its full-size file.
+- Add-on pages: clickable links go in `.doc-grid` as `.doc-card` (bordered cards). Non-clickable
+  short sections (How does it work, Privacy, Requirements) go in `.info-grid` as `.info-card`: plain
+  text blocks with a side rule and a small mono label, not cards. Do not mix the two in one grid.
+  `.doc-grid-3` (e.g. ThunderStats) gives three equal columns and centers a lone last card with the
+  same width (2 columns below 880px, 1 below 560px). `.doc-grid-single` is a separate grid with one
+  centered card, max 340px wide.
+- GitHub icon: `theme.css` puts the GitHub mark in front of every link whose `href` contains
+  `//github.com/` (on `.doc-card` links it goes before `.doc-card-title`). It is a CSS mask filled
+  with `currentColor`, so one icon works in both themes. No markup is needed in the content.
+- External links: every other `http(s)` link outside `micz.it` gets an external-link arrow after
+  it, made the same way. Links that hold only an image (the PayPal donate buttons) are skipped;
+  the Weblate badge links keep the arrow.
 
 ## Known quirks (not theme bugs)
 
 - `content/_404.html` is bilingual (IT + EN) on purpose.
-- The `guides/*` and `ollama-cors-*` pages have inline `<style>` blocks for their tables. They are
-  kept on purpose: overriding them breaks the borderless ollama-cors table layouts.
+- The `ollama-cors-*` pages have inline `<style>` blocks for their tables. They are kept on purpose:
+  overriding them breaks the borderless ollama-cors table layouts.
+- ThunderAI setup guides (`guides/*`): the summary table at the top uses `class="guides"`, the
+  same theme style as the comparison table in the guides index: one `<thead>` row with the labels
+  and one body row with the values. Every table in the guides uses `class="guides"`, and the guides
+  have no inline `<style>`.
 - The ThunderAI status pages (`status.html`, `status_archive.html`) center their header with
   inline CSS on `.title-block`. Each issue notice is an `<h1>` that opens and closes with `<br>`.
   `.content h1` in `theme.css` styles these notices and hides those two `<br>`. The archive page

@@ -1,5 +1,5 @@
 +++
-Title = "Guida di configurazione per \"ThunderAI\" - OpenAI API"
+Title = "OpenAI API"
 Type = "no-list"
 multilang = true
 +++
@@ -11,19 +11,21 @@ multilang = true
     Rispetto all'interfaccia web, è più veloce, più affidabile e ti offre il controllo esplicito sul modello da utilizzare.
 </p>
 
-<table>
-    <tr>
-        <td><strong>Chiave API richiesta</strong></td>
-        <td>Sì</td>
-    </tr>
-    <tr>
-        <td><strong>Opzione gratuita</strong></td>
-        <td>No [Pagamento a consumo]</td>
-    </tr>
-    <tr>
-        <td><strong>Ideale per</strong></td>
-        <td>Accesso stabile e veloce ai modelli ChatGPT</td>
-    </tr>
+<table class="guides">
+    <thead>
+        <tr>
+            <th>Chiave API richiesta</th>
+            <th>Opzione gratuita</th>
+            <th>Ideale per</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Sì</td>
+            <td>No (pagamento a consumo)</td>
+            <td>Accesso stabile e veloce ai modelli ChatGPT</td>
+        </tr>
+    </tbody>
 </table>
 
 <br>
@@ -46,58 +48,90 @@ multilang = true
 
 <h2>Configurazione</h2>
 
-<h3>1. Apri le opzioni di ThunderAI</h3>
 <p>
-    In Thunderbird, clicca sul menu ThunderAI e seleziona <strong>Options</strong>, oppure vai su<br>
-    <strong>Strumenti → Componenti aggiuntivi e temi → ThunderAI → Preferenze</strong>.
+    Il modo più rapido è il <strong>Setup Wizard</strong>: aprilo dalla pagina di benvenuto di ThunderAI, dal popup della barra degli
+    strumenti o dalla pagina delle impostazioni, scegli <strong>ChatGPT OpenAI API</strong>, incolla la chiave API, scegli un modello e
+    testa la connessione. Poi il wizard ti permette di attivare le funzioni AI che ti servono.<br>
+    Per configurarla a mano, segui i passi qui sotto.
+</p>
+
+<h3>1. Apri le impostazioni di ThunderAI</h3>
+<p>
+    In Thunderbird, vai su <strong>Strumenti → Componenti aggiuntivi e temi → ThunderAI → Preferenze</strong>.
 </p>
 
 <h3>2. Seleziona l'integrazione OpenAI API</h3>
-<p>Nella sezione <strong>Connection</strong>, scegli <strong>OpenAI API</strong> dal menu a tendina delle integrazioni.</p>
+<p>Nel pannello <strong>Connection Settings</strong>, scegli <strong>ChatGPT OpenAI API</strong> nel menu a tendina <strong>Connection Type</strong>.</p>
 
-<h3>3. Inserisci la tua chiave API</h3>
-<p>Incolla la tua chiave API nel campo <strong>API Key</strong>. La chiave viene memorizzata localmente in Thunderbird e non viene mai inviata ad altri server oltre a quelli di OpenAI.</p>
+<h3>3. Inserisci la chiave API</h3>
+<p>Incolla la chiave API nel campo <strong>ChatGPT API Key</strong>. La chiave è memorizzata localmente in Thunderbird e viene inviata solo ai server di OpenAI.</p>
 
-<h3>4. Scegli un modello</h3>
-<p>Seleziona il modello che desideri utilizzare dal menu a tendina <strong>Model</strong>. Clicca sul pulsante per aggiornare l'elenco.</p>
+<h3 id="model">4. Scegli un modello</h3>
+<p>
+    Clicca su <strong>Update list</strong> accanto a <strong>ChatGPT Models</strong>. La prima volta Thunderbird chiede il permesso di
+    accedere a <code>openai.com</code>: accettalo, altrimenti ThunderAI non può raggiungere OpenAI. Poi seleziona dall'elenco il modello che vuoi usare.
+</p>
 
-<h3>5. Salva e testa</h3>
-<p>Clicca su <strong>Save</strong>. Apri una qualsiasi email, usa il menu ThunderAI ed esegui un prompt per verificare che tutto funzioni.</p>
+<h3>5. Testa la connessione</h3>
+<p>
+    Le impostazioni vengono salvate appena le modifichi: non c'è un pulsante Salva.<br>
+    Clicca su <strong>Test now</strong> nella barra sotto le impostazioni di connessione. Se è tutto a posto, mostra
+    <em>"Connected — ChatGPT OpenAI API reachable"</em>. Poi apri una qualsiasi email, clicca sul pulsante ThunderAI nella barra degli strumenti e lancia un prompt.
+</p>
+
+<h2>Opzioni avanzate</h2>
+<p>
+    Clicca su <strong>Advanced options</strong> nel pannello <strong>Connection Settings</strong> per mostrare le impostazioni qui sotto.
+    Lasciale vuote o su <em>Default</em> per lasciar decidere all'API.
+    Si adattano al modello selezionato: un'impostazione che il modello non accetta viene disattivata, con una nota che spiega il motivo.
+    Il valore salvato viene mantenuto, nel caso torni a un altro modello.
+</p>
+<ul>
+    <li><strong>Temperature</strong> e <strong>Top P</strong>: quanto la risposta è casuale o mirata. I modelli di ragionamento non le accettano: usa invece <strong>Reasoning effort</strong>.</li>
+    <li><strong>Reasoning effort</strong> e <strong>Reasoning summary</strong>: quanto ragiona il modello, e se mostrare nella chat un riepilogo del ragionamento. Solo per i modelli di ragionamento.</li>
+    <li><strong>Verbosity</strong>: quanto è lunga e dettagliata la risposta, sui modelli che lo supportano.</li>
+    <li><strong>Max output tokens</strong>: la lunghezza massima della risposta.</li>
+    <li><strong>Developer Messages</strong>: istruzioni e contesto inviati al modello con ogni prompt.</li>
+    <li><strong>Output format</strong>: testo semplice (predefinito), un oggetto JSON, oppure JSON che segue uno schema che inserisci tu.</li>
+    <li><strong>Truncation</strong>, <strong>Service tier</strong>, <strong>Prompt cache key</strong>, <strong>Safety identifier</strong> e
+        <strong>Include encrypted reasoning</strong>: opzioni delle richieste a OpenAI, descritte nella
+        <a href="https://platform.openai.com/docs/api-reference/responses/create" target="_blank">documentazione dell'API di OpenAI</a>.</li>
+    <li><strong>Use storage</strong>: se attivo, OpenAI conserva le tue chat.</li>
+    <li><strong>Extra body data</strong>: parametri aggiuntivi in formato JSON, per le opzioni che ThunderAI non mostra.</li>
+</ul>
+<p>
+    Puoi impostare queste opzioni anche sul singolo prompt, nella pagina dei prompt personalizzati, e su ciascuna funzione AI (Add Tags, Spam Filter,
+    Summarize, Translate, Calendar Event, Task), con il pulsante <strong>Advanced options</strong> della sua connessione specifica.
+</p>
 
 <h2>Suggerimenti</h2>
 <ul>
-    <li>L'utilizzo delle API viene misurato in token. Le email sono generalmente brevi, quindi i costi sono di solito molto bassi. Controlla il tuo utilizzo su <a href="https://platform.openai.com/usage" target="_blank">platform.openai.com/usage</a>.</li>
-    <li>OpenAI aggiunge regolarmente nuovi modelli. Aggiorna l'elenco dei modelli nelle opzioni di ThunderAI per vedere gli ultimi disponibili.</li>
+    <li>L'uso dell'API si misura in token. Le email sono di solito brevi, quindi i costi sono in genere molto bassi. Controlla i consumi su <a href="https://platform.openai.com/usage" target="_blank">platform.openai.com/usage</a>.</li>
+    <li>OpenAI aggiunge regolarmente nuovi modelli. Clicca su <strong>Update list</strong> per vedere gli ultimi disponibili.</li>
+    <li>Se durante l'elaborazione di più email (Add Tags, Spam Filter, Summarize, Translate) si supera il limite di richieste o la quota di OpenAI, l'elaborazione si ferma da sola e ti dice quanti messaggi sono stati elaborati.</li>
 </ul>
 
 <h2>Risoluzione dei problemi</h2>
 
-<h3>Errore "Invalid API key"</h3>
-<p>Verifica di aver copiato la chiave correttamente: non devono esserci spazi extra. Se la chiave continua a non funzionare, generane una nuova dalla piattaforma OpenAI.</p>
+<h3>Errore "Authentication failed — check your API key" o "Invalid API key"</h3>
+<p>Verifica di aver copiato correttamente la chiave, senza spazi in più. Se la chiave continua a non funzionare, generane una nuova dalla piattaforma OpenAI.</p>
 
 <h3>Errore "You exceeded your current quota"</h3>
-<p>Il tuo account API OpenAI ha esaurito i crediti. Aggiungine altri su <a href="https://platform.openai.com/settings/organization/billing" target="_blank">platform.openai.com/settings/organization/billing</a>.</p>
+<p>Il tuo account API di OpenAI ha esaurito i crediti. Aggiungine altri su <a href="https://platform.openai.com/settings/organization/billing" target="_blank">platform.openai.com/settings/organization/billing</a>.</p>
 
-<h3>Nessun modello nel menu a tendina</h3>
-<p>Assicurati che la tua chiave API sia salvata e valida. Se il problema persiste, controlla la connessione internet.</p>
+<h3>Nell'elenco non compare nessun modello</h3>
+<p>
+    Se vedi <em>"You have denied the optional permission needed to fetch models for this integration"</em>, clicca di nuovo su
+    <strong>Update list</strong> e accetta la richiesta di permesso di Thunderbird. Altrimenti verifica che la chiave API sia valida e controlla la connessione a internet.
+</p>
+
+<h3>Il popup chiede un permesso invece di mostrare i prompt</h3>
+<p>
+    Il permesso per <code>openai.com</code> non è ancora stato concesso. Clicca sul messaggio nel popup: si apre la pagina di benvenuto di ThunderAI.
+    Clicca lì sullo stesso messaggio e accetta la richiesta di Thunderbird. Puoi concederlo anche dal <a href="#model">passo 4</a>.
+</p>
 
 <br>
 <div style="text-align: center">
     <a href="../">Torna alle guide</a> &nbsp;|&nbsp; <a href="../google-gemini/">Avanti: Google Gemini →</a>
 </div>
-
-
-<style>
-table {
-    border-collapse: collapse;
-    margin: 10px 0;
-}
-th, td {
-    border: 1px solid #ccc;
-    padding: 7px 14px;
-    text-align: left;
-}
-h3 {
-    margin-bottom: 4px;
-}
-</style>

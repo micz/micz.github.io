@@ -446,6 +446,9 @@ a:hover { color: var(--accent-strong); }
 .content img.alignright { float: right; margin: 4px 0 12px 20px; }
 .content .img_center { width: 100%; text-align: center; }
 .content img.homepage_img { max-width: 100%; }
+/* an image in two versions, one per theme (shortcodes ui_button and themed_screenshot) */
+[data-theme="light"] .only-dark,
+html:not([data-theme="light"]) .only-light { display: none !important; }
 
 .content figure {
     margin: 1.6em 0;
@@ -490,7 +493,6 @@ a:hover { color: var(--accent-strong); }
 
 /* helper classes used by the content files */
 .content .sup_comment { font-size: 0.8em; font-style: italic; color: var(--ink-muted); }
-.content .perm_desc { font-size: 0.9em; color: var(--ink-muted); }
 .content .small_text { font-size: 0.8em; font-style: italic; color: var(--ink-muted); }
 .content .paragraph-space { margin-top: 25px; }
 .content p.center, .content .center { text-align: center; margin-inline: auto; }
@@ -735,6 +737,27 @@ html:not([data-theme="light"]) body:has(.ph-doc) { --bg: #17181c; }
     padding: 0;
     word-break: normal;
 }
+/* name + context chips (Reading, Compose, or both) */
+.ph-name {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 10px;
+    min-width: 0;
+}
+.ph-ctx {
+    font: 500 12px/1.4 var(--sans);
+    padding: 2px 8px;
+    border: 1px solid color-mix(in srgb, var(--ph-ctx) 45%, transparent);
+    border-radius: 999px;
+    color: var(--ph-ctx);
+    background: color-mix(in srgb, var(--ph-ctx) 10%, transparent);
+    white-space: nowrap;
+}
+.ph-ctx-reading { --ph-ctx: #7fb8e6; }
+.ph-ctx-compose { --ph-ctx: #8fcf9a; }
+[data-theme="light"] .ph-ctx-reading { --ph-ctx: #1f5f99; }
+[data-theme="light"] .ph-ctx-compose { --ph-ctx: #2d7a3a; }
 .ph-tag { display: none; }
 .ph[data-view="az"] .ph-tag {
     display: inline-block;
@@ -989,6 +1012,40 @@ html:has(#section-nav) { scroll-behavior: smooth; }
 #section-nav-wrap ~ .ph .ph-row { scroll-margin-top: 190px; }
 .content > .ph { margin-inline: 0; }
 
+/* ThunderAI permissions (permissions_list): .ph list grouped by status */
+.ph-perms { --pm-required: #7fb8e6; --pm-optional: #8fcf9a; --pm-removed: #e08a7f; }
+[data-theme="light"] .ph-perms { --pm-required: #1f5f99; --pm-optional: #2d7a3a; --pm-removed: #a63d30; }
+.ph-perms .ph-group-h::before {
+    content: "";
+    align-self: center;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--pm-dot);
+}
+.pm-required { --pm-dot: var(--pm-required); }
+.pm-optional { --pm-dot: var(--pm-optional); }
+.pm-removed { --pm-dot: var(--pm-removed); }
+.ph .pm-note { margin: -4px 0 12px; font-size: 14px; line-height: 1.5; color: var(--ph-meta); }
+.pm-title { font: 600 16px/1.45 var(--sans); color: var(--ph-ink); }
+.pm-meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px 12px;
+    margin-top: 8px;
+}
+.pm-meta .ph-chip { font-size: 13px; padding: 2px 7px; }
+.ph .pm-meta .ph-since { margin: 0; }
+.ph .pm-meta .ph-since + .ph-since::before { content: "· "; }
+.content .pm-row-removed .pm-title { text-decoration: line-through; color: var(--ph-meta); }
+.ph .pm-row-removed .ph-desc { color: var(--ph-meta); }
+.ph .pm-why { margin-top: 4px; font-style: italic; }
+.ph-perms[data-view="az"] .ph-tag { border-color: color-mix(in srgb, var(--pm-tag) 45%, transparent); color: var(--pm-tag); }
+.pm-tag-required { --pm-tag: var(--pm-required); }
+.pm-tag-optional { --pm-tag: var(--pm-optional); }
+.pm-tag-removed { --pm-tag: var(--pm-removed); }
+
 /* 7. Addon hero + card grid + go-back ----------------------------------- */
 
 .addon-hero {
@@ -1076,9 +1133,95 @@ html:has(#section-nav) { scroll-behavior: smooth; }
 }
 .btn-sm { font-size: 12.5px; padding: 0.35em 1em; }
 
+/* GitHub icon on every link to github.com: a mask filled with currentColor, so one icon fits both themes */
+a[href*="//github.com/"]:not(.doc-card)::before,
+a.doc-card[href*="//github.com/"] .doc-card-title::before {
+    content: "";
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    margin-right: 0.3em;
+    vertical-align: -0.125em;
+    background-color: currentColor;
+    --gh-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z'/%3E%3C/svg%3E");
+    -webkit-mask: var(--gh-icon) no-repeat center / contain;
+    mask: var(--gh-icon) no-repeat center / contain;
+}
+
+/* external-link arrow after every other link that leaves the site (GitHub links have their own icon;
+   image-only links such as the PayPal donate buttons are skipped) */
+a[href^="http"]:not([href*="//github.com/"]):not([href*="//micz.it"]):not([href*="//www.micz.it"]):not(:has(> img:not(.weblate_svg)))::after {
+    content: "";
+    display: inline-block;
+    width: 0.75em;
+    height: 0.75em;
+    margin-left: 0.2em;
+    vertical-align: 0;
+    background-color: currentColor;
+    --ext-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M15 3h6v6'/%3E%3Cpath d='M10 14 21 3'/%3E%3Cpath d='M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6'/%3E%3C/svg%3E");
+    -webkit-mask: var(--ext-icon) no-repeat center / contain;
+    mask: var(--ext-icon) no-repeat center / contain;
+}
+
 .go-back {
     text-align: center;
     margin-top: 3em;
+}
+
+/* add-on sidebar (partials/addon-nav.html): a column left of the page, as wide as the page
+   column was before, so the reading column keeps its width. Below 1100px: a box above the page. */
+.with-addon-nav {
+    flex: 1;
+    width: 100%;
+    max-width: calc(var(--wide) + 264px);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+    display: grid;
+    grid-template-columns: 232px minmax(0, 1fr);
+    column-gap: 32px;
+    align-items: start;
+}
+.with-addon-nav > .post { max-width: none; padding-inline: 0; }
+.addon-nav {
+    position: sticky;
+    top: 0;
+    max-height: 100svh;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    padding: clamp(22px, 4vw, 44px) 4px 32px 0;
+    font-size: 14px;
+    line-height: 1.35;
+}
+.addon-nav summary { display: none; }
+.addon-nav-group + .addon-nav-group { margin-top: 1.4em; }
+.addon-nav-group-title {
+    margin: 0 0 0.5em;
+    font-family: var(--mono);
+    font-size: 11.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+}
+.addon-nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-left: 1px solid var(--hairline);
+}
+.addon-nav ul ul { margin: 2px 0 4px 12px; font-size: 13.5px; }
+.addon-nav a {
+    display: block;
+    margin-left: -1px;
+    padding: 5px 10px;
+    border-left: 2px solid transparent;
+    color: var(--ink-muted);
+    text-decoration: none;
+}
+.addon-nav a:hover { color: var(--ink); border-left-color: var(--hairline-strong); }
+.addon-nav a[aria-current="page"] {
+    color: var(--ink);
+    border-left-color: var(--accent);
+    background: var(--bg-raised);
 }
 
 /* card grid (list-thunderbird-pages) */
@@ -1154,9 +1297,23 @@ html:has(#section-nav) { scroll-behavior: smooth; }
     gap: 14px;
     margin: 1.2em 0 1.8em;
 }
+.doc-grid-single {
+    grid-template-columns: minmax(0, 340px);
+    justify-content: center;
+}
+.doc-grid + .doc-grid-single { margin-top: calc(14px - 1.8em); }
+/* three equal columns; a lone card on the last row is centered with the same width */
+.doc-grid-3 { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+.doc-grid-3 > * { grid-column: span 2; }
+.doc-grid-3 > :last-child:nth-child(3n+1) { grid-column: 3 / span 2; }
+@media (max-width: 880px) {
+    .doc-grid-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .doc-grid-3 > *, .doc-grid-3 > :last-child:nth-child(3n+1) { grid-column: auto; }
+}
+@media (max-width: 560px) {
+    .doc-grid-3 { grid-template-columns: minmax(0, 1fr); }
+}
 .doc-grid .doc-card,
-.info-grid .doc-card,
-.info-grid .info-card,
 .steps > li {
     position: relative;
     display: flex;
@@ -1169,13 +1326,9 @@ html:has(#section-nav) { scroll-behavior: smooth; }
     text-decoration: none;
     transition: border-color 0.15s ease;
 }
-.doc-grid .doc-card:hover,
-.info-grid .doc-card:hover { border-color: var(--hairline-strong); }
-.doc-grid .doc-card-title,
-.info-grid .doc-card-title,
-.info-grid .info-card-title { color: var(--ink); font-weight: 600; font-size: 16.5px; line-height: 1.4; }
-.doc-grid .doc-card-text,
-.info-grid .doc-card-text { color: var(--ink-muted); font-size: 14.5px; line-height: 1.5; }
+.doc-grid .doc-card:hover { border-color: var(--hairline-strong); }
+.doc-grid .doc-card-title { color: var(--ink); font-weight: 600; font-size: 16.5px; line-height: 1.4; }
+.doc-grid .doc-card-text { color: var(--ink-muted); font-size: 14.5px; line-height: 1.5; }
 .doc-grid .doc-card-link { text-decoration: none; }
 .doc-grid .doc-card-link::after { content: ""; position: absolute; inset: 0; border-radius: inherit; }
 .doc-grid .doc-card-flags { position: relative; z-index: 1; display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 6px; margin-top: auto; padding-top: 4px; font-size: 18px; line-height: 1; }
@@ -1189,12 +1342,27 @@ html:has(#section-nav) { scroll-behavior: smooth; }
 }
 .addon-cta a.btn { margin: 0; }
 
-/* info cards (short sections on addon pages) */
+/* info blocks (short non-clickable sections on addon pages): plain text with a side rule, not cards */
 .info-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 14px;
-    margin: 1.2em 0 1.8em;
+    gap: 18px 32px;
+    margin: 2em 0 1.8em;
+}
+.info-grid .info-card {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 2px 0 2px 16px;
+    border-left: 2px solid var(--hairline-strong);
+}
+.info-grid .info-card-title {
+    color: var(--ink);
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
 }
 .info-grid .info-card p { margin: 0; color: var(--ink-muted); font-size: 15px; line-height: 1.55; }
 .info-grid .info-card p + p { margin-top: 0.6em; }
@@ -1458,6 +1626,53 @@ body.home .page-shell::after {
 [data-theme="light"] .theme-toggle .icon-sun { display: none; }
 
 /* 10. Responsive / motion / focus ---------------------------------------- */
+
+@media (max-width: 1100px) {
+    /* add-on sidebar: a collapsed box above the page, aligned and as wide as the reading column */
+    .with-addon-nav { display: block; max-width: var(--wide); padding-inline: 0; }
+    .with-addon-nav > .post { padding-inline: var(--gutter); }
+    .addon-nav {
+        position: static;
+        max-height: none;
+        overflow: visible;
+        max-width: calc(var(--measure) + 2 * var(--gutter));
+        padding: clamp(22px, 4vw, 44px) var(--gutter) 0;
+    }
+    .addon-nav details {
+        border: 1px solid var(--hairline);
+        border-radius: 10px;
+        background: var(--bg-raised);
+    }
+    .addon-nav summary {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 14px;
+        cursor: pointer;
+        list-style: none;
+        font-weight: 600;
+        color: var(--ink);
+    }
+    .addon-nav summary::-webkit-details-marker { display: none; }
+    .addon-nav summary span {
+        font-family: var(--mono);
+        font-size: 12px;
+        font-weight: 400;
+        color: var(--ink-muted);
+    }
+    .addon-nav summary span::after { content: " ▾"; }
+    .addon-nav details[open] summary span::after { content: " ▴"; }
+    .addon-nav details[open] summary { border-bottom: 1px solid var(--hairline); }
+    .addon-nav-groups {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 18px 24px;
+        padding: 14px;
+    }
+    .addon-nav-group + .addon-nav-group { margin-top: 0; }
+    .with-addon-nav .post { padding-top: 22px; }
+}
 
 @media (max-width: 880px) {
     /* icon stays beside the intro, donation card drops below it */

@@ -1,5 +1,5 @@
 +++
-Title = "Guida di configurazione per \"ThunderAI\" - Claude API"
+Title = "Claude API"
 Type = "no-list"
 multilang = true
 +++
@@ -11,19 +11,21 @@ multilang = true
     Claude è noto per produrre risposte accurate e ben strutturate, gestendo ottimamente i documenti lunghi — ideale per leggere e comporre email dettagliate.
 </p>
 
-<table>
-    <tr>
-        <td><strong>Chiave API richiesta</strong></td>
-        <td>Sì</td>
-    </tr>
-    <tr>
-        <td><strong>Opzione gratuita</strong></td>
-        <td>No [Pagamento a consumo]</td>
-    </tr>
-    <tr>
-        <td><strong>Ideale per</strong></td>
-        <td>Analisi dettagliate, email lunghe, scrittura strutturata</td>
-    </tr>
+<table class="guides">
+    <thead>
+        <tr>
+            <th>Chiave API richiesta</th>
+            <th>Opzione gratuita</th>
+            <th>Ideale per</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Sì</td>
+            <td>No (pagamento a consumo)</td>
+            <td>Analisi dettagliate, email lunghe, scrittura strutturata</td>
+        </tr>
+    </tbody>
 </table>
 
 <br>
@@ -44,69 +46,92 @@ multilang = true
 
 <h2>Configurazione</h2>
 
-<h3>1. Apri le opzioni di ThunderAI</h3>
 <p>
-    In Thunderbird, clicca sul menu ThunderAI e seleziona <strong>Options</strong>, oppure vai su<br>
-    <strong>Strumenti → Componenti aggiuntivi e temi → ThunderAI → Preferenze</strong>.
+    Il modo più rapido è il <strong>Setup Wizard</strong>: aprilo dalla pagina di benvenuto di ThunderAI, dal popup della barra degli
+    strumenti o dalla pagina delle impostazioni, scegli <strong>Claude API</strong>, incolla la chiave API, scegli un modello e
+    testa la connessione. Poi il wizard ti permette di attivare le funzioni AI che ti servono.<br>
+    Per configurarla a mano, segui i passi qui sotto.
+</p>
+
+<h3>1. Apri le impostazioni di ThunderAI</h3>
+<p>
+    In Thunderbird, vai su <strong>Strumenti → Componenti aggiuntivi e temi → ThunderAI → Preferenze</strong>.
 </p>
 
 <h3>2. Seleziona l'integrazione Claude API</h3>
-<p>Nella sezione <strong>Connection</strong>, scegli <strong>Claude API</strong> dal menu a tendina delle integrazioni.</p>
+<p>Nel pannello <strong>Connection Settings</strong>, scegli <strong>Claude API</strong> nel menu a tendina <strong>Connection Type</strong>.</p>
 
-<h3>3. Inserisci la tua chiave API</h3>
-<p>Incolla la tua chiave Claude API nel campo <strong>API Key</strong>.</p>
+<h3>3. Inserisci la chiave API</h3>
+<p>Incolla la chiave API nel campo <strong>Claude API Key</strong>. La chiave è memorizzata localmente in Thunderbird e viene inviata solo ai server di Anthropic.</p>
 
-<h3>4. Concedi il permesso richiesto</h3>
+<h3 id="model">4. Scegli un modello</h3>
 <p>
-    La Claude API richiede che ThunderAI acceda al dominio <code>anthropic.com</code>.<br>
-    Nella pagina delle opzioni comparirà un pulsante per concedere questo permesso — clicca su di esso e conferma nella finestra di dialogo di Thunderbird.
+    Clicca su <strong>Update list</strong> accanto a <strong>Claude Models</strong>. La prima volta Thunderbird chiede il permesso di
+    accedere a <code>anthropic.com</code>: accettalo, altrimenti ThunderAI non può raggiungere la Claude API. Poi seleziona dall'elenco il modello che vuoi usare.
 </p>
-<p><em>Si tratta di un permesso opzionale richiesto solo quando selezioni l'integrazione Claude. Consente a ThunderAI di comunicare con i server API di Anthropic. ThunderAI non raccoglie alcun dato.</em></p>
+<p><em>Questo permesso è opzionale e serve solo a comunicare con i server API di Anthropic. ThunderAI non raccoglie alcun dato.</em></p>
 
-<h3>5. Scegli un modello</h3>
-<p>Seleziona un modello Claude dal menu a tendina <strong>Model</strong>. Clicca sul pulsante per aggiornare l'elenco.</p>
+<h3>5. Testa la connessione</h3>
+<p>
+    Le impostazioni vengono salvate appena le modifichi: non c'è un pulsante Salva.<br>
+    Clicca su <strong>Test now</strong> nella barra sotto le impostazioni di connessione. Se è tutto a posto, mostra
+    <em>"Connected — Claude API reachable"</em>. Poi apri una qualsiasi email, clicca sul pulsante ThunderAI nella barra degli strumenti e lancia un prompt.
+</p>
 
-<h3>6. Salva e testa</h3>
-<p>Clicca su <strong>Save</strong>. Apri una qualsiasi email, usa il menu ThunderAI ed esegui un prompt per confermare che l'integrazione funzioni.</p>
+<h2>Opzioni avanzate</h2>
+<p>
+    Clicca su <strong>Advanced options</strong> nel pannello <strong>Connection Settings</strong> per mostrare le impostazioni qui sotto.
+    Si adattano al modello selezionato: un'impostazione che il modello non accetta viene disattivata, con una nota che spiega il motivo, e non viene inviata.
+    Il valore salvato viene mantenuto, nel caso torni a un altro modello.
+</p>
+<ul>
+    <li><strong>System Prompt</strong>: istruzioni e contesto inviati al modello con ogni prompt.</li>
+    <li><strong>Max Tokens</strong>: la lunghezza massima della risposta.</li>
+    <li><strong>Effort</strong>: quanto ragionamento il modello dedica a una richiesta. I livelli più alti danno risposte migliori sui compiti complessi, ma costano più token e richiedono più tempo.
+        Lascialo su <em>Default</em> per lasciar decidere all'API. I modelli Claude più vecchi non lo supportano.</li>
+    <li><strong>Extended thinking budget (tokens)</strong>: per i modelli più vecchi, il numero massimo di token che il modello può usare per ragionare. <code>0</code> disattiva il ragionamento esteso.
+        Deve essere almeno 1024 e minore di Max Tokens: altrimenti le impostazioni mostrano un avviso e il valore non viene inviato.</li>
+    <li><strong>Temperature</strong> (0.0–1.0), <strong>Top P</strong> e <strong>Top K</strong>: quanto la risposta è casuale o mirata.
+        I modelli Claude più recenti non li accettano: usa invece <strong>Effort</strong>.</li>
+    <li><strong>Stop sequences</strong>: testi che fanno smettere di scrivere il modello, uno per riga. Accettate da tutti i modelli Claude.</li>
+    <li><strong>Claude API Version</strong>: la versione dell'API di Anthropic. Non cambiarla se non sai cosa stai facendo.</li>
+</ul>
+<p>
+    Puoi impostare queste opzioni anche sul singolo prompt, nella pagina dei prompt personalizzati, e su ciascuna funzione AI (Add Tags, Spam Filter,
+    Summarize, Translate, Calendar Event, Task), con il pulsante <strong>Advanced options</strong> della sua connessione specifica.
+</p>
 
 <h2>Suggerimenti</h2>
 <ul>
-    <li>I modelli Claude gestiscono grandi quantità di testo grazie alla loro ampia finestra di contesto, utile quando si elaborano lunghe conversazioni email.</li>
-    <li>Claude tende a essere dettagliato nelle risposte. Se preferisci output più brevi, aggiungi istruzioni come "Sii conciso" direttamente nei tuoi prompt o in un template di prompt personalizzato.</li>
-    <li>Monitora il tuo utilizzo e i costi su <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a>.</li>
+    <li>I modelli Claude gestiscono bene grandi quantità di testo grazie alla loro ampia finestra di contesto, utile per elaborare lunghi thread di email.</li>
+    <li>Claude tende a dare risposte esaurienti. Se preferisci risposte più brevi, aggiungi istruzioni come "Sii conciso" direttamente nei prompt, in un prompt personalizzato o nel <strong>System Prompt</strong>.</li>
+    <li>I nuovi modelli Claude funzionano appena compaiono nell'elenco. Se un modello rifiuta una delle opzioni, ThunderAI ripete automaticamente la richiesta una volta senza quell'opzione.</li>
+    <li>Se durante l'elaborazione di più email (Add Tags, Spam Filter, Summarize, Translate) si supera il limite di richieste di Anthropic, l'elaborazione si ferma da sola e ti dice quanti messaggi sono stati elaborati.</li>
+    <li>Controlla l'utilizzo e i costi dell'API su <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a>.</li>
 </ul>
 
 <h2>Risoluzione dei problemi</h2>
 
-<h3>"Authentication error" o "Invalid API key"</h3>
-<p>Verifica che la chiave sia stata copiata correttamente. Se necessario, rigenera una nuova chiave dalla console Anthropic.</p>
+<h3>Errore "Authentication failed — check your API key" o "Invalid API key"</h3>
+<p>Verifica di aver copiato correttamente la chiave. Se necessario, generane una nuova dalla console di Anthropic.</p>
 
-<h3>Errore CORS o richieste che falliscono</h3>
-<p>Assicurati di aver concesso il permesso per il dominio <code>anthropic.com</code> come descritto al passaggio 4. Senza di esso, ThunderAI non può raggiungere la Claude API.</p>
+<h3>Il popup chiede un permesso invece di mostrare i prompt</h3>
+<p>
+    Il permesso per <code>anthropic.com</code> non è ancora stato concesso, e senza di esso ThunderAI non può raggiungere la Claude API.
+    Clicca sul messaggio nel popup: si apre la pagina di benvenuto di ThunderAI. Clicca lì sullo stesso messaggio e accetta la richiesta di Thunderbird.
+    Puoi concederlo anche dal <a href="#model">passo 4</a>.
+</p>
 
 <h3>Errore "Credit balance too low"</h3>
 <p>Aggiungi crediti al tuo account Anthropic su <a href="https://console.anthropic.com/settings/billing" target="_blank">console.anthropic.com/settings/billing</a>.</p>
 
-<h3>Nessun modello nel menu a tendina</h3>
-<p>Verifica che la chiave API sia salvata e che il permesso per il dominio sia stato concesso. Prova a salvare la pagina delle opzioni e riaprirla.</p>
+<h3>Nell'elenco non compare nessun modello</h3>
+<p>
+    Se vedi <em>"You have denied the optional permission needed to fetch models for this integration"</em>, clicca di nuovo su
+    <strong>Update list</strong> e accetta la richiesta di permesso di Thunderbird. Altrimenti verifica che la chiave API sia valida.
+</p>
 
 <br>
 <div style="text-align: center">
     <a href="../">Torna alle guide</a> &nbsp;|&nbsp; <a href="../ollama/">Avanti: Ollama →</a>
 </div>
-
-
-<style>
-table {
-    border-collapse: collapse;
-    margin: 10px 0;
-}
-th, td {
-    border: 1px solid #ccc;
-    padding: 7px 14px;
-    text-align: left;
-}
-h3 {
-    margin-bottom: 4px;
-}
-</style>

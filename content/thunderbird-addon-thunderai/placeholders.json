@@ -1,175 +1,211 @@
 [
     {
         "id": "{%account_email_address%}",
+        "type": "both",
         "description": "the mail address of the current account.",
         "scope": "Account & Folder",
         "version": "3.3.0"
     },
     {
         "id": "{%additional_text:<Placeholder-ID>%}",
-        "description": "the text added by the user before sending the prompt. To use this placeholder the \"<i>Ask for additional text</i>\" flag must be set in the prompt configuration. You can define more instances of this placeholder, defining different &lt;Placeholder-ID&gt;, that will be shown in the form used to ask the value to the user. This placeholder is not available in the \"Add tags\" and \"Add Calendar Event\" special prompts.",
+        "type": "both",
+        "description": "the text added by the user before sending the prompt. To use this placeholder the \"<i>Ask for additional text</i>\" flag must be set in the prompt configuration. You can define more instances of this placeholder, defining different &lt;Placeholder-ID&gt;, that will be shown in the form used to ask the value to the user. A field left empty is replaced by an empty text. This placeholder is not available in the \"Add tags\" and \"Add Calendar Event\" special prompts.",
         "scope": "User Input",
         "version": "4.0.0"
     },
     {
         "id": "{%author%}",
+        "type": "both",
         "description": "the author of the email.",
         "scope": "Email Metadata",
         "version": ""
     },
     {
         "id": "{%cc_list%}",
-        "description": "the list of addresses of the CC field of the email, separated by a comma.",
+        "type": "both",
+        "description": "the list of addresses of the CC field of the email, separated by a comma. When composing, the addresses typed in the Cc field are used.",
         "scope": "Email Metadata",
         "version": ""
     },
     {
         "id": "{%current_datetime%}",
+        "type": "both",
         "description": "the current date and time.",
         "scope": "General",
         "version": "3.1.0"
     },
     {
         "id": "{%junk_score%}",
+        "type": "reading",
         "description": "the Junk score of the email, only for received emails.",
         "scope": "Email Metadata",
         "version": ""
     },
     {
         "id": "{%mail_attachments_info%}",
+        "type": "reading",
         "description": "prints a list of information about the attachments of the email, in the form <code>\"file name\" [file type] (file size)</code>. As an example: <code>\"google.png\" [image/png] (2 KB)</code>.",
         "scope": "Email Content",
         "version": "3.7.0"
     },
     {
         "id": "{%mail_datetime%}",
+        "type": "reading",
         "description": "the date and time of the email.",
         "scope": "Email Metadata",
         "version": "3.1.0"
     },
     {
         "id": "{%mail_folder_name%}",
+        "type": "reading",
         "description": "the folder name containing the email.",
         "scope": "Account & Folder",
         "version": "3.3.0"
     },
     {
         "id": "{%mail_folder_path%}",
+        "type": "reading",
         "description": "the complete path of the folder containing the email.",
         "scope": "Account & Folder",
         "version": "3.3.0"
     },
     {
         "id": "{%mail_html_body%}",
+        "type": "both",
         "description": "the body of the email in HTML.",
         "scope": "Email Content",
         "version": ""
     },
     {
         "id": "{%mail_html_body_or_selected%}",
+        "type": "both",
         "description": "a selection if there is any, otherwise the body of the email in HTML.",
         "scope": "Email Content",
         "version": "4.0.0"
     },
     {
+        "id": "{%mail_plain_text_part%}",
+        "type": "reading",
+        "description": "the original plain text part of the email, exactly as the sender wrote it, with no conversion from the HTML part. Blank lines and column alignment are preserved, so it is well suited to business mail, invoices and automated notifications, and it usually costs fewer tokens than <i>{%mail_text_body%}</i>. It is empty when the email has no plain text part, and some newsletters only include a stub there.",
+        "scope": "Email Content",
+        "version": "5.0.0"
+    },
+    {
         "id": "{%mail_quoted_text%}",
+        "type": "compose",
         "description": "this placeholders autoselects the quoted text only when is after the reply text, removing any previous manual made selection.",
         "scope": "Email Content",
         "version": "3.4.0"
     },
     {
         "id": "{%mail_subject%}",
+        "type": "both",
         "description": "the subject of the email.",
         "scope": "Email Content",
         "version": ""
     },
     {
         "id": "{%mail_text_body%}",
+        "type": "both",
         "description": "the body of the email in plain text.",
         "scope": "Email Content",
         "version": ""
     },
     {
         "id": "{%mail_text_body_or_selected%}",
+        "type": "both",
         "description": "a selection if there is any, otherwise the body of the email in plain text.",
         "scope": "Email Content",
         "version": "4.0.0"
     },
     {
         "id": "{%mail_typed_text%}",
+        "type": "compose",
         "description": "this placeholders autoselects the text typed in a message only when it's before the quoted email, removing any previous manual made selection.",
         "scope": "Email Content",
         "version": "3.1.0"
     },
     {
         "id": "{%recipients%}",
-        "description": "the list of recipients of the email, separated by a comma.",
+        "type": "both",
+        "description": "the list of recipients of the email, separated by a comma. When composing, the addresses typed in the To field are used.",
         "scope": "Email Metadata",
         "version": ""
     },
     {
         "id": "{%selected_text%}",
+        "type": "both",
         "description": "the text selected by the user. To use this placeholder the \"<i>Text selection needed</i>\" flag must be set in the prompt configuration.",
         "scope": "Email Content",
         "version": ""
     },
     {
         "id": "{%selected_html%}",
+        "type": "both",
         "description": "the html part of the text selected by the user. To use this placeholder the \"<i>Text selection needed</i>\" flag must be set in the prompt configuration.",
         "scope": "Email Content",
         "version": "3.5.0"
     },
     {
         "id": "{%tags_current_email%}",
+        "type": "both",
         "description": "a comma separated list of the tags of the current email.",
         "scope": "Tags",
         "version": "3.0.0"
     },
     {
         "id": "{%tags_full_list%}",
+        "type": "both",
         "description": "a comma separated list of all the tags available in Thunderbird.",
         "scope": "Tags",
         "version": "3.0.0"
     },
     {
         "id": "{%thunderai_def_sign%}",
+        "type": "both",
         "description": "the default signature as defined in the ThunderAI options page.",
         "scope": "ThunderAI Settings",
         "version": "3.2.0"
     },
     {
         "id": "{%thunderai_def_lang%}",
+        "type": "both",
         "description": "the default language as defined in the ThunderAI options page.",
         "scope": "ThunderAI Settings",
         "version": "3.2.0"
     },
     {
         "id": "{%thunderai_translate_lang%}",
-        "description": "the language defined in the translation settings.",
+        "type": "both",
+        "description": "the language defined in the translation settings. If it is empty, the default language defined in the ThunderAI options page is used.",
         "scope": "ThunderAI Settings",
         "version": "4.1.0"
     },
     {
         "id": "{%thunderai_translate_exclude_lang%}",
+        "type": "both",
         "description": "the languages to be excluded from the translation as defined in the translation settings.",
         "scope": "ThunderAI Settings",
         "version": "4.1.0"
     },
     {
         "id": "{%mail_headers:<Header-ID>%}",
-        "description": "use this placeholder to get the value of any mail header, replacing &lt;Header-ID&gt; with the ID of the header you wish to retrieve. For example, use <i>{%mail_headers:Received-SPF%}</i> to use the value of <i>Received-SPF</i>.",
+        "type": "reading",
+        "description": "use this placeholder to get the value of any mail header, replacing &lt;Header-ID&gt; with the ID of the header you wish to retrieve. For example, use <i>{%mail_headers:Received-SPF%}</i> to use the value of <i>Received-SPF</i>. Spaces around the colon are ignored.",
         "scope": "Email Metadata",
         "version": "3.8.0"
     },
     {
         "id": "{%mail_full_headers%}",
+        "type": "reading",
         "description": "use this placeholder to get all the mail headers.",
         "scope": "Email Metadata",
         "version": "4.1.0"
     },
     {
         "id": "{%empty%}",
-        "description": "this placeholder will be replaced by an empty string. This allows you to use a prompt that doesn't include any information from the email and prevents the email body from being automatically appended at the end.",
+        "type": "both",
+        "description": "this placeholder is always replaced by an empty string. This allows you to use a prompt that doesn't include any information from the email and prevents the email body from being automatically appended at the end.",
         "scope": "General",
         "version": "3.4.0"
     }

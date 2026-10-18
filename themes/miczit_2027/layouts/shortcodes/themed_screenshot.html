@@ -1,0 +1,7 @@
+{{- /* A screenshot in the site's current theme, linked to its full-size file.
+       Usage: {{< themed_screenshot "thunderai/customprompts/table-view.png" "Alt text" >}} (path under static/images/).
+       The light version is the same file in a light/ subfolder. */ -}}
+{{- $p := .Get 0 -}}
+{{- $light := printf "%s/light/%s" (path.Dir $p) (path.Base $p) -}}
+<a class="only-dark" href="{{ .Site.BaseURL }}images/{{ $p }}" target="_blank"><img loading="lazy" src="{{ .Site.BaseURL }}images/{{ $p }}" alt="{{ .Get 1 }}"></a>
+<a class="only-light" href="{{ .Site.BaseURL }}images/{{ $light }}" target="_blank"><img loading="lazy" src="{{ .Site.BaseURL }}images/{{ $light }}" alt="{{ .Get 1 }}"></a>
