@@ -8,7 +8,6 @@ notes that no longer apply instead of leaving them as history.
 
 ## Build and dev
 
-- `hugo.exe` lives in `miczit/hugo` (the parent folder of this repo) and is not on PATH.
 - Production build: `hugo --gc --minify` writes to `docs/`. `docs/` is committed and deployed to
   GitHub Pages by `.github/workflows/static.yml` on pushes to `master` that touch `docs/**`.
   Hugo does not delete stale files in `docs/`; use `--cleanDestinationDir` for a clean build.

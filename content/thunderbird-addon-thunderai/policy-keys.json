@@ -63,7 +63,7 @@
         "settable": true,
         "values": "true",
         "notes": "<code>true</code> turns strict mode on: every setting the policy does not set is locked at its default. See <a href=\"#strict-mode\">Strict mode</a>.",
-        "version": ""
+        "version": "5.1.0"
     },
     {
         "key": "_user_editable",
@@ -74,7 +74,7 @@
         "settable": true,
         "values": "",
         "notes": "Setting names that stay user-editable in strict mode. Only used when <code>_lock_unlisted</code> is <code>true</code>. See <a href=\"#strict-mode\">Strict mode</a>.",
-        "version": ""
+        "version": "5.1.0"
     },
     {
         "key": "_disable_prompt_management",
@@ -720,6 +720,17 @@
         "default": "\"\"",
         "values": "",
         "notes": "",
+        "version": "5.1.0",
+        "group": "ChatGPT Web",
+        "category": "provider",
+        "settable": true
+    },
+    {
+        "key": "chatgpt_web_model_extended_check",
+        "type": "boolean",
+        "default": "false",
+        "values": "",
+        "notes": "Opens the ChatGPT model menu before sending the prompt to check which model is selected. Only known models are checked.",
         "version": "5.1.0",
         "group": "ChatGPT Web",
         "category": "provider",
@@ -1410,7 +1421,7 @@
     {
         "key": "spamfilter_skip_addressbook",
         "type": "boolean",
-        "default": "true",
+        "default": "false",
         "values": "",
         "notes": "Needs the <code>addressBooks</code> permission, which a policy cannot grant. See <a href=\"#permissions\">Settings that require a browser permission</a>.",
         "version": "5.1.0",
