@@ -112,6 +112,12 @@ themes/miczit_2027/
 - `scripts/sync-thunderai-languages.mjs` (plain Node) adds/publishes locales; run it with
   `--dry-run` to see the JSON summary. It rewrites the file with `JSON.stringify(…, null, 4)` and
   refuses to run if the file is not already in that exact format, so keep it that way.
+- Payload `contributors` (in_progress only): `{ locale: [{ name, email, github, weblate, url }] }`
+  (old `["Name"]` still accepted). They only fill `credits` of entries the run adds, merged by
+  email and then by GitHub login, as a link to `url` when set. Existing `credits` are hand-made and
+  never rewritten; the PR is the approval step. Emails never reach the file, the PR or the logs:
+  an email inside `name` is removed (empty name → GitHub login, then Weblate login, else the
+  person is dropped), and a `url` with `@` is not used.
 - `.github/workflows/thunderai-languages.yml` runs it on `repository_dispatch`
   `thunderai-languages` (or by hand) and keeps one open PR on branch `thunderai-languages-sync`.
   It needs "Allow GitHub Actions to create and approve pull requests" in the repo settings.

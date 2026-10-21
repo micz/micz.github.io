@@ -9,7 +9,8 @@
 // Options:
 //   --mode in_progress|release   overrides payload.mode
 //   --locales a,b,c              overrides payload.locales (array or comma-separated string)
-//   --contributors '<json>'      {"ko": ["Name", ...] | "Name, Name"}, overrides payload.contributors
+//   --contributors '<json>'      {"ko": [{ name, email, github, weblate, url }, ...]}, overrides
+//                                payload.contributors (old format ["Name", ...] | "Name, Name" still works)
 //   --payload <file>             JSON file with { mode, locales, contributors?, ref, url }
 //   --file <path>                languages.json to edit (default: the ThunderAI one in this repo)
 //   --baseline <path>            languages.json to compare against for the PR text (default: the
@@ -18,6 +19,10 @@
 //   --summary <path>             also write the JSON summary to this file
 //   --pr-body <path>             write the Markdown PR body to this file
 //   --dry-run                    compute and print the summary, write nothing
+//
+// Contributors only fill the credits of entries this run adds; the PR is where they get approved.
+// Credits already in the file are hand-made and always win: they are never rewritten. Emails are
+// used only as the key to merge duplicates and never reach the file, the PR or the output.
 //
 // The summary is printed to stdout as JSON. Exit codes: 0 ok, 1 bad input, 2 file not canonical.
 // When GITHUB_OUTPUT is set, "changed" and "pr_title" are appended to it.
@@ -155,11 +160,58 @@ function escapeHtml(text) {
     return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
+const clean = (value) => (typeof value === 'string' && value.trim()) ? value.trim() : null;
+
+const EMAIL_RE = /<?[^\s<>@,]+@[^\s<>@,]+>?/g;
+
+// Git names can be an email or hold one ("Kim <kim@x.org>"): drop it, and when nothing is left
+// fall back to the GitHub login, then the Weblate one.
+function nameWithoutEmail(item) {
+    const name = clean(item.name)?.replace(EMAIL_RE, '').replace(/\(\s*\)|<\s*>/g, '').replace(/\s+/g, ' ').trim();
+    return name || clean(item.github) || clean(item.weblate);
+}
+
+// One contributor as { name, email, github, weblate, url }; a plain string is the old format.
+function toContributor(item) {
+    if (typeof item === 'string') item = { name: item };
+    if (!item || typeof item !== 'object') return null;
+    const name = nameWithoutEmail(item);
+    if (!name) return null;
+    const url = clean(item.url)?.includes('@') ? null : clean(item.url);
+    return {
+        name,
+        email: clean(item.email)?.toLowerCase() ?? null,
+        github: clean(item.github),
+        weblate: clean(item.weblate),
+        url: url && /^https?:\/\//i.test(url) ? url : null,
+    };
+}
+
+// Contributors of one locale, merged by email, then by GitHub login; with neither, by name.
+function mergeContributors(list) {
+    const people = [];
+    for (const c of list.map(toContributor).filter(Boolean)) {
+        const same = people.find((p) => (c.email && p.email === c.email)
+            || (c.github && p.github?.toLowerCase() === c.github.toLowerCase())
+            || (!c.email && !c.github && !p.email && !p.github && collator.compare(p.name, c.name) === 0));
+        if (!same) { people.push(c); continue; }
+        for (const k of ['email', 'github', 'weblate']) same[k] ??= c[k];
+        // Same priority as ThunderAI: a GitHub profile wins over a Weblate one.
+        const onGithub = (url) => /^https?:\/\/github\.com\//i.test(url ?? '');
+        if (c.url && (!same.url || (onGithub(c.url) && !onGithub(same.url)))) same.url = c.url;
+    }
+    return people;
+}
+
 function creditsFor(contributors, code) {
     if (!contributors) return '';
     const key = Object.keys(contributors).find((k) => normCode(k) === normCode(code));
     if (!key) return '';
-    return toList(contributors[key]).map((n) => n.trim()).filter(Boolean).map(escapeHtml).join(', ');
+    const value = contributors[key];
+    const list = Array.isArray(value) ? value : toList(value);
+    return mergeContributors(list).map((c) => c.url
+        ? `<a href="${escapeHtml(c.url)}" target="_blank">${escapeHtml(c.name)}</a>`
+        : escapeHtml(c.name)).join(', ');
 }
 
 function checkEntries(entries, path) {

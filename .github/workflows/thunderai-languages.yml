@@ -55,7 +55,8 @@ jobs:
           else
             node -e 'const e = process.env; process.stdout.write(JSON.stringify({ mode: e.IN_MODE, locales: e.IN_LOCALES, url: e.RUN_URL }))' > "$RUNNER_TEMP/payload.json"
           fi
-          cat "$RUNNER_TEMP/payload.json"
+          # The log is public: print the payload without the contributors' emails.
+          node -e 'const p = JSON.parse(require("fs").readFileSync(process.argv[1], "utf8")); console.log(JSON.stringify(p, (k, v) => k === "email" ? undefined : v))' "$RUNNER_TEMP/payload.json"
 
       # create-pull-request rebuilds the branch from the base on every run, so the changes
       # already in the open PR are merged in first, or the new event would drop them.
