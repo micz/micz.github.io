@@ -26,8 +26,11 @@
 // every locale in the payload are checked against it, released or not, and the PR is where the
 // changes get approved. `credits` is a list of items { name, url?, github?, weblate?, first?,
 // hidden? } or { generated: true }; Hugo builds the text. Hand edits always win:
-// - an item that matches a contributor (by GitHub, Weblate, profile link or name) is kept; the
-//   sync only adds the keys it does not have yet (a key set by hand, even to null, stays);
+// - an item that matches a contributor (by GitHub login, then Weblate login, then profile link,
+//   then name) is kept; the sync only adds the keys it does not have yet (a key set by hand, even
+//   to null, stays), except "github": a login in the payload is always written;
+// - GitHub always wins over Weblate: an item with "github" links https://github.com/<github>, and
+//   "weblate" stays as data only;
 // - a contributor matching no item gets a new item (null fields left out);
 // - items matching no contributor are manual credits and stay;
 // - "hidden": true keeps a person out of the page and stops the sync from adding them again;
@@ -194,11 +197,13 @@ function toContributor(item) {
     const name = nameWithoutEmail(item);
     if (!name) return null;
     const url = clean(item.url)?.includes('@') ? null : clean(item.url);
+    // The Weblate login can come only as a profile link.
+    const weblateLogin = url?.match(/^https?:\/\/hosted\.weblate\.org\/user\/([^/?#]+)\/?$/i)?.[1];
     return {
         name,
         email: clean(item.email)?.toLowerCase() ?? null,
         github: clean(item.github),
-        weblate: clean(item.weblate),
+        weblate: clean(item.weblate) ?? (weblateLogin ? decodeURIComponent(weblateLogin) : null),
         url: url && /^https?:\/\//i.test(url) ? url : null,
         first: date(item.first),
         last: date(item.last),
@@ -238,6 +243,7 @@ function mergeContributors(list) {
         same.strings = sum(same.strings, c.strings);
         same.lines = sum(same.lines, c.lines);
     }
+    for (const p of people) if (p.github) p.url = githubUrl(p.github);
     return people.sort(byContribution);
 }
 
@@ -250,12 +256,14 @@ function contributorsFor(contributors, code) {
     return mergeContributors(Array.isArray(value) ? value : toList(value));
 }
 
+const githubUrl = (login) => `https://github.com/${login}`;
+
 // "https://GitHub.com/Foo/" -> "github.com/foo"
 const normUrl = (url) => url ? url.toLowerCase().replace(/^https?:\/\//, '').replace(/^www\./, '').replace(/\/+$/, '') : null;
 
 function profileUrls(p) {
     return [p.url,
-        p.github && `https://github.com/${p.github}`,
+        p.github && githubUrl(p.github),
         p.weblate && `https://hosted.weblate.org/user/${p.weblate}/`].filter(Boolean).map(normUrl);
 }
 
@@ -269,6 +277,18 @@ const isItemOf = (item, p) => !item.generated && (sameLogin(item.github, p.githu
     || (item.url && profileUrls(p).includes(normUrl(item.url)))
     || (item.name && sameName(item.name, p.name)));
 
+// The item of a person, trying the keys in order: GitHub login, Weblate login, profile link, name.
+// Items in the file have no email (the key that merged the payload), so these are what is left.
+function findItem(credits, p) {
+    const tests = [(i) => sameLogin(i.github, p.github), (i) => sameLogin(i.weblate, p.weblate),
+        (i) => i.url && profileUrls(p).includes(normUrl(i.url)), (i) => i.name && sameName(i.name, p.name)];
+    for (const test of tests) {
+        const item = credits.find((i) => !i.generated && test(i));
+        if (item) return item;
+    }
+    return null;
+}
+
 // New item of a person: no email, and no `last`, `strings` or `lines`, which would change on
 // every commit (the order they give is the order of the list).
 function newItem(p) {
@@ -277,9 +297,12 @@ function newItem(p) {
     return item;
 }
 
-// Adds to an existing item the keys it does not have yet; `first` only moves earlier.
+// Adds to an existing item the keys it does not have yet; `first` only moves earlier. The GitHub
+// login of the payload always replaces the item's, and an item with a GitHub login links it.
 function fillItem(item, p) {
-    for (const k of ['url', 'github', 'weblate']) if (!(k in item) && p[k]) item[k] = p[k];
+    if (p.github) item.github = p.github;
+    for (const k of ['url', 'weblate']) if (!(k in item) && p[k]) item[k] = p[k];
+    if (item.github) item.url = githubUrl(item.github);
     if (p.first && (!('first' in item) || (item.first && p.first < item.first))) item.first = p.first;
 }
 
@@ -290,7 +313,7 @@ function syncCredits(entry, people) {
     const credits = entry.credits.filter((i) => !i.generated);
     const added = [];
     for (const p of people) {
-        const item = credits.find((i) => isItemOf(i, p));
+        const item = findItem(credits, p);
         if (item) { fillItem(item, p); continue; }
         credits.push(newItem(p));
         added.push(p);

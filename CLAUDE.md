@@ -122,10 +122,15 @@ themes/miczit_2027/
   (old `["Name"]` still accepted, kept in payload order). Merged by email, then by GitHub login
   (first = min, last = max, strings and lines summed). The credits of every locale in the payload
   are synced, released or not; the PR is the approval step:
-  - an item matches a person by GitHub or Weblate login, profile link or name. A matching item
-    only gets the keys it lacks (a key set by hand, even to `null`, wins; `first` only moves
-    earlier); an unmatched person gets a new item without null fields; items matching nobody
-    are manual credits and stay. Nothing is ever removed;
+  - an item matches a person by GitHub login, then Weblate login (also taken from a
+    `hosted.weblate.org/user/<login>/` url in the payload), then profile link, then name. A
+    matching item only gets the keys it lacks (a key set by hand, even to `null`, wins; `first`
+    only moves earlier), except `github`: a login in the payload is always written, even on a
+    hand-made item. An unmatched person gets a new item without null fields; items matching
+    nobody are manual credits and stay. Nothing is ever removed;
+  - GitHub always wins over Weblate: an item with `github` has `url` =
+    `https://github.com/<github>` (the sync writes it, and `lang_list_weblate` links GitHub
+    whatever `url` says); `weblate` stays as data only;
   - order: people of the payload by strings, then lines (descending), then name; then manual
     items in their order. `"keep_credits_order": true` on an entry keeps the hand-made order
     and only appends new names;

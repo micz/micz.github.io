@@ -203,8 +203,9 @@
         "credits": [
             {
                 "name": "Taichi Ito",
-                "url": "https://hosted.weblate.org/user/watya1/",
-                "weblate": "watya1"
+                "url": "https://github.com/watya1",
+                "weblate": "watya1",
+                "github": "watya1"
             },
             {
                 "generated": true

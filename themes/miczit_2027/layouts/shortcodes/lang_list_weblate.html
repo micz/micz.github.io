@@ -16,7 +16,9 @@
                 {{ $credits = $credits | append "Generated automatically" }}
             {{ else if and .name (not .hidden) }}
                 {{ $name := htmlEscape .name }}
-                {{ with .url }}{{ $name = printf `<a href="%s" target="_blank">%s</a>` (htmlEscape .) $name }}{{ end }}
+                {{ $url := .url }}
+                {{ with .github }}{{ $url = printf "https://github.com/%s" . }}{{ end }}
+                {{ with $url }}{{ $name = printf `<a href="%s" target="_blank">%s</a>` (htmlEscape .) $name }}{{ end }}
                 {{ $credits = $credits | append $name }}
             {{ end }}
         {{ end }}
