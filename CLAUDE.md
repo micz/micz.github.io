@@ -112,12 +112,20 @@ themes/miczit_2027/
 - `scripts/sync-thunderai-languages.mjs` (plain Node) adds/publishes locales; run it with
   `--dry-run` to see the JSON summary. It rewrites the file with `JSON.stringify(…, null, 4)` and
   refuses to run if the file is not already in that exact format, so keep it that way.
-- Payload `contributors` (in_progress only): `{ locale: [{ name, email, github, weblate, url }] }`
-  (old `["Name"]` still accepted). They only fill `credits` of entries the run adds, merged by
-  email and then by GitHub login, as a link to `url` when set. Existing `credits` are hand-made and
-  never rewritten; the PR is the approval step. Emails never reach the file, the PR or the logs:
-  an email inside `name` is removed (empty name → GitHub login, then Weblate login, else the
-  person is dropped), and a `url` with `@` is not used.
+- Payload `contributors` (both modes): `{ locale: [{ name, email, github, weblate, url, first,
+  last }] }`, the FULL list of every locale, not a delta (old `["Name"]` still accepted). Merged
+  by email, then by GitHub login (first = min, last = max). The credits of every locale in the
+  payload are synced, released or not; the PR is the approval step:
+  - items already in `credits` that match a person (by profile link or name) stay as written
+    (manual wins); unmatched people are appended, as a link to `url` when set; items matching
+    nobody are manual credits and stay;
+  - `synced_contributors` (per entry, no emails, no `last`, which would change every commit)
+    records who the sync has proposed: a known person missing from `credits` was removed by hand
+    and is not proposed again. People missing from a payload stay in it;
+  - "Generated automatically" is never sent; it is kept and always moved to the end.
+- Emails never reach the file, the PR or the logs: an email inside `name` is removed (empty name
+  → GitHub login, then Weblate login, else the person is dropped), and a `url` with `@` is not
+  used. `languages.json` is not published (`ignoreFiles`).
 - `.github/workflows/thunderai-languages.yml` runs it on `repository_dispatch`
   `thunderai-languages` (or by hand) and keeps one open PR on branch `thunderai-languages-sync`.
   It needs "Allow GitHub Actions to create and approve pull requests" in the repo settings.

@@ -9,8 +9,9 @@
 // Options:
 //   --mode in_progress|release   overrides payload.mode
 //   --locales a,b,c              overrides payload.locales (array or comma-separated string)
-//   --contributors '<json>'      {"ko": [{ name, email, github, weblate, url }, ...]}, overrides
-//                                payload.contributors (old format ["Name", ...] | "Name, Name" still works)
+//   --contributors '<json>'      {"ko": [{ name, email, github, weblate, url, first, last }, ...]},
+//                                overrides payload.contributors (old format ["Name", ...] | "Name, Name"
+//                                still works)
 //   --payload <file>             JSON file with { mode, locales, contributors?, ref, url }
 //   --file <path>                languages.json to edit (default: the ThunderAI one in this repo)
 //   --baseline <path>            languages.json to compare against for the PR text (default: the
@@ -20,9 +21,16 @@
 //   --pr-body <path>             write the Markdown PR body to this file
 //   --dry-run                    compute and print the summary, write nothing
 //
-// Contributors only fill the credits of entries this run adds; the PR is where they get approved.
-// Credits already in the file are hand-made and always win: they are never rewritten. Emails are
-// used only as the key to merge duplicates and never reach the file, the PR or the output.
+// Contributors are the full list of every locale (in both modes), not a delta: the credits of
+// every locale in the payload are checked against it, released or not, and the PR is where the
+// changes get approved. Credits stay hand-made and always win:
+// - an item already in `credits` that matches a contributor (by link or name) is kept as written;
+// - a contributor matching nobody is appended as a link to `url` (plain text when null);
+// - items matching no contributor are manual credits and stay;
+// - `synced_contributors` remembers who the sync has already proposed (no emails), so a person
+//   removed from `credits` by hand is not proposed again;
+// - "Generated automatically" (never sent by ThunderAI) is kept and always moved to the end.
+// Emails are used only as the key to merge duplicates and never reach the file, the PR or the output.
 //
 // The summary is printed to stdout as JSON. Exit codes: 0 ok, 1 bad input, 2 file not canonical.
 // When GITHUB_OUTPUT is set, "changed" and "pr_title" are appended to it.
@@ -171,7 +179,10 @@ function nameWithoutEmail(item) {
     return name || clean(item.github) || clean(item.weblate);
 }
 
-// One contributor as { name, email, github, weblate, url }; a plain string is the old format.
+const date = (value) => /^\d{4}-\d{2}-\d{2}$/.test(clean(value) ?? '') ? value.trim() : null;
+
+// One contributor as { name, email, github, weblate, url, first, last }; a plain string is the
+// old format.
 function toContributor(item) {
     if (typeof item === 'string') item = { name: item };
     if (!item || typeof item !== 'object') return null;
@@ -184,8 +195,13 @@ function toContributor(item) {
         github: clean(item.github),
         weblate: clean(item.weblate),
         url: url && /^https?:\/\//i.test(url) ? url : null,
+        first: date(item.first),
+        last: date(item.last),
     };
 }
+
+const minDate = (a, b) => (a && b) ? (a < b ? a : b) : (a ?? b);
+const maxDate = (a, b) => (a && b) ? (a > b ? a : b) : (a ?? b);
 
 // Contributors of one locale, merged by email, then by GitHub login; with neither, by name.
 function mergeContributors(list) {
@@ -199,19 +215,82 @@ function mergeContributors(list) {
         // Same priority as ThunderAI: a GitHub profile wins over a Weblate one.
         const onGithub = (url) => /^https?:\/\/github\.com\//i.test(url ?? '');
         if (c.url && (!same.url || (onGithub(c.url) && !onGithub(same.url)))) same.url = c.url;
+        same.first = minDate(same.first, c.first);
+        same.last = maxDate(same.last, c.last);
     }
     return people;
 }
 
-function creditsFor(contributors, code) {
-    if (!contributors) return '';
+// Merged contributors of a locale, or null when the payload has no list for it.
+function contributorsFor(contributors, code) {
+    if (!contributors) return null;
     const key = Object.keys(contributors).find((k) => normCode(k) === normCode(code));
-    if (!key) return '';
+    if (!key) return null;
     const value = contributors[key];
-    const list = Array.isArray(value) ? value : toList(value);
-    return mergeContributors(list).map((c) => c.url
-        ? `<a href="${escapeHtml(c.url)}" target="_blank">${escapeHtml(c.name)}</a>`
-        : escapeHtml(c.name)).join(', ');
+    return mergeContributors(Array.isArray(value) ? value : toList(value));
+}
+
+const GENERATED_RE = /^generated automatically$/i;
+
+function unescapeHtml(text) {
+    return text.replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
+}
+
+// "https://GitHub.com/Foo/" -> "github.com/foo"
+const normUrl = (url) => url ? url.toLowerCase().replace(/^https?:\/\//, '').replace(/^www\./, '').replace(/\/+$/, '') : null;
+
+// Items of a credits string: { raw, name, href }. Commas inside a link do not split it.
+function parseCredits(html) {
+    return (html ?? '').split(/,(?![^<]*<\/a>)/).map((s) => s.trim()).filter(Boolean).map((raw) => ({
+        raw,
+        name: unescapeHtml(raw.replace(/<[^>]*>/g, '')).trim(),
+        href: raw.match(/href="([^"]*)"/)?.[1] ?? null,
+    }));
+}
+
+function profileUrls(p) {
+    return [p.url,
+        p.github && `https://github.com/${p.github}`,
+        p.weblate && `https://hosted.weblate.org/user/${p.weblate}/`].filter(Boolean).map(normUrl);
+}
+
+const sameName = (a, b) => collator.compare(a, b) === 0;
+
+// A credits item is this person when it links one of their profiles or has their name.
+const isItemOf = (item, p) => (item.href && profileUrls(p).includes(normUrl(item.href))) || sameName(item.name, p.name);
+
+// A synced_contributors record is this person (records have no email).
+const isRecordOf = (r, p) => (r.github && p.github && r.github.toLowerCase() === p.github.toLowerCase())
+    || (r.weblate && p.weblate && r.weblate.toLowerCase() === p.weblate.toLowerCase())
+    || (r.url && p.url && normUrl(r.url) === normUrl(p.url))
+    || sameName(r.name, p.name);
+
+const creditHtml = (p) => p.url
+    ? `<a href="${escapeHtml(p.url)}" target="_blank">${escapeHtml(p.name)}</a>`
+    : escapeHtml(p.name);
+
+// What the file keeps of a person: no email, and no `last`, which would change on every commit.
+const toRecord = (p) => ({ name: p.name, github: p.github, weblate: p.weblate, url: p.url, first: p.first });
+
+// Brings entry.credits in line with the full contributor list of its locale. Returns the people
+// added to the credits.
+function syncCredits(entry, people) {
+    const items = parseCredits(entry.credits);
+    const generated = items.filter((i) => !i.href && GENERATED_RE.test(i.name));
+    const credits = items.filter((i) => !generated.includes(i));
+    const known = entry.synced_contributors ?? [];
+    const added = [];
+    for (const p of people) {
+        if (credits.some((i) => isItemOf(i, p))) continue;
+        // Proposed before and no longer in the credits: removed by hand, keep it out.
+        if (known.some((r) => isRecordOf(r, p))) continue;
+        credits.push({ raw: creditHtml(p) });
+        added.push(p);
+    }
+    entry.credits = [...credits, ...generated].map((i) => i.raw).join(', ');
+    // People missing from this payload stay known (a release payload can lag behind dev).
+    entry.synced_contributors = [...people.map(toRecord), ...known.filter((r) => !people.some((p) => isRecordOf(r, p)))];
+    return added;
 }
 
 function checkEntries(entries, path) {
@@ -226,11 +305,19 @@ function describeChanges(before, after) {
     const old = new Map(before.filter((e) => e.lang_code).map((e) => [normCode(e.lang_code), e]));
     const added = [];
     const published = [];
+    const credits = [];
     for (const e of after) {
         if (!e.lang_code) continue;
         const prev = old.get(normCode(e.lang_code));
         if (!prev) added.push(e);
         else if (!prev.released && e.released) published.push(e);
+        if (prev && prev.credits !== e.credits) {
+            const before = parseCredits(prev.credits).map((i) => i.raw);
+            const now = parseCredits(e.credits).map((i) => i.raw);
+            credits.push({ entry: e,
+                added: parseCredits(e.credits).filter((i) => !before.includes(i.raw)).map((i) => i.name),
+                removed: parseCredits(prev.credits).filter((i) => !now.includes(i.raw)).map((i) => i.name) });
+        }
     }
     const needsReview = [];
     for (const e of added) {
@@ -246,15 +333,22 @@ function describeChanges(before, after) {
                 detail: `"${e.lang_name}": credits are empty${e.released ? ' (shown on the page, the language is released)' : ''}` });
         }
     }
-    return { added, published, needsReview };
+    for (const c of credits) {
+        if (c.added.length) {
+            needsReview.push({ lang_code: c.entry.lang_code, issue: 'credits',
+                detail: `"${c.entry.lang_name}": check the new names: ${c.added.join(', ')}${c.entry.released ? ' (shown on the page, the language is released)' : ''}` });
+        }
+    }
+    return { added, published, credits, needsReview };
 }
 
 function prTitle(changes) {
-    const inProgress = changes.added.some((e) => !e.released);
-    const publish = changes.published.length > 0 || changes.added.some((e) => e.released);
-    if (publish && inProgress) return 'ThunderAI: publish languages and new languages in progress';
-    if (publish) return 'ThunderAI: publish languages';
-    return 'ThunderAI: new languages in progress';
+    const parts = [];
+    if (changes.published.length > 0 || changes.added.some((e) => e.released)) parts.push('publish languages');
+    if (changes.added.some((e) => !e.released)) parts.push('new languages in progress');
+    if (changes.credits.length > 0) parts.push('update credits');
+    if (parts.length === 0) return 'ThunderAI: languages sync';
+    return `ThunderAI: ${parts.slice(0, -1).join(', ')}${parts.length > 1 ? ' and ' : ''}${parts.at(-1)}`;
 }
 
 function prBody(changes, sourceUrl, skipped) {
@@ -266,6 +360,13 @@ function prBody(changes, sourceUrl, skipped) {
         lines.push(`- Added \`${e.lang_code}\` ${e.lang_name} (${e.released ? 'released' : 'in progress'})`);
     }
     for (const e of changes.published) lines.push(`- Published \`${e.lang_code}\` ${e.lang_name}`);
+    for (const c of changes.credits) {
+        const what = [];
+        if (c.added.length) what.push(`added ${c.added.join(', ')}`);
+        if (c.removed.length) what.push(`removed ${c.removed.join(', ')}`);
+        if (!what.length) what.push('reordered ("Generated automatically" moved to the end)');
+        lines.push(`- Credits of \`${c.entry.lang_code}\` ${c.entry.lang_name}: ${what.join('; ')}`);
+    }
     if (skipped.length) {
         lines.push('', '<details><summary>Skipped in the last event</summary>', '');
         for (const s of skipped) lines.push(`- \`${s.code}\`: ${s.reason}`);
@@ -302,7 +403,7 @@ if (JSON.stringify(entries, null, 4) !== text.replace(/\r\n/g, '\n').replace(/\n
 }
 const original = structuredClone(entries);
 
-const summary = { mode, file, dry_run: opts.dryRun, changed: false, added: [], published: [], skipped: [], needs_review: [] };
+const summary = { mode, file, dry_run: opts.dryRun, changed: false, added: [], published: [], credits: [], skipped: [], needs_review: [] };
 const seen = new Set();
 
 for (const code of locales) {
@@ -310,38 +411,43 @@ for (const code of locales) {
     if (seen.has(normCode(code))) { summary.skipped.push({ code, reason: 'duplicate in input' }); continue; }
     seen.add(normCode(code));
 
-    const existing = entries.find((e) => e.lang_code && normCode(e.lang_code) === normCode(code));
-    if (existing) {
-        if (mode === 'in_progress') {
-            summary.skipped.push({ code, reason: `already present as ${existing.lang_code}` });
-        } else if (existing.released) {
-            summary.skipped.push({ code, reason: `already released as ${existing.lang_code}` });
-        } else {
-            existing.released = true;
-            summary.published.push({ lang_code: existing.lang_code, lang_name: existing.lang_name });
-            if (!existing.credits) {
-                summary.needs_review.push({ lang_code: existing.lang_code, issue: 'credits', detail: 'credits are empty' });
-            }
+    let entry = entries.find((e) => e.lang_code && normCode(e.lang_code) === normCode(code));
+    if (entry) {
+        if (mode === 'release' && !entry.released) {
+            entry.released = true;
+            summary.published.push({ lang_code: entry.lang_code, lang_name: entry.lang_name });
         }
-        continue;
+    } else {
+        const name = buildName(code);
+        if (!name) { summary.skipped.push({ code, reason: `no display name for ${toBcp47(code)}` }); continue; }
+        entry = { lang_name: name.lang_name, lang_code: code, released: mode === 'release', credits: '' };
+        const { index, placement } = insertIndex(entries, name.native);
+        entries.splice(index, 0, entry);
+        summary.added.push({ lang_name: entry.lang_name, lang_code: code, released: entry.released, placement,
+            after: index > 0 ? entries[index - 1].lang_code : null });
+        if (hasNonLatinLetters(name.native)) {
+            summary.needs_review.push({ lang_code: code, issue: 'romanization',
+                detail: `native name "${name.native}" has no romanization; entry placed before the sentinel` });
+        }
     }
 
-    const name = buildName(code);
-    if (!name) { summary.skipped.push({ code, reason: `no display name for ${toBcp47(code)}` }); continue; }
-    const entry = { lang_name: name.lang_name, lang_code: code, released: mode === 'release', credits: creditsFor(contributors, code) };
-    const { index, placement } = insertIndex(entries, name.native);
-    entries.splice(index, 0, entry);
-    summary.added.push({ ...entry, placement, after: index > 0 ? entries[index - 1].lang_code : null });
-    if (hasNonLatinLetters(name.native)) {
-        summary.needs_review.push({ lang_code: code, issue: 'romanization',
-            detail: `native name "${name.native}" has no romanization; entry placed before the sentinel` });
+    // Credits of every locale in the payload, already present or not.
+    const people = contributorsFor(contributors, code);
+    if (people) {
+        const before = entry.credits;
+        const added = syncCredits(entry, people);
+        if (entry.credits !== before) {
+            summary.credits.push({ lang_code: entry.lang_code, added: added.map((p) => ({ name: p.name, url: p.url, first: p.first, last: p.last })),
+                reordered: added.length === 0 });
+        }
     }
-    if (!entry.credits) {
-        summary.needs_review.push({ lang_code: code, issue: 'credits', detail: 'no contributors given, credits are empty' });
+    const isNew = [...summary.added, ...summary.published].some((a) => a.lang_code === entry.lang_code);
+    if (!entry.credits && isNew) {
+        summary.needs_review.push({ lang_code: entry.lang_code, issue: 'credits', detail: 'credits are empty' });
     }
 }
 
-summary.changed = summary.added.length > 0 || summary.published.length > 0;
+summary.changed = JSON.stringify(entries) !== JSON.stringify(original);
 
 const baseline = opts.baseline ? readJson(opts.baseline, 'baseline') : original;
 const changes = describeChanges(baseline, entries);
