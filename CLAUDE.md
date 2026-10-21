@@ -113,15 +113,20 @@ themes/miczit_2027/
   `--dry-run` to see the JSON summary. It rewrites the file with `JSON.stringify(…, null, 4)` and
   refuses to run if the file is not already in that exact format, so keep it that way.
 - Payload `contributors` (both modes): `{ locale: [{ name, email, github, weblate, url, first,
-  last }] }`, the FULL list of every locale, not a delta (old `["Name"]` still accepted). Merged
-  by email, then by GitHub login (first = min, last = max). The credits of every locale in the
-  payload are synced, released or not; the PR is the approval step:
+  last, strings, lines }] }`, the FULL list of every locale, not a delta, sorted by contribution
+  (old `["Name"]` still accepted, kept in payload order). Merged by email, then by GitHub login
+  (first = min, last = max, strings and lines summed). The credits of every locale in the payload
+  are synced, released or not; the PR is the approval step:
   - items already in `credits` that match a person (by profile link or name) stay as written
-    (manual wins); unmatched people are appended, as a link to `url` when set; items matching
+    (manual wins); unmatched people are added, as a link to `url` when set; items matching
     nobody are manual credits and stay;
-  - `synced_contributors` (per entry, no emails, no `last`, which would change every commit)
-    records who the sync has proposed: a known person missing from `credits` was removed by hand
-    and is not proposed again. People missing from a payload stay in it;
+  - order: people of the payload by strings, then lines (descending), then name; then manual
+    items in their order. `"keep_credits_order": true` on an entry keeps the hand-made order
+    and only appends new names;
+  - `synced_contributors` (per entry, no emails, no `last`/`strings`/`lines`, which change every
+    commit; records keep their place) records who the sync has proposed: a known person missing
+    from `credits` was removed by hand and is not proposed again. People missing from a payload
+    stay in it;
   - "Generated automatically" is never sent; it is kept and always moved to the end.
 - Emails never reach the file, the PR or the logs: an email inside `name` is removed (empty name
   → GitHub login, then Weblate login, else the person is dropped), and a `url` with `@` is not
@@ -129,6 +134,7 @@ themes/miczit_2027/
 - `.github/workflows/thunderai-languages.yml` runs it on `repository_dispatch`
   `thunderai-languages` (or by hand) and keeps one open PR on branch `thunderai-languages-sync`.
   It needs "Allow GitHub Actions to create and approve pull requests" in the repo settings.
+  By hand it takes `mode`, `locales` and an optional `contributors` JSON.
 
 ## Known quirks (not theme bugs)
 

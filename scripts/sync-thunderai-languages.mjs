@@ -9,7 +9,8 @@
 // Options:
 //   --mode in_progress|release   overrides payload.mode
 //   --locales a,b,c              overrides payload.locales (array or comma-separated string)
-//   --contributors '<json>'      {"ko": [{ name, email, github, weblate, url, first, last }, ...]},
+//   --contributors '<json>'      {"ko": [{ name, email, github, weblate, url, first, last, strings,
+//                                lines }, ...]},
 //                                overrides payload.contributors (old format ["Name", ...] | "Name, Name"
 //                                still works)
 //   --payload <file>             JSON file with { mode, locales, contributors?, ref, url }
@@ -30,6 +31,10 @@
 // - `synced_contributors` remembers who the sync has already proposed (no emails), so a person
 //   removed from `credits` by hand is not proposed again;
 // - "Generated automatically" (never sent by ThunderAI) is kept and always moved to the end.
+// Credits follow the contribution order (strings, then lines, descending, then name): items of
+// people in the payload first, then manual items in their order, then "Generated automatically".
+// An entry with "keep_credits_order": true keeps its hand-made order and only gets new names
+// appended. People merged in one locale (same email or GitHub login) add up strings and lines.
 // Emails are used only as the key to merge duplicates and never reach the file, the PR or the output.
 //
 // The summary is printed to stdout as JSON. Exit codes: 0 ok, 1 bad input, 2 file not canonical.
@@ -181,8 +186,11 @@ function nameWithoutEmail(item) {
 
 const date = (value) => /^\d{4}-\d{2}-\d{2}$/.test(clean(value) ?? '') ? value.trim() : null;
 
-// One contributor as { name, email, github, weblate, url, first, last }; a plain string is the
-// old format.
+// strings / lines: a non-negative integer, or null when the payload has none (old format).
+const count = (value) => Number.isInteger(value) && value >= 0 ? value : null;
+
+// One contributor as { name, email, github, weblate, url, first, last, strings, lines }; a plain
+// string is the old format.
 function toContributor(item) {
     if (typeof item === 'string') item = { name: item };
     if (!item || typeof item !== 'object') return null;
@@ -197,13 +205,26 @@ function toContributor(item) {
         url: url && /^https?:\/\//i.test(url) ? url : null,
         first: date(item.first),
         last: date(item.last),
+        strings: count(item.strings),
+        lines: count(item.lines),
     };
 }
 
 const minDate = (a, b) => (a && b) ? (a < b ? a : b) : (a ?? b);
 const maxDate = (a, b) => (a && b) ? (a > b ? a : b) : (a ?? b);
+const sum = (a, b) => (a == null && b == null) ? null : (a ?? 0) + (b ?? 0);
+
+// Biggest contribution first: strings, then lines, descending, then name. People without
+// numbers (old payload) keep the payload order among themselves.
+function byContribution(a, b) {
+    const d = (b.strings ?? 0) - (a.strings ?? 0) || (b.lines ?? 0) - (a.lines ?? 0);
+    if (d) return d;
+    const numbered = (p) => p.strings != null || p.lines != null;
+    return numbered(a) && numbered(b) ? collator.compare(a.name, b.name) : 0;
+}
 
 // Contributors of one locale, merged by email, then by GitHub login; with neither, by name.
+// Sorted by contribution.
 function mergeContributors(list) {
     const people = [];
     for (const c of list.map(toContributor).filter(Boolean)) {
@@ -217,8 +238,10 @@ function mergeContributors(list) {
         if (c.url && (!same.url || (onGithub(c.url) && !onGithub(same.url)))) same.url = c.url;
         same.first = minDate(same.first, c.first);
         same.last = maxDate(same.last, c.last);
+        same.strings = sum(same.strings, c.strings);
+        same.lines = sum(same.lines, c.lines);
     }
-    return people;
+    return people.sort(byContribution);
 }
 
 // Merged contributors of a locale, or null when the payload has no list for it.
@@ -269,11 +292,12 @@ const creditHtml = (p) => p.url
     ? `<a href="${escapeHtml(p.url)}" target="_blank">${escapeHtml(p.name)}</a>`
     : escapeHtml(p.name);
 
-// What the file keeps of a person: no email, and no `last`, which would change on every commit.
+// What the file keeps of a person: no email, and no `last`, `strings` or `lines`, which would
+// change on every commit (the order they give is already in `credits`).
 const toRecord = (p) => ({ name: p.name, github: p.github, weblate: p.weblate, url: p.url, first: p.first });
 
-// Brings entry.credits in line with the full contributor list of its locale. Returns the people
-// added to the credits.
+// Brings entry.credits in line with the full contributor list of its locale (sorted by
+// contribution). Returns the people added to the credits.
 function syncCredits(entry, people) {
     const items = parseCredits(entry.credits);
     const generated = items.filter((i) => !i.href && GENERATED_RE.test(i.name));
@@ -284,12 +308,22 @@ function syncCredits(entry, people) {
         if (credits.some((i) => isItemOf(i, p))) continue;
         // Proposed before and no longer in the credits: removed by hand, keep it out.
         if (known.some((r) => isRecordOf(r, p))) continue;
-        credits.push({ raw: creditHtml(p) });
+        credits.push({ raw: creditHtml(p), name: p.name, href: p.url });
         added.push(p);
     }
+    if (entry.keep_credits_order !== true) {
+        // Rank of an item: its person's place in the payload; manual items go after, in their order.
+        const rank = new Map(credits.map((i) => {
+            const at = people.findIndex((p) => isItemOf(i, p));
+            return [i, at < 0 ? Infinity : at];
+        }));
+        credits.sort((a, b) => (rank.get(a) - rank.get(b)) || 0);
+    }
     entry.credits = [...credits, ...generated].map((i) => i.raw).join(', ');
-    // People missing from this payload stay known (a release payload can lag behind dev).
-    entry.synced_contributors = [...people.map(toRecord), ...known.filter((r) => !people.some((p) => isRecordOf(r, p)))];
+    // Records keep their place, so a change in the counts alone does not touch the file. People
+    // missing from this payload stay known (a release payload can lag behind dev).
+    const records = known.map((r) => { const p = people.find((q) => isRecordOf(r, q)); return p ? toRecord(p) : r; });
+    entry.synced_contributors = [...records, ...people.filter((p) => !known.some((r) => isRecordOf(r, p))).map(toRecord)];
     return added;
 }
 
@@ -364,7 +398,7 @@ function prBody(changes, sourceUrl, skipped) {
         const what = [];
         if (c.added.length) what.push(`added ${c.added.join(', ')}`);
         if (c.removed.length) what.push(`removed ${c.removed.join(', ')}`);
-        if (!what.length) what.push('reordered ("Generated automatically" moved to the end)');
+        if (!what.length) what.push('reordered by contribution ("Generated automatically" last)');
         lines.push(`- Credits of \`${c.entry.lang_code}\` ${c.entry.lang_name}: ${what.join('; ')}`);
     }
     if (skipped.length) {
@@ -437,7 +471,8 @@ for (const code of locales) {
         const before = entry.credits;
         const added = syncCredits(entry, people);
         if (entry.credits !== before) {
-            summary.credits.push({ lang_code: entry.lang_code, added: added.map((p) => ({ name: p.name, url: p.url, first: p.first, last: p.last })),
+            summary.credits.push({ lang_code: entry.lang_code,
+                added: added.map((p) => ({ name: p.name, url: p.url, first: p.first, last: p.last, strings: p.strings, lines: p.lines })),
                 reordered: added.length === 0 });
         }
     }

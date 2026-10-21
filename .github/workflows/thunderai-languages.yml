@@ -13,6 +13,10 @@ on:
         description: Comma-separated locale codes (e.g. ko,uk)
         type: string
         required: true
+      contributors:
+        description: 'Optional JSON, as in the payload: {"ko": [{"name": "…", "url": "…", "strings": 10, "lines": 30}]}'
+        type: string
+        required: false
 permissions:
   contents: write
   pull-requests: write
@@ -48,12 +52,14 @@ jobs:
           PAYLOAD: ${{ toJSON(github.event.client_payload) }}
           IN_MODE: ${{ inputs.mode }}
           IN_LOCALES: ${{ inputs.locales }}
+          IN_CONTRIBUTORS: ${{ inputs.contributors }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
           if [[ "$EVENT" == "repository_dispatch" ]]; then
             printf '%s' "$PAYLOAD" > "$RUNNER_TEMP/payload.json"
           else
-            node -e 'const e = process.env; process.stdout.write(JSON.stringify({ mode: e.IN_MODE, locales: e.IN_LOCALES, url: e.RUN_URL }))' > "$RUNNER_TEMP/payload.json"
+            node -e 'const e = process.env; process.stdout.write(JSON.stringify({ mode: e.IN_MODE, locales: e.IN_LOCALES, url: e.RUN_URL,
+              contributors: e.IN_CONTRIBUTORS ? JSON.parse(e.IN_CONTRIBUTORS) : undefined }))' > "$RUNNER_TEMP/payload.json"
           fi
           # The log is public: print the payload without the contributors' emails.
           node -e 'const p = JSON.parse(require("fs").readFileSync(process.argv[1], "utf8")); console.log(JSON.stringify(p, (k, v) => k === "email" ? undefined : v))' "$RUNNER_TEMP/payload.json"
