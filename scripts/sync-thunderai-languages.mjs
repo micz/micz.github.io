@@ -24,13 +24,14 @@
 //
 // Contributors are the full list of every locale (in both modes), not a delta: the credits of
 // every locale in the payload are checked against it, released or not, and the PR is where the
-// changes get approved. Credits stay hand-made and always win:
-// - an item already in `credits` that matches a contributor (by link or name) is kept as written;
-// - a contributor matching nobody is appended as a link to `url` (plain text when null);
+// changes get approved. `credits` is a list of items { name, url?, github?, weblate?, first?,
+// hidden? } or { generated: true }; Hugo builds the text. Hand edits always win:
+// - an item that matches a contributor (by GitHub, Weblate, profile link or name) is kept; the
+//   sync only adds the keys it does not have yet (a key set by hand, even to null, stays);
+// - a contributor matching no item gets a new item (null fields left out);
 // - items matching no contributor are manual credits and stay;
-// - `synced_contributors` remembers who the sync has already proposed (no emails), so a person
-//   removed from `credits` by hand is not proposed again;
-// - "Generated automatically" (never sent by ThunderAI) is kept and always moved to the end.
+// - "hidden": true keeps a person out of the page and stops the sync from adding them again;
+// - { "generated": true } ("Generated automatically", never sent by ThunderAI) stays at the end.
 // Credits follow the contribution order (strings, then lines, descending, then name): items of
 // people in the payload first, then manual items in their order, then "Generated automatically".
 // An entry with "keep_credits_order": true keeps its hand-made order and only gets new names
@@ -169,10 +170,6 @@ function insertIndex(entries, native) {
     return { index: sentinel, placement: 'sorted' };
 }
 
-function escapeHtml(text) {
-    return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-}
-
 const clean = (value) => (typeof value === 'string' && value.trim()) ? value.trim() : null;
 
 const EMAIL_RE = /<?[^\s<>@,]+@[^\s<>@,]+>?/g;
@@ -253,23 +250,8 @@ function contributorsFor(contributors, code) {
     return mergeContributors(Array.isArray(value) ? value : toList(value));
 }
 
-const GENERATED_RE = /^generated automatically$/i;
-
-function unescapeHtml(text) {
-    return text.replace(/&quot;/g, '"').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&amp;/g, '&');
-}
-
 // "https://GitHub.com/Foo/" -> "github.com/foo"
 const normUrl = (url) => url ? url.toLowerCase().replace(/^https?:\/\//, '').replace(/^www\./, '').replace(/\/+$/, '') : null;
-
-// Items of a credits string: { raw, name, href }. Commas inside a link do not split it.
-function parseCredits(html) {
-    return (html ?? '').split(/,(?![^<]*<\/a>)/).map((s) => s.trim()).filter(Boolean).map((raw) => ({
-        raw,
-        name: unescapeHtml(raw.replace(/<[^>]*>/g, '')).trim(),
-        href: raw.match(/href="([^"]*)"/)?.[1] ?? null,
-    }));
-}
 
 function profileUrls(p) {
     return [p.url,
@@ -278,37 +260,39 @@ function profileUrls(p) {
 }
 
 const sameName = (a, b) => collator.compare(a, b) === 0;
+const sameLogin = (a, b) => !!(a && b) && a.toLowerCase() === b.toLowerCase();
 
-// A credits item is this person when it links one of their profiles or has their name.
-const isItemOf = (item, p) => (item.href && profileUrls(p).includes(normUrl(item.href))) || sameName(item.name, p.name);
+// A credits item is this person when it has their GitHub or Weblate login, links one of their
+// profiles or has their name.
+const isItemOf = (item, p) => !item.generated && (sameLogin(item.github, p.github)
+    || sameLogin(item.weblate, p.weblate)
+    || (item.url && profileUrls(p).includes(normUrl(item.url)))
+    || (item.name && sameName(item.name, p.name)));
 
-// A synced_contributors record is this person (records have no email).
-const isRecordOf = (r, p) => (r.github && p.github && r.github.toLowerCase() === p.github.toLowerCase())
-    || (r.weblate && p.weblate && r.weblate.toLowerCase() === p.weblate.toLowerCase())
-    || (r.url && p.url && normUrl(r.url) === normUrl(p.url))
-    || sameName(r.name, p.name);
+// New item of a person: no email, and no `last`, `strings` or `lines`, which would change on
+// every commit (the order they give is the order of the list).
+function newItem(p) {
+    const item = { name: p.name };
+    for (const k of ['url', 'github', 'weblate', 'first']) if (p[k]) item[k] = p[k];
+    return item;
+}
 
-const creditHtml = (p) => p.url
-    ? `<a href="${escapeHtml(p.url)}" target="_blank">${escapeHtml(p.name)}</a>`
-    : escapeHtml(p.name);
-
-// What the file keeps of a person: no email, and no `last`, `strings` or `lines`, which would
-// change on every commit (the order they give is already in `credits`).
-const toRecord = (p) => ({ name: p.name, github: p.github, weblate: p.weblate, url: p.url, first: p.first });
+// Adds to an existing item the keys it does not have yet; `first` only moves earlier.
+function fillItem(item, p) {
+    for (const k of ['url', 'github', 'weblate']) if (!(k in item) && p[k]) item[k] = p[k];
+    if (p.first && (!('first' in item) || (item.first && p.first < item.first))) item.first = p.first;
+}
 
 // Brings entry.credits in line with the full contributor list of its locale (sorted by
 // contribution). Returns the people added to the credits.
 function syncCredits(entry, people) {
-    const items = parseCredits(entry.credits);
-    const generated = items.filter((i) => !i.href && GENERATED_RE.test(i.name));
-    const credits = items.filter((i) => !generated.includes(i));
-    const known = entry.synced_contributors ?? [];
+    const generated = entry.credits.filter((i) => i.generated);
+    const credits = entry.credits.filter((i) => !i.generated);
     const added = [];
     for (const p of people) {
-        if (credits.some((i) => isItemOf(i, p))) continue;
-        // Proposed before and no longer in the credits: removed by hand, keep it out.
-        if (known.some((r) => isRecordOf(r, p))) continue;
-        credits.push({ raw: creditHtml(p), name: p.name, href: p.url });
+        const item = credits.find((i) => isItemOf(i, p));
+        if (item) { fillItem(item, p); continue; }
+        credits.push(newItem(p));
         added.push(p);
     }
     if (entry.keep_credits_order !== true) {
@@ -319,18 +303,20 @@ function syncCredits(entry, people) {
         }));
         credits.sort((a, b) => (rank.get(a) - rank.get(b)) || 0);
     }
-    entry.credits = [...credits, ...generated].map((i) => i.raw).join(', ');
-    // Records keep their place, so a change in the counts alone does not touch the file. People
-    // missing from this payload stay known (a release payload can lag behind dev).
-    const records = known.map((r) => { const p = people.find((q) => isRecordOf(r, q)); return p ? toRecord(p) : r; });
-    entry.synced_contributors = [...records, ...people.filter((p) => !known.some((r) => isRecordOf(r, p))).map(toRecord)];
+    entry.credits = [...credits, ...generated];
     return added;
 }
+
+// Items and names shown on the page.
+const shownItems = (credits) => (Array.isArray(credits) ? credits : []).filter((i) => !i.generated && !i.hidden);
+const shownNames = (credits) => shownItems(credits).map((i) => i.name);
 
 function checkEntries(entries, path) {
     if (!Array.isArray(entries) || entries.length === 0) fail(2, `${path} is not a non-empty array`);
     const last = entries[entries.length - 1];
     if (last.lang_code !== '') fail(2, `${path}: the last entry is not the sentinel (empty lang_code)`);
+    const old = entries.find((e) => e.lang_code && (!Array.isArray(e.credits) || 'synced_contributors' in e));
+    if (old) fail(2, `${path}: "${old.lang_code}" has credits in the old string format; run scripts/migrate-thunderai-credits.mjs first`);
 }
 
 // Changes between two versions of the file, plus what a human must still fill in.
@@ -345,12 +331,16 @@ function describeChanges(before, after) {
         const prev = old.get(normCode(e.lang_code));
         if (!prev) added.push(e);
         else if (!prev.released && e.released) published.push(e);
-        if (prev && prev.credits !== e.credits) {
-            const before = parseCredits(prev.credits).map((i) => i.raw);
-            const now = parseCredits(e.credits).map((i) => i.raw);
-            credits.push({ entry: e,
-                added: parseCredits(e.credits).filter((i) => !before.includes(i.raw)).map((i) => i.name),
-                removed: parseCredits(prev.credits).filter((i) => !now.includes(i.raw)).map((i) => i.name) });
+        if (prev && JSON.stringify(prev.credits) !== JSON.stringify(e.credits)) {
+            const was = shownNames(prev.credits);
+            const now = shownNames(e.credits);
+            const urlOf = (list, name) => shownItems(list).find((i) => sameName(i.name, name))?.url;
+            const added = now.filter((n) => !was.some((w) => sameName(w, n)));
+            const kept = now.filter((n) => !added.includes(n));
+            credits.push({ entry: e, added,
+                removed: was.filter((w) => !now.some((n) => sameName(w, n))),
+                linked: kept.filter((n) => urlOf(e.credits, n) && urlOf(e.credits, n) !== urlOf(prev.credits, n)),
+                reordered: kept.join('\n') !== was.filter((w) => kept.some((n) => sameName(w, n))).join('\n') });
         }
     }
     const needsReview = [];
@@ -362,15 +352,16 @@ function describeChanges(before, after) {
         }
     }
     for (const e of [...added, ...published]) {
-        if (!e.credits) {
+        if (!shownNames(e.credits).length) {
             needsReview.push({ lang_code: e.lang_code, issue: 'credits',
                 detail: `"${e.lang_name}": credits are empty${e.released ? ' (shown on the page, the language is released)' : ''}` });
         }
     }
     for (const c of credits) {
-        if (c.added.length) {
+        const names = [...c.added, ...c.linked];
+        if (names.length) {
             needsReview.push({ lang_code: c.entry.lang_code, issue: 'credits',
-                detail: `"${c.entry.lang_name}": check the new names: ${c.added.join(', ')}${c.entry.released ? ' (shown on the page, the language is released)' : ''}` });
+                detail: `"${c.entry.lang_name}": check the new names and links: ${names.join(', ')}${c.entry.released ? ' (shown on the page, the language is released)' : ''}` });
         }
     }
     return { added, published, credits, needsReview };
@@ -398,7 +389,9 @@ function prBody(changes, sourceUrl, skipped) {
         const what = [];
         if (c.added.length) what.push(`added ${c.added.join(', ')}`);
         if (c.removed.length) what.push(`removed ${c.removed.join(', ')}`);
-        if (!what.length) what.push('reordered by contribution ("Generated automatically" last)');
+        if (c.linked.length) what.push(`linked ${c.linked.join(', ')}`);
+        if (c.reordered) what.push('reordered by contribution');
+        if (!what.length) what.push('profiles or dates filled in');
         lines.push(`- Credits of \`${c.entry.lang_code}\` ${c.entry.lang_name}: ${what.join('; ')}`);
     }
     if (skipped.length) {
@@ -454,7 +447,7 @@ for (const code of locales) {
     } else {
         const name = buildName(code);
         if (!name) { summary.skipped.push({ code, reason: `no display name for ${toBcp47(code)}` }); continue; }
-        entry = { lang_name: name.lang_name, lang_code: code, released: mode === 'release', credits: '' };
+        entry = { lang_name: name.lang_name, lang_code: code, released: mode === 'release', credits: [] };
         const { index, placement } = insertIndex(entries, name.native);
         entries.splice(index, 0, entry);
         summary.added.push({ lang_name: entry.lang_name, lang_code: code, released: entry.released, placement,
@@ -468,16 +461,15 @@ for (const code of locales) {
     // Credits of every locale in the payload, already present or not.
     const people = contributorsFor(contributors, code);
     if (people) {
-        const before = entry.credits;
+        const before = JSON.stringify(entry.credits);
         const added = syncCredits(entry, people);
-        if (entry.credits !== before) {
-            summary.credits.push({ lang_code: entry.lang_code,
-                added: added.map((p) => ({ name: p.name, url: p.url, first: p.first, last: p.last, strings: p.strings, lines: p.lines })),
-                reordered: added.length === 0 });
+        if (JSON.stringify(entry.credits) !== before) {
+            summary.credits.push({ lang_code: entry.lang_code, shown: shownNames(entry.credits),
+                added: added.map((p) => ({ name: p.name, url: p.url, first: p.first, last: p.last, strings: p.strings, lines: p.lines })) });
         }
     }
     const isNew = [...summary.added, ...summary.published].some((a) => a.lang_code === entry.lang_code);
-    if (!entry.credits && isNew) {
+    if (!shownNames(entry.credits).length && isNew) {
         summary.needs_review.push({ lang_code: entry.lang_code, issue: 'credits', detail: 'credits are empty' });
     }
 }

@@ -112,22 +112,28 @@ themes/miczit_2027/
 - `scripts/sync-thunderai-languages.mjs` (plain Node) adds/publishes locales; run it with
   `--dry-run` to see the JSON summary. It rewrites the file with `JSON.stringify(…, null, 4)` and
   refuses to run if the file is not already in that exact format, so keep it that way.
+- `credits` of an entry is a list; `lang_list_weblate` builds the text from it (link when `url`
+  is set, `", "` between items, only for released languages). Items: `{ name, url?, github?,
+  weblate?, first?, hidden? }` or `{ "generated": true }` ("Generated automatically").
+  `hidden: true` keeps a person off the page and stops the sync from adding them again: use it
+  instead of deleting an item. The old format (HTML string plus `synced_contributors`) is refused
+  by the sync; `scripts/migrate-thunderai-credits.mjs` (standalone, `--dry-run`, `--file`)
+  converts it, and the template still renders an old string.
 - Payload `contributors` (both modes): `{ locale: [{ name, email, github, weblate, url, first,
   last, strings, lines }] }`, the FULL list of every locale, not a delta, sorted by contribution
   (old `["Name"]` still accepted, kept in payload order). Merged by email, then by GitHub login
   (first = min, last = max, strings and lines summed). The credits of every locale in the payload
   are synced, released or not; the PR is the approval step:
-  - items already in `credits` that match a person (by profile link or name) stay as written
-    (manual wins); unmatched people are added, as a link to `url` when set; items matching
-    nobody are manual credits and stay;
+  - an item matches a person by GitHub or Weblate login, profile link or name. A matching item
+    only gets the keys it lacks (a key set by hand, even to `null`, wins; `first` only moves
+    earlier); an unmatched person gets a new item without null fields; items matching nobody
+    are manual credits and stay. Nothing is ever removed;
   - order: people of the payload by strings, then lines (descending), then name; then manual
     items in their order. `"keep_credits_order": true` on an entry keeps the hand-made order
     and only appends new names;
-  - `synced_contributors` (per entry, no emails, no `last`/`strings`/`lines`, which change every
-    commit; records keep their place) records who the sync has proposed: a known person missing
-    from `credits` was removed by hand and is not proposed again. People missing from a payload
-    stay in it;
-  - "Generated automatically" is never sent; it is kept and always moved to the end.
+  - no emails, `last`, `strings` or `lines` in the file (they change every commit; the order
+    already reflects them);
+  - "Generated automatically" is never sent; it is kept and always last.
 - Emails never reach the file, the PR or the logs: an email inside `name` is removed (empty name
   → GitHub login, then Weblate login, else the person is dropped), and a `url` with `@` is not
   used. `languages.json` is not published (`ignoreFiles`).

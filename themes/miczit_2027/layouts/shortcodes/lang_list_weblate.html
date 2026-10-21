@@ -10,7 +10,22 @@
         <a href="https://hosted.weblate.org/translate/{{ $addon_id }}/-/{{ .lang_code }}/?q=state:%3Ctranslated" target="_blank">{{ .lang_name }} <img src="{{ site.BaseURL }}weblate/{{ $addon_id }}/{{ .lang_code }}.svg" alt="Weblate Translation Status" class="weblate_svg"/></a>
         <br>
         {{ if .released }}
-        <span class="translate-credits">Credits: {{ .credits | safeHTML }}</span>
+        {{ $credits := slice }}
+        {{ if reflect.IsSlice .credits }}
+            {{ range .credits }}
+                {{ if .generated }}
+                    {{ $credits = $credits | append "Generated automatically" }}
+                {{ else if and .name (not .hidden) }}
+                    {{ $name := htmlEscape .name }}
+                    {{ with .url }}{{ $name = printf `<a href="%s" target="_blank">%s</a>` (htmlEscape .) $name }}{{ end }}
+                    {{ $credits = $credits | append $name }}
+                {{ end }}
+            {{ end }}
+        {{ else }}
+            {{/* Old HTML string, until languages.json is migrated. */}}
+            {{ $credits = $credits | append .credits }}
+        {{ end }}
+        <span class="translate-credits">Credits: {{ delimit $credits ", " | safeHTML }}</span>
         {{ else }}
         <span class="translate-credits">Not released, work in progress...</span>
         {{ end }}
