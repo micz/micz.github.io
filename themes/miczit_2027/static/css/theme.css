@@ -496,6 +496,7 @@ html:not([data-theme="light"]) .only-light { display: none !important; }
 .content .small_text { font-size: 0.8em; font-style: italic; color: var(--ink-muted); }
 .content .paragraph-space { margin-top: 25px; }
 .content p.center, .content .center { text-align: center; margin-inline: auto; }
+.content .text-center { text-align: center; } /* centered inside the reading column, like .go-back */
 .content a img.weblate_svg {
     display: inline;
     margin: 0 0 0 8px;
@@ -532,8 +533,19 @@ html:not([data-theme="light"]) .only-light { display: none !important; }
     display: block;
     font-size: 0.68em;
     font-style: italic;
-    color: var(--ink-faint);
+    color: color-mix(in srgb, var(--ink-faint) 50%, var(--ink-muted));
     margin: 0 0 0.7em;
+}
+[data-theme="light"] .content .translate-credits { color: var(--ink-faint); }
+/* credit links look like the rest of the line until hovered */
+.content .translate-credits a {
+    color: inherit;
+    text-decoration: none;
+}
+.content .translate-credits a:hover {
+    color: var(--accent-strong);
+    text-decoration: underline;
+    text-decoration-color: var(--accent-strong);
 }
 
 /* ThunderAI data placeholders page (shortcode placeholders_list + .ph-doc wrapper)
