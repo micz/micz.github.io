@@ -11,19 +11,14 @@
         <br>
         {{ if .released }}
         {{ $credits := slice }}
-        {{ if reflect.IsSlice .credits }}
-            {{ range .credits }}
-                {{ if .generated }}
-                    {{ $credits = $credits | append "Generated automatically" }}
-                {{ else if and .name (not .hidden) }}
-                    {{ $name := htmlEscape .name }}
-                    {{ with .url }}{{ $name = printf `<a href="%s" target="_blank">%s</a>` (htmlEscape .) $name }}{{ end }}
-                    {{ $credits = $credits | append $name }}
-                {{ end }}
+        {{ range .credits }}
+            {{ if .generated }}
+                {{ $credits = $credits | append "Generated automatically" }}
+            {{ else if and .name (not .hidden) }}
+                {{ $name := htmlEscape .name }}
+                {{ with .url }}{{ $name = printf `<a href="%s" target="_blank">%s</a>` (htmlEscape .) $name }}{{ end }}
+                {{ $credits = $credits | append $name }}
             {{ end }}
-        {{ else }}
-            {{/* Old HTML string, until languages.json is migrated. */}}
-            {{ $credits = $credits | append .credits }}
         {{ end }}
         <span class="translate-credits">Credits: {{ delimit $credits ", " | safeHTML }}</span>
         {{ else }}

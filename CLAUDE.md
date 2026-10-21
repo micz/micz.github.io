@@ -116,9 +116,7 @@ themes/miczit_2027/
   is set, `", "` between items, only for released languages). Items: `{ name, url?, github?,
   weblate?, first?, hidden? }` or `{ "generated": true }` ("Generated automatically").
   `hidden: true` keeps a person off the page and stops the sync from adding them again: use it
-  instead of deleting an item. The old format (HTML string plus `synced_contributors`) is refused
-  by the sync; `scripts/migrate-thunderai-credits.mjs` (standalone, `--dry-run`, `--file`)
-  converts it, and the template still renders an old string.
+  instead of deleting an item. The sync refuses a file whose `credits` is not a list.
 - Payload `contributors` (both modes): `{ locale: [{ name, email, github, weblate, url, first,
   last, strings, lines }] }`, the FULL list of every locale, not a delta, sorted by contribution
   (old `["Name"]` still accepted, kept in payload order). Merged by email, then by GitHub login

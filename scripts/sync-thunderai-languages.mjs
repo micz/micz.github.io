@@ -315,8 +315,8 @@ function checkEntries(entries, path) {
     if (!Array.isArray(entries) || entries.length === 0) fail(2, `${path} is not a non-empty array`);
     const last = entries[entries.length - 1];
     if (last.lang_code !== '') fail(2, `${path}: the last entry is not the sentinel (empty lang_code)`);
-    const old = entries.find((e) => e.lang_code && (!Array.isArray(e.credits) || 'synced_contributors' in e));
-    if (old) fail(2, `${path}: "${old.lang_code}" has credits in the old string format; run scripts/migrate-thunderai-credits.mjs first`);
+    const bad = entries.find((e) => e.lang_code && !Array.isArray(e.credits));
+    if (bad) fail(2, `${path}: the credits of "${bad.lang_code}" are not a list`);
 }
 
 // Changes between two versions of the file, plus what a human must still fill in.

@@ -3,133 +3,346 @@
         "lang_name": "Bulgarian - Bǎlgarski (български)",
         "lang_code": "bg",
         "released": false,
-        "credits": "<a href=\"https://hosted.weblate.org/user/kalon.vasilev/\" target=\"_blank\">Kaloyan Vassilev</a>, <a href=\"https://hosted.weblate.org/user/bogomil/\" target=\"_blank\">Bogomil Shopov</a>"
+        "credits": [
+            {
+                "name": "Kaloyan Vassilev",
+                "url": "https://hosted.weblate.org/user/kalon.vasilev/",
+                "weblate": "kalon.vasilev"
+            },
+            {
+                "name": "Bogomil Shopov",
+                "url": "https://hosted.weblate.org/user/bogomil/",
+                "weblate": "bogomil"
+            }
+        ]
     },
     {
         "lang_name": "Czech - Čeština",
         "lang_code": "cs",
         "released": true,
-        "credits": "<a href=\"https://hosted.weblate.org/user/Fjuro/\" target=\"_blank\">Fjuro</a>, <a href=\"https://hosted.weblate.org/user/jaroush/\" target=\"_blank\">Jaroslav Staněk</a>"
+        "credits": [
+            {
+                "name": "Fjuro",
+                "url": "https://hosted.weblate.org/user/Fjuro/",
+                "weblate": "Fjuro"
+            },
+            {
+                "name": "Jaroslav Staněk",
+                "url": "https://hosted.weblate.org/user/jaroush/",
+                "weblate": "jaroush"
+            }
+        ]
     },
     {
         "lang_name": "German - Deutsch",
         "lang_code": "de",
         "released": true,
-        "credits": "Generated automatically"
+        "credits": [
+            {
+                "generated": true
+            }
+        ]
     },
     {
         "lang_name": "Dutch - Nederlands",
         "lang_code": "nl",
         "released": false,
-        "credits": "<a href=\"https://hosted.weblate.org/user/portefeuillesgevraagd/\" target=\"_blank\">Pieter de Bruin</a>"
+        "credits": [
+            {
+                "name": "Pieter de Bruin",
+                "url": "https://hosted.weblate.org/user/portefeuillesgevraagd/",
+                "weblate": "portefeuillesgevraagd"
+            }
+        ]
     },
     {
         "lang_name": "Greek - Elliniká (Ελληνικά)",
         "lang_code": "el",
         "released": true,
-        "credits": "<a href=\"https://github.com/christoskaterini\" target=\"_blank\">ChristosK.</a>"
+        "credits": [
+            {
+                "name": "ChristosK.",
+                "url": "https://github.com/christoskaterini",
+                "github": "christoskaterini"
+            }
+        ]
     },
     {
         "lang_name": "Spanish - Español",
         "lang_code": "es",
         "released": true,
-        "credits": "<a href=\"https://hosted.weblate.org/user/gerardo.sobarzo/\" target=\"_blank\">Gerardo Sobarzo</a>, <a href=\"https://hosted.weblate.org/user/arendon/\" target=\"_blank\">Andrés Rendón Hernández</a>, <a href=\"https://hosted.weblate.org/user/ErickLimonG/\" target=\"_blank\">Erick Limon</a>"
+        "credits": [
+            {
+                "name": "Gerardo Sobarzo",
+                "url": "https://hosted.weblate.org/user/gerardo.sobarzo/",
+                "weblate": "gerardo.sobarzo"
+            },
+            {
+                "name": "Andrés Rendón Hernández",
+                "url": "https://hosted.weblate.org/user/arendon/",
+                "weblate": "arendon"
+            },
+            {
+                "name": "Erick Limon",
+                "url": "https://hosted.weblate.org/user/ErickLimonG/",
+                "weblate": "ErickLimonG"
+            }
+        ]
     },
     {
         "lang_name": "Esperanto",
         "lang_code": "eo",
         "released": false,
-        "credits": "<a href=\"https://hosted.weblate.org/user/phlostically/\" target=\"_blank\">phlostically</a>"
+        "credits": [
+            {
+                "name": "phlostically",
+                "url": "https://hosted.weblate.org/user/phlostically/",
+                "weblate": "phlostically"
+            }
+        ]
     },
     {
         "lang_name": "Chinese (Traditional) - Fántǐ Zhōngwén (繁體中文)",
         "lang_code": "zh_Hant",
         "released": true,
-        "credits": "<a href=\"https://github.com/evez\" target=\"_blank\">evez</a>"
+        "credits": [
+            {
+                "name": "evez",
+                "url": "https://github.com/evez",
+                "github": "evez"
+            }
+        ]
     },
     {
         "lang_name": "French - Français",
         "lang_code": "fr",
         "released": true,
-        "credits": "Generated automatically, <a href=\"https://github.com/noam-sc\" target=\"_blank\">Noam</a>"
+        "credits": [
+            {
+                "name": "Noam",
+                "url": "https://github.com/noam-sc",
+                "github": "noam-sc"
+            },
+            {
+                "generated": true
+            }
+        ]
     },
     {
         "lang_name": "Croatian - Hrvatski",
         "lang_code": "hr",
         "released": true,
-        "credits": "Petar Jedvaj"
+        "credits": [
+            {
+                "name": "Petar Jedvaj"
+            }
+        ]
     },
     {
         "lang_name": "Italian - Italiano",
         "lang_code": "it",
         "released": true,
-        "credits": "<a href=\"https://github.com/micz\" target=\"_blank\">Mic</a>"
+        "credits": [
+            {
+                "name": "Mic",
+                "url": "https://github.com/micz",
+                "github": "micz"
+            }
+        ]
     },
     {
         "lang_name": "Chinese (Simplified) - Jiǎntǐ Zhōngwén (简体中文)",
         "lang_code": "zh_Hans",
         "released": true,
-        "credits": "<a href=\"https://github.com/jeklau\" target=\"_blank\">jeklau</a>, <a href=\"https://github.com/Min9X1n\" target=\"_blank\">Min9X1n</a>"
+        "credits": [
+            {
+                "name": "jeklau",
+                "url": "https://github.com/jeklau",
+                "github": "jeklau"
+            },
+            {
+                "name": "Min9X1n",
+                "url": "https://github.com/Min9X1n",
+                "github": "Min9X1n"
+            }
+        ]
     },
     {
         "lang_name": "Hungarian - Magyar",
         "lang_code": "hu",
         "released": true,
-        "credits": "<a href=\"https://hosted.weblate.org/user/simaphonesave/\" target=\"_blank\">Roland S</a>, <a href=\"https://hosted.weblate.org/user/benedek.vigh/\" target=\"_blank\">Benedek Vigh (冯白诺)</a>"
+        "credits": [
+            {
+                "name": "Roland S",
+                "url": "https://hosted.weblate.org/user/simaphonesave/",
+                "weblate": "simaphonesave"
+            },
+            {
+                "name": "Benedek Vigh (冯白诺)",
+                "url": "https://hosted.weblate.org/user/benedek.vigh/",
+                "weblate": "benedek.vigh"
+            }
+        ]
     },
     {
         "lang_name": "Indonesian - Bahasa Indonesia",
         "lang_code": "id",
         "released": true,
-        "credits": "<a href=\"https://github.com/arifpedia\" target=\"_blank\">Arif Budiman</a>"
+        "credits": [
+            {
+                "name": "Arif Budiman",
+                "url": "https://github.com/arifpedia",
+                "github": "arifpedia"
+            }
+        ]
     },
     {
         "lang_name": "Japanese - Nihongo (日本語)",
         "lang_code": "ja",
         "released": true,
-        "credits": "<a href=\"https://hosted.weblate.org/user/watya1/\" target=\"_blank\">Taichi Ito</a>, Generated automatically"
+        "credits": [
+            {
+                "name": "Taichi Ito",
+                "url": "https://hosted.weblate.org/user/watya1/",
+                "weblate": "watya1"
+            },
+            {
+                "generated": true
+            }
+        ]
     },
     {
         "lang_name": "Polish - Polski",
         "lang_code": "pl",
         "released": true,
-        "credits": "<a href=\"https://github.com/neexpl\" target=\"_blank\">neexpl</a>, <a href=\"https://github.com/makkacprzak\" target=\"_blank\">makkacprzak</a>, <a href=\"https://github.com/stankiewiczmichal\" target=\"_blank\">Michał Stankiewicz</a>, <a href=\"https://github.com/LukaszJal\" target=\"_blank\">LukaszJal</a>, Generated automatically"
+        "credits": [
+            {
+                "name": "neexpl",
+                "url": "https://github.com/neexpl",
+                "github": "neexpl"
+            },
+            {
+                "name": "makkacprzak",
+                "url": "https://github.com/makkacprzak",
+                "github": "makkacprzak"
+            },
+            {
+                "name": "Michał Stankiewicz",
+                "url": "https://github.com/stankiewiczmichal",
+                "github": "stankiewiczmichal"
+            },
+            {
+                "name": "LukaszJal",
+                "url": "https://github.com/LukaszJal",
+                "github": "LukaszJal"
+            },
+            {
+                "generated": true
+            }
+        ]
     },
     {
         "lang_name": "Portuguese - Português",
         "lang_code": "pt",
         "released": true,
-        "credits": "<a href=\"https://github.com/SantosSi\" target=\"_blank\">Silvério Santos</a>, <a href=\"https://hosted.weblate.org/user/nobrega8/\" target=\"_blank\">Afonso Nóbrega</a>, <a href=\"https://hosted.weblate.org/user/alucenafaria/\" target=\"_blank\">Antonio Lucena de Faria</a>"
+        "credits": [
+            {
+                "name": "Silvério Santos",
+                "url": "https://github.com/SantosSi",
+                "github": "SantosSi"
+            },
+            {
+                "name": "Afonso Nóbrega",
+                "url": "https://hosted.weblate.org/user/nobrega8/",
+                "weblate": "nobrega8"
+            },
+            {
+                "name": "Antonio Lucena de Faria",
+                "url": "https://hosted.weblate.org/user/alucenafaria/",
+                "weblate": "alucenafaria"
+            }
+        ]
     },
     {
         "lang_name": "Brazilian Portuguese - Português Brasileiro",
         "lang_code": "pt-br",
         "released": true,
-        "credits": "Bruno Pereira de Souza, Generated automatically, <a href=\"https://github.com/Brusca\" target=\"_blank\">Bruno Scatolin</a>"
+        "credits": [
+            {
+                "name": "Bruno Pereira de Souza"
+            },
+            {
+                "name": "Bruno Scatolin",
+                "url": "https://github.com/Brusca",
+                "github": "Brusca"
+            },
+            {
+                "generated": true
+            }
+        ]
     },
     {
         "lang_name": "Romanian - Română",
         "lang_code": "ro",
         "released": false,
-        "credits": "<a href=\"https://hosted.weblate.org/user/indreias/\" target=\"_blank\">Ioan Indreias</a>"
+        "credits": [
+            {
+                "name": "Ioan Indreias",
+                "url": "https://hosted.weblate.org/user/indreias/",
+                "weblate": "indreias"
+            }
+        ]
     },
     {
         "lang_name": "Russian - Russkiy (русский)",
         "lang_code": "ru",
         "released": true,
-        "credits": "<a href=\"https://hosted.weblate.org/user/law820314/\" target=\"_blank\">Maksim</a>, <a href=\"https://hosted.weblate.org/user/gebekovasmobile/\" target=\"_blank\">G S (TAra)</a>, <a href=\"https://hosted.weblate.org/user/PouncePanda/\" target=\"_blank\">Konstantin Spirin</a>"
+        "credits": [
+            {
+                "name": "Maksim",
+                "url": "https://hosted.weblate.org/user/law820314/",
+                "weblate": "law820314"
+            },
+            {
+                "name": "G S (TAra)",
+                "url": "https://hosted.weblate.org/user/gebekovasmobile/",
+                "weblate": "gebekovasmobile"
+            },
+            {
+                "name": "Konstantin Spirin",
+                "url": "https://hosted.weblate.org/user/PouncePanda/",
+                "weblate": "PouncePanda"
+            }
+        ]
     },
     {
         "lang_name": "Swedish - Svenska",
         "lang_code": "sv",
         "released": true,
-        "credits": "<a href=\"https://hosted.weblate.org/user/Andy_tb/\" target=\"_blank\">Andreas Pettersson</a>, <a href=\"https://hosted.weblate.org/user/bittin1ddc447d824349b2/\" target=\"_blank\">Luna Jernberg</a>"
+        "credits": [
+            {
+                "name": "Andreas Pettersson",
+                "url": "https://hosted.weblate.org/user/Andy_tb/",
+                "weblate": "Andy_tb"
+            },
+            {
+                "name": "Luna Jernberg",
+                "url": "https://hosted.weblate.org/user/bittin1ddc447d824349b2/",
+                "weblate": "bittin1ddc447d824349b2"
+            }
+        ]
     },
     {
         "lang_name": "Turkish - Türkçe",
         "lang_code": "tr",
         "released": false,
-        "credits": "<a href=\"https://hosted.weblate.org/user/babico/\" target=\"_blank\">Müslüm Barış Korkmazer</a>"
+        "credits": [
+            {
+                "name": "Müslüm Barış Korkmazer",
+                "url": "https://hosted.weblate.org/user/babico/",
+                "weblate": "babico"
+            }
+        ]
     },
     {
         "lang_name": "Translate in a new language",
