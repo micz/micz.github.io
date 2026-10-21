@@ -8,15 +8,15 @@ notes that no longer apply instead of leaving them as history.
 
 ## Build and dev
 
-- Production build: `hugo --gc --minify` writes to `docs/`. `docs/` is committed and deployed to
-  GitHub Pages by `.github/workflows/static.yml` on pushes to `master` that touch `docs/**`.
-  Hugo does not delete stale files in `docs/`; use `--cleanDestinationDir` for a clean build.
-- **`docs/` is the publish dir and only the user updates it.** Never build into it, edit it, or
-  use it to check results. For every test, render the site into a temporary dir
-  (`hugo -d <tmp>`, or `hugo server --renderToMemory`), check the output there, and delete the
-  temp dir yourself when done.
+- Deploy: `.github/workflows/hugo.yml` builds the site (`hugo build --gc --minify` into `public/`)
+  and deploys it to GitHub Pages on every push to `master` (or by hand). Nothing built is committed.
+- Local production build: `hugo --gc --minify` writes to `docs/` (`publishDir`), which is
+  gitignored. Hugo does not delete stale files in it; use `--cleanDestinationDir` for a clean build.
+- **`docs/` belongs to the user.** Never build into it, edit it, or use it to check results. For
+  every test, render the site into a temporary dir (`hugo -d <tmp>`, or
+  `hugo server --renderToMemory`), check the output there, and delete the temp dir yourself when done.
 - Dev server: `hugo server`.
-- `CNAME` is in `static/`, so every build copies it into `docs/`.
+- `CNAME` is in `static/`, so every build copies it into the output.
 
 ## Site config (`config.toml`)
 
@@ -103,6 +103,18 @@ themes/miczit_2027/
 - External links: every other `http(s)` link outside `micz.it` gets an external-link arrow after
   it, made the same way. Links that hold only an image (the PayPal donate buttons) are skipped;
   the Weblate badge links keep the arrow.
+
+## ThunderAI languages sync
+
+- `content/thunderbird-addon-thunderai/languages.json` feeds `lang_list_weblate`, which sorts by
+  `lang_name` itself, so the file order is only for readability: by native name (romanized
+  part, before the parenthesis), last entry is the "Translate in a new language" sentinel.
+- `scripts/sync-thunderai-languages.mjs` (plain Node) adds/publishes locales; run it with
+  `--dry-run` to see the JSON summary. It rewrites the file with `JSON.stringify(…, null, 4)` and
+  refuses to run if the file is not already in that exact format, so keep it that way.
+- `.github/workflows/thunderai-languages.yml` runs it on `repository_dispatch`
+  `thunderai-languages` (or by hand) and keeps one open PR on branch `thunderai-languages-sync`.
+  It needs "Allow GitHub Actions to create and approve pull requests" in the repo settings.
 
 ## Known quirks (not theme bugs)
 

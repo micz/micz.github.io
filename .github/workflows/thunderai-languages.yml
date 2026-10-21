@@ -1,0 +1,107 @@
+name: ThunderAI languages sync
+on:
+  repository_dispatch:
+    types: [thunderai-languages]
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: Mode
+        type: choice
+        options: [in_progress, release]
+        required: true
+      locales:
+        description: Comma-separated locale codes (e.g. ko,uk)
+        type: string
+        required: true
+permissions:
+  contents: write
+  pull-requests: write
+# One run at a time, so consecutive events build on each other's PR.
+concurrency:
+  group: thunderai-languages
+  cancel-in-progress: false
+defaults:
+  run:
+    shell: bash
+env:
+  FILE: content/thunderbird-addon-thunderai/languages.json
+  SYNC_BRANCH: thunderai-languages-sync
+  BASE_BRANCH: master
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ env.BASE_BRANCH }}
+          fetch-depth: 0
+
+      - name: Install Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+
+      - name: Write payload
+        env:
+          EVENT: ${{ github.event_name }}
+          PAYLOAD: ${{ toJSON(github.event.client_payload) }}
+          IN_MODE: ${{ inputs.mode }}
+          IN_LOCALES: ${{ inputs.locales }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          if [[ "$EVENT" == "repository_dispatch" ]]; then
+            printf '%s' "$PAYLOAD" > "$RUNNER_TEMP/payload.json"
+          else
+            node -e 'const e = process.env; process.stdout.write(JSON.stringify({ mode: e.IN_MODE, locales: e.IN_LOCALES, url: e.RUN_URL }))' > "$RUNNER_TEMP/payload.json"
+          fi
+          cat "$RUNNER_TEMP/payload.json"
+
+      # create-pull-request rebuilds the branch from the base on every run, so the changes
+      # already in the open PR are merged in first, or the new event would drop them.
+      - name: Carry over the open PR
+        id: carry
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git show "HEAD:$FILE" > "$RUNNER_TEMP/baseline.json"
+          open=$(gh pr list --head "$SYNC_BRANCH" --base "$BASE_BRANCH" --state open --json number --jq length)
+          if [[ "$open" == "0" ]]; then
+            echo "No open PR on $SYNC_BRANCH."
+            exit 0
+          fi
+          git fetch origin "$SYNC_BRANCH"
+          git show "$(git merge-base HEAD FETCH_HEAD):$FILE" > "$RUNNER_TEMP/ancestor.json"
+          git show "FETCH_HEAD:$FILE" > "$RUNNER_TEMP/pr.json"
+          if git merge-file "$FILE" "$RUNNER_TEMP/ancestor.json" "$RUNNER_TEMP/pr.json" \
+             && node -e 'JSON.parse(require("fs").readFileSync(process.env.FILE, "utf8"))'; then
+            echo "Merged the changes of the open PR."
+          else
+            git checkout -- "$FILE"
+            echo "::warning::Could not merge the open PR's languages.json with $BASE_BRANCH; its earlier changes are dropped."
+            echo "dropped=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Sync languages.json
+        id: sync
+        run: |
+          node scripts/sync-thunderai-languages.mjs \
+            --payload "$RUNNER_TEMP/payload.json" \
+            --baseline "$RUNNER_TEMP/baseline.json" \
+            --summary "$RUNNER_TEMP/summary.json" \
+            --pr-body "$RUNNER_TEMP/body.md"
+          if [[ "${{ steps.carry.outputs.dropped }}" == "true" ]]; then
+            printf '\n> [!WARNING]\n> The previous changes of this PR could not be merged with `%s` and were dropped. Re-send those events if still needed.\n' "$BASE_BRANCH" >> "$RUNNER_TEMP/body.md"
+          fi
+
+      - name: Create or update the PR
+        if: steps.sync.outputs.changed == 'true'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ github.token }}
+          base: ${{ env.BASE_BRANCH }}
+          branch: ${{ env.SYNC_BRANCH }}
+          add-paths: ${{ env.FILE }}
+          commit-message: ${{ steps.sync.outputs.pr_title }}
+          title: ${{ steps.sync.outputs.pr_title }}
+          body-path: ${{ runner.temp }}/body.md
