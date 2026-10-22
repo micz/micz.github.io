@@ -144,6 +144,11 @@ themes/miczit_2027/
   `thunderai-languages` (or by hand) and keeps one open PR on branch `thunderai-languages-sync`.
   It needs "Allow GitHub Actions to create and approve pull requests" in the repo settings.
   By hand it takes `mode`, `locales` and an optional `contributors` JSON.
+- `.github/workflows/thunderai-readme-dispatch.yml` runs on every push to `master` touching
+  `languages.json` (e.g. that PR merged) or by hand, and sends `repository_dispatch`
+  `thunderai-readme-languages` to micz/ThunderAI, whose `readme-languages.yml` rebuilds the
+  README translations list from `master` and opens a PR there. Needs the secret
+  `THUNDERAI_DISPATCH_TOKEN` (fine-grained PAT on micz/ThunderAI, Contents: Read and write).
 
 ## Known quirks (not theme bugs)
 

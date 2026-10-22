@@ -1,0 +1,41 @@
+name: ThunderAI README sync
+# Tells micz/ThunderAI that languages.json changed, through a repository_dispatch with event_type
+# "thunderai-readme-languages": its readme-languages.yml rebuilds the "Translations" list of
+# README.md from this file and opens a PR there. Nothing is sent: ThunderAI reads languages.json
+# from master itself, so this runs only after the change is on master (e.g. the
+# thunderai-languages-sync PR merged).
+#
+# REQUIRED SECRET: THUNDERAI_DISPATCH_TOKEN
+#   A fine-grained personal access token with access to the micz/ThunderAI repository only,
+#   permission "Contents: Read and write" (required by the repository_dispatch endpoint).
+on:
+  push:
+    branches: [master]
+    paths:
+      - content/thunderbird-addon-thunderai/languages.json
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: thunderai-readme-dispatch
+  cancel-in-progress: true
+defaults:
+  run:
+    shell: bash
+jobs:
+  notify:
+    if: github.repository == 'micz/micz.github.io'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Notify ThunderAI
+        env:
+          GH_TOKEN: ${{ secrets.THUNDERAI_DISPATCH_TOKEN }}
+          TARGET_REPO: micz/ThunderAI
+        run: |
+          set -euo pipefail
+          if [[ -z "$GH_TOKEN" ]]; then
+            echo "::error::Secret THUNDERAI_DISPATCH_TOKEN is not set (see the comment at the top of this workflow)"; exit 1
+          fi
+          gh api --method POST "repos/$TARGET_REPO/dispatches" -f event_type=thunderai-readme-languages
+          echo "Sent thunderai-readme-languages to $TARGET_REPO"
