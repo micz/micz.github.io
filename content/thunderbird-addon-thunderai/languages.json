@@ -120,7 +120,7 @@
         "released": true,
         "credits": [
             {
-                "name": "evez",
+                "name": "Evereasy",
                 "url": "https://github.com/evez",
                 "github": "evez",
                 "first": "2025-06-14"
@@ -358,6 +358,8 @@
         "credits": [
             {
                 "name": "Maksim_220 Кабанов",
+                "url": "https://hosted.weblate.org/user/law820314/",
+                "weblate": "law820314",
                 "first": "2025-07-04"
             },
             {
@@ -371,11 +373,6 @@
                 "url": "https://hosted.weblate.org/user/PouncePanda/",
                 "weblate": "PouncePanda",
                 "first": "2025-08-22"
-            },
-            {
-                "name": "Maksim",
-                "url": "https://hosted.weblate.org/user/law820314/",
-                "weblate": "law820314"
             }
         ]
     },
@@ -403,15 +400,11 @@
                 "first": "2025-12-29"
             },
             {
-                "name": "bittin1ddc447d824349b2",
+                "name": "Luna Jernberg",
                 "url": "https://github.com/bittin",
                 "github": "bittin",
+                "weblate": "bittin1ddc447d824349b2",
                 "first": "2026-02-06"
-            },
-            {
-                "name": "Luna Jernberg",
-                "url": "https://hosted.weblate.org/user/bittin1ddc447d824349b2/",
-                "weblate": "bittin1ddc447d824349b2"
             }
         ]
     },
@@ -421,23 +414,18 @@
         "released": false,
         "credits": [
             {
-                "name": "cahitcengizhan",
+                "name": "Cahit Cengizhan",
                 "url": "https://github.com/cahitcengizhan",
                 "github": "cahitcengizhan",
+                "weblate": "cengizhan.cahit",
                 "first": "2026-10-17"
-            },
+},
             {
                 "name": "Müslüm Barış Korkmazer",
                 "url": "https://github.com/babico",
                 "weblate": "babico",
                 "github": "babico",
                 "first": "2026-02-02"
-            },
-            {
-                "name": "Cahit Cengizhan",
-                "url": "https://hosted.weblate.org/user/cengizhan.cahit/",
-                "weblate": "cengizhan.cahit",
-                "first": "2026-10-17"
             }
         ]
     },
