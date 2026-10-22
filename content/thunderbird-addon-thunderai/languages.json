@@ -7,12 +7,14 @@
             {
                 "name": "Kaloyan Vassilev",
                 "url": "https://hosted.weblate.org/user/kalon.vasilev/",
-                "weblate": "kalon.vasilev"
+                "weblate": "kalon.vasilev",
+                "first": "2025-09-29"
             },
             {
                 "name": "Bogomil Shopov",
                 "url": "https://hosted.weblate.org/user/bogomil/",
-                "weblate": "bogomil"
+                "weblate": "bogomil",
+                "first": "2025-08-07"
             }
         ]
     },
@@ -22,14 +24,16 @@
         "released": true,
         "credits": [
             {
-                "name": "Fjuro",
-                "url": "https://hosted.weblate.org/user/Fjuro/",
-                "weblate": "Fjuro"
-            },
-            {
                 "name": "Jaroslav Staněk",
                 "url": "https://hosted.weblate.org/user/jaroush/",
-                "weblate": "jaroush"
+                "weblate": "jaroush",
+                "first": "2025-03-12"
+            },
+            {
+                "name": "Fjuro",
+                "url": "https://hosted.weblate.org/user/Fjuro/",
+                "weblate": "Fjuro",
+                "first": "2025-03-10"
             }
         ]
     },
@@ -51,7 +55,8 @@
             {
                 "name": "Pieter de Bruin",
                 "url": "https://hosted.weblate.org/user/portefeuillesgevraagd/",
-                "weblate": "portefeuillesgevraagd"
+                "weblate": "portefeuillesgevraagd",
+                "first": "2026-02-28"
             }
         ]
     },
@@ -63,7 +68,8 @@
             {
                 "name": "ChristosK.",
                 "url": "https://github.com/christoskaterini",
-                "github": "christoskaterini"
+                "github": "christoskaterini",
+                "first": "2025-12-17"
             }
         ]
     },
@@ -74,18 +80,24 @@
         "credits": [
             {
                 "name": "Gerardo Sobarzo",
-                "url": "https://hosted.weblate.org/user/gerardo.sobarzo/",
-                "weblate": "gerardo.sobarzo"
+                "url": "https://github.com/gerald-CL",
+                "weblate": "gerardo.sobarzo",
+                "github": "gerald-CL",
+                "first": "2025-12-27"
             },
             {
                 "name": "Andrés Rendón Hernández",
-                "url": "https://hosted.weblate.org/user/arendon/",
-                "weblate": "arendon"
+                "url": "https://github.com/arendon1",
+                "weblate": "arendon",
+                "github": "arendon1",
+                "first": "2025-08-08"
             },
             {
                 "name": "Erick Limon",
-                "url": "https://hosted.weblate.org/user/ErickLimonG/",
-                "weblate": "ErickLimonG"
+                "url": "https://github.com/ErickLimonG",
+                "weblate": "ErickLimonG",
+                "github": "ErickLimonG",
+                "first": "2025-02-27"
             }
         ]
     },
@@ -97,7 +109,8 @@
             {
                 "name": "phlostically",
                 "url": "https://hosted.weblate.org/user/phlostically/",
-                "weblate": "phlostically"
+                "weblate": "phlostically",
+                "first": "2025-04-18"
             }
         ]
     },
@@ -107,9 +120,10 @@
         "released": true,
         "credits": [
             {
-                "name": "evez",
+                "name": "Evereasy",
                 "url": "https://github.com/evez",
-                "github": "evez"
+                "github": "evez",
+                "first": "2025-06-14"
             }
         ]
     },
@@ -121,7 +135,8 @@
             {
                 "name": "Noam",
                 "url": "https://github.com/noam-sc",
-                "github": "noam-sc"
+                "github": "noam-sc",
+                "first": "2025-01-27"
             },
             {
                 "generated": true
@@ -133,6 +148,12 @@
         "lang_code": "hr",
         "released": true,
         "credits": [
+            {
+                "name": "Maurizio Domba Cerin",
+                "url": "https://github.com/mdomba",
+                "github": "mdomba",
+                "first": "2026-01-30"
+            },
             {
                 "name": "Petar Jedvaj"
             }
@@ -158,12 +179,20 @@
             {
                 "name": "jeklau",
                 "url": "https://github.com/jeklau",
-                "github": "jeklau"
+                "github": "jeklau",
+                "first": "2025-03-14"
             },
             {
                 "name": "Min9X1n",
                 "url": "https://github.com/Min9X1n",
-                "github": "Min9X1n"
+                "github": "Min9X1n",
+                "first": "2026-03-07"
+            },
+            {
+                "name": "Evereasy",
+                "url": "https://github.com/evez",
+                "github": "evez",
+                "first": "2025-06-14"
             }
         ]
     },
@@ -175,12 +204,15 @@
             {
                 "name": "Roland S",
                 "url": "https://hosted.weblate.org/user/simaphonesave/",
-                "weblate": "simaphonesave"
+                "weblate": "simaphonesave",
+                "first": "2026-06-09"
             },
             {
                 "name": "Benedek Vigh (冯白诺)",
-                "url": "https://hosted.weblate.org/user/benedek.vigh/",
-                "weblate": "benedek.vigh"
+                "url": "https://github.com/fengbainuo",
+                "weblate": "benedek.vigh",
+                "github": "fengbainuo",
+                "first": "2025-08-22"
             }
         ]
     },
@@ -192,7 +224,8 @@
             {
                 "name": "Arif Budiman",
                 "url": "https://github.com/arifpedia",
-                "github": "arifpedia"
+                "github": "arifpedia",
+                "first": "2026-06-20"
             }
         ]
     },
@@ -205,10 +238,24 @@
                 "name": "Taichi Ito",
                 "url": "https://github.com/watya1",
                 "weblate": "watya1",
-                "github": "watya1"
+                "github": "watya1",
+                "first": "2026-01-22"
             },
             {
                 "generated": true
+            }
+        ]
+    },
+    {
+        "lang_name": "Norwegian Bokmål (Norway) - Norsk bokmål (Norge)",
+        "lang_code": "nb_NO",
+        "released": false,
+        "credits": [
+            {
+                "name": "Thomas Hegghammer",
+                "url": "https://github.com/hegghammer",
+                "github": "hegghammer",
+                "first": "2026-01-04"
             }
         ]
     },
@@ -218,24 +265,27 @@
         "released": true,
         "credits": [
             {
-                "name": "neexpl",
-                "url": "https://github.com/neexpl",
-                "github": "neexpl"
+                "name": "Michał Stankiewicz",
+                "url": "https://github.com/stankiewiczmichal",
+                "github": "stankiewiczmichal",
+                "first": "2026-06-24"
             },
             {
                 "name": "makkacprzak",
                 "url": "https://github.com/makkacprzak",
-                "github": "makkacprzak"
-            },
-            {
-                "name": "Michał Stankiewicz",
-                "url": "https://github.com/stankiewiczmichal",
-                "github": "stankiewiczmichal"
+                "github": "makkacprzak",
+                "first": "2025-04-19"
             },
             {
                 "name": "LukaszJal",
                 "url": "https://github.com/LukaszJal",
-                "github": "LukaszJal"
+                "github": "LukaszJal",
+                "first": "2026-07-06"
+            },
+            {
+                "name": "neexpl",
+                "url": "https://github.com/neexpl",
+                "github": "neexpl"
             },
             {
                 "generated": true
@@ -250,17 +300,22 @@
             {
                 "name": "Silvério Santos",
                 "url": "https://github.com/SantosSi",
-                "github": "SantosSi"
+                "github": "SantosSi",
+                "first": "2026-06-30"
             },
             {
                 "name": "Afonso Nóbrega",
-                "url": "https://hosted.weblate.org/user/nobrega8/",
-                "weblate": "nobrega8"
+                "url": "https://github.com/nobrega8",
+                "weblate": "nobrega8",
+                "github": "nobrega8",
+                "first": "2025-06-23"
             },
             {
                 "name": "Antonio Lucena de Faria",
-                "url": "https://hosted.weblate.org/user/alucenafaria/",
-                "weblate": "alucenafaria"
+                "url": "https://github.com/mystratex",
+                "weblate": "alucenafaria",
+                "github": "mystratex",
+                "first": "2025-10-29"
             }
         ]
     },
@@ -270,12 +325,13 @@
         "released": true,
         "credits": [
             {
-                "name": "Bruno Pereira de Souza"
-            },
-            {
                 "name": "Bruno Scatolin",
                 "url": "https://github.com/Brusca",
-                "github": "Brusca"
+                "github": "Brusca",
+                "first": "2026-08-06"
+            },
+            {
+                "name": "Bruno Pereira de Souza"
             },
             {
                 "generated": true
@@ -290,7 +346,8 @@
             {
                 "name": "Ioan Indreias",
                 "url": "https://hosted.weblate.org/user/indreias/",
-                "weblate": "indreias"
+                "weblate": "indreias",
+                "first": "2025-11-13"
             }
         ]
     },
@@ -300,19 +357,33 @@
         "released": true,
         "credits": [
             {
-                "name": "Maksim",
+                "name": "Maksim_220 Кабанов",
                 "url": "https://hosted.weblate.org/user/law820314/",
-                "weblate": "law820314"
+                "weblate": "law820314",
+                "first": "2025-07-04"
             },
             {
                 "name": "G S (TAra)",
                 "url": "https://hosted.weblate.org/user/gebekovasmobile/",
-                "weblate": "gebekovasmobile"
+                "weblate": "gebekovasmobile",
+                "first": "2025-06-14"
             },
             {
                 "name": "Konstantin Spirin",
                 "url": "https://hosted.weblate.org/user/PouncePanda/",
-                "weblate": "PouncePanda"
+                "weblate": "PouncePanda",
+                "first": "2025-08-22"
+            }
+        ]
+    },
+    {
+        "lang_name": "Slovak - Slovenčina",
+        "lang_code": "sk",
+        "released": false,
+        "credits": [
+            {
+                "name": "MIRT M",
+                "first": "2025-07-02"
             }
         ]
     },
@@ -323,13 +394,17 @@
         "credits": [
             {
                 "name": "Andreas Pettersson",
-                "url": "https://hosted.weblate.org/user/Andy_tb/",
-                "weblate": "Andy_tb"
+                "url": "https://github.com/andy-moz",
+                "weblate": "Andy_tb",
+                "github": "andy-moz",
+                "first": "2025-12-29"
             },
             {
                 "name": "Luna Jernberg",
-                "url": "https://hosted.weblate.org/user/bittin1ddc447d824349b2/",
-                "weblate": "bittin1ddc447d824349b2"
+                "url": "https://github.com/bittin",
+                "github": "bittin",
+                "weblate": "bittin1ddc447d824349b2",
+                "first": "2026-02-06"
             }
         ]
     },
@@ -339,9 +414,18 @@
         "released": false,
         "credits": [
             {
+                "name": "Cahit Cengizhan",
+                "url": "https://github.com/cahitcengizhan",
+                "github": "cahitcengizhan",
+                "weblate": "cengizhan.cahit",
+                "first": "2026-10-17"
+},
+            {
                 "name": "Müslüm Barış Korkmazer",
-                "url": "https://hosted.weblate.org/user/babico/",
-                "weblate": "babico"
+                "url": "https://github.com/babico",
+                "weblate": "babico",
+                "github": "babico",
+                "first": "2026-02-02"
             }
         ]
     },
