@@ -53,6 +53,12 @@
         "released": false,
         "credits": [
             {
+                "name": "Frank B",
+                "url": "https://hosted.weblate.org/user/frabri/",
+                "weblate": "frabri",
+                "first": "2026-10-22"
+            },
+            {
                 "name": "Pieter de Bruin",
                 "url": "https://hosted.weblate.org/user/portefeuillesgevraagd/",
                 "weblate": "portefeuillesgevraagd",
