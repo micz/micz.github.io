@@ -159,6 +159,9 @@ themes/miczit_2027/
   same theme style as the comparison table in the guides index: one `<thead>` row with the labels
   and one body row with the values. Every table in the guides uses `class="guides"`, and the guides
   have no inline `<style>`.
+- Table cells: `<code>` in any column but the last stays on one line (`white-space: nowrap`),
+  so keys are not broken letter by letter; it wraps again below 600px. Put long values (paths)
+  in the last column. `<code>` in a `<thead>` cell is not uppercased like the rest of the header.
 - The ThunderAI status pages (`status.html`, `status_archive.html`) center their header with
   inline CSS on `.title-block`. Each issue notice is an `<h1>` that opens and closes with `<br>`.
   `.content h1` in `theme.css` styles these notices and hides those two `<br>`. The archive page
