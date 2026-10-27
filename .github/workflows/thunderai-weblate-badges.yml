@@ -3,8 +3,8 @@ name: ThunderAI Weblate badges
 # Started by micz/ThunderAI (.github/workflows/update-weblate-badges.yml) with a repository_dispatch
 # of event_type "thunderai-weblate-badges" on every stable release, or by hand here.
 # client_payload: { ref: ThunderAI tag or branch, url: release or run url }
-# The language list and the download script are ThunderAI's, read at that ref:
-# .github/scripts/thunderai_languages.txt and .github/scripts/weblate_update_status.mjs (a failed
+# The languages and the download script are ThunderAI's, read at that ref: every directory of
+# _locales/ (en excluded), downloaded by .github/scripts/weblate_update_status.mjs (a failed
 # download fails the run: no PR with partial results). The changes go to the branch
 # thunderai-weblate-badges and a PR to master is opened, or the open one updated. No changes, no PR.
 # A PR opened with the workflow token does not start other workflows.
@@ -14,7 +14,7 @@ on:
   workflow_dispatch:
     inputs:
       ref:
-        description: ThunderAI tag or branch to read the language list from
+        description: ThunderAI tag or branch to read the languages (_locales/) from
         type: string
         required: true
         default: main
@@ -45,7 +45,9 @@ jobs:
           repository: micz/ThunderAI
           ref: ${{ github.event.client_payload.ref || inputs.ref }}
           path: thunderai
-          sparse-checkout: .github/scripts
+          sparse-checkout: |
+            .github/scripts
+            _locales
 
       - name: Install Node.js
         uses: actions/setup-node@v7
@@ -56,7 +58,7 @@ jobs:
         run: >-
           node thunderai/.github/scripts/weblate_update_status.mjs
           "https://hosted.weblate.org/widget/thunderai/-/"
-          thunderai/.github/scripts/thunderai_languages.txt
+          thunderai/_locales
           "site/$BADGES_DIR/"
 
       - name: Create or update the PR
@@ -71,6 +73,6 @@ jobs:
           commit-message: 'ThunderAI: update Weblate translation badges (${{ github.event.client_payload.ref || inputs.ref }})'
           title: 'ThunderAI: update Weblate translation badges (${{ github.event.client_payload.ref || inputs.ref }})'
           body: |
-            Automatic update of the ThunderAI Weblate translation status badges, with the language list of micz/ThunderAI at `${{ github.event.client_payload.ref || inputs.ref }}`.
+            Automatic update of the ThunderAI Weblate translation status badges, with the languages of `_locales/` of micz/ThunderAI at `${{ github.event.client_payload.ref || inputs.ref }}`.
 
             Triggered by: ${{ github.event.client_payload.url || format('manual run {0}/{1}/actions/runs/{2}', github.server_url, github.repository, github.run_id) }}
