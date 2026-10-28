@@ -65,7 +65,10 @@ themes/miczit_2027/
   `Title` explicitly, so the "Overview" linkTitle of ThunderAI does not move its card.
 - `partials/header.html` shows the wordmark and then a breadcrumb:
   - it skips Home, because the wordmark already links there;
-  - language stubs have no Title, so it takes the title from a translation;
+  - language stubs have no Title, so it takes the title from a translation and links that
+    translation, not the stub (the wordmark too: on a stub home it links the default home);
+  - links in content to a page that exists only in English (or only as a stub) use the absolute
+    English path (`/thunderbird-addon-thunderai/status/`), not a relative one;
   - add-on pages are siblings of `thunderbird-addons/` in `content/`, not children of it. So when
     the top-level ancestor has `addon_status`, the breadcrumb puts the `/thunderbird-addons` page
     in front. Another top-level page can name a parent with `breadcrumb_parent = "/<path>"` in its

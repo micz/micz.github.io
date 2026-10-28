@@ -1,11 +1,14 @@
 <header class="site-header">
     <div class="site-header-inner">
         <div class="site-header-lead">
-            <a class="wordmark" href="{{ .Site.BaseURL | relLangURL }}" title="{{ .Site.Title }}">{{ replace .Site.Title "'" "’" }}</a>
+            {{/* The home of the other languages is a redirect stub: link the default one. */}}
+            {{ $home := site.Home }}
+            {{ if eq $home.Layout "redirect" }}{{ $home = hugo.Sites.Default.Home }}{{ end }}
+            <a class="wordmark" href="{{ $home.RelPermalink }}" title="{{ .Site.Title }}">{{ replace .Site.Title "'" "’" }}</a>
             {{ with .Title }}
             {{/* Parent pages (grey) before the current title. Home is skipped (the wordmark
                  links there). Language redirect stubs have no Title: borrow it from the
-                 first translation that has one (the stub itself redirects there anyway). */}}
+                 first translation that has one, and link that translation instead of the stub. */}}
             <span class="header-divider" aria-hidden="true"></span>
             <nav class="header-title" aria-label="{{ i18n "breadcrumb" }}">
                 {{/* Addon pages sit at the content root, not under /thunderbird-addons/:
@@ -26,9 +29,9 @@
                 {{ end }}
                 {{ range $.Ancestors.Reverse }}{{ if not .IsHome }}
                     {{ $src := . }}
-                    {{ if not .Title }}{{ range first 1 (where .Translations "Title" "!=" "") }}{{ $src = . }}{{ end }}{{ end }}
+                    {{ if or (not .Title) (eq .Layout "redirect") }}{{ range first 1 (where (where .Translations "Title" "!=" "") "Layout" "!=" "redirect") }}{{ $src = . }}{{ end }}{{ end }}
                     {{ if $src.Title }}
-                        <a class="header-parent" href="{{ .RelPermalink }}">{{ $src.Title }}</a>
+                        <a class="header-parent" href="{{ $src.RelPermalink }}">{{ $src.Title }}</a>
                         <span class="header-sep" aria-hidden="true">/</span>
                     {{ end }}
                 {{ end }}{{ end }}
