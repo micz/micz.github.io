@@ -1,0 +1,179 @@
+[
+    {
+        "date": "2026-09-25",
+        "active": false,
+        "text": [
+            "The ChatGPT web interface has changed and same users are reporting errors when attempting to use ThunderAI.",
+            "See <a href=\"https://github.com/micz/ThunderAI/issues/924\" target=\"_blank\">#924</a> for more information.",
+            "",
+            "Version <a href=\"https://github.com/micz/ThunderAI/releases/\" target=\"_blank\">5.0.3</a> fixes the issues."
+        ]
+    },
+    {
+        "date": "2026-04-21",
+        "active": false,
+        "text": [
+            "The ChatGPT web interface has changed and consistently returns an error when attempting to use ThunderAI.",
+            "This appears to be an issue with how Thunderbird 140.* loads webpages, and there is no current workaround.",
+            "The solution is to update to the monthly version 149.* or wait for the next ESR release scheduled for the beginning of July 2026.",
+            "See <a href=\"https://github.com/micz/ThunderAI/issues/776#issuecomment-4290110476\" target=\"_blank\">#776</a> for more information."
+        ]
+    },
+    {
+        "date": "2026-02-10",
+        "active": false,
+        "text": [
+            "The ChatGPT Web Interface has been changed and ThunderAI under some circumstances is not able to import the selected text.",
+            "See <a href=\"https://github.com/micz/ThunderAI/issues/646\" target=\"_blank\">#646</a> for more information.",
+            "",
+            "Version <a href=\"https://github.com/micz/ThunderAI/releases/\" target=\"_blank\">3.8.4</a> fixes the issues."
+        ]
+    },
+    {
+        "date": "2026-01-06",
+        "active": false,
+        "text": [
+            "The ChatGPT Web Interface has been changed and ThunderAI is not getting any more the job completion, forcing the user to click on the \"Force completion\" link.",
+            "See <a href=\"https://github.com/micz/ThunderAI/issues/607\" target=\"_blank\">#607</a> for more information.",
+            "",
+            "Version <a href=\"https://github.com/micz/ThunderAI/releases/\" target=\"_blank\">3.7.9</a> fixes the issues."
+        ]
+    },
+    {
+        "date": "2025-12-08",
+        "active": false,
+        "text": [
+            "The ChatGPT Web Interface has been changed and the input field to write more messages after the first prompt is sent, is no more visibile.",
+            "See <a href=\"https://github.com/micz/ThunderAI/issues/556\" target=\"_blank\">#556</a> for more information.",
+            "",
+            "Version <a href=\"https://github.com/micz/ThunderAI/releases/\" target=\"_blank\">3.7.6</a> fixes the issues."
+        ]
+    },
+    {
+        "date": "2025-06-13",
+        "active": false,
+        "text": [
+            "The ChatGPT Web Interface is again not correctly dececting when the reponse is completed.",
+            "You could click the \"force completion\" button to get the full response.",
+            "",
+            "Version <a href=\"https://github.com/micz/ThunderAI/releases/\" target=\"_blank\">3.5.4</a> fixes the issues."
+        ]
+    },
+    {
+        "date": "2025-06-10",
+        "active": false,
+        "text": [
+            "The ChatGPT Web Interface is not correctly dececting when the reponse is completed.",
+            "You could click the \"force completion\" button to get the full response.",
+            "",
+            "Version <a href=\"https://github.com/micz/ThunderAI/releases/\" target=\"_blank\">3.5.3</a> fixes the issues."
+        ]
+    },
+    {
+        "date": "2025-06-05",
+        "active": false,
+        "text": [
+            "The ChatGPT Web Interface is not working with a free account [see <a href=\"https://github.com/micz/ThunderAI/issues/408\" target=\"_blank\">#408</a>].",
+            "",
+            "Version <a href=\"https://github.com/micz/ThunderAI/releases/\" target=\"_blank\">3.5.2</a> fixes the issues."
+        ]
+    },
+    {
+        "date": "2024-11-29",
+        "active": false,
+        "text": [
+            "The ChatGPT web interface sometimes displays the audio button, preventing the automatic prompt from being sent [see <a href=\"https://github.com/micz/ThunderAI/issues/188\" target=\"_blank\">#188</a>], and occasionally pushes the input field too far down [see <a href=\"https://github.com/micz/ThunderAI/issues/189\" target=\"_blank\">#189</a>].",
+            "",
+            "Version <a href=\"https://github.com/micz/ThunderAI/releases/tag/v2.3.3\" target=\"_blank\">2.3.3</a> fixes the issues."
+        ]
+    },
+    {
+        "date": "2024-09-23",
+        "active": false,
+        "text": [
+            "The ChatGPT web interface is using a new feature that is not compatible with Firefox 115, which causes the ChatGPT Web Interface to stop working in Thunderbird 115.",
+            "See <a href=\"https://github.com/micz/ThunderAI/issues/139\" target=\"_blank\">#139</a>.",
+            "",
+            "Version <a href=\"https://github.com/micz/ThunderAI/releases/tag/v2.1.5\" target=\"_blank\">2.1.5</a> fixes the issue."
+        ]
+    },
+    {
+        "date": "2024-09-11",
+        "active": false,
+        "text": [
+            "A change in the ChatGPT web interface prevents again the addon from working.",
+            "See <a href=\"https://github.com/micz/ThunderAI/issues/133\" target=\"_blank\">#133</a>.",
+            "",
+            "From version 2.1.4 the issue has been fixed, update the addon directly from Thunderbird."
+        ]
+    },
+    {
+        "date": "2024-09-04",
+        "active": false,
+        "text": [
+            "A change in the ChatGPT web interface prevents the addon from working.",
+            "",
+            "From version 2.1.2 the issue has been fixed, update the addon directly from Thunderbird."
+        ]
+    },
+    {
+        "date": "2024-08-21",
+        "active": false,
+        "text": [
+            "A change in the ChatGPT web interface prevents the addon from sending automatically the prompt.",
+            "",
+            "Version <a href=\"https://github.com/micz/ThunderAI/releases/tag/v2.0.7\" target=\"_blank\">2.0.7</a> fixes the issue.",
+            "Meanwhile just press the button to send the prompt."
+        ]
+    },
+    {
+        "date": "2024-08-14",
+        "active": false,
+        "text": [
+            "A change in the ChatGPT web interface prevents the addon from correctly importing the text when replying or substituting.",
+            "",
+            "Version <a href=\"https://github.com/micz/ThunderAI/releases/tag/v2.0.2\" target=\"_blank\">2.0.2</a> fixes the issue.",
+            "",
+            "Starting from version 2.0.2, to use a response in a reply, the user must select the text.",
+            "A single click should suffice, but it is also possible to manually select the desired text.",
+            "",
+            "See <a href=\"https://github.com/micz/ThunderAI/issues/103\" target=\"_blank\">#103</a>."
+        ]
+    },
+    {
+        "date": "2024-07-19",
+        "active": false,
+        "text": [
+            "A change in the ChatGPT web interface prevents the addon from correctly importing the text when replying or substituting, unless the \"Keep formatting\" option is used.",
+            "",
+            "Version 1.2.1 fixes the issue. See <a href=\"https://github.com/micz/ThunderAI/issues/87\" target=\"_blank\">#87</a>."
+        ]
+    },
+    {
+        "date": "2024-05-15",
+        "active": false,
+        "text": [
+            "A change in the ChatGPT web interface prevents to send the prompt. You have to click the send button.",
+            "",
+            "The imported text has a <i>ChatGPT</i> string in front of it that you have to remove manually.",
+            "From version 1.0.8 onwards, the issues are fixed (<a href=\"https://github.com/micz/ThunderAI/issues/57\" target=\"_blank\">#57</a> and <a href=\"https://github.com/micz/ThunderAI/issues/60\" target=\"_blank\">#60</a>)."
+        ]
+    },
+    {
+        "date": "2024-05-09",
+        "active": false,
+        "text": [
+            "A change in the ChatGPT web interface prevents the button to use the answer automatically from appearing.",
+            "Version 1.0.6 fixes the issue (<a href=\"https://github.com/micz/ThunderAI/issues/43\" target=\"_blank\">#43</a>)."
+        ]
+    },
+    {
+        "date": "2024-05-02",
+        "active": false,
+        "text": [
+            "If using ChatGPT-4 model, maintain the ChatGPT window width to 700.",
+            "With a larger width, it may not function properly.",
+            "See issue <a href=\"https://github.com/micz/ThunderAI/issues/38\" target=\"_blank\">#38</a>."
+        ]
+    }
+]

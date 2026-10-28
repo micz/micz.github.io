@@ -1,0 +1,15 @@
+{{/* ThunderAI ChatGPT Web status notices.
+
+     Data: status.json next to the page. Each entry: date (YYYY-MM-DD), active (true/false),
+     text (list of HTML lines joined with <br>; "" = blank line). Newest first.
+     active="true" (status page) lists the active notices, or "No issues present." when there is none;
+     active="false" (archive page) lists the others. The <h1> notices are styled by .content h1. */}}
+{{ $data := os.ReadFile (printf "content/%sstatus.json" .Page.File.Dir) | transform.Unmarshal }}
+{{ $active := eq (.Get "active") "true" }}
+{{ range sort (where $data "active" $active) "date" "desc" }}
+<h1 style="text-align: center;"><br><b>{{ (time.AsTime .date).Format "2006/01/02" }}</b><br>
+    {{ delimit .text "<br>" | safeHTML }}
+    <br></h1>
+{{ else }}
+{{ if $active }}<h1 style="text-align: center;"><br>No issues present.<br></h1>{{ end }}
+{{ end }}

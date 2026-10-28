@@ -46,7 +46,7 @@ themes/miczit_2027/
 │   ├── partials/           head, head-extra, theme-init, header, footer, lang-switcher,
 │   │                       theme-toggle, doc-title, ph-list-script, addon-nav
 │   └── shortcodes/         project shortcodes (page_title, list-thunderbird-pages, *_list, lang_*,
-│                           ui_button, themed_screenshot)
+│                           ui_button, themed_screenshot, status_list)
 └── static/
     ├── css/theme.css       dark tokens on :root, light tokens on [data-theme="light"]
     └── fonts/
@@ -168,9 +168,14 @@ themes/miczit_2027/
   in the last column. `<code>` in a `<thead>` cell is not uppercased like the rest of the header.
 - `status.{de,es,fr,it,ja}.html` are redirect stubs (`layout = "redirect"`), so a translated
   `/<lang>/thunderbird-addon-thunderai/status/` goes to the English page instead of a 404.
-- The ThunderAI status pages (`status.html`, `status_archive.html`) center their header with
-  inline CSS on `.title-block`. Each issue notice is an `<h1>` that opens and closes with `<br>`.
-  `.content h1` in `theme.css` styles these notices and hides those two `<br>`. The archive page
-  sets a smaller size inline.
+- The ThunderAI ChatGPT Web status pages (`status.html`, `status_archive.html`) get their notices
+  from `content/thunderbird-addon-thunderai/status.json` through `status_list`: entries
+  `{ date: "YYYY-MM-DD", active, text: [HTML lines] }` (`""` = blank line), newest first.
+  `active="true"` (status page) shows the active ones, or "No issues present." when there is none;
+  `active="false"` (archive) shows the others. To publish an issue add an entry with
+  `active: true`; to archive it set `active: false` (and add the fix line to `text`).
+  The pages center their header with inline CSS on `.title-block`. Each notice is an `<h1>` that
+  opens and closes with `<br>`. `.content h1` in `theme.css` styles these notices and hides those
+  two `<br>`. The archive page sets a smaller size inline.
 - Headless Edge has a minimum layout width of about 500px. A "390px" screenshot is a crop of a
   wider page, so overflow seen in it is not real.

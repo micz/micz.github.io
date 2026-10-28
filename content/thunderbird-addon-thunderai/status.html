@@ -6,7 +6,7 @@ Type = "no-list"
 
 <div style="font-size: 16px; text-align: center;">Check this page for any known issues in interacting with the ChatGPT Web Interface.</div>
 
-<h1 style="text-align:center;"><br>No issues present.<br></h1>
+{{< status_list active="true" >}}
 
 <p style="text-align:center;font-size:14px;font-style:italic;"><a href="archive/">Check old issues</a></p>
 
@@ -18,5 +18,9 @@ Type = "no-list"
     }
     .content > p {
         margin-inline: auto;
+    }
+    .content h1 + h1 {
+        border-top: 1px solid var(--hairline);
+        padding-top: 1.6em;
     }
 </style>
