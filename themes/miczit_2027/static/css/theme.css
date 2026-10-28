@@ -1321,7 +1321,6 @@ a[href^="http"]:not([href*="//github.com/"]):not([href*="//micz.it"]):not([href*
     grid-template-columns: minmax(0, 340px);
     justify-content: center;
 }
-.doc-grid + .doc-grid-single { margin-top: calc(14px - 1.8em); }
 /* three equal columns; a lone card on the last row is centered with the same width */
 .doc-grid-3 { grid-template-columns: repeat(6, minmax(0, 1fr)); }
 .doc-grid-3 > * { grid-column: span 2; }

@@ -94,7 +94,7 @@ themes/miczit_2027/
 - Add-on pages: clickable links go in `.doc-grid` as `.doc-card` (bordered cards). Non-clickable
   short sections (How does it work, Privacy, Requirements) go in `.info-grid` as `.info-card`: plain
   text blocks with a side rule and a small mono label, not cards. Do not mix the two in one grid.
-  `.doc-grid-3` (e.g. ThunderStats) gives three equal columns and centers a lone last card with the
+  `.doc-grid-3` (e.g. ThunderStats, ThunderAI) gives three equal columns and centers a lone last card with the
   same width (2 columns below 880px, 1 below 560px). `.doc-grid-single` is a separate grid with one
   centered card, max 340px wide.
 - GitHub icon: `theme.css` puts the GitHub mark in front of every link whose `href` contains
