@@ -40,6 +40,7 @@
 // An entry with "keep_credits_order": true keeps its hand-made order and only gets new names
 // appended. People merged in one locale (same email or GitHub login) add up strings and lines.
 // Emails are used only as the key to merge duplicates and never reach the file, the PR or the output.
+// The strings and lines of each person are listed in the PR body (and the summary), not in the file.
 //
 // The summary is printed to stdout as JSON. Exit codes: 0 ok, 1 bad input, 2 file not canonical.
 // When GITHUB_OUTPUT is set, "changed" and "pr_title" are appended to it.
@@ -399,7 +400,10 @@ function prTitle(changes) {
     return `ThunderAI: ${parts.slice(0, -1).join(', ')}${parts.length > 1 ? ' and ' : ''}${parts.at(-1)}`;
 }
 
-function prBody(changes, sourceUrl, skipped) {
+// Markdown table cell: no pipes or line breaks.
+const cell = (text) => String(text).replace(/\|/g, '\\|').replace(/\s+/g, ' ');
+
+function prBody(changes, sourceUrl, skipped, counts) {
     const lines = [];
     lines.push('Automatic update of `content/thunderbird-addon-thunderai/languages.json` from the ThunderAI repository.');
     if (sourceUrl) lines.push('', `Source: ${sourceUrl}`);
@@ -421,6 +425,16 @@ function prBody(changes, sourceUrl, skipped) {
         lines.push('', '<details><summary>Skipped in the last event</summary>', '');
         for (const s of skipped) lines.push(`- \`${s.code}\`: ${s.reason}`);
         lines.push('', '</details>');
+    }
+    if (counts.length) {
+        lines.push('', '### Contributions in the last event', '',
+            'The numbers that order the credits (strings, then lines). They are not saved in the file.');
+        for (const c of counts) {
+            lines.push('', `<details><summary><code>${c.lang_code}</code> ${c.lang_name}${c.keep_order ? ' (order kept by hand)' : ''}</summary>`, '',
+                '| # | Name | Strings | Lines |', '|---:|---|---:|---:|');
+            c.people.forEach((p, i) => lines.push(`| ${i + 1} | ${cell(p.name)} | ${p.strings ?? '–'} | ${p.lines ?? '–'} |`));
+            lines.push('', '</details>');
+        }
     }
     lines.push('', '### Needs manual review', '');
     if (changes.needsReview.length === 0) lines.push('Nothing to review.');
@@ -453,7 +467,7 @@ if (JSON.stringify(entries, null, 4) !== text.replace(/\r\n/g, '\n').replace(/\n
 }
 const original = structuredClone(entries);
 
-const summary = { mode, file, dry_run: opts.dryRun, changed: false, added: [], published: [], credits: [], skipped: [], needs_review: [] };
+const summary = { mode, file, dry_run: opts.dryRun, changed: false, added: [], published: [], credits: [], counts: [], skipped: [], needs_review: [] };
 const seen = new Set();
 
 for (const code of locales) {
@@ -486,6 +500,10 @@ for (const code of locales) {
     if (people) {
         const before = JSON.stringify(entry.credits);
         const added = syncCredits(entry, people);
+        // Hidden people stay out of the PR as well.
+        summary.counts.push({ lang_code: entry.lang_code, lang_name: entry.lang_name, keep_order: entry.keep_credits_order === true,
+            people: people.filter((p) => !findItem(entry.credits, p)?.hidden)
+                .map((p) => ({ name: p.name, strings: p.strings, lines: p.lines })) });
         if (JSON.stringify(entry.credits) !== before) {
             summary.credits.push({ lang_code: entry.lang_code, shown: shownNames(entry.credits),
                 added: added.map((p) => ({ name: p.name, url: p.url, first: p.first, last: p.last, strings: p.strings, lines: p.lines })) });
@@ -506,7 +524,7 @@ summary.pr_title = prTitle(changes);
 if (summary.changed && !opts.dryRun) {
     writeFileSync(file, JSON.stringify(entries, null, 4).replace(/\n/g, eol) + (finalNewline ? eol : ''), 'utf8');
 }
-if (opts['pr-body']) writeFileSync(opts['pr-body'], prBody(changes, sourceUrl, summary.skipped), 'utf8');
+if (opts['pr-body']) writeFileSync(opts['pr-body'], prBody(changes, sourceUrl, summary.skipped, summary.counts.filter((c) => c.people.length)), 'utf8');
 if (opts.summary) writeFileSync(opts.summary, JSON.stringify(summary, null, 2) + '\n', 'utf8');
 if (process.env.GITHUB_OUTPUT) {
     appendFileSync(process.env.GITHUB_OUTPUT, `changed=${summary.changed}\npr_title=${summary.pr_title}\n`);

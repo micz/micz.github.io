@@ -135,7 +135,8 @@ themes/miczit_2027/
     items in their order. `"keep_credits_order": true` on an entry keeps the hand-made order
     and only appends new names;
   - no emails, `last`, `strings` or `lines` in the file (they change every commit; the order
-    already reflects them);
+    already reflects them). The PR body lists them instead: "Contributions in the last event",
+    one collapsed table per locale of the event (hidden people left out);
   - "Generated automatically" is never sent; it is kept and always last.
 - Emails never reach the file, the PR or the logs: an email inside `name` is removed (empty name
   → GitHub login, then Weblate login, else the person is dropped), and a `url` with `@` is not
