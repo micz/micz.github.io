@@ -1,0 +1,137 @@
++++
+Title = "OpenAI API"
+Type = "no-list"
+multilang = true
++++
+
+{{< page_title >}}
+
+<p>
+    <strong>OpenAI API</strong> 連携は、API キーを使って ThunderAI を OpenAI のサーバーに直接接続します。<br>
+    ウェブインターフェースと比べて、より速く、より安定しており、使用するモデルを明示的に指定できます。
+</p>
+
+<table class="guides">
+    <thead>
+        <tr>
+            <th>API キーが必要</th>
+            <th>無料オプション</th>
+            <th>おすすめの用途</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>はい</td>
+            <td>いいえ(従量課金)</td>
+            <td>ChatGPT モデルへの安定した高速アクセス</td>
+        </tr>
+    </tbody>
+</table>
+
+<br>
+
+<h2>前提条件</h2>
+<ul>
+    <li>API アクセスが有効になっている <a href="https://platform.openai.com" target="_blank">OpenAI アカウント</a></li>
+    <li>有効な API キー</li>
+    <li>ThunderAI がインストールされた Thunderbird</li>
+</ul>
+<p><em>注意:OpenAI API の利用料金は、ChatGPT のサブスクリプションとは別に請求されます。ChatGPT Plus を契約していても、API アカウントにクレジットを追加する必要があります。</em></p>
+
+<h2>API キーの取得</h2>
+<ol>
+    <li><a href="https://platform.openai.com/api-keys" target="_blank">platform.openai.com/api-keys</a> にアクセスします</li>
+    <li><strong>Create new secret key</strong> をクリックします</li>
+    <li>名前を付けて(例:"ThunderAI")、<strong>Create</strong> をクリックします</li>
+    <li>キーはすぐにコピーしてください。二度と表示されません</li>
+</ol>
+
+<h2>セットアップ</h2>
+
+<p>
+    最も手早いのは <strong>Setup Wizard</strong> を使う方法です。ThunderAI のウェルカムページ、ツールバーのポップアップ、
+    または設定ページから開き、<strong>ChatGPT OpenAI API</strong> を選んで、API キーを貼り付け、モデルを選んで
+    接続をテストします。その後、ウィザードで必要な AI 機能を有効にできます。<br>
+    手動で設定する場合は、以下の手順に従ってください。
+</p>
+
+<h3>1. ThunderAI の設定を開く</h3>
+<p>
+    Thunderbird で、<strong>ツール → アドオンとテーマ → ThunderAI → 設定</strong> に移動します。
+</p>
+
+<h3>2. OpenAI API 連携を選択する</h3>
+<p><strong>Connection Settings</strong> パネルで、<strong>Connection Type</strong> のドロップダウンから <strong>ChatGPT OpenAI API</strong> を選びます。</p>
+
+<h3>3. API キーを入力する</h3>
+<p><strong>ChatGPT API Key</strong> 欄に API キーを貼り付けます。キーは Thunderbird 内にローカルに保存され、OpenAI のサーバー以外に送信されることはありません。</p>
+
+<h3 id="model">4. モデルを選ぶ</h3>
+<p>
+    <strong>ChatGPT Models</strong> の横にある <strong>Update list</strong> をクリックします。初回は Thunderbird が
+    <code>openai.com</code> へのアクセス許可を求めます。承認してください。承認しないと ThunderAI は OpenAI に接続できません。その後、一覧から使いたいモデルを選びます。
+</p>
+
+<h3>5. 接続をテストする</h3>
+<p>
+    設定は変更するとすぐに保存されます。保存ボタンはありません。<br>
+    接続設定の下にあるバーの <strong>Test now</strong> をクリックします。問題がなければ、
+    <em>"Connected — ChatGPT OpenAI API reachable"</em> と表示されます。その後、任意のメールを開き、ツールバーの ThunderAI ボタンをクリックしてプロンプトを実行してください。
+</p>
+
+<h2>詳細オプション</h2>
+<p>
+    <strong>Connection Settings</strong> パネルの <strong>Advanced options</strong> をクリックすると、以下の設定が表示されます。
+    空欄または <em>Default</em> のままにすると、API に判断を任せます。
+    これらは選択したモデルに合わせて変わります。モデルが受け付けない設定は無効になり、その理由を説明する注記が表示されます。
+    保存された値は、別のモデルに戻したときのために保持されます。
+</p>
+<ul>
+    <li><strong>Temperature</strong> と <strong>Top P</strong>:回答のランダムさ、または的確さの度合いです。推論モデルはこれらを受け付けません。代わりに <strong>Reasoning effort</strong> を使ってください。</li>
+    <li><strong>Reasoning effort</strong> と <strong>Reasoning summary</strong>:モデルがどれだけ推論するか、またチャットに推論の要約を表示するかどうかです。推論モデルのみが対象です。</li>
+    <li><strong>Verbosity</strong>:回答の長さと詳しさです。対応しているモデルで使用できます。</li>
+    <li><strong>Max output tokens</strong>:回答の最大の長さです。</li>
+    <li><strong>Developer Messages</strong>:各プロンプトと一緒にモデルへ送信される指示とコンテキストです。</li>
+    <li><strong>Output format</strong>:プレーンテキスト(既定)、JSON オブジェクト、またはご自身で入力したスキーマに従う JSON です。</li>
+    <li><strong>Truncation</strong>、<strong>Service tier</strong>、<strong>Prompt cache key</strong>、<strong>Safety identifier</strong>、
+        <strong>Include encrypted reasoning</strong>:OpenAI へのリクエストのオプションで、
+        <a href="https://platform.openai.com/docs/api-reference/responses/create" target="_blank">OpenAI API リファレンス</a>で説明されています。</li>
+    <li><strong>Use storage</strong>:オンにすると、OpenAI がチャットを保存します。</li>
+    <li><strong>Extra body data</strong>:ThunderAI に表示されないオプション用の追加パラメーターを JSON オブジェクトで指定します。</li>
+</ul>
+<p>
+    これらのオプションは、カスタムプロンプトのページで個々のプロンプトに設定することも、各 AI 機能(Add Tags、Spam Filter、
+    Summarize、Translate、Calendar Event、Task)の個別接続にある <strong>Advanced options</strong> ボタンから設定することもできます。
+</p>
+
+<h2>ヒント</h2>
+<ul>
+    <li>API の利用量はトークン単位で計測されます。メールは通常短いため、費用はたいていごくわずかです。利用状況は <a href="https://platform.openai.com/usage" target="_blank">platform.openai.com/usage</a> で確認できます。</li>
+    <li>OpenAI は定期的に新しいモデルを追加しています。<strong>Update list</strong> をクリックすると、最新のモデルを確認できます。</li>
+    <li>ThunderAI が複数のメールを処理している間(Add Tags、Spam Filter、Summarize、Translate)に OpenAI のレート制限やクォータを超えた場合、処理は自動的に停止し、処理済みのメッセージ数が表示されます。</li>
+</ul>
+
+<h2>トラブルシューティング</h2>
+
+<h3>"Authentication failed — check your API key" または "Invalid API key" エラー</h3>
+<p>キーが正しくコピーされているか、余分な空白がないかを確認してください。それでもキーが使えない場合は、OpenAI のプラットフォームで新しいキーを生成してください。</p>
+
+<h3>"You exceeded your current quota" エラー</h3>
+<p>OpenAI の API アカウントのクレジットが不足しています。<a href="https://platform.openai.com/settings/organization/billing" target="_blank">platform.openai.com/settings/organization/billing</a> でクレジットを追加してください。</p>
+
+<h3>一覧にモデルが表示されない</h3>
+<p>
+    <em>"You have denied the optional permission needed to fetch models for this integration"</em> と表示された場合は、もう一度
+    <strong>Update list</strong> をクリックし、Thunderbird の許可リクエストを承認してください。それ以外の場合は、API キーが有効であることと、インターネット接続を確認してください。
+</p>
+
+<h3>ポップアップにプロンプトではなく許可の要求が表示される</h3>
+<p>
+    <code>openai.com</code> へのアクセス許可がまだ与えられていません。ポップアップのメッセージをクリックすると、ThunderAI のウェルカムページが開きます。
+    そこで同じメッセージをクリックし、Thunderbird のリクエストを承認してください。<a href="#model">手順 4</a> から許可を与えることもできます。
+</p>
+
+<br>
+<div style="text-align: center">
+    <a href="../">ガイド一覧に戻る</a> &nbsp;|&nbsp; <a href="../google-gemini/">次へ:Google Gemini →</a>
+</div>

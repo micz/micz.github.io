@@ -1,0 +1,165 @@
++++
+Title = "OpenAI Compatible API"
+Type = "no-list"
+multilang = true
++++
+
+{{< page_title >}}
+
+<p>
+    <strong>OpenAI Compatible API</strong> 連携を使うと、OpenAI の API 形式に従う任意のサーバーに ThunderAI を接続できます。<br>
+    これには、<strong>LM Studio</strong> のようなローカルサーバー、<strong>DeepSeek</strong>、<strong>Grok</strong>、<strong>Mistral AI</strong>、<strong>OpenRouter</strong>、<strong>Perplexity</strong> のようなホスト型サービス、さらにカスタムまたはセルフホストのあらゆるエンドポイントが含まれます。
+</p>
+
+<table class="guides">
+    <thead>
+        <tr>
+            <th>API キーが必要</th>
+            <th>無料オプション</th>
+            <th>おすすめの用途</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>サービスによる</td>
+            <td>サービスによる(ローカルサーバーは無料)</td>
+            <td>柔軟性:ローカルサーバー、代替プロバイダー、カスタムエンドポイント</td>
+        </tr>
+    </tbody>
+</table>
+
+<br>
+
+<h2>定義済みの設定</h2>
+<p>ThunderAI には、よく使われる OpenAI 互換サービス向けのプリセットが用意されています。これらのいずれかを使う場合は、プリセットを選んで API キーを入力するだけです:</p>
+
+<table class="guides">
+    <thead>
+        <tr>
+            <th>プリセット</th>
+            <th>備考</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><strong>DeepSeek API</strong></td>
+            <td>高速で低コスト、強力な推論モデル</td>
+        </tr>
+        <tr>
+            <td><strong>Grok API</strong></td>
+            <td>xAI の Grok モデル</td>
+        </tr>
+        <tr>
+            <td><strong>Mistral API</strong></td>
+            <td>Mistral AI がホストするモデル</td>
+        </tr>
+        <tr>
+            <td><strong>OpenRouter API</strong></td>
+            <td>1 つの API キーで多数のプロバイダーにアクセス</td>
+        </tr>
+        <tr>
+            <td><strong>Perplexity API</strong></td>
+            <td>ウェブ検索で強化されたモデルを含む</td>
+        </tr>
+    </tbody>
+</table>
+
+<br>
+
+<h2>セットアップ</h2>
+
+<p>
+    最も手早いのは <strong>Setup Wizard</strong> を使う方法です。ThunderAI のウェルカムページ、ツールバーのポップアップ、
+    または設定ページから開き、<strong>OpenAI Compatible API</strong> を選んで、サービスを選ぶかサーバーのアドレスを入力し、
+    モデルを選んで接続をテストします。その後、ウィザードで必要な AI 機能を有効にできます。<br>
+    手動で設定する場合は、以下の手順に従ってください。
+</p>
+
+<h3>1. ThunderAI の設定を開く</h3>
+<p>
+    Thunderbird で、<strong>ツール → アドオンとテーマ → ThunderAI → 設定</strong> に移動します。
+</p>
+
+<h3>2. OpenAI Compatible API 連携を選択する</h3>
+<p><strong>Connection Settings</strong> パネルで、<strong>Connection Type</strong> のドロップダウンから <strong>OpenAI Compatible API</strong> を選びます。</p>
+
+<h3>3a. プリセットを使う</h3>
+<p>
+    お使いのプロバイダーにプリセットがある場合は、<strong>Available Services</strong> でそれを選んで確定します。ThunderAI がサーバーのアドレス、
+    "v1" の設定、チャット名を入力し、モデルの一覧を空にします。API キーを入力して、手順 5 から続けてください。
+</p>
+
+<h3 id="manual">3b. 手動での設定</h3>
+<p>お使いのプロバイダーが一覧にない場合は、<strong>Custom</strong> を選んで手動で設定します:</p>
+<ul>
+    <li><strong>Host Address</strong>:サーバーのベース URL です。<code>/v1</code> は<strong>含めません</strong>。ローカルで動作する LM Studio の場合、通常は
+        <code>http://localhost:1234</code> です。リモートサーバーのアドレスも使えます。</li>
+    <li><strong>Keep the "v1" compatibility</strong>(詳細オプション内、既定でオン):ThunderAI がアドレスに <code>/v1</code> を追加し、
+        <code>http://localhost:1234/v1/chat/completions</code> のようになります。プロバイダーのエンドポイントに <code>/v1</code> の部分がない場合はオフにしてください。</li>
+</ul>
+
+<h3>4. API キーを入力する(必要な場合)</h3>
+<p><strong>OpenAI Comp API Key</strong> 欄に入力します。この欄は任意です。LM Studio のようなローカルサーバーでは通常 API キーは不要なので、空のままでかまいません。ホスト型サービスでは有効なキーが必要です。</p>
+
+<h3>5. モデルを選ぶ</h3>
+<p><strong>OpenAI Compatible API Models</strong> の横にある <strong>Update list</strong> をクリックし、一覧からモデルを選びます。</p>
+<p>サーバーがモデルの一覧を提供しない場合は、<strong>Add manually</strong> をクリックし、プロバイダーが指定するモデル名を入力してください。<strong>Clear list</strong> で一覧を空にできます。</p>
+
+<h3>6. 接続をテストする</h3>
+<p>
+    設定は変更するとすぐに保存されます。保存ボタンはありません。<br>
+    接続設定の下にあるバーの <strong>Test now</strong> をクリックし、Thunderbird の許可リクエストが表示された場合は承認してください。
+    問題がなければ、バーに <em>"Connected — OpenAI Compatible API reachable"</em> と表示されます。
+    その後、任意のメールを開き、ツールバーの ThunderAI ボタンをクリックしてプロンプトを実行してください。
+</p>
+
+<h2>詳細オプション</h2>
+<p><strong>Connection Settings</strong> パネルの <strong>Advanced options</strong> をクリックすると、次の設定が表示されます:</p>
+<ul>
+    <li><strong>Keep the "v1" compatibility</strong>:<a href="#manual">手順 3b</a> を参照してください。</li>
+    <li><strong>Chat Name</strong>:ThunderAI のチャットウィンドウで AI に表示される名前です。</li>
+    <li><strong>Temperature</strong>:0 から 2 の間です。値を大きくすると出力がよりランダムに、小さくするとより的確になります。</li>
+    <li><strong>Extra body data</strong>:サービスがサポートしているものの ThunderAI に表示されないオプション用の追加パラメーターを JSON オブジェクトで指定します。
+        例:<code>{"top_p": 0.9}</code>、または対応しているサーバーで思考モードを無効にする <code>{"chat_template_kwargs": {"thinking": false}}</code>。</li>
+</ul>
+<p>
+    これらのオプションは、カスタムプロンプトのページで個々のプロンプトに設定することも、各 AI 機能(Add Tags、Spam Filter、
+    Summarize、Translate、Calendar Event、Task)の個別接続にある <strong>Advanced options</strong> ボタンから設定することもできます。
+</p>
+
+<h2>LM Studio — クイックセットアップ</h2>
+<p><a href="https://lmstudio.ai" target="_blank">LM Studio</a> は、OpenAI 互換 API を備えたローカルサーバーと、モデルをダウンロード・管理するためのグラフィカルインターフェースを提供します。</p>
+<ol>
+    <li><a href="https://lmstudio.ai" target="_blank">lmstudio.ai</a> から LM Studio をダウンロードしてインストールします</li>
+    <li>LM Studio のモデルブラウザーから、お好みのモデルをダウンロードします</li>
+    <li>LM Studio でローカルサーバーを起動します</li>
+    <li>ThunderAI で <strong>Custom</strong> を選び、<strong>Host Address</strong> を <code>http://localhost:1234</code> に設定し、"v1" の互換性はオンのまま、API キーは空のままにして、モデルを選びます</li>
+</ol>
+
+<h2>ヒント</h2>
+<ul>
+    <li><strong>OpenRouter</strong> は、1 つの API キーと 1 つの請求アカウントで多数のモデル(Claude、Gemini、Mistral など)を使いたい場合に最適です。</li>
+    <li>ローカルサーバーを使う場合、パフォーマンスはハードウェアによって決まります。ハードウェアに関するヒントは <a href="../ollama/">Ollama ガイド</a>をご覧ください。</li>
+    <li>リクエストが CORS エラーで失敗し、サーバーの設定を変更できない場合は、ThunderAI の設定で <strong>Give permission to the current host</strong> をクリックしてください
+        (<em>"Problems setting CORS?"</em> の下)。<code>localhost</code> または <code>127.0.0.1</code> 上のサーバーの場合、Thunderbird はすべてのウェブサイトへのアクセス(<code>&lt;all_urls&gt;</code>)を求めます。</li>
+    <li>ThunderAI が複数のメールを処理している間(Add Tags、Spam Filter、Summarize、Translate)にサービスのレート制限やクォータを超えた場合、処理は自動的に停止し、処理済みのメッセージ数が表示されます。</li>
+</ul>
+
+<h2>トラブルシューティング</h2>
+
+<h3>ローカルサーバーで "Connection refused"</h3>
+<p>ローカルサーバー(例:LM Studio)が実際に実行されていること、そして ThunderAI の <strong>Host Address</strong> がサーバーの待ち受けポートと一致していることを確認してください。</p>
+
+<h3>"401 Unauthorized" エラー</h3>
+<p>API キーを確認してください。キーを必要としないローカルサーバーでは、<code>none</code> のようなダミーの値を入力してみてください。空のキー欄を受け付けないサーバーもあります。</p>
+
+<h3>モデルの一覧が空</h3>
+<p><strong>Add manually</strong> をクリックし、プロバイダーまたはサーバーのドキュメントに記載されているモデル名を入力してください。</p>
+
+<h3>"404 Not Found"、または URL の "v1" が原因のエラー</h3>
+<p><strong>Host Address</strong> の末尾が <code>/v1</code> になっていないか確認してください。<strong>Keep the "v1" compatibility</strong> がオンのときは ThunderAI が自動で追加します。プロバイダーのエンドポイントに <code>/v1</code> の部分がない場合は、このオプションをオフにしてください。</p>
+
+<br>
+<div style="text-align: center">
+    <a href="../">ガイド一覧に戻る</a>
+</div>

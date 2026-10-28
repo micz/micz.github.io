@@ -21,7 +21,7 @@ notes that no longer apply instead of leaving them as history.
 ## Site config (`config.toml`)
 
 - Single theme: `themes/miczit_2027`.
-- Languages: en (default, served at the root), it, de, fr, es. RSS, taxonomy and sitemap are disabled.
+- Languages: en (default, served at the root), it, de, fr, es, ja. RSS, taxonomy and sitemap are disabled.
 - `content/**/*.json` is excluded from rendering (`ignoreFiles`). Shortcodes read these files as data.
 - `params.forceCSSReloadID` (YYYYMMDD) is the `?v=` cache-buster on `theme.css`. **Bump it whenever
   `theme.css` changes.**
@@ -38,7 +38,7 @@ full-bleed black-and-white photo.
 
 ```
 themes/miczit_2027/
-├── i18n/{en,it,de,fr,es}.yaml
+├── i18n/{en,it,de,fr,es,ja}.yaml
 ├── layouts/
 │   ├── _default/{baseof,single,list,redirect}.html
 │   ├── index.html          home hero on the photo (does not render .Content)
@@ -54,7 +54,7 @@ themes/miczit_2027/
 
 - Font tokens: `--serif` (Newsreader), `--mono` (JetBrains Mono), `--text` (Inter, body text),
   `--display-sans` (Inter Tight, header breadcrumb).
-- `_default/redirect.html` builds the language redirect stubs (`/it/`, `/de/`, `/fr/`, `/es/`, …)
+- `_default/redirect.html` builds the language redirect stubs (`/it/`, `/de/`, `/fr/`, `/es/`, `/ja/`, …)
   and the legacy `thunderdbird-addon-*` aliases. Do not change this behavior.
 - Page titles are short: `Title` is the page's own name only ("Ollama", "Setup guides", "ThunderAI",
   "Donate"), with no add-on name or "Thunderbird Addon" in it. Breadcrumb, add-on cards and sidebar
@@ -166,7 +166,7 @@ themes/miczit_2027/
 - Table cells: `<code>` in any column but the last stays on one line (`white-space: nowrap`),
   so keys are not broken letter by letter; it wraps again below 600px. Put long values (paths)
   in the last column. `<code>` in a `<thead>` cell is not uppercased like the rest of the header.
-- `status.{de,es,fr,it}.html` are redirect stubs (`layout = "redirect"`), so a translated
+- `status.{de,es,fr,it,ja}.html` are redirect stubs (`layout = "redirect"`), so a translated
   `/<lang>/thunderbird-addon-thunderai/status/` goes to the English page instead of a 404.
 - The ThunderAI status pages (`status.html`, `status_archive.html`) center their header with
   inline CSS on `.title-block`. Each issue notice is an `<h1>` that opens and closes with `<br>`.

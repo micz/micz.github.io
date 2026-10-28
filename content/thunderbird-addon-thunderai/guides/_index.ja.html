@@ -1,0 +1,88 @@
++++
+Title = "セットアップガイド"
+Type = "no-list"
+multilang = true
++++
+
+{{< page_title >}}
+
+<p>
+    ThunderAI を最大限に活用するためのステップバイステップのガイドです。<br>
+    使い始めたばかりの方も、特定の AI 連携を設定したい方も、必要な情報はすべてここにあります。<br>
+    最初のカスタムプロンプトの作り方は、<a href="../tutorial/">チュートリアル</a>をご覧ください。<br>
+    プロバイダーに接続する最も簡単な方法は <strong>Setup Wizard</strong> です。ThunderAI のウェルカムページ、ツールバーのポップアップ、または設定ページから開けます。
+</p>
+
+<h2>AI 連携</h2>
+<p>ThunderAI を、お好みの AI バックエンドに接続します。どれを選べばよいか迷ったら、下の比較表をご覧ください。</p>
+<ul>
+    <li><a href="chatgpt-web/">ChatGPT Web Interface</a> — API キーは不要で、無料の ChatGPT アカウントでも使えます。</li>
+    <li><a href="openai-api/">OpenAI API</a> — API キーを使って ChatGPT のモデルに直接接続します。</li>
+    <li><a href="google-gemini/">Google Gemini</a> — Google の Gemini モデルに接続します。無料枠があります。</li>
+    <li><a href="claude-api/">Claude API</a> — Anthropic の Claude モデルです。メールの詳しい分析に適しています。</li>
+    <li><a href="ollama/">Ollama（ローカル AI）</a> — AI を完全にお使いのコンピューター上で実行します。プライベート、無料で、インターネット接続も不要です。</li>
+    <li><a href="openai-compatible-api/">OpenAI Compatible API</a> — LM Studio、DeepSeek、Mistral、OpenRouter など。</li>
+</ul>
+
+<h2>どの連携を選べばよいですか？</h2>
+
+<table class="guides">
+    <thead>
+        <tr>
+            <th>連携</th>
+            <th>API キーが必要？</th>
+            <th>無料で使える？</th>
+            <th>プライベート / ローカル？</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><a href="chatgpt-web/">ChatGPT Web</a></td>
+            <td>いいえ</td>
+            <td>はい（無料アカウント）</td>
+            <td>いいえ</td>
+        </tr>
+        <tr>
+            <td><a href="openai-api/">OpenAI API</a></td>
+            <td>はい</td>
+            <td>いいえ（従量課金）</td>
+            <td>いいえ</td>
+        </tr>
+        <tr>
+            <td><a href="google-gemini/">Google Gemini</a></td>
+            <td>はい</td>
+            <td>はい（無料枠）</td>
+            <td>いいえ</td>
+        </tr>
+        <tr>
+            <td><a href="claude-api/">Claude API</a></td>
+            <td>はい</td>
+            <td>いいえ（従量課金）</td>
+            <td>いいえ</td>
+        </tr>
+        <tr>
+            <td><a href="ollama/">Ollama</a></td>
+            <td>いいえ（任意）</td>
+            <td>はい（完全に無料）</td>
+            <td>はい</td>
+        </tr>
+        <tr>
+            <td><a href="openai-compatible-api/">OpenAI Compatible</a></td>
+            <td>場合による</td>
+            <td>場合による</td>
+            <td>任意</td>
+        </tr>
+    </tbody>
+</table>
+
+<br>
+<p>
+    <strong>まずは ThunderAI を無料で試したいですか？</strong> <a href="chatgpt-web/">ChatGPT Web Interface</a> から始めましょう。設定も支払いも不要です。<br>
+    <strong>プライバシーを重視しますか？</strong> <a href="ollama/">Ollama</a> を使えば、すべてをお使いのコンピューター上に保てます。
+</p>
+
+<h2>管理者の方へ</h2>
+<p>組織全体に ThunderAI を導入しますか？<a href="/thunderbird-addon-thunderai/guides/enterprise-configuration/">Enterprise Configuration</a> ガイド（英語）では、Thunderbird のエンタープライズポリシーを使って、設定を事前に構成または強制する方法、共通のプロンプトを配布する方法、ユーザーが変更できる項目を制限する方法を説明しています。</p>
+
+<br>
+<p class="go-back"><a href="/thunderbird-addon-thunderai/">アドオンのページに戻る</a></p>

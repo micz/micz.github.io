@@ -1,0 +1,137 @@
++++
+Title = "Claude API"
+Type = "no-list"
+multilang = true
++++
+
+{{< page_title >}}
+
+<p>
+    <strong>Claude API</strong> との連携により、ThunderAI を Anthropic の Claude AI モデルに接続できます。<br>
+    Claude は、丁寧でよく構成された回答を生成し、長い文書の扱いにも優れていることで知られています。詳しいメールを読んだり書いたりするのに最適です。
+</p>
+
+<table class="guides">
+    <thead>
+        <tr>
+            <th>API キー</th>
+            <th>無料オプション</th>
+            <th>おすすめの用途</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>必要</td>
+            <td>なし（従量課金）</td>
+            <td>詳しい分析、長いメール、構成のしっかりした文章</td>
+        </tr>
+    </tbody>
+</table>
+
+<br>
+
+<h2>前提条件</h2>
+<ul>
+    <li>API アクセスが可能な <a href="https://console.anthropic.com" target="_blank">Anthropic アカウント</a></li>
+    <li>有効な Claude API キー</li>
+    <li>ThunderAI をインストールした Thunderbird</li>
+</ul>
+
+<h2>API キーの取得</h2>
+<ol>
+    <li><a href="https://console.anthropic.com/settings/keys" target="_blank">console.anthropic.com/settings/keys</a> にアクセスします</li>
+    <li><strong>Create Key</strong> をクリックします</li>
+    <li>名前を付けて、すぐにキーをコピーします。キーは二度と表示されません</li>
+</ol>
+
+<h2>セットアップ</h2>
+
+<p>
+    最も簡単な方法は <strong>Setup Wizard</strong> です。ThunderAI のウェルカムページ、ツールバーのポップアップ、または設定ページから開き、
+    <strong>Claude API</strong> を選択して API キーを貼り付け、モデルを選んで接続をテストします。
+    その後、ウィザードで使いたい AI 機能を有効にできます。<br>
+    手動で設定する場合は、以下の手順に従ってください。
+</p>
+
+<h3>1. ThunderAI の設定を開く</h3>
+<p>
+    Thunderbird で <strong>ツール → アドオンとテーマ → ThunderAI → 設定</strong> を開きます。
+</p>
+
+<h3>2. Claude API 連携を選択する</h3>
+<p><strong>Connection Settings</strong> パネルで、<strong>Connection Type</strong> のドロップダウンから <strong>Claude API</strong> を選択します。</p>
+
+<h3>3. API キーを入力する</h3>
+<p><strong>Claude API Key</strong> 欄に API キーを貼り付けます。キーは Thunderbird 内にローカルで保存され、Anthropic のサーバー以外に送信されることはありません。</p>
+
+<h3 id="model">4. モデルを選択する</h3>
+<p>
+    <strong>Claude Models</strong> の横にある <strong>Update list</strong> をクリックします。初回は、Thunderbird が
+    <code>anthropic.com</code> へのアクセス権限を求めます。承認しないと、ThunderAI は Claude API に接続できません。その後、一覧から使用するモデルを選択します。
+</p>
+<p><em>この権限は任意であり、Anthropic の API サーバーとの通信にのみ使用されます。ThunderAI がデータを収集することはありません。</em></p>
+
+<h3>5. 接続をテストする</h3>
+<p>
+    設定は変更するとすぐに保存されます。保存ボタンはありません。<br>
+    接続設定の下にあるバーの <strong>Test now</strong> をクリックします。問題がなければ
+    <em>"Connected — Claude API reachable"</em> と表示されます。その後、任意のメールを開き、ツールバーの ThunderAI ボタンをクリックしてプロンプトを実行します。
+</p>
+
+<h2>詳細オプション</h2>
+<p>
+    <strong>Connection Settings</strong> パネルの <strong>Advanced options</strong> をクリックすると、以下の設定が表示されます。
+    これらは選択したモデルに合わせて変わります。モデルが受け付けない設定は無効になり、その理由を説明する注記が表示され、送信されません。
+    別のモデルに戻した場合に備えて、保存した値は保持されます。
+</p>
+<ul>
+    <li><strong>System Prompt</strong>: すべてのプロンプトと一緒にモデルへ送信される指示とコンテキストです。</li>
+    <li><strong>Max Tokens</strong>: 回答の最大の長さです。</li>
+    <li><strong>Effort</strong>: モデルがリクエストにどれだけ推論を費やすかです。レベルが高いほど複雑なタスクでよりよい回答が得られますが、消費するトークンが増え、時間もかかります。
+        API に任せる場合は <em>Default</em> のままにしてください。古い Claude モデルはこの設定に対応していません。</li>
+    <li><strong>Extended thinking budget (tokens)</strong>: 古いモデル向けの設定で、モデルが思考に使えるトークンの最大数です。<code>0</code> にすると拡張思考がオフになります。
+        1024 以上、かつ Max Tokens 未満である必要があります。そうでない場合、設定画面に警告が表示され、値は送信されません。</li>
+    <li><strong>Temperature</strong>（0.0～1.0）、<strong>Top P</strong>、<strong>Top K</strong>: 回答のランダムさ、または的確さを調整します。
+        新しい Claude モデルはこれらを受け付けないため、代わりに <strong>Effort</strong> を使用してください。</li>
+    <li><strong>Stop sequences</strong>: モデルの書き込みを停止させるテキストで、1 行に 1 つずつ指定します。すべての Claude モデルで使用できます。</li>
+    <li><strong>Claude API Version</strong>: Anthropic API のバージョンです。よくわからない場合は変更しないでください。</li>
+</ul>
+<p>
+    これらのオプションは、カスタムプロンプトのページで個々のプロンプトに設定することもできます。また、各 AI 機能（Add Tags、Spam Filter、
+    Summarize、Translate、Calendar Event、Task）にも、それぞれの専用接続の <strong>Advanced options</strong> ボタンから設定できます。
+</p>
+
+<h2>ヒント</h2>
+<ul>
+    <li>Claude モデルは広いコンテキストウィンドウにより大量のテキストをうまく扱えるため、長いメールスレッドの処理に役立ちます。</li>
+    <li>Claude は詳しく回答する傾向があります。短い出力を好む場合は、プロンプト、カスタムプロンプト、または <strong>System Prompt</strong> に「簡潔に」などの指示を直接追加してください。</li>
+    <li>新しい Claude モデルは、一覧に表示された時点ですぐに使えます。モデルがいずれかのオプションを拒否した場合、ThunderAI はそのオプションを外して自動的に一度だけリクエストを再送します。</li>
+    <li>ThunderAI が複数のメールを処理している間（Add Tags、Spam Filter、Summarize、Translate）に Anthropic のレート制限を超えた場合、処理は自動的に停止し、処理済みのメッセージ数が表示されます。</li>
+    <li>API の使用量とコストは <a href="https://console.anthropic.com" target="_blank">console.anthropic.com</a> で確認できます。</li>
+</ul>
+
+<h2>トラブルシューティング</h2>
+
+<h3>"Authentication failed — check your API key" または "Invalid API key" エラー</h3>
+<p>キーが正しくコピーされているか確認してください。必要に応じて、Anthropic コンソールで新しいキーを生成してください。</p>
+
+<h3>ポップアップにプロンプトではなく権限のリクエストが表示される</h3>
+<p>
+    <code>anthropic.com</code> の権限がまだ許可されていません。この権限がないと、ThunderAI は Claude API に接続できません。
+    ポップアップのメッセージをクリックすると、ThunderAI のウェルカムページが開きます。そこで同じメッセージをクリックし、Thunderbird のリクエストを承認してください。
+    <a href="#model">手順 4</a> から許可することもできます。
+</p>
+
+<h3>"Credit balance too low" エラー</h3>
+<p><a href="https://console.anthropic.com/settings/billing" target="_blank">console.anthropic.com/settings/billing</a> で Anthropic アカウントにクレジットを追加してください。</p>
+
+<h3>一覧にモデルが表示されない</h3>
+<p>
+    <em>"You have denied the optional permission needed to fetch models for this integration"</em> と表示される場合は、
+    もう一度 <strong>Update list</strong> をクリックし、Thunderbird の権限リクエストを承認してください。それ以外の場合は、API キーが有効であることを確認してください。
+</p>
+
+<br>
+<div style="text-align: center">
+    <a href="../">ガイド一覧に戻る</a> &nbsp;|&nbsp; <a href="../ollama/">次へ: Ollama →</a>
+</div>

@@ -1,0 +1,152 @@
++++
+Title = "Ollama CORS"
+Type = "no-list"
+multilang = true
++++
+
+{{< page_title >}}
+
+
+<p><br>Ollama の CORS 設定は、お使いの OS とローカルサーバーの実行方法によって異なります。<br>
+    このページには、ThunderAI のユーザーの協力によって集めた情報をすべて掲載しています。<br>
+    新しい設定方法を提供していただける場合は、<a href="https://github.com/micz/ThunderAI/issues" target="_blank">新しい issue を作成</a>してください。<br><br>
+
+    サーバーで CORS を設定できない場合やサーバーにアクセスできない場合は、ThunderAI に「すべての URL」の権限を付与することで、CORS の問題を回避できるようになりました。
+    <br>以下のように、オプションページにある該当のボタンを使用してください。<br><br>
+    <img src="{{< base_url >}}images/thunderai/ollama-cors-information/all_urls.png" class="img-full"><br></p>
+
+    <h2>目次</h2>
+    <ul>
+        <li><a href="#docker_desktop">Docker Desktop</a></li>
+        <li><a href="#docker_commandline">Docker コマンドライン</a></li>
+        <li><a href="#docker_compose">Docker Compose</a></li>
+        <li><a href="#windows">Windows の Ollama</a></li>
+        <li><a href="#linux">Linux の Ollama</a></li>
+        <li><a href="#macos">macOS の Ollama</a></li>
+    </ul>
+<br>
+
+<h3 id="docker_desktop">Docker Desktop</h3>
+<table>
+    <tr style="vertical-align: top;">
+        <td class="top">新しいコンテナーを実行するときに「Optional settings」を開き、次の値で「Environment variables」を追加します。
+            <ul>
+                <li>Variable: <code>OLLAMA_ORIGINS</code></li>
+                <li>Value: <code>moz-extension://*</code></li>
+            </ul>
+        </td>
+        <td><img src="{{< base_url >}}images/thunderai/ollama-cors-information/docker_desktop.png" class="img-full"></td>
+    </tr>
+</table>
+<hr>
+<h3 id="docker_commandline">Docker コマンドライン</h3>
+<table>
+    <tr style="vertical-align: top;">
+        <td class="top">新しいコンテナーを実行するときに、docker コマンドに次のオプションを追加します。
+            <br><pre>-e 'OLLAMA_ORIGINS=moz-extension://*'</pre>
+        </td>
+    </tr>
+</table>
+<hr>
+<h3 id="docker_compose">Docker Compose</h3>
+<p class="translate-credits">提供：<a href="https://github.com/Amras2322" target="_blank">Amras2322</a> さん</p>
+<table>
+    <tr style="vertical-align: top;">
+        <td class="top">Ollama サービスを設定するときに、docker-compose.yml ファイルの <code>environment</code> セクションに <code>OLLAMA_ORIGINS</code> オプションを追加します。
+            <br><pre>services:
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+        [...]
+    environment:
+    - OLLAMA_ORIGINS=moz-extension://*</pre>
+        </td>
+    </tr>
+</table>
+<hr>
+<h3 id="windows">Windows の Ollama</h3>
+<p class="translate-credits">提供：<a href="https://github.com/actXc" target="_blank">actXc</a> さん</p>
+<table>
+    <tr style="vertical-align: top;">
+        <td class="top">
+            <ol>
+                <li>Windows の設定を開きます（Windows キー + I）</li>
+                <li>「環境変数」を検索します</li>
+                <li>「システム環境変数の編集」をクリックします</li>
+                <li>表示されたウィンドウで「環境変数」をクリックします</li>
+                <li>「システム環境変数」の下にある「新規」をクリックします</li>
+                <li>変数名：<code>OLLAMA_ORIGINS</code></li>
+                <li>変数値：<code>moz-extension://*</code></li>
+                <li>「OK」で確定します</li>
+                <li>PC を再起動します</li>
+            </ol>
+        </td>
+    </tr>
+</table>
+<hr>
+<h3 id="linux">Linux の Ollama</h3>
+<p class="translate-credits">提供：<a href="https://github.com/lakonis" target="_blank">lakonis</a> さん</p>
+<table>
+    <tr style="vertical-align: top;">
+        <td class="top">
+            <pre>
+### /etc/systemd/system/ollama.service.d/override.conf を編集中
+### ここから下のコメントまでの内容が drop-in ファイルの内容になります
+
+[Service]
+Environment="OLLAMA_ORIGINS=moz-extension://*"
+
+### このコメントより下の編集は破棄されます
+[...]
+            </pre>
+<i style="font-size: 0.90em;">Manjaro Linux で動作確認済み</i>
+        </td>
+    </tr>
+</table>
+<hr>
+<h3 id="macos">macOS の Ollama</h3>
+<p class="translate-credits">提供：<a href="https://github.com/jatoko" target="_blank">jatoko</a> さん</p>
+<table>
+    <tr style="vertical-align: top;">
+        <td class="top">
+            <ol>
+                <li>ターミナルを開きます</li>
+                <li>ターミナルで次のコマンドを実行します。<pre>launchctl setenv OLLAMA_ORIGINS "moz-extension://*"</pre></li>
+                <li>Ollama を（再）起動します（例：一度終了してから起動し直す）</li>
+            </ol>
+        </td>
+    </tr>
+</table>
+
+
+
+<br>
+<p class="go-back"><a href="/thunderbird-addon-thunderai/">アドオンのページに戻る</a></p>
+
+
+
+
+<style>
+table {
+  border: none;
+  border-collapse: collapse;
+}
+
+td {
+  border: none;
+}
+
+td.top{
+    padding-top: 0;
+}
+
+h3{
+    margin-bottom: 0;
+}
+
+pre{
+    margin: 5px;
+    padding: 10px;
+    border-radius: 9px;
+}
+</style>

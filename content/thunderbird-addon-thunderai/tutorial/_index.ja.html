@@ -1,0 +1,133 @@
++++
+Title = "チュートリアル"
+Type = "no-list"
+multilang = true
++++
+
+{{< page_title >}}
+
+<p>
+    このチュートリアルでは、完全に動作するカスタムプロンプトを一から作成します。<br>
+    目標は、メールへの<strong>フォーマルな返信の下書きを作成する</strong>プロンプトです。返信は適切な相手に宛てられ、その場で指定したトーンで書かれ、あなたの名前で署名されます。<br>
+    <a href="/thunderbird-addon-thunderai/custom-prompts/" target="_blank">カスタムプロンプト</a>、標準の<a href="/thunderbird-addon-thunderai/data-placeholders/" target="_blank">データプレースホルダー</a>、そしてカスタムデータプレースホルダーを組み合わせて使います。
+</p>
+<p>最後まで進めると、この 3 つの要素がどのように連携するかがわかり、作成したいどのプロンプトにも同じ方法を応用できるようになります。</p>
+
+<h2 class="tutorial">作成するもの</h2>
+<p>完成したプロンプトは、次のことを行います。</p>
+<ol>
+    <li>メールから自動的に取得した元の送信者に宛てて返信します。</li>
+    <li>使用するたびに<strong>トーン</strong>（例：「フォーマル」「親しみやすく」「簡潔に」）を尋ねます。</li>
+    <li>カスタムデータプレースホルダーとして一度だけ保存したあなたの名前で署名します。</li>
+</ol>
+<p>最終的なプロンプトのテキストは次のようになります。</p>
+<pre class="tutorial">Write a reply to the following email.
+Address the reply to: {%author%}
+Tone: {%additional_text:tone%}
+Sign the reply with: {%thunderai_custom_my_name%}
+
+{%mail_text_body%}</pre>
+
+<h2 class="tutorial">ステップ 1 — 名前用のカスタムデータプレースホルダーを作成する</h2>
+<p>
+    まず、作成するすべてのプロンプトに名前を入力しなくて済むように、名前を再利用可能なカスタムプレースホルダーとして保存します。<br>
+    <strong>ThunderAI のオプション</strong>を開き、{{< ui_button "thunderai/tutorial/buttons/manage-data-ph.png" "Manage your data placeholders" >}} ボタンをクリックします。
+    <strong>Manage Data Placeholders</strong> ページが開きます。{{< ui_button "thunderai/tutorial/buttons/add-new.png" "Add New" >}} をクリックし、次の値でフォームに入力します。
+</p>
+<ul>
+    <li><strong>ID</strong>：<code>my_name</code> — ThunderAI が <code>thunderai_custom_</code> という接頭辞を付けるため、プロンプト内ではこのプレースホルダーは <code>{%thunderai_custom_my_name%}</code> になります。</li>
+    <li><strong>Name</strong>：<code>My Name</code> — 自分でわかりやすい説明的な名前です。</li>
+    <li><strong>Data Placeholder Text</strong>：あなたのフルネーム（例：<code>山田 太郎</code>）。</li>
+    <li><strong>Usable in prompts added to menu</strong>：<em>Always</em> — メールを読むときも作成するときも、すべてのプロンプトで使えるようにします。</li>
+</ul>
+
+<figure>
+    {{< themed_screenshot "thunderai/tutorial/custom-data-placeholder.png" "入力済みの新しいカスタムデータプレースホルダーのフォーム" >}}
+    <figcaption>新しいデータプレースホルダー</figcaption>
+</figure>
+
+<p>
+    {{< ui_button "thunderai/tutorial/buttons/add-ph.png" "Add the Data Placeholder" >}} をクリックしてから、{{< ui_button "thunderai/tutorial/buttons/save-all.png" "Save All" >}} をクリックします。このページでは、変更は保存したときにのみ記録されます。<br>
+    これで、どのプロンプトでも <code>{%thunderai_custom_my_name%}</code> を使えるようになり、ThunderAI が自動的にあなたの名前に置き換えます。
+</p>
+
+<h2 class="tutorial">ステップ 2 — カスタムプロンプトを作成する</h2>
+<p>
+    ThunderAI のオプションに戻り、{{< ui_button "thunderai/customprompts/buttons/manage-prompts.png" "Manage your prompts" >}} ボタンをクリックして <strong>Manage Prompts</strong> ページを開きます。
+    {{< ui_button "thunderai/customprompts/buttons/new-prompt.png" "+ New prompt" >}} をクリックし、各フィールドに次のように入力します。
+</p>
+<ul>
+    <li><strong>ID</strong>：<code>formal_reply</code></li>
+    <li><strong>Name</strong>：<code>返信の下書き...</code> — この名前が ThunderAI のメニューに表示されます。<code>...</code> は、プロンプトの実行前に入力を求めることを示すための便利な慣習です。</li>
+    <li><strong>Prompt Text</strong>：以下のプロンプトをコピーします。
+        <pre class="tutorial">Write a reply to the following email.
+Address the reply to: {%author%}
+Tone: {%additional_text:tone%}
+Sign the reply with: {%thunderai_custom_my_name%}
+
+{%mail_text_body%}</pre>
+    </li>
+</ul>
+<p>プロンプトのテキストに <code>{%</code> と入力すると、ThunderAI が利用可能なプレースホルダーを候補として表示し、認識されたプレースホルダーはすべてハイライト表示されます。赤で表示されているものがあれば、書き方を確認してください。</p>
+<p>使用しているプレースホルダーについての補足です。</p>
+<ul>
+    <li><code>{%author%}</code> — メールの作成者（名前とメールアドレス）を挿入する標準のプレースホルダーです。</li>
+    <li><code>{%additional_text:tone%}</code> — ユーザー入力用のプレースホルダーです。このプロンプトを実行するたびに、ThunderAI がトーンの入力を求めます。入力欄の横に ID <code>tone</code> が表示されるので、何を入力すればよいかがわかります。</li>
+    <li><code>{%thunderai_custom_my_name%}</code> — ステップ 1 で作成したカスタムデータプレースホルダーです。</li>
+    <li><code>{%mail_text_body%}</code> — メール本文のプレーンテキストです。これにより、AI が必要なコンテキストを得られます。</li>
+</ul>
+
+<h2 class="tutorial">ステップ 3 — プロンプトの設定を構成する</h2>
+<p>引き続き新しいプロンプトで、次のオプションを設定します。</p>
+<ul>
+    <li><strong>Add to menu</strong>：<em>Reading an email</em> — 受信したメールに返信するためのもので、メールの作成中に使うものではないためです。</li>
+    <li><strong>Action</strong>：<em>Do reply</em> — AI の回答がメールへの返信に使われます。</li>
+    <li><strong>Ask for additional text</strong>：オンにします — <code>{%additional_text:tone%}</code> プレースホルダーが機能するために必要です。オフのままにすると、ThunderAI がこのスイッチをハイライト表示します。</li>
+    <li><strong>Always add the signature</strong>：オフのままにします — 名前はすでにプロンプト自体で追加しています。ThunderAI のオプションで設定した署名も付けたい場合はオンにしてください。</li>
+</ul>
+
+<figure>
+    {{< themed_screenshot "thunderai/tutorial/custom-prompt.png" "Manage Prompts ページの Draft a reply... プロンプト" >}}
+    <figcaption>完成したプロンプト</figcaption>
+</figure>
+
+<p><strong>Connection [API]</strong> セクションでは、このプロンプトだけで使用する別の AI サービス、モデル、サーバーを選択することもできます。このチュートリアルでは必要ありません。デフォルトでは、プロンプトはオプションで設定した接続を使用します。</p>
+
+<p>{{< ui_button "thunderai/customprompts/buttons/save.png" "Save" >}} をクリックします。プロンプトはすぐに保存され、メニューに追加されます。</p>
+
+<h2 class="tutorial">ステップ 4 — 試してみる</h2>
+<ol>
+    <li>Thunderbird で受信したメールを開きます。</li>
+    <li><a href="/thunderbird-addon-thunderai/dynamic-menu/" target="_blank">ThunderAI のメニュー</a>を開き、<strong>返信の下書き...</strong> を選択します。
+        <figure>
+            {{< themed_screenshot "thunderai/tutorial/menu.png" "Draft a reply... プロンプトが選択された ThunderAI のメニュー" >}}
+            <figcaption>ThunderAI のメニューに追加された新しいプロンプト</figcaption>
+        </figure>
+    </li>
+    <li>AI チャットウィンドウが開き、<strong>[ID: tone]</strong> ラベルを表示して追加のテキストを求めます。<code>フォーマルで簡潔に</code> のように入力し、{{< ui_button "thunderai/tutorial/buttons/send.png" "Send" >}} をクリックします。
+        <figure>
+            {{< themed_screenshot "thunderai/tutorial/additional-text.png" "ID tone の追加テキストを求める AI チャットウィンドウ" >}}
+            <figcaption>ThunderAI がトーンを尋ねる</figcaption>
+        </figure>
+    </li>
+    <li>すべてのプレースホルダーが置き換えられた状態でプロンプトが AI に送信されます。送信内容はチャットウィンドウで確認できます。</li>
+    <li>AI が回答したら、{{< ui_button "thunderai/tutorial/buttons/use-answer.png" "Use this answer" >}} をクリックすると、回答のテキストを使った返信が開きます。ボタンの 2 行目には、オプションの設定に従って全員に返信するのか送信者のみに返信するのかが表示されます。横の矢印から、もう一方を選ぶこともできます。
+        <figure>
+            {{< themed_screenshot "thunderai/tutorial/answer.png" "置き換え済みのプロンプト、回答、Use this answer ボタンが表示された AI チャットウィンドウ" >}}
+            <figcaption>返信に使える状態の回答</figcaption>
+        </figure>
+    </li>
+</ol>
+
+<h2 class="tutorial">次に試すこと</h2>
+<p>各要素がどのように組み合わさるかがわかったところで、次のような使い方も試してみてください。</p>
+<ul>
+    <li><strong>カスタムプレースホルダーを追加する</strong> — 役職、会社名、定型の免責事項などを保存し、すべてのプロンプトで再利用できます。</li>
+    <li><strong>ユーザー入力欄を増やす</strong> — 同じプロンプト内に、それぞれ異なる ID を持つ複数の <code>{%additional_text:&lt;id&gt;%}</code> プレースホルダーを使用できます。ThunderAI はそれらを順番に尋ねます。</li>
+    <li><strong>テキスト比較ビューアーを有効にする</strong> — <em>Substitute text</em> アクションを使って校正や書き直しのプロンプトを作成する場合は、<strong>Enable the text comparison viewer</strong> をオンにすると、AI が提案した変更を使用する前に確認できます。</li>
+</ul>
+
+<p class="go-back">
+    <a href="/ja/thunderbird-addon-thunderai/guides/">ガイドに戻る</a><br>
+    <a href="/thunderbird-addon-thunderai/">アドオンのページに戻る</a>
+</p>

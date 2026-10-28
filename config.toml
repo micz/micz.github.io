@@ -46,6 +46,11 @@ defaultContentLanguageInSubdir = false
     weight = 5
     [languages.es.params]
       flag = "🇪🇸"
+  [languages.ja]
+    languageName = "日本語"
+    weight = 6
+    [languages.ja.params]
+      flag = "🇯🇵"
 
 [params]
    forceCSSReloadID = "20261029"

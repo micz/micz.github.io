@@ -1,0 +1,122 @@
++++
+Title = "ChatGPT Web"
+Type = "no-list"
+multilang = true
++++
+
+{{< page_title >}}
+
+<p>
+    <strong>ChatGPT Web Interface</strong> との連携を使うと、API キーなしで ThunderAI を利用できます。<br>
+    ThunderAI がお客様に代わって ChatGPT のウェブサイトを直接操作するため、必要なのは無料の ChatGPT アカウントだけです。
+</p>
+
+<table class="guides">
+    <thead>
+        <tr>
+            <th>API キー</th>
+            <th>無料オプション</th>
+            <th>おすすめの用途</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>不要</td>
+            <td>あり（無料の ChatGPT アカウントでも可）</td>
+            <td>支払いの設定なしで、すぐに使い始めたい場合</td>
+        </tr>
+    </tbody>
+</table>
+
+<br>
+
+<h2>前提条件</h2>
+<ul>
+    <li><a href="https://chatgpt.com" target="_blank">chatgpt.com</a> の無料（または有料）アカウント</li>
+    <li>ThunderAI をインストールした Thunderbird</li>
+</ul>
+
+<h2>セットアップ</h2>
+
+<p>
+    最も簡単な方法は <strong>Setup Wizard</strong> です。ThunderAI のウェルカムページ、ツールバーのポップアップ、または設定ページから開き、
+    <strong>ChatGPT Web Interface</strong> を選択してください。その後、手順 3 から進めます。<br>
+    手動で設定する場合は、以下の手順をすべて行ってください。
+</p>
+
+<h3>1. ThunderAI の設定を開く</h3>
+<p>
+    Thunderbird で <strong>ツール → アドオンとテーマ → ThunderAI → 設定</strong> を開きます。
+</p>
+
+<h3>2. ChatGPT Web Interface を選択する</h3>
+<p><strong>Connection Settings</strong> パネルで、<strong>Connection Type</strong> のドロップダウンから <strong>ChatGPT Web Interface</strong> を選択します。</p>
+
+<h3 id="permission">3. 必要な権限を許可する</h3>
+<p>
+    ThunderAI には <code>chatgpt.com</code> へのアクセス権限が必要です。この権限は設定ページではなく、ThunderAI のポップアップから求められます。
+</p>
+<ol>
+    <li>ツールバーの ThunderAI ボタンをクリックします。権限が許可されていない間は、ポップアップにプロンプトの一覧の代わりに
+        <em>"To use the ChatGPT Web integration, you need to grant the required permission."</em> と表示されます。</li>
+    <li>そのメッセージをクリックすると、ThunderAI のウェルカムページが新しいタブで開きます。</li>
+    <li>ウェルカムページの上部にある同じメッセージをクリックし、Thunderbird の権限リクエストを承認します。</li>
+    <li><em>"Permission granted"</em> と表示されたら、それをクリックしてタブを閉じます。</li>
+</ol>
+<p>
+    ChatGPT Web Interface を選択すると、設定ページ上部の <strong>Open the Welcome Page</strong> カードからもウェルカムページを開けます。
+    同じリクエストが表示されます。
+</p>
+<p><em>この権限は任意であり、お客様に代わって ChatGPT のウェブサイトを操作するためだけに使用されます。ThunderAI がお客様のデータを収集または保存することはありません。</em></p>
+
+<h3>4. ChatGPT にログインする</h3>
+<p>
+    この操作は一度だけ必要です。Thunderbird がセッションを維持します。<br>
+    初めてプロンプトを使うと、ThunderAI が ChatGPT のウィンドウを開きます。ログインしていない場合はその旨が表示されるので、
+    そのウィンドウでご自分のアカウントにログインし、ウィンドウを閉じてから、もう一度プロンプトを実行してください。<br>
+    そのウィンドウからログインできない場合は、ThunderAI の設定にある <strong>Open ChatGPT Tab</strong> ボタンを使ってください。
+    Thunderbird のタブで <i>chatgpt.com</i> が開くので、そこでログインできます。その後タブを閉じて、ThunderAI の利用に戻ります。
+</p>
+
+<h3>5. 連携をテストする</h3>
+<p>任意のメールを開き、ツールバーの ThunderAI ボタンをクリックして、プロンプト（例: <strong>Summarize</strong>）を選択します。ThunderAI が ChatGPT のウィンドウを開き、プロンプトを送信して、そこに回答を表示します。</p>
+
+<h2>詳細オプション</h2>
+<p><strong>Connection Settings</strong> パネルの <strong>Advanced options</strong> をクリックすると、次の設定が表示されます。</p>
+<ul>
+    <li><strong>ChatGPT Web Model</strong>: 使用するモデルです。空欄または無効な場合、ChatGPT は既定のモデルを使用します。無料の ChatGPT アカウントでは機能しません。</li>
+    <li><strong>ChatGPT Web Project</strong> と <strong>ChatGPT Web Custom GPT</strong>: 常に使用する Project または Custom GPT です。
+        ChatGPT で Project（<code>/g/PROJECT-ID-PROJECT-NAME/project</code>）または
+        Custom GPT（<code>/g/CUSTOM-GPT-ID</code>）を開いているときに、ブラウザーのアドレスバーから値をコピーしてください。カスタムプロンプトのページで、個々のプロンプトに設定することもできます。</li>
+    <li><strong>ChatGPT Web temporary chat</strong>: 一時チャットを使用します。</li>
+    <li><strong>Wait time for page load</strong>: ChatGPT のページの読み込みを ThunderAI が待つ時間（ミリ秒、既定値 1000）です。Project または Custom GPT を使用する場合は、1000&nbsp;ms が加算されます。</li>
+</ul>
+<p><strong>Open ChatGPT Tab</strong> ボタンにも、設定したモデル、Project、Custom GPT が適用されます。</p>
+
+<h2>ヒントと既知の制限</h2>
+<ul>
+    <li>応答速度は ChatGPT のウェブサイトに依存し、変動することがあります。一般に、API 連携のほうが高速で安定しています。</li>
+    <li>無料アカウントには、ChatGPT 自体の利用制限（レート制限、利用できるモデル）が適用されます。</li>
+    <li>ChatGPT がウェブサイトのレイアウトを変更すると、ThunderAI が更新されるまで連携が一時的に動作しなくなることがあります。既知の問題については<a href="/thunderbird-addon-thunderai/status/">ステータスページ</a>をご確認ください。</li>
+    <li>設定ページに表示される AI 機能（Add Tags、Spam Filter、Summarize、Translate、Calendar Event、Task）には API 連携が必要で、ChatGPT Web Interface では動作しません。
+        ChatGPT Web をメインの接続のままにして、これらの機能それぞれに、その設定ページで個別の API 接続を割り当てることができます。ツールバーのメニューから使うプロンプトは、引き続き ChatGPT Web で動作します。</li>
+</ul>
+
+<h2>トラブルシューティング</h2>
+
+<h3>ポップアップにプロンプトではなく権限のリクエストが表示される</h3>
+<p><code>chatgpt.com</code> の権限がまだ許可されていません。<a href="#permission">手順 3</a> をご覧ください。</p>
+
+<h3>ログインしていないと表示される、または応答が表示されない</h3>
+<p>ThunderAI が開いた ChatGPT のウィンドウで ChatGPT にログインし、ウィンドウを閉じてから再度お試しください。それでも解決しない場合は、ThunderAI の設定にある <strong>Open ChatGPT Tab</strong> ボタンで開いたタブからログインしてください。</p>
+
+<h3>"Could not locate the ChatGPT message box"</h3>
+<p>ThunderAI が ChatGPT のテキストボックスを見つけられませんでした。通常は ChatGPT のウェブサイトが変更された後に起こります。1 分以内に ChatGPT のテキストボックス内をクリックすると、ThunderAI が処理を続行します。毎回発生する場合は、<a href="/thunderbird-addon-thunderai/status/">ステータスページ</a>をご確認ください。</p>
+
+<h3>応答が遅い、またはタイムアウトする</h3>
+<p>通常は ChatGPT のウェブサイトの一時的な問題です。しばらく待ってから再度お試しいただくか、より安定した動作を求める場合は <a href="../openai-api/">OpenAI API</a> 連携への切り替えをご検討ください。</p>
+
+<br>
+<div style="text-align: center">
+    <a href="../">ガイド一覧に戻る</a> &nbsp;|&nbsp; <a href="../openai-api/">次へ: OpenAI API →</a>
+</div>

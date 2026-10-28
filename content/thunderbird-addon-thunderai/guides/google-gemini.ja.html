@@ -1,0 +1,119 @@
++++
+Title = "Google Gemini"
+Type = "no-list"
+multilang = true
++++
+
+{{< page_title >}}
+
+<p>
+    <strong>Google Gemini</strong> との連携により、Gemini API を通じて ThunderAI を Google の Gemini AI モデルに接続できます。<br>
+    <strong>System Instruction</strong> や <strong>Thinking Budget</strong> などの詳細オプションにも対応しており、モデルの動作を細かく制御したい上級ユーザーに便利です。
+</p>
+
+<table class="guides">
+    <thead>
+        <tr>
+            <th>API キー</th>
+            <th>無料オプション</th>
+            <th>おすすめの用途</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>必要</td>
+            <td>あり（十分な無料枠あり）</td>
+            <td>Google のエコシステムを好む方、無料の API を使いたい方</td>
+        </tr>
+    </tbody>
+</table>
+
+<br>
+
+<h2>前提条件</h2>
+<ul>
+    <li><a href="https://accounts.google.com" target="_blank">Google アカウント</a></li>
+    <li>Gemini API キー（無料枠あり）</li>
+    <li>ThunderAI をインストールした Thunderbird</li>
+</ul>
+
+<h2>API キーの取得</h2>
+<ol>
+    <li><a href="https://aistudio.google.com/apikey" target="_blank">aistudio.google.com/apikey</a> にアクセスします</li>
+    <li><strong>Create API key</strong> をクリックします</li>
+    <li>既存の Google Cloud プロジェクトを選択するか、新しいプロジェクトを作成します</li>
+    <li>生成された API キーをコピーします</li>
+</ol>
+<p><em>Gemini API には十分なレート制限の無料枠があり、個人でのメール利用に適しています。より高いスループットが必要な場合は、有料プランも利用できます。</em></p>
+
+<h2>セットアップ</h2>
+
+<p>
+    最も簡単な方法は <strong>Setup Wizard</strong> です。ThunderAI のウェルカムページ、ツールバーのポップアップ、または設定ページから開き、
+    <strong>Google Gemini API</strong> を選択して API キーを貼り付け、モデルを選んで接続をテストします。
+    その後、ウィザードで使いたい AI 機能を有効にできます。<br>
+    手動で設定する場合は、以下の手順に従ってください。
+</p>
+
+<h3>1. ThunderAI の設定を開く</h3>
+<p>
+    Thunderbird で <strong>ツール → アドオンとテーマ → ThunderAI → 設定</strong> を開きます。
+</p>
+
+<h3>2. Google Gemini 連携を選択する</h3>
+<p><strong>Connection Settings</strong> パネルで、<strong>Connection Type</strong> のドロップダウンから <strong>Google Gemini API</strong> を選択します。</p>
+
+<h3>3. API キーを入力する</h3>
+<p><strong>API Key</strong> 欄に API キーを貼り付けます。キーは Thunderbird 内にローカルで保存され、Google のサーバー以外に送信されることはありません。</p>
+
+<h3>4. モデルを選択する</h3>
+<p><strong>Google Gemini API Models</strong> の横にある <strong>Update list</strong> をクリックし、一覧から使用するモデルを選択します。</p>
+
+<h3>5. 接続をテストする</h3>
+<p>
+    設定は変更するとすぐに保存されます。保存ボタンはありません。<br>
+    接続設定の下にあるバーの <strong>Test now</strong> をクリックします。Thunderbird が
+    <code>generativelanguage.googleapis.com</code> へのアクセス権限を求めた場合は、承認してください。問題がなければ、バーに
+    <em>"Connected — Google Gemini API reachable"</em> と表示されます。その後、任意のメールを開き、ツールバーの ThunderAI ボタンをクリックしてプロンプトを実行します。
+</p>
+
+<h2>詳細オプション</h2>
+<p>
+    <strong>Connection Settings</strong> パネルの <strong>Advanced options</strong> をクリックすると、以下の設定が表示されます。
+    モデルの既定値を使う場合は、欄を空欄のままにしてください。
+</p>
+<ul>
+    <li><strong>System Instruction</strong>: すべてのプロンプトに共通する固定のコンテキストです。たとえば、常に丁寧な文体で、特定の言語で、または特定の役割で回答させることができます。</li>
+    <li><strong>Thinking Budget</strong>: モデルが回答前の推論に使えるトークン数です。<code>0</code> を入力すると思考がオフになり、<code>-1</code> を入力すると動的な思考になります。モデルが思考に対応していない場合は、空欄のままにしてください。</li>
+    <li><strong>Temperature</strong>（0.0～2.0）、<strong>Top P</strong>、<strong>Top K</strong>: 回答のランダムさ、または的確さを調整します。Top K に対応していないモデルもあります。</li>
+    <li><strong>Max output tokens</strong>: 回答の最大の長さです。空欄または 0 の場合は、モデルに任せます。</li>
+    <li><strong>Extra body data</strong>: ThunderAI に表示されないオプション用の、Gemini API への追加パラメーターです。JSON オブジェクトで指定します（例: <code>{"generationConfig": {"seed": 42}}</code>）。
+        <code>generationConfig</code> 内のキーは、ThunderAI が作成するキーとマージされます。</li>
+</ul>
+<p>
+    これらのオプションは、カスタムプロンプトのページで個々のプロンプトに設定することもできます。また、各 AI 機能（Add Tags、Spam Filter、
+    Summarize、Translate、Calendar Event、Task）にも、それぞれの専用接続の <strong>Advanced options</strong> ボタンから設定できます。
+</p>
+
+<h2>ヒント</h2>
+<ul>
+    <li>無料枠には 1 分あたり・1 日あたりのリクエスト制限がありますが、通常は個人利用には十分です。現在の制限は <a href="https://aistudio.google.com" target="_blank">Google AI Studio</a> で確認してください。</li>
+    <li>ThunderAI が複数のメールを処理している間（Add Tags、Spam Filter、Summarize、Translate）に制限に達した場合、処理は自動的に停止し、処理済みのメッセージ数と、Google から通知があればどれだけ待つ必要があるかが表示されます。</li>
+    <li>System Instruction は、メールアシスタントに共通のルールを指定したい場合に特に便利です。</li>
+</ul>
+
+<h2>トラブルシューティング</h2>
+
+<h3>"Authentication failed — check your API key" または "API key not valid" エラー</h3>
+<p>キーが正しくコピーされているか確認してください。必要に応じて、AI Studio で新しいキーを生成してください。</p>
+
+<h3>"Model not found" またはモデルの一覧が空</h3>
+<p>API キーが Gemini モデルにアクセスできることを確認してください。制限のある Google Cloud プロジェクトで作成したキーでは、利用できるモデルが限られる場合があります。</p>
+
+<h3>詳細オプションを変更した後にリクエストが失敗する</h3>
+<p>モデルによっては、すべてのオプションを受け付けるわけではありません（たとえば Top K や、思考に対応していないモデルでの Thinking Budget）。そのオプションを空欄にして、再度お試しください。</p>
+
+<br>
+<div style="text-align: center">
+    <a href="../">ガイド一覧に戻る</a> &nbsp;|&nbsp; <a href="../claude-api/">次へ: Claude API →</a>
+</div>
