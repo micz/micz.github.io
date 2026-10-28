@@ -53,6 +53,12 @@
         "released": false,
         "credits": [
             {
+                "name": "Frank B",
+                "url": "https://hosted.weblate.org/user/frabri/",
+                "weblate": "frabri",
+                "first": "2026-10-22"
+            },
+            {
                 "name": "Pieter de Bruin",
                 "url": "https://hosted.weblate.org/user/portefeuillesgevraagd/",
                 "weblate": "portefeuillesgevraagd",
@@ -120,6 +126,12 @@
         "released": true,
         "credits": [
             {
+                "name": "tszlznl",
+                "url": "https://hosted.weblate.org/user/tszlznl/",
+                "weblate": "tszlznl",
+                "first": "2026-10-27"
+            },
+            {
                 "name": "Evereasy",
                 "url": "https://github.com/evez",
                 "github": "evez",
@@ -177,10 +189,22 @@
         "released": true,
         "credits": [
             {
+                "name": "tszlznl",
+                "url": "https://hosted.weblate.org/user/tszlznl/",
+                "weblate": "tszlznl",
+                "first": "2026-10-27"
+            },
+            {
                 "name": "jeklau",
                 "url": "https://github.com/jeklau",
                 "github": "jeklau",
                 "first": "2025-03-14"
+            },
+            {
+                "name": "67",
+                "url": "https://hosted.weblate.org/user/jeklau/",
+                "weblate": "jeklau",
+                "first": "2026-10-26"
             },
             {
                 "name": "Min9X1n",
