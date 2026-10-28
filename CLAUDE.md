@@ -166,6 +166,8 @@ themes/miczit_2027/
 - Table cells: `<code>` in any column but the last stays on one line (`white-space: nowrap`),
   so keys are not broken letter by letter; it wraps again below 600px. Put long values (paths)
   in the last column. `<code>` in a `<thead>` cell is not uppercased like the rest of the header.
+- `status.{de,es,fr,it}.html` are redirect stubs (`layout = "redirect"`), so a translated
+  `/<lang>/thunderbird-addon-thunderai/status/` goes to the English page instead of a 404.
 - The ThunderAI status pages (`status.html`, `status_archive.html`) center their header with
   inline CSS on `.title-block`. Each issue notice is an `<h1>` that opens and closes with `<br>`.
   `.content h1` in `theme.css` styles these notices and hides those two `<br>`. The archive page
