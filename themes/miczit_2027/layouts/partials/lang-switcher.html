@@ -4,7 +4,7 @@
   {{/* First: default language (English) */}}
   {{ range .AllTranslations }}
     {{ if eq .Language.Lang $defaultLang }}
-      <a href="{{ .Permalink }}" hreflang="{{ .Language.Lang }}"
+      <a href="{{ .RelPermalink }}" hreflang="{{ .Language.Lang }}"
         {{- if eq .Language.Lang $.Language.Lang }} class="current"{{ end }}>
         {{- with .Language.Params.flag }}{{ . }}{{ else }}{{ .Language.Lang }}{{ end }} {{ .Language.LanguageName -}}
       </a>
@@ -13,7 +13,7 @@
   {{/* Then: other languages in alphabetical order */}}
   {{ range sort .AllTranslations "Language.LanguageName" }}
     {{ if ne .Language.Lang $defaultLang }}
-      <a href="{{ .Permalink }}" hreflang="{{ .Language.Lang }}"
+      <a href="{{ .RelPermalink }}" hreflang="{{ .Language.Lang }}"
         {{- if eq .Language.Lang $.Language.Lang }} class="current"{{ end }}>
         {{- with .Language.Params.flag }}{{ . }}{{ else }}{{ .Language.Lang }}{{ end }} {{ .Language.LanguageName -}}
       </a>
