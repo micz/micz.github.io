@@ -14,7 +14,8 @@
                 {{/* Addon pages sit at the content root, not under /thunderbird-addons/:
                      if the top-level page of this path has addon_status, prepend the list
                      page. Redirect stubs lack params: check their translations too.
-                     Any other top-level page can name its parent with breadcrumb_parent. */}}
+                     Any other top-level page can name its parent with breadcrumb_parent;
+                     on a nested page, breadcrumb_parent goes right before its own title. */}}
                 {{ $root := $ }}
                 {{ range $.Ancestors }}{{ if not .IsHome }}{{ $root = . }}{{ end }}{{ end }}
                 {{ $isAddon := $root.Params.addon_status }}
@@ -35,6 +36,12 @@
                         <span class="header-sep" aria-hidden="true">/</span>
                     {{ end }}
                 {{ end }}{{ end }}
+                {{ with $.Parent }}{{ if not .IsHome }}{{ with $.Params.breadcrumb_parent }}
+                    {{ with or (site.GetPage .) (hugo.Sites.Default.GetPage .) }}
+                        <a class="header-parent" href="{{ .RelPermalink }}">{{ .Title }}</a>
+                        <span class="header-sep" aria-hidden="true">/</span>
+                    {{ end }}
+                {{ end }}{{ end }}{{ end }}
                 <h1 aria-current="page">{{ $.Title }}</h1>
             </nav>
             {{ end }}

@@ -73,7 +73,9 @@ themes/miczit_2027/
     the top-level ancestor has `addon_status`, the breadcrumb puts the `/thunderbird-addons` page
     in front. Another top-level page can name a parent with `breadcrumb_parent = "/<path>"` in its
     front matter (used by `thunderbird-addon-development-discontinued`): the parent goes in the
-    breadcrumb and in the `<title>`.
+    breadcrumb and in the `<title>`. On a nested page, `breadcrumb_parent` puts that page right
+    before the page's own title, in the breadcrumb and in the `<title>` (used by `status_archive`:
+    "… / ThunderAI / ChatGPT Web Status / Archive").
 - `baseof.html` adds `class="home"` to `<body>` on the home page. The photo background
   (`body.home .page-shell::before`) needs this class. Areas on the photo use the fixed
   `--photo-ink` color, so the theme toggle does not change the home page.
