@@ -1,5 +1,13 @@
 [
     {
+        "date": "2026-10-30",
+        "active": true,
+        "text": [
+            "The ChatGPT web interface has changed and same users are reporting that is needed to click \"Force completion\" when the answer in completed.",
+            "See <a href=\"https://github.com/micz/ThunderAI/issues/1011\" target=\"_blank\">#1011</a> for more information."
+        ]
+    },
+    {
         "date": "2026-09-25",
         "active": false,
         "text": [
