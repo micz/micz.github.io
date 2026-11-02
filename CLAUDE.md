@@ -68,13 +68,13 @@ themes/miczit_2027/
   - language stubs have no Title, so it takes the title from a translation and links that
     translation, not the stub (the wordmark too: on a stub home it links the default home);
   - links in content to a page that exists only in English (or only as a stub) use the absolute
-    English path (`/thunderbird-addon-thunderai/status/`), not a relative one;
+    English path (`/thunderbird-addon-thunderai/chatgptweb_status/`), not a relative one;
   - add-on pages are siblings of `thunderbird-addons/` in `content/`, not children of it. So when
     the top-level ancestor has `addon_status`, the breadcrumb puts the `/thunderbird-addons` page
     in front. Another top-level page can name a parent with `breadcrumb_parent = "/<path>"` in its
     front matter (used by `thunderbird-addon-development-discontinued`): the parent goes in the
     breadcrumb and in the `<title>`. On a nested page, `breadcrumb_parent` puts that page right
-    before the page's own title, in the breadcrumb and in the `<title>` (used by `status_archive`:
+    before the page's own title, in the breadcrumb and in the `<title>` (used by `chatgptweb_status_archive`:
     "… / ThunderAI / ChatGPT Web Status / Archive").
 - `baseof.html` adds `class="home"` to `<body>` on the home page. The photo background
   (`body.home .page-shell::before`) needs this class. Areas on the photo use the fixed
@@ -168,10 +168,12 @@ themes/miczit_2027/
 - Table cells: `<code>` in any column but the last stays on one line (`white-space: nowrap`),
   so keys are not broken letter by letter; it wraps again below 600px. Put long values (paths)
   in the last column. `<code>` in a `<thead>` cell is not uppercased like the rest of the header.
-- `status.{de,es,fr,it,ja}.html` are redirect stubs (`layout = "redirect"`), so a translated
-  `/<lang>/thunderbird-addon-thunderai/status/` goes to the English page instead of a 404.
-- The ThunderAI ChatGPT Web status pages (`status.html`, `status_archive.html`) get their notices
-  from `content/thunderbird-addon-thunderai/status.json` through `status_list`: entries
+- `chatgptweb_status.{de,es,fr,it,ja}.html` are redirect stubs (`layout = "redirect"`), so a translated
+  `/<lang>/thunderbird-addon-thunderai/chatgptweb_status/` goes to the English page instead of a 404.
+- The status pages used to live at `/thunderbird-addon-thunderai/status/` (and `status/archive/`):
+  `aliases` on the pages and on the stubs keep those old URLs (also `/<lang>/…/status/`) redirecting.
+- The ThunderAI ChatGPT Web status pages (`chatgptweb_status.html`, `chatgptweb_status_archive.html`) get their notices
+  from `content/thunderbird-addon-thunderai/chatgptweb_status.json` through `status_list`: entries
   `{ date: "YYYY-MM-DD", active, text: [HTML lines] }` (`""` = blank line), newest first.
   `active="true"` (status page) shows the active ones, or "No issues present." when there is none;
   `active="false"` (archive) shows the others. To publish an issue add an entry with

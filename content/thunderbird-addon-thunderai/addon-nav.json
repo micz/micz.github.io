@@ -36,7 +36,7 @@
     {
       "title": "addonNavResources",
       "items": [
-        { "page": "status", "also": ["status_archive"] },
+        { "page": "chatgptweb_status", "also": ["chatgptweb_status_archive"] },
         { "page": "ollama-cors-information" },
         { "page": "privacy" },
         { "page": "permissions" },
