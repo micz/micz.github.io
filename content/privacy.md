@@ -3,7 +3,7 @@ Title = "Privacy and cookie policy"
 url = "/privacy/"
 +++
 
-*Last updated: 31 October 2026*
+*Last updated: 4 November 2026*
 
 This page explains what data is processed when you visit **micz.it** and its subpages, and what choices you have.
 
@@ -43,7 +43,7 @@ The site is hosted on **GitHub Pages** (GitHub, Inc.). Like any web server, GitH
 
 Some pages embed videos from third-party services. When such a page loads the video player, your browser connects to that service, which receives your IP address and browser information:
 
-- The Thunderbird Error Console pages embed a video from **peertube.uno**, an instance of the open-source PeerTube platform. The player is loaded with peer-to-peer sharing turned off, so your IP address is not shared with other viewers. PeerTube sets no tracking cookies. The player may save settings such as volume in its own browser storage. See the [peertube.uno instance information](https://peertube.uno/about/instance).
+- The Thunderbird Error Console and Thunderbird Addon Keyboard Shortcut pages embed videos from **peertube.uno**, an instance of the open-source PeerTube platform. The player is loaded with peer-to-peer sharing turned off, so your IP address is not shared with other viewers. PeerTube sets no tracking cookies. The player may save settings such as volume in its own browser storage. See the [peertube.uno instance information](https://peertube.uno/about/instance).
 - One page embeds a YouTube video using YouTube's privacy-enhanced mode (`youtube-nocookie.com`). YouTube says it does not store information about you unless you play the video. If you do, Google's [privacy policy](https://policies.google.com/privacy) applies.
 
 Pages may link to external sites (for example GitHub, addons.thunderbird.net, PayPal for donations). Their own privacy policies apply once you follow those links.
