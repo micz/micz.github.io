@@ -110,6 +110,17 @@
         "version": "5.1.0"
     },
     {
+        "key": "_disable_add_tags_account_settings",
+        "type": "boolean",
+        "default": "false",
+        "group": "Restrictions",
+        "category": "structural",
+        "settable": true,
+        "values": "true",
+        "notes": "No per-account Add Tags settings: every account uses the global Add Tags settings and prompt text. The stored per-account settings are ignored, never deleted. See <a href=\"#restrictions\">Restrictions</a>.",
+        "version": "5.2.0"
+    },
+    {
         "key": "add_tags",
         "type": "boolean",
         "default": "false",
@@ -204,6 +215,17 @@
         "values": "",
         "notes": "Account identifiers, specific to a profile. Use add_tags_enabled_accounts_match instead.",
         "version": "5.1.0",
+        "group": "Not settable by policy",
+        "category": "excluded",
+        "settable": false
+    },
+    {
+        "key": "add_tags_account_settings",
+        "type": "object",
+        "default": "{}",
+        "values": "",
+        "notes": "Per-account Add Tags settings, keyed by account identifiers specific to a profile. Use _disable_add_tags_account_settings to turn them off.",
+        "version": "5.2.0",
         "group": "Not settable by policy",
         "category": "excluded",
         "settable": false
@@ -869,6 +891,28 @@
         "settable": true
     },
     {
+        "key": "ai_processing_enabled",
+        "type": "boolean",
+        "default": "false",
+        "values": "",
+        "notes": "\"Use ThunderAI Privacy\": mask personal data through the ThunderAI Privacy companion. While on, a missing companion blocks every AI request.",
+        "version": "5.2.0",
+        "group": "General",
+        "category": "general",
+        "settable": true
+    },
+    {
+        "key": "ai_processing_model_autodownload",
+        "type": "boolean",
+        "default": "false",
+        "values": "",
+        "notes": "No control in the settings, meant for a policy: when ThunderAI Privacy is installed without its model, ask it to download the model. Every machine downloads it from Hugging Face.",
+        "version": "5.2.0",
+        "group": "General",
+        "category": "general",
+        "settable": true
+    },
+    {
         "key": "do_debug",
         "type": "boolean",
         "default": "false",
@@ -1298,6 +1342,17 @@
         "settable": true
     },
     {
+        "key": "openai_comp_extra_headers",
+        "type": "string",
+        "default": "\"\"",
+        "values": "",
+        "notes": "A JSON object of request headers (name: string value), sent with every request of the connection. ThunderAI's own headers win over one with the same name. Not a managed secret: the value is visible in the settings.",
+        "version": "5.2.0",
+        "group": "OpenAI-compatible",
+        "category": "provider",
+        "settable": true
+    },
+    {
         "key": "openai_comp_host",
         "type": "string",
         "default": "\"\"",
@@ -1474,6 +1529,39 @@
         "settable": true
     },
     {
+        "key": "spamfilter_storage_max_entries",
+        "type": "number",
+        "default": "0",
+        "values": "",
+        "notes": "The cleanup removes the oldest saved records beyond this count. 0 = no limit.",
+        "version": "5.2.0",
+        "group": "Spam filter",
+        "category": "feature",
+        "settable": true
+    },
+    {
+        "key": "spamfilter_storage_max_age_days",
+        "type": "number",
+        "default": "0",
+        "values": "",
+        "notes": "In days: the cleanup removes the saved records older than this. 0 = no limit.",
+        "version": "5.2.0",
+        "group": "Spam filter",
+        "category": "feature",
+        "settable": true
+    },
+    {
+        "key": "spamfilter_storage_error_max_age_days",
+        "type": "number",
+        "default": "90",
+        "values": "",
+        "notes": "In days: the cleanup first removes the saved records holding an error older than this. 0 = keep them.",
+        "version": "5.2.0",
+        "group": "Spam filter",
+        "category": "feature",
+        "settable": true
+    },
+    {
         "key": "spamfilter_use_specific_integration",
         "type": "boolean",
         "default": "false",
@@ -1491,6 +1579,39 @@
         "values": "",
         "notes": "In milliseconds, before a hung special command is aborted.",
         "version": "5.1.0",
+        "group": "General",
+        "category": "general",
+        "settable": true
+    },
+    {
+        "key": "message_storage_cleanup_auto",
+        "type": "boolean",
+        "default": "true",
+        "values": "",
+        "notes": "The scheduled cleanup of the saved spam reports, summaries and translations, every 24 hours.",
+        "version": "5.2.0",
+        "group": "General",
+        "category": "general",
+        "settable": true
+    },
+    {
+        "key": "message_storage_batch_size",
+        "type": "number",
+        "default": "100",
+        "values": "",
+        "notes": "No control in the settings: the records a bulk removal of the saved data handles per lot. 1 to 10000.",
+        "version": "5.2.0",
+        "group": "General",
+        "category": "general",
+        "settable": true
+    },
+    {
+        "key": "api_stream_idle_timeout",
+        "type": "number",
+        "default": "120000",
+        "values": "",
+        "notes": "In milliseconds, without any data before an API answer that has started is given up. 0 disables it. Raise it for reasoning or slow local models. No effect on ChatGPT Web.",
+        "version": "5.2.0",
         "group": "General",
         "category": "general",
         "settable": true
@@ -1639,6 +1760,39 @@
         "settable": true
     },
     {
+        "key": "summarize_storage_max_entries",
+        "type": "number",
+        "default": "0",
+        "values": "",
+        "notes": "The cleanup removes the oldest saved records beyond this count. 0 = no limit.",
+        "version": "5.2.0",
+        "group": "Summarize",
+        "category": "feature",
+        "settable": true
+    },
+    {
+        "key": "summarize_storage_max_age_days",
+        "type": "number",
+        "default": "0",
+        "values": "",
+        "notes": "In days: the cleanup removes the saved records older than this. 0 = no limit.",
+        "version": "5.2.0",
+        "group": "Summarize",
+        "category": "feature",
+        "settable": true
+    },
+    {
+        "key": "summarize_storage_error_max_age_days",
+        "type": "number",
+        "default": "90",
+        "values": "",
+        "notes": "In days: the cleanup first removes the saved records holding an error older than this. 0 = keep them.",
+        "version": "5.2.0",
+        "group": "Summarize",
+        "category": "feature",
+        "settable": true
+    },
+    {
         "key": "summarize_use_specific_integration",
         "type": "boolean",
         "default": "false",
@@ -1711,6 +1865,39 @@
         "values": "",
         "notes": "0 = no limit, otherwise max characters shown inline.",
         "version": "5.1.0",
+        "group": "Translate",
+        "category": "feature",
+        "settable": true
+    },
+    {
+        "key": "translate_storage_max_entries",
+        "type": "number",
+        "default": "0",
+        "values": "",
+        "notes": "The cleanup removes the oldest saved records beyond this count. 0 = no limit.",
+        "version": "5.2.0",
+        "group": "Translate",
+        "category": "feature",
+        "settable": true
+    },
+    {
+        "key": "translate_storage_max_age_days",
+        "type": "number",
+        "default": "0",
+        "values": "",
+        "notes": "In days: the cleanup removes the saved records older than this. 0 = no limit.",
+        "version": "5.2.0",
+        "group": "Translate",
+        "category": "feature",
+        "settable": true
+    },
+    {
+        "key": "translate_storage_error_max_age_days",
+        "type": "number",
+        "default": "90",
+        "values": "",
+        "notes": "In days: the cleanup first removes the saved records holding an error older than this. 0 = keep them.",
+        "version": "5.2.0",
         "group": "Translate",
         "category": "feature",
         "settable": true

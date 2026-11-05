@@ -792,7 +792,7 @@ Type = "no-list"
             <td><code>openai_comp_host</code>, <code>openai_comp_model</code>, <code>openai_comp_api_key</code>,
                 <code>openai_comp_use_v1</code> <span class="sup_comment">(boolean)</span>,
                 <code>openai_comp_chat_name</code>, <code>openai_comp_temperature</code>,
-                <code>openai_comp_extra_body</code></td>
+                <code>openai_comp_extra_body</code>, <code>openai_comp_extra_headers</code></td>
         </tr>
         <tr>
             <td><code>chatgpt_api</code></td>
@@ -997,6 +997,13 @@ Type = "no-list"
             <td><code>""</code>, or a string holding a JSON object</td>
         </tr>
         <tr>
+            <td><code>openai_comp_extra_headers</code></td>
+            <td><code>""</code>, or a string holding a JSON object of header names and string values. Every
+                header must be usable: a valid header name, not one the browser does not let an add-on set
+                (<code>Host</code>, <code>Cookie</code>, <code>Origin</code>, <code>Proxy-*</code>,
+                <code>Sec-*</code>…), and a value with no line break</td>
+        </tr>
+        <tr>
             <td><code>chatgpt_verbosity</code></td>
             <td><code>""</code>, <code>"low"</code>, <code>"medium"</code> or <code>"high"</code></td>
         </tr>
@@ -1140,7 +1147,8 @@ Type = "no-list"
 {{< highlight yaml >}}
 "_disable_prompt_management": true,
 "_disable_default_prompts": true,
-"_disable_setup_wizard": true
+"_disable_setup_wizard": true,
+"_disable_add_tags_account_settings": true
 {{< /highlight >}}
 
 <p>
@@ -1182,6 +1190,14 @@ Type = "no-list"
             <td>Everything else. In the popup, the "run the setup wizard" link is replaced by a note that
                 the connection is configured centrally.</td>
         </tr>
+        <tr>
+            <td><code>_disable_add_tags_account_settings</code></td>
+            <td>The per-account Add Tags settings: the "Settings for single accounts" section of the Add Tags
+                page is hidden, and every account uses the global Add Tags settings and prompt text.</td>
+            <td>The global Add Tags settings, which stay the user's unless the policy sets them. The
+                per-account settings are <strong>never deleted</strong>: they apply again as they were when
+                the restriction is lifted.</td>
+        </tr>
     </tbody>
 </table>
 
@@ -1199,6 +1215,13 @@ Type = "no-list"
     connection</strong> (<code>connection_type</code> and its provider settings). On its own it just
     leaves users with no guided way to configure ThunderAI. Custom data placeholders are not covered by
     any restriction.
+</p>
+<p>
+    The per-account Add Tags settings themselves (<code>add_tags_account_settings</code>) cannot be set by
+    policy: they are keyed by account identifiers that differ in each profile. They never bypass the
+    policy, though: a global Add Tags key the policy enforces is never overridden for an account, and an
+    account's prompt text is ignored while the policy enforces the Add Tags text.
+    <code>_disable_add_tags_account_settings</code> is the way to turn them off altogether.
 </p>
 
 
@@ -1342,7 +1365,8 @@ Type = "no-list"
             <td>every number</td>
             <td>an integer, 0 or more. <code>spamfilter_threshold</code>: 0 to 100.
                 <code>add_tags_maxnum</code>, <code>summarize_max_messages</code>,
-                <code>max_prompt_length</code>, <code>batch_max_concurrency</code>: 1 or more.</td>
+                <code>max_prompt_length</code>, <code>batch_max_concurrency</code>: 1 or more.
+                <code>message_storage_batch_size</code>: 1 to 10000.</td>
         </tr>
         <tr>
             <td><code>calendar_timezone</code></td>
@@ -1378,7 +1402,7 @@ Type = "no-list"
 <h3>All keys</h3>
 
 <p>
-    137 of ThunderAI's 146 settings can be set by policy; the other nine are listed at the end.
+    153 of ThunderAI's 163 settings can be set by policy; the other ten are listed at the end.
     Two settable keys need a permission the policy cannot grant — see
     <a href="#permissions">Settings that require a browser permission</a>.
 </p>
