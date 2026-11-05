@@ -13,6 +13,10 @@ theme = "miczit_2027"
 
 enableRobotsTXT = true
 
+# Page .Lastmod = date of the last git commit that touched the file (used by the page_lastmod shortcode).
+enableGitInfo = true
+
+
 disableKinds = ["RSS","taxonomy","sitemap"]
 ignoreErrors = ["error-disable-taxonomy"]
 ignoreFiles = ["\\.json$"]

@@ -46,7 +46,7 @@ themes/miczit_2027/
 │   ├── partials/           head, head-extra, theme-init, header, footer, lang-switcher,
 │   │                       theme-toggle, doc-title, ph-list-script, addon-nav
 │   └── shortcodes/         project shortcodes (page_title, list-thunderbird-pages, *_list, lang_*,
-│                           ui_button, themed_screenshot, status_list)
+│                           ui_button, themed_screenshot, status_list, page_lastmod)
 └── static/
     ├── css/theme.css       dark tokens on :root, light tokens on [data-theme="light"]
     └── fonts/
@@ -102,6 +102,11 @@ themes/miczit_2027/
   `.doc-grid-3` (e.g. ThunderStats, ThunderAI) gives three equal columns and centers a lone last card with the
   same width (2 columns below 880px, 1 below 560px). `.doc-grid-single` is a separate grid with one
   centered card, max 340px wide.
+- `page_lastmod` prints the page's `.Lastmod` in the page language, in a `<time>` tag (optional
+  param: a `time.Format` layout, default `:date_long`). With `enableGitInfo = true` in `config.toml`
+  that is the date of the last commit touching the file, so it needs the full git history:
+  `fetch-depth: 0` in `hugo.yml` must stay. Uncommitted changes show the previous commit's date.
+  Used by the "Last updated" note of the enterprise configuration guide.
 - GitHub icon: `theme.css` puts the GitHub mark in front of every link whose `href` contains
   `//github.com/` (on `.doc-card` links it goes before `.doc-card-title`). It is a CSS mask filled
   with `currentColor`, so one icon works in both themes. No markup is needed in the content.

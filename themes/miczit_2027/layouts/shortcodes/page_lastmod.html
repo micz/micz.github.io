@@ -1,0 +1,5 @@
+{{- /* Date of the last git commit that touched this page (.Lastmod, needs enableGitInfo), in the page language. Optional first param: a time.Format layout (default ":date_long"). */ -}}
+{{- $layout := .Get 0 | default ":date_long" -}}
+{{- $d := .Page.Lastmod -}}
+<time datetime="{{ $d.Format "2006-01-02" }}">{{ time.Format $layout $d }}</time>
+{{- /**/ -}}
