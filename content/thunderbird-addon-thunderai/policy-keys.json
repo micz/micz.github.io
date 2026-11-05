@@ -1496,6 +1496,17 @@
         "settable": true
     },
     {
+        "key": "api_stream_idle_timeout",
+        "type": "number",
+        "default": "120000",
+        "values": "",
+        "notes": "In milliseconds, without any data before an API answer that has started is given up. 0 disables it. Raise it for reasoning or slow local models. No effect on ChatGPT Web.",
+        "version": "5.2.0",
+        "group": "General",
+        "category": "general",
+        "settable": true
+    },
+    {
         "key": "batch_max_concurrency",
         "type": "number",
         "default": "1",
