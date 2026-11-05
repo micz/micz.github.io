@@ -16,7 +16,7 @@ Type = "no-list"
     Thunderbird's own enterprise policy file.
 </p>
 <p class="small_text">Enterprise configuration is available from ThunderAI <strong>5.1.0</strong>.
-    <br>Last updated for ThunderAI <strong>5.2.0</strong>, on {{< page_lastmod >}}.
+    <br>Last updated for ThunderAI <strong>5.2.0pre2</strong>, on {{< page_lastmod >}}.
 </p>
 
 <h2 id="before">Before you start</h2>
@@ -73,6 +73,7 @@ Type = "no-list"
         <a href="#key-reference" class="nav-parent" aria-haspopup="true">Reference ▾</a>
         <span class="nav-sub">
             <a href="#key-reference">Key reference</a>
+            <a href="#privacy-companion">ThunderAI-Privacy</a>
             <a href="#troubleshooting">Troubleshooting</a>
         </span>
     </span>
@@ -1420,6 +1421,104 @@ Type = "no-list"
 
 {{< policy_keys_list >}}
 
+<h2 id="privacy-companion">ThunderAI-Privacy</h2>
+
+<p>
+    <a href="https://addons.thunderbird.net/thunderbird/addon/thunderai-privacy/" target="_blank">ThunderAI-Privacy</a> is a separate companion add-on that masks personal
+    data locally, with a model that runs on the machine, before a prompt is sent to the AI provider, and
+    restores it in the answer. It needs <strong>Thunderbird 153 or later, 64-bit</strong>. Two ThunderAI keys,
+    available from 5.2.0, control it:
+</p>
+
+<table class="guides">
+    <thead>
+        <tr>
+            <th>Key</th>
+            <th>What it does</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>ai_processing_enabled</code></td>
+            <td>The "Use ThunderAI-Privacy" switch in ThunderAI's advanced options. It is the only switch: the
+                one in the companion's settings mirrors it, and is disabled too when the policy locks the key.</td>
+        </tr>
+        <tr>
+            <td><code>ai_processing_model_autodownload</code></td>
+            <td>No control in the settings, meant for a policy. When the companion is installed without its
+                local model, ThunderAI asks it to download the model, with no user action.</td>
+        </tr>
+    </tbody>
+</table>
+
+<p>
+    ThunderAI does not install the companion. Deploy it with Thunderbird's own <code>ExtensionSettings</code>
+    policy (see the <a href="https://thunderbird.github.io/policy-templates/" target="_blank">Thunderbird
+    policy templates</a>), then turn it on and lock it in ThunderAI's block:
+</p>
+
+{{< highlight json >}}
+{
+  "policies": {
+    "ExtensionSettings": {
+      "thunderai-privacy@micz.it": {
+        "installation_mode": "force_installed",
+        "install_url": "https://addons.thunderbird.net/thunderbird/downloads/latest/thunderai-privacy/addon-990453-latest.xpi"
+      }
+    },
+    "3rdparty": {
+      "Extensions": {
+        "thunderai@micz.it": {
+          "ai_processing_enabled": true,
+          "ai_processing_model_autodownload": true
+        }
+      }
+    }
+  }
+}
+{{< /highlight >}}
+
+<h3>The model download</h3>
+
+<p>
+    The switch can be turned on <strong>from the settings</strong> only once the companion's model is
+    downloaded. A policy is not held back by this: <code>ai_processing_enabled</code> set to
+    <code>true</code> applies at once, and until the model is ready every AI request is blocked with a
+    message asking to download the model. With <code>ai_processing_model_autodownload</code> the download
+    starts by itself, so set the two keys together.
+</p>
+<ul>
+    <li><strong>Every machine downloads the model from Hugging Face</strong>, which is why the key is off by
+        default. Your network must let Thunderbird reach the Hugging Face hosts; plan for the traffic of a
+        whole fleet downloading it after the rollout.</li>
+    <li>The request is made at ThunderAI's startup and whenever the companion announces that its model is
+        missing (at the companion's own startup too). A failed download is tried
+        <strong>once</strong> per start of the companion: it is tried again only after Thunderbird, or one of
+        the two add-ons, restarts.</li>
+    <li>If a model that was ready is lost later, for example because its cache was cleared, it is
+        downloaded again.</li>
+    <li>Without this key, each user downloads the model from ThunderAI's "Download the model" button, in the
+        advanced options, or from the companion's settings.</li>
+</ul>
+
+<h3>While the switch is on</h3>
+
+<ul>
+    <li><strong>Nothing is ever sent unprocessed.</strong> If the companion is missing, disabled,
+        incompatible or without its model, AI requests are blocked, not sent as they are. To send them
+        again, the switch must be turned off: with the key locked, only the policy can do that.</li>
+    <li><strong>ChatGPT Web is not covered.</strong> A prompt that would open ChatGPT Web is not sent: the
+        user sees an alert instead. Use an API connection (see
+        <a href="#feature-connections">Per-feature connections</a> for the special features).</li>
+    <li>The companion cannot delete its model while the switch is on.</li>
+</ul>
+
+<p>
+    To leave the choice to the users, set <code>"ai_processing_enabled:locked": false</code> instead, or leave
+    the key out: they turn it on themselves once the model is downloaded.
+</p>
+
+
 <h2 id="troubleshooting">Troubleshooting</h2>
 
 <p>
@@ -1543,6 +1642,17 @@ Type = "no-list"
             <td>Calendar Event ignores the message body, warning about <code>calendar_no_selection</code></td>
             <td>The option is on but the Calendar Event prompt has neither
                 <code>{%mail_text_body_or_selected%}</code> nor <code>{%mail_html_body_or_selected%}</code>.</td>
+        </tr>
+        <tr>
+            <td>Every AI request blocked after turning on <code>ai_processing_enabled</code></td>
+            <td>ThunderAI Privacy is missing, disabled, not compatible, or its model is not downloaded yet.
+                Add <code>ai_processing_model_autodownload</code> and check that the machine can reach
+                Hugging Face. See <a href="#privacy-companion">ThunderAI Privacy</a>.</td>
+        </tr>
+        <tr>
+            <td>ChatGPT Web does not open, alert about ThunderAI Privacy</td>
+            <td>Expected while <code>ai_processing_enabled</code> is on: ChatGPT Web is not covered by the
+                companion. Use an API connection.</td>
         </tr>
         <tr>
             <td>Users cannot test the connection or fetch models</td>
