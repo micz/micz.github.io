@@ -107,14 +107,14 @@
     {
         "id": "{%mail_text_body%}",
         "type": "both",
-        "description": "the body of the email in plain text.",
+        "description": "the body of the email in plain text. Add a colon and a number to limit its length, for example <i>{%mail_text_body:2000%}</i> (from version 5.2.0, see <a href=\"#body-length-limit\">Limiting the length of the body</a>).",
         "scope": "Email Content",
         "version": ""
     },
     {
         "id": "{%mail_text_body_or_selected%}",
         "type": "both",
-        "description": "a selection if there is any, otherwise the body of the email in plain text.",
+        "description": "a selection if there is any, otherwise the body of the email in plain text. Add a colon and a number to limit its length, for example <i>{%mail_text_body_or_selected:4000%}</i> (from version 5.2.0, see <a href=\"#body-length-limit\">Limiting the length of the body</a>).",
         "scope": "Email Content",
         "version": "4.0.0"
     },
