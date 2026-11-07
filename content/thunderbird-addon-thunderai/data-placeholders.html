@@ -31,6 +31,26 @@ Description = "Placeholders insert email and account data into your ThunderAI pr
 <p>With the option "<i>Placeholders: Use default value</i>", you can choose whether to use the default value or retain the placeholder when no value is available (for example, an email with no address in the CC field)</p>
 
 <p>A custom placeholder that is disabled in the Data Placeholders page is not replaced in the prompts: it is left as written, as for a placeholder that does not exist.</p>
+
+<h2 class="ph-section-h" id="body-length-limit">Limiting the length of the body</h2>
+
+<p><i>Requires ThunderAI 5.2.0 or later.</i></p>
+
+<p>Like <a href="#mail_headers"><code>{%mail_headers:&lt;Header-ID&gt;%}</code></a> and <a href="#additional_text"><code>{%additional_text:&lt;Placeholder-ID&gt;%}</code></a>, the placeholders <a href="#mail_text_body"><code>{%mail_text_body%}</code></a> and <a href="#mail_text_body_or_selected"><code>{%mail_text_body_or_selected%}</code></a> accept a value after a colon: the maximum number of characters to insert.</p>
+
+<pre><code>{%mail_text_body:2000%}
+{%mail_text_body_or_selected:4000%}</code></pre>
+
+<ul>
+<li>The text is cut to that number of characters, at the end of a word near the limit. <code> [...]</code> is added at the end only when some text was actually cut.</li>
+<li>Without a limit (<code>{%mail_text_body%}</code>, <code>{%mail_text_body_or_selected%}</code>) the whole text is used, as before, so your existing prompts do not change.</li>
+<li>If the value is not a positive whole number (for example <code>:abc</code> or <code>:0</code>), the whole text is used. An invalid value never empties the prompt.</li>
+<li>The limit belongs to the prompt: an "Add tags" prompt can use 2000 characters while a summary prompt keeps 20000. If a prompt uses the placeholder twice with different limits, each one applies its own.</li>
+<li>It works everywhere placeholders are replaced: the context menu, the toolbar popup, automatic tagging, Summarize and Translate.</li>
+<li>The autocomplete in the prompt editor inserts the placeholder without a limit: type the colon and the number yourself.</li>
+</ul>
+
+<p>A typical use is keeping long emails within the context window of a small local model, for example with <a href="../guides/ollama/">Ollama</a> or a local <a href="../guides/openai-compatible-api/">OpenAI-compatible server</a>. Without a limit, a very long email can exceed the context window, and the model may then ignore part of the prompt or return an error.</p>
 </div>
 
 <br>
