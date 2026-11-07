@@ -42,7 +42,8 @@ Description = "Placeholders insert email and account data into your ThunderAI pr
 {%mail_text_body_or_selected:4000%}</code></pre>
 
 <ul>
-<li>The text is cut to that number of characters, at the end of a word near the limit. <code> [...]</code> is added at the end only when some text was actually cut.</li>
+<li>The text is cut to that number of characters. If there is a space in the last 10% of that length, the cut is made there, so a word is not broken in half. <code> [...]</code> is added at the end only when some text was actually cut.</li>
+<li>Spaces around the colon are ignored: <code>{%mail_text_body : 2000%}</code> is the same as <code>{%mail_text_body:2000%}</code>.</li>
 <li>Without a limit (<code>{%mail_text_body%}</code>, <code>{%mail_text_body_or_selected%}</code>) the whole text is used, as before, so your existing prompts do not change.</li>
 <li>If the value is not a positive whole number (for example <code>:abc</code> or <code>:0</code>), the whole text is used. An invalid value never empties the prompt.</li>
 <li>The limit belongs to the prompt: an "Add tags" prompt can use 2000 characters while a summary prompt keeps 20000. If a prompt uses the placeholder twice with different limits, each one applies its own.</li>
