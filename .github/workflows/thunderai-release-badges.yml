@@ -1,0 +1,86 @@
+name: ThunderAI release badges
+# Refreshes the ThunderAI version badges of the ThunderAI README (static/badges/thunderai/release.svg
+# and prerelease.svg, served at https://micz.it/badges/thunderai/*.svg), so the README does not
+# depend on shields.io.
+# Started by micz/ThunderAI (.github/workflows/update-release-badges.yml) with a repository_dispatch
+# of event_type "thunderai-release-badges" every time a release changes, or by hand here.
+# client_payload: { stable: latest stable tag or "", prerelease: pre-release tag to show or "",
+#                   url: release or run url }
+# An empty tag hides that badge (empty transparent SVG). A tag must be empty or match
+# ^v?[0-9]+\.[0-9]+\.[0-9]+[A-Za-z0-9.]*$, otherwise the run fails and writes nothing.
+# The SVGs are made by scripts/thunderai-release-badges.mjs with badge-maker (shields.io's library,
+# pinned in scripts/package.json): no badge service is called.
+# The changes go to the branch thunderai-release-badges and a PR to master is opened, or the open
+# one updated. No changes, no PR. The site is deployed (hugo.yml) when the PR is merged.
+# A PR opened with the workflow token does not start other workflows.
+on:
+  repository_dispatch:
+    types: [thunderai-release-badges]
+  workflow_dispatch:
+    inputs:
+      stable:
+        description: Latest stable tag (e.g. v3.7.0); empty = hide the release badge
+        type: string
+        required: false
+        default: ''
+      prerelease:
+        description: Pre-release tag to show (e.g. v3.8.0pre1); empty = hide the pre-release badge
+        type: string
+        required: false
+        default: ''
+permissions:
+  contents: write
+  pull-requests: write
+concurrency:
+  group: thunderai-release-badges
+  cancel-in-progress: false
+env:
+  BADGES_DIR: static/badges/thunderai
+  BADGES_BRANCH: thunderai-release-badges
+  BASE_BRANCH: master
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      # Untrusted values: only ever used through env, never expanded inside a script.
+      STABLE: ${{ github.event.client_payload.stable || inputs.stable }}
+      PRERELEASE: ${{ github.event.client_payload.prerelease || inputs.prerelease }}
+      SOURCE_URL: ${{ github.event.client_payload.url || format('manual run {0}/{1}/actions/runs/{2}', github.server_url, github.repository, github.run_id) }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ env.BASE_BRANCH }}
+
+      - name: Install Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+
+      - name: Install badge-maker
+        run: npm ci --prefix scripts --no-audit --no-fund
+
+      - name: Write the badges
+        run: node scripts/thunderai-release-badges.mjs --stable "$STABLE" --prerelease "$PRERELEASE" --dir "$BADGES_DIR"
+
+      - name: Create or update the PR
+        uses: peter-evans/create-pull-request@v8
+        with:
+          token: ${{ github.token }}
+          base: ${{ env.BASE_BRANCH }}
+          branch: ${{ env.BADGES_BRANCH }}
+          delete-branch: true
+          add-paths: ${{ env.BADGES_DIR }}
+          commit-message: |
+            ThunderAI: update release badges (release ${{ env.STABLE || 'hidden' }}, pre-release ${{ env.PRERELEASE || 'hidden' }})
+
+            Triggered by: ${{ env.SOURCE_URL }}
+          title: "ThunderAI: update release badges (release ${{ env.STABLE || 'hidden' }}, pre-release ${{ env.PRERELEASE || 'hidden' }})"
+          body: |
+            Automatic update of the ThunderAI version badges (`${{ env.BADGES_DIR }}`), served at https://micz.it/badges/thunderai/release.svg and https://micz.it/badges/thunderai/prerelease.svg.
+
+            - release: `${{ env.STABLE || 'hidden' }}`
+            - pre-release: `${{ env.PRERELEASE || 'hidden' }}`
+
+            Triggered by: ${{ env.SOURCE_URL }}
