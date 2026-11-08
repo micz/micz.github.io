@@ -163,15 +163,20 @@ themes/miczit_2027/
 
 ## ThunderAI release badges
 
-- `static/badges/thunderai/{release,prerelease}.svg` (served at `https://micz.it/badges/thunderai/…`)
-  are the version badges of the ThunderAI README. `.github/workflows/thunderai-release-badges.yml`
-  rewrites them on `repository_dispatch` `thunderai-release-badges` (sent by ThunderAI's
-  `update-release-badges.yml`; payload `{ stable, prerelease, url }`) or by hand.
+- `static/badges/thunderai/{release,prerelease,dev}.svg` (served at `https://micz.it/badges/thunderai/…`)
+  are the version badges of the ThunderAI README (`dev` = `version` of `manifest.json` on
+  ThunderAI's dev branch). `.github/workflows/thunderai-release-badges.yml` rewrites them on
+  `repository_dispatch` `thunderai-release-badges` (sent by ThunderAI's `update-release-badges.yml`
+  on releases and on pushes to dev touching `manifest.json`; payload `{ stable, prerelease, dev,
+  url }`) or by hand (inputs `stable`, `prerelease`, `dev`).
 - `scripts/thunderai-release-badges.mjs` makes them with `badge-maker`, pinned to an exact version
   in `scripts/package.json` (lockfile committed, `scripts/node_modules` gitignored; the package.json
-  is in `scripts/`, not at the root, so `hugo.yml` does not run `npm ci`). An empty tag writes an
-  empty transparent SVG (badge hidden); a tag not matching `^v?[0-9]+\.[0-9]+\.[0-9]+[A-Za-z0-9.]*$`
-  fails the run before anything is written.
+  is in `scripts/`, not at the root, so `hugo.yml` does not run `npm ci`). On a dispatch the script
+  reads the payload itself (`--event "$GITHUB_EVENT_PATH"`), because a GitHub expression cannot tell
+  a missing field from `""`. An empty value writes an empty transparent SVG (badge hidden); a field
+  missing from the payload (older ThunderAI workflow) leaves that SVG as it is; a value that is not a
+  string, or not matching `^v?[0-9]+\.[0-9]+\.[0-9]+[A-Za-z0-9.]*$`, fails the run before anything is
+  written. The commit and PR title show each badge's value, `hidden` or `unchanged`.
 - Like the Weblate badges workflow it opens a PR (branch `thunderai-release-badges`), or updates
   the open one, only when a file changed; the site is deployed when the PR is merged.
 

@@ -2,18 +2,25 @@
 // Writes the ThunderAI version badges served at https://micz.it/badges/thunderai/:
 //   <dir>/release.svg     label "release",     color blue,   the latest stable tag
 //   <dir>/prerelease.svg  label "pre-release", color orange, the pre-release tag to show
+//   <dir>/dev.svg         label "dev",         color yellow, the manifest.json version on ThunderAI's dev branch
 // Used by .github/workflows/thunderai-release-badges.yml. Needs `npm ci` in scripts/ (badge-maker,
 // the library of shields.io, pinned in package.json): the SVGs are made here, no badge service is
 // called.
 //
 // Usage:
-//   node scripts/thunderai-release-badges.mjs --stable v3.7.0 --prerelease v3.8.0pre1 [--dir <path>]
+//   node scripts/thunderai-release-badges.mjs [--stable v3.7.0] [--prerelease v3.8.0pre1] [--dev 3.8.0dev] [--dir <path>]
+//   node scripts/thunderai-release-badges.mjs --event "$GITHUB_EVENT_PATH" [--dir <path>]
 //
-// An empty tag (or a missing option) writes an empty transparent SVG, so the badge disappears from
-// the README. A tag must be empty or match TAG_RE: any other value makes the script exit with an
-// ::error:: annotation before writing anything. Prints "changed" / "unchanged" for each file.
+// With --event the values are the fields stable / prerelease / dev of the client_payload of that
+// repository_dispatch event file, and the options --stable / --prerelease / --dev are not allowed.
+// An empty value writes an empty transparent SVG, so the badge disappears from the README.
+// A missing option (or a field missing from the payload, e.g. a dispatch sent by an older ThunderAI
+// workflow) leaves that file as it is. A value must be a string, empty or matching TAG_RE: anything
+// else makes the script exit with an ::error:: annotation before writing anything.
+// Prints "changed" / "unchanged" / "kept" for each file. When GITHUB_OUTPUT is set it also writes
+// the outputs stable / prerelease / dev: the value, "hidden" (empty) or "unchanged" (missing).
 
-import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
+import { readFileSync, writeFileSync, appendFileSync, mkdirSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { parseArgs } from "node:util";
@@ -23,26 +30,53 @@ const TAG_RE = /^v?[0-9]+\.[0-9]+\.[0-9]+[A-Za-z0-9.]*$/;
 const EMPTY_SVG = '<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0"/>\n';
 const DEFAULT_DIR = join(dirname(fileURLToPath(import.meta.url)), "..", "static", "badges", "thunderai");
 
+const badges = [
+    { file: "release.svg", option: "stable", label: "release", color: "blue" },
+    { file: "prerelease.svg", option: "prerelease", label: "pre-release", color: "orange" },
+    { file: "dev.svg", option: "dev", label: "dev", color: "yellow" },
+];
+
 const { values } = parseArgs({
     options: {
-        stable: { type: "string", default: "" },
-        prerelease: { type: "string", default: "" },
+        stable: { type: "string" },
+        prerelease: { type: "string" },
+        dev: { type: "string" },
+        event: { type: "string" },
         dir: { type: "string", default: DEFAULT_DIR },
     },
 });
 
-const badges = [
-    { file: "release.svg", option: "stable", label: "release", color: "blue" },
-    { file: "prerelease.svg", option: "prerelease", label: "pre-release", color: "orange" },
-];
+function fail(message) {
+    console.log(`::error::${message}`);
+    process.exit(1);
+}
 
-// Validate everything first: an invalid tag must not leave one file written and the other not.
+// source: where the values come from. A key that is not an own property = leave the file as it is.
+let source = values;
+if (values.event !== undefined) {
+    if (badges.some((b) => values[b.option] !== undefined)) {
+        fail(`--event cannot be used with --${badges.map((b) => b.option).join(" / --")}`);
+    }
+    let payload;
+    try {
+        payload = JSON.parse(readFileSync(values.event, "utf8")).client_payload;
+    } catch (e) {
+        fail(`Cannot read the event file ${JSON.stringify(values.event)}: ${e.message}`);
+    }
+    source = payload !== null && typeof payload === "object" && !Array.isArray(payload) ? payload : {};
+}
+
+// Validate everything first: an invalid value must not leave one file written and another not.
 let invalid = false;
 for (const b of badges) {
-    const tag = values[b.option];
-    if (tag !== "" && !TAG_RE.test(tag)) {
+    if (!Object.hasOwn(source, b.option) || source[b.option] === undefined) {
+        b.tag = null; // missing: keep the file
+        continue;
+    }
+    const tag = source[b.option];
+    if (typeof tag !== "string" || (tag !== "" && !TAG_RE.test(tag))) {
         // JSON.stringify keeps newlines and control characters out of the annotation.
-        console.log(`::error::Invalid ${b.option} tag ${JSON.stringify(tag)}: it must be empty or match ${TAG_RE}`);
+        console.log(`::error::Invalid ${b.option} value ${JSON.stringify(tag)}: it must be an empty string or match ${TAG_RE}`);
         invalid = true;
     }
     b.tag = tag;
@@ -51,6 +85,11 @@ if (invalid) process.exit(1);
 
 mkdirSync(values.dir, { recursive: true });
 for (const b of badges) {
+    b.summary = b.tag === null ? "unchanged" : b.tag || "hidden";
+    if (b.tag === null) {
+        console.log(`${b.file}: kept (missing ${b.option})`);
+        continue;
+    }
     const svg = b.tag === ""
         ? EMPTY_SVG
         : makeBadge({ label: b.label, message: b.tag, color: b.color, style: "flat" }) + "\n";
@@ -62,9 +101,13 @@ for (const b of badges) {
         // missing file: written below
     }
     if (old === svg) {
-        console.log(`${b.file}: unchanged (${b.tag || "hidden"})`);
+        console.log(`${b.file}: unchanged (${b.summary})`);
     } else {
         writeFileSync(path, svg);
-        console.log(`${b.file}: changed (${b.tag || "hidden"})`);
+        console.log(`${b.file}: changed (${b.summary})`);
     }
+}
+
+if (process.env.GITHUB_OUTPUT) {
+    appendFileSync(process.env.GITHUB_OUTPUT, badges.map((b) => `${b.option}=${b.summary}\n`).join(""));
 }
