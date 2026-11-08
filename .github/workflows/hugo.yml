@@ -8,6 +8,10 @@ env:
 
   # Set the build time zone
   TZ: Europe/Rome
+
+  # Seconds the build waits after a push before starting: a push to master within this time
+  # cancels this run, so several PRs merged one after the other are deployed only once
+  DEBOUNCE_SECONDS: 60
 on:
   push:
     branches: ["master"]
@@ -16,16 +20,24 @@ permissions:
   contents: read
   pages: write
   id-token: write
-concurrency:
-  group: pages
-  cancel-in-progress: false
 defaults:
   run:
     shell: bash
 jobs:
   build:
     runs-on: ubuntu-latest
+    # A newer run cancels the build of an older one (while it waits or builds): only the
+    # latest push is built and deployed
+    concurrency:
+      group: pages-build
+      cancel-in-progress: true
     steps:
+      - name: Debounce
+        if: github.event_name == 'push'
+        run: |
+          echo "Waiting ${DEBOUNCE_SECONDS}s for further pushes..."
+          sleep "${DEBOUNCE_SECONDS}"
+
       - name: Checkout
         uses: actions/checkout@v7
         with:
@@ -135,6 +147,10 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: build
+    # A deploy already started is never cancelled
+    concurrency:
+      group: pages-deploy
+      cancel-in-progress: false
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
