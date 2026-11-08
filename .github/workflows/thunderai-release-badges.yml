@@ -6,7 +6,8 @@ name: ThunderAI release badges
 # of event_type "thunderai-release-badges" every time a release changes or a push to its dev branch
 # changes manifest.json, or by hand here.
 # client_payload: { stable: latest stable tag or "", prerelease: pre-release tag to show or "",
-#                   dev: "version" of manifest.json on the dev branch (e.g. 5.3.0dev) or "",
+#                   dev: "version" of manifest.json on the dev branch (e.g. 5.3.0dev, shown as
+#                        v5.3.0dev: a missing leading "v" is added) or "",
 #                   url: release or run url }
 # An empty value hides that badge (empty transparent SVG). A field missing from the payload (e.g. no
 # "dev" from an older ThunderAI workflow) leaves that badge as it is. A value must be empty or match
@@ -34,7 +35,7 @@ on:
         required: false
         default: ''
       dev:
-        description: Version of manifest.json on the dev branch (e.g. 5.3.0dev); empty = hide the dev badge
+        description: Version of manifest.json on the dev branch (e.g. 5.3.0dev, shown as v5.3.0dev); empty = hide the dev badge
         type: string
         required: false
         default: ''
