@@ -161,6 +161,21 @@ themes/miczit_2027/
   README translations list from `master` and opens a PR there. Needs the secret
   `THUNDERAI_DISPATCH_TOKEN` (fine-grained PAT on micz/ThunderAI, Contents: Read and write).
 
+## ThunderAI release badges
+
+- `static/badges/thunderai/{release,prerelease}.svg` (served at `https://micz.it/badges/thunderai/…`)
+  are the version badges of the ThunderAI README. `.github/workflows/thunderai-release-badges.yml`
+  rewrites them on `repository_dispatch` `thunderai-release-badges` (sent by ThunderAI's
+  `update-release-badges.yml`; payload `{ stable, prerelease, url }`) or by hand.
+- `scripts/thunderai-release-badges.mjs` makes them with `badge-maker`, pinned to an exact version
+  in `scripts/package.json` (lockfile committed, `scripts/node_modules` gitignored; the package.json
+  is in `scripts/`, not at the root, so `hugo.yml` does not run `npm ci`). An empty tag writes an
+  empty transparent SVG (badge hidden); a tag not matching `^v?[0-9]+\.[0-9]+\.[0-9]+[A-Za-z0-9.]*$`
+  fails the run before anything is written.
+- Unlike the other sync workflows it commits straight to `master` (no PR), and only when a file
+  changed. A push made with the workflow token does not start `hugo.yml`, so it starts it with
+  `gh workflow run` (`actions: write`). This needs `master` to stay unprotected for the workflow.
+
 ## Known quirks (not theme bugs)
 
 - `content/_404.html` is bilingual (IT + EN) on purpose.

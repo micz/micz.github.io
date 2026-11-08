@@ -1,0 +1,97 @@
+name: ThunderAI release badges
+# Refreshes the ThunderAI version badges of the ThunderAI README (static/badges/thunderai/release.svg
+# and prerelease.svg, served at https://micz.it/badges/thunderai/*.svg), so the README does not
+# depend on shields.io.
+# Started by micz/ThunderAI (.github/workflows/update-release-badges.yml) with a repository_dispatch
+# of event_type "thunderai-release-badges" every time a release changes, or by hand here.
+# client_payload: { stable: latest stable tag or "", prerelease: pre-release tag to show or "",
+#                   url: release or run url }
+# An empty tag hides that badge (empty transparent SVG). A tag must be empty or match
+# ^v?[0-9]+\.[0-9]+\.[0-9]+[A-Za-z0-9.]*$, otherwise the run fails and writes nothing.
+# The SVGs are made by scripts/thunderai-release-badges.mjs with badge-maker (shields.io's library,
+# pinned in scripts/package.json): no badge service is called.
+# No changes, no commit. Otherwise one commit is pushed straight to master (no PR: a release must
+# not wait for a merge). A push made with the workflow token does not start other workflows, so
+# the run then starts hugo.yml by hand (workflow_dispatch) to deploy the site.
+on:
+  repository_dispatch:
+    types: [thunderai-release-badges]
+  workflow_dispatch:
+    inputs:
+      stable:
+        description: Latest stable tag (e.g. v3.7.0); empty = hide the release badge
+        type: string
+        required: false
+        default: ''
+      prerelease:
+        description: Pre-release tag to show (e.g. v3.8.0pre1); empty = hide the pre-release badge
+        type: string
+        required: false
+        default: ''
+permissions:
+  contents: write
+  actions: write
+concurrency:
+  group: thunderai-release-badges
+  cancel-in-progress: false
+env:
+  BADGES_DIR: static/badges/thunderai
+  BASE_BRANCH: master
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      # Untrusted values: only ever used through env, never expanded inside a script.
+      STABLE: ${{ github.event.client_payload.stable || inputs.stable }}
+      PRERELEASE: ${{ github.event.client_payload.prerelease || inputs.prerelease }}
+      SOURCE_URL: ${{ github.event.client_payload.url || format('manual run {0}/{1}/actions/runs/{2}', github.server_url, github.repository, github.run_id) }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ env.BASE_BRANCH }}
+
+      - name: Install Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+
+      - name: Install badge-maker
+        run: npm ci --prefix scripts --no-audit --no-fund
+
+      - name: Write the badges
+        run: node scripts/thunderai-release-badges.mjs --stable "$STABLE" --prerelease "$PRERELEASE" --dir "$BADGES_DIR"
+
+      - name: Commit and push
+        id: push
+        run: |
+          if [ -z "$(git status --porcelain -- "$BADGES_DIR")" ]; then
+            echo "Badges unchanged: nothing to commit."
+            echo "pushed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          # One line, printable characters only, so the payload url cannot shape the message.
+          url=$(printf '%s' "$SOURCE_URL" | head -n 1 | tr -cd '[:print:]' | cut -c 1-300)
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- "$BADGES_DIR"
+          git commit -m "ThunderAI: update release badges (release ${STABLE:-hidden}, pre-release ${PRERELEASE:-hidden})" \
+                     -m "Triggered by: $url"
+          for attempt in 1 2 3 4; do
+            if git push origin "HEAD:$BASE_BRANCH"; then
+              echo "pushed=true" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            echo "Push refused (attempt $attempt): rebasing on the new $BASE_BRANCH."
+            sleep $((attempt * 2))
+            git pull --rebase origin "$BASE_BRANCH"
+          done
+          echo "::error::Could not push to $BASE_BRANCH."
+          exit 1
+
+      - name: Deploy the site
+        if: steps.push.outputs.pushed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run hugo.yml --repo "$GITHUB_REPOSITORY" --ref "$BASE_BRANCH"

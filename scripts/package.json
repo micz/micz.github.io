@@ -1,0 +1,12 @@
+{
+    "name": "micz-site-scripts",
+    "private": true,
+    "description": "Dependencies of the scripts in this folder (only thunderai-release-badges.mjs needs any).",
+    "type": "module",
+    "engines": {
+        "node": ">=20"
+    },
+    "dependencies": {
+        "badge-maker": "6.0.0"
+    }
+}
