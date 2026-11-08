@@ -165,7 +165,7 @@ themes/miczit_2027/
 
 - `static/badges/thunderai/{release,prerelease,dev}.svg` (served at `https://micz.it/badges/thunderai/…`)
   are the version badges of the ThunderAI README (`dev` = `version` of `manifest.json` on
-  ThunderAI's dev branch). `.github/workflows/thunderai-release-badges.yml` rewrites them on
+  ThunderAI's dev branch, shown with a leading `v` added by the script: `5.3.0dev` → `v5.3.0dev`). `.github/workflows/thunderai-release-badges.yml` rewrites them on
   `repository_dispatch` `thunderai-release-badges` (sent by ThunderAI's `update-release-badges.yml`
   on releases and on pushes to dev touching `manifest.json`; payload `{ stable, prerelease, dev,
   url }`) or by hand (inputs `stable`, `prerelease`, `dev`).
