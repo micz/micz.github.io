@@ -1,13 +1,18 @@
 name: ThunderAI release badges
-# Refreshes the ThunderAI version badges of the ThunderAI README (static/badges/thunderai/release.svg
-# and prerelease.svg, served at https://micz.it/badges/thunderai/*.svg), so the README does not
-# depend on shields.io.
+# Refreshes the ThunderAI version badges of the ThunderAI README (static/badges/thunderai/release.svg,
+# prerelease.svg and dev.svg, served at https://micz.it/badges/thunderai/*.svg), so the README does
+# not depend on shields.io.
 # Started by micz/ThunderAI (.github/workflows/update-release-badges.yml) with a repository_dispatch
-# of event_type "thunderai-release-badges" every time a release changes, or by hand here.
+# of event_type "thunderai-release-badges" every time a release changes or a push to its dev branch
+# changes manifest.json, or by hand here.
 # client_payload: { stable: latest stable tag or "", prerelease: pre-release tag to show or "",
+#                   dev: "version" of manifest.json on the dev branch (e.g. 5.3.0dev) or "",
 #                   url: release or run url }
-# An empty tag hides that badge (empty transparent SVG). A tag must be empty or match
+# An empty value hides that badge (empty transparent SVG). A field missing from the payload (e.g. no
+# "dev" from an older ThunderAI workflow) leaves that badge as it is. A value must be empty or match
 # ^v?[0-9]+\.[0-9]+\.[0-9]+[A-Za-z0-9.]*$, otherwise the run fails and writes nothing.
+# The payload is read by the script from the event file ($GITHUB_EVENT_PATH), never expanded here.
+# A manual run always sets all three badges (an empty input hides that badge).
 # The SVGs are made by scripts/thunderai-release-badges.mjs with badge-maker (shields.io's library,
 # pinned in scripts/package.json): no badge service is called.
 # The changes go to the branch thunderai-release-badges and a PR to master is opened, or the open
@@ -28,6 +33,11 @@ on:
         type: string
         required: false
         default: ''
+      dev:
+        description: Version of manifest.json on the dev branch (e.g. 5.3.0dev); empty = hide the dev badge
+        type: string
+        required: false
+        default: ''
 permissions:
   contents: write
   pull-requests: write
@@ -44,8 +54,10 @@ jobs:
     timeout-minutes: 10
     env:
       # Untrusted values: only ever used through env, never expanded inside a script.
-      STABLE: ${{ github.event.client_payload.stable || inputs.stable }}
-      PRERELEASE: ${{ github.event.client_payload.prerelease || inputs.prerelease }}
+      # Manual run only: a repository_dispatch payload is read from the event file by the script.
+      STABLE: ${{ inputs.stable }}
+      PRERELEASE: ${{ inputs.prerelease }}
+      DEV: ${{ inputs.dev }}
       SOURCE_URL: ${{ github.event.client_payload.url || format('manual run {0}/{1}/actions/runs/{2}', github.server_url, github.repository, github.run_id) }}
     steps:
       - name: Checkout
@@ -61,8 +73,15 @@ jobs:
       - name: Install badge-maker
         run: npm ci --prefix scripts --no-audit --no-fund
 
+      # Outputs stable / prerelease / dev: the validated value, "hidden" or "unchanged" (missing field).
       - name: Write the badges
-        run: node scripts/thunderai-release-badges.mjs --stable "$STABLE" --prerelease "$PRERELEASE" --dir "$BADGES_DIR"
+        id: badges
+        run: |
+          if [ "$GITHUB_EVENT_NAME" = repository_dispatch ]; then
+            node scripts/thunderai-release-badges.mjs --event "$GITHUB_EVENT_PATH" --dir "$BADGES_DIR"
+          else
+            node scripts/thunderai-release-badges.mjs --stable "$STABLE" --prerelease "$PRERELEASE" --dev "$DEV" --dir "$BADGES_DIR"
+          fi
 
       - name: Create or update the PR
         uses: peter-evans/create-pull-request@v8
@@ -73,14 +92,15 @@ jobs:
           delete-branch: true
           add-paths: ${{ env.BADGES_DIR }}
           commit-message: |
-            ThunderAI: update release badges (release ${{ env.STABLE || 'hidden' }}, pre-release ${{ env.PRERELEASE || 'hidden' }})
+            ThunderAI: update release badges (release ${{ steps.badges.outputs.stable }}, pre-release ${{ steps.badges.outputs.prerelease }}, dev ${{ steps.badges.outputs.dev }})
 
             Triggered by: ${{ env.SOURCE_URL }}
-          title: "ThunderAI: update release badges (release ${{ env.STABLE || 'hidden' }}, pre-release ${{ env.PRERELEASE || 'hidden' }})"
+          title: "ThunderAI: update release badges (release ${{ steps.badges.outputs.stable }}, pre-release ${{ steps.badges.outputs.prerelease }}, dev ${{ steps.badges.outputs.dev }})"
           body: |
-            Automatic update of the ThunderAI version badges (`${{ env.BADGES_DIR }}`), served at https://micz.it/badges/thunderai/release.svg and https://micz.it/badges/thunderai/prerelease.svg.
+            Automatic update of the ThunderAI version badges (`${{ env.BADGES_DIR }}`), served at https://micz.it/badges/thunderai/release.svg, https://micz.it/badges/thunderai/prerelease.svg and https://micz.it/badges/thunderai/dev.svg.
 
-            - release: `${{ env.STABLE || 'hidden' }}`
-            - pre-release: `${{ env.PRERELEASE || 'hidden' }}`
+            - release: `${{ steps.badges.outputs.stable }}`
+            - pre-release: `${{ steps.badges.outputs.prerelease }}`
+            - dev: `${{ steps.badges.outputs.dev }}`
 
             Triggered by: ${{ env.SOURCE_URL }}
