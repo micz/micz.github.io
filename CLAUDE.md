@@ -10,6 +10,10 @@ notes that no longer apply instead of leaving them as history.
 
 - Deploy: `.github/workflows/hugo.yml` builds the site (`hugo build --gc --minify` into `public/`)
   and deploys it to GitHub Pages on every push to `master` (or by hand). Nothing built is committed.
+  On a push the build first waits `DEBOUNCE_SECONDS` (60): the `build` job has its own concurrency
+  group with `cancel-in-progress: true`, so a newer push cancels the older run while it waits and
+  several PRs merged in a row are deployed once. The `deploy` job is in a separate group that is
+  never cancelled. A manual run skips the wait.
 - Local production build: `hugo --gc --minify` writes to `docs/` (`publishDir`), which is
   gitignored. Hugo does not delete stale files in it; use `--cleanDestinationDir` for a clean build.
 - **`docs/` belongs to the user.** Never build into it, edit it, or use it to check results. For
