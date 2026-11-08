@@ -164,11 +164,13 @@ themes/miczit_2027/
 ## ThunderAI release badges
 
 - `static/badges/thunderai/{release,prerelease,dev}.svg` (served at `https://micz.it/badges/thunderai/…`)
-  are the version badges of the ThunderAI README (`dev` = `version` of `manifest.json` on
-  ThunderAI's dev branch, shown with a leading `v` added by the script: `5.3.0dev` → `v5.3.0dev`). `.github/workflows/thunderai-release-badges.yml` rewrites them on
-  `repository_dispatch` `thunderai-release-badges` (sent by ThunderAI's `update-release-badges.yml`
-  on releases and on pushes to dev touching `manifest.json`; payload `{ stable, prerelease, dev,
-  url }`) or by hand (inputs `stable`, `prerelease`, `dev`).
+  are the version badges of the ThunderAI README: blue, orange (badge-maker named colors) and
+  `#BC2997` (magenta). `dev` = `version` of `manifest.json` on ThunderAI's dev branch, shown with a
+  leading `v` added by the script (`5.3.0dev` → `v5.3.0dev`).
+  `.github/workflows/thunderai-release-badges.yml` rewrites them on `repository_dispatch`
+  `thunderai-release-badges` (sent by ThunderAI's `update-release-badges.yml` on releases and on
+  pushes to dev touching `manifest.json`; payload `{ stable, prerelease, dev, url }`) or by hand
+  (inputs `stable`, `prerelease`, `dev`).
 - `scripts/thunderai-release-badges.mjs` makes them with `badge-maker`, pinned to an exact version
   in `scripts/package.json` (lockfile committed, `scripts/node_modules` gitignored; the package.json
   is in `scripts/`, not at the root, so `hugo.yml` does not run `npm ci`). On a dispatch the script

@@ -2,7 +2,7 @@
 // Writes the ThunderAI version badges served at https://micz.it/badges/thunderai/:
 //   <dir>/release.svg     label "release",     color blue,   the latest stable tag
 //   <dir>/prerelease.svg  label "pre-release", color orange, the pre-release tag to show
-//   <dir>/dev.svg         label "dev",         color yellow, the manifest.json version on ThunderAI's dev branch,
+//   <dir>/dev.svg         label "dev",         color #BC2997 (magenta), the manifest.json version on ThunderAI's dev branch,
 //                         shown with a leading "v" (5.3.0dev -> v5.3.0dev; a value already starting with v is kept)
 // Used by .github/workflows/thunderai-release-badges.yml. Needs `npm ci` in scripts/ (badge-maker,
 // the library of shields.io, pinned in package.json): the SVGs are made here, no badge service is
@@ -35,7 +35,8 @@ const badges = [
     { file: "release.svg", option: "stable", label: "release", color: "blue" },
     { file: "prerelease.svg", option: "prerelease", label: "pre-release", color: "orange" },
     // manifest.json has no "v" in its version: add it, like the tags of the other two badges.
-    { file: "dev.svg", option: "dev", label: "dev", color: "yellow", prefixV: true },
+    // #BC2997: white text contrast 5.4:1 (the named "yellow" was 1.9:1), distinct from blue and orange.
+    { file: "dev.svg", option: "dev", label: "dev", color: "BC2997", prefixV: true },
 ];
 
 const { values } = parseArgs({
