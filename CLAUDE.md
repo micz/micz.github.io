@@ -172,9 +172,8 @@ themes/miczit_2027/
   is in `scripts/`, not at the root, so `hugo.yml` does not run `npm ci`). An empty tag writes an
   empty transparent SVG (badge hidden); a tag not matching `^v?[0-9]+\.[0-9]+\.[0-9]+[A-Za-z0-9.]*$`
   fails the run before anything is written.
-- Unlike the other sync workflows it commits straight to `master` (no PR), and only when a file
-  changed. A push made with the workflow token does not start `hugo.yml`, so it starts it with
-  `gh workflow run` (`actions: write`). This needs `master` to stay unprotected for the workflow.
+- Like the Weblate badges workflow it opens a PR (branch `thunderai-release-badges`), or updates
+  the open one, only when a file changed; the site is deployed when the PR is merged.
 
 ## Known quirks (not theme bugs)
 
