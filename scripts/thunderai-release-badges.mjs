@@ -4,7 +4,8 @@
 //   <dir>/prerelease.svg  label "pre-release", color orange, the pre-release tag to show
 //   <dir>/dev.svg         label "dev",         color #BC2997 (magenta), the manifest.json version on ThunderAI's dev branch,
 //                         shown with a leading "v" (5.3.0dev -> v5.3.0dev; a value already starting with v is kept)
-// Used by .github/workflows/thunderai-release-badges.yml. Needs `npm ci` in scripts/ (badge-maker,
+// Used by .github/workflows/thunderai-release-badges.yml, and by sparks-release-badges.yml for the
+// ThunderAI Sparks badges (same labels and colors, written with --dir static/badges/sparks). Needs `npm ci` in scripts/ (badge-maker,
 // the library of shields.io, pinned in package.json): the SVGs are made here, no badge service is
 // called.
 //

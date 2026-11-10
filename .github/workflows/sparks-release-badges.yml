@@ -1,0 +1,108 @@
+name: ThunderAI Sparks release badges
+# Refreshes the ThunderAI Sparks version badges of the Sparks README (static/badges/sparks/release.svg,
+# prerelease.svg and dev.svg, served at https://micz.it/badges/sparks/*.svg), so the README does
+# not depend on shields.io. Same badges (labels, colors, rules) as thunderai-release-badges.yml.
+# Started by micz/ThunderAI-Sparks (.github/workflows/update-release-badges.yml) with a
+# repository_dispatch of event_type "sparks-release-badges" every time a release changes or a push to
+# its dev branch changes manifest.json, or by hand here.
+# client_payload: { stable: latest stable tag or "", prerelease: pre-release tag to show or "",
+#                   dev: "version" of manifest.json on the dev branch (e.g. 3.1.1, shown as
+#                        v3.1.1: a missing leading "v" is added) or "",
+#                   url: release or run url }
+# An empty value hides that badge (empty transparent SVG). A field missing from the payload leaves
+# that badge as it is. A value must be empty or match ^v?[0-9]+\.[0-9]+\.[0-9]+[A-Za-z0-9.]*$,
+# otherwise the run fails and writes nothing.
+# The payload is read by the script from the event file ($GITHUB_EVENT_PATH), never expanded here.
+# A manual run always sets all three badges (an empty input hides that badge).
+# The SVGs are made by scripts/thunderai-release-badges.mjs (shared with the ThunderAI badges, only
+# --dir changes) with badge-maker (shields.io's library, pinned in scripts/package.json): no badge
+# service is called.
+# The changes go to the branch sparks-release-badges and a PR to master is opened, or the open
+# one updated. No changes, no PR. The site is deployed (hugo.yml) when the PR is merged.
+# A PR opened with the workflow token does not start other workflows.
+on:
+  repository_dispatch:
+    types: [sparks-release-badges]
+  workflow_dispatch:
+    inputs:
+      stable:
+        description: Latest stable tag (e.g. v3.1.0); empty = hide the release badge
+        type: string
+        required: false
+        default: ''
+      prerelease:
+        description: Pre-release tag to show (e.g. v3.2.0pre1); empty = hide the pre-release badge
+        type: string
+        required: false
+        default: ''
+      dev:
+        description: Version of manifest.json on the dev branch (e.g. 3.1.1, shown as v3.1.1); empty = hide the dev badge
+        type: string
+        required: false
+        default: ''
+permissions:
+  contents: write
+  pull-requests: write
+concurrency:
+  group: sparks-release-badges
+  cancel-in-progress: false
+env:
+  BADGES_DIR: static/badges/sparks
+  BADGES_BRANCH: sparks-release-badges
+  BASE_BRANCH: master
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      # Untrusted values: only ever used through env, never expanded inside a script.
+      # Manual run only: a repository_dispatch payload is read from the event file by the script.
+      STABLE: ${{ inputs.stable }}
+      PRERELEASE: ${{ inputs.prerelease }}
+      DEV: ${{ inputs.dev }}
+      SOURCE_URL: ${{ github.event.client_payload.url || format('manual run {0}/{1}/actions/runs/{2}', github.server_url, github.repository, github.run_id) }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+        with:
+          ref: ${{ env.BASE_BRANCH }}
+
+      - name: Install Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+
+      - name: Install badge-maker
+        run: npm ci --prefix scripts --no-audit --no-fund
+
+      # Outputs stable / prerelease / dev: the validated value, "hidden" or "unchanged" (missing field).
+      - name: Write the badges
+        id: badges
+        run: |
+          if [ "$GITHUB_EVENT_NAME" = repository_dispatch ]; then
+            node scripts/thunderai-release-badges.mjs --event "$GITHUB_EVENT_PATH" --dir "$BADGES_DIR"
+          else
+            node scripts/thunderai-release-badges.mjs --stable "$STABLE" --prerelease "$PRERELEASE" --dev "$DEV" --dir "$BADGES_DIR"
+          fi
+
+      - name: Create or update the PR
+        uses: peter-evans/create-pull-request@v8
+        with:
+          token: ${{ github.token }}
+          base: ${{ env.BASE_BRANCH }}
+          branch: ${{ env.BADGES_BRANCH }}
+          delete-branch: true
+          add-paths: ${{ env.BADGES_DIR }}
+          commit-message: |
+            ThunderAI Sparks: update release badges (release ${{ steps.badges.outputs.stable }}, pre-release ${{ steps.badges.outputs.prerelease }}, dev ${{ steps.badges.outputs.dev }})
+
+            Triggered by: ${{ env.SOURCE_URL }}
+          title: "ThunderAI Sparks: update release badges (release ${{ steps.badges.outputs.stable }}, pre-release ${{ steps.badges.outputs.prerelease }}, dev ${{ steps.badges.outputs.dev }})"
+          body: |
+            Automatic update of the ThunderAI Sparks version badges (`${{ env.BADGES_DIR }}`), served at https://micz.it/badges/sparks/release.svg, https://micz.it/badges/sparks/prerelease.svg and https://micz.it/badges/sparks/dev.svg.
+
+            - release: `${{ steps.badges.outputs.stable }}`
+            - pre-release: `${{ steps.badges.outputs.prerelease }}`
+            - dev: `${{ steps.badges.outputs.dev }}`
+
+            Triggered by: ${{ env.SOURCE_URL }}

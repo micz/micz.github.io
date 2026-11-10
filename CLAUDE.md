@@ -185,6 +185,11 @@ themes/miczit_2027/
   written. The commit and PR title show each badge's value, `hidden` or `unchanged`.
 - Like the Weblate badges workflow it opens a PR (branch `thunderai-release-badges`), or updates
   the open one, only when a file changed; the site is deployed when the PR is merged.
+- ThunderAI Sparks has the same three badges in `static/badges/sparks/` (served at
+  `https://micz.it/badges/sparks/…`, same labels, colors and rules), written by
+  `.github/workflows/sparks-release-badges.yml` on `repository_dispatch` `sparks-release-badges`
+  (sent by micz/ThunderAI-Sparks' `update-release-badges.yml`, same payload) or by hand. It runs the
+  same script with `--dir static/badges/sparks` and opens its PR on the branch `sparks-release-badges`.
 
 ## Known quirks (not theme bugs)
 
