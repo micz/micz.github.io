@@ -190,6 +190,11 @@ themes/miczit_2027/
   `.github/workflows/sparks-release-badges.yml` on `repository_dispatch` `sparks-release-badges`
   (sent by micz/ThunderAI-Sparks' `update-release-badges.yml`, same payload) or by hand. It runs the
   same script with `--dir static/badges/sparks` and opens its PR on the branch `sparks-release-badges`.
+- ThunderAI Privacy has the same three badges in `static/badges/privacy/` (served at
+  `https://micz.it/badges/privacy/…`, same labels, colors and rules), written by
+  `.github/workflows/privacy-release-badges.yml` on `repository_dispatch` `privacy-release-badges`
+  (sent by micz/ThunderAI-Privacy's `update-release-badges.yml`, same payload) or by hand. It runs the
+  same script with `--dir static/badges/privacy` and opens its PR on the branch `privacy-release-badges`.
 
 ## Known quirks (not theme bugs)
 
