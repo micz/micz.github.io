@@ -16,7 +16,7 @@ Type = "no-list"
     Thunderbird's own enterprise policy file.
 </p>
 <p class="small_text">Enterprise configuration is available from ThunderAI <strong>5.1.0</strong>.
-    <br>Last updated for ThunderAI <strong>5.2.0pre2</strong>, on {{< page_lastmod >}}.
+    <br>Last updated for ThunderAI <strong>5.3.0</strong>, on {{< page_lastmod >}}.
 </p>
 
 <h2 id="before">Before you start</h2>
@@ -795,6 +795,8 @@ Type = "no-list"
             <td><code>openai_comp_host</code>, <code>openai_comp_model</code>, <code>openai_comp_api_key</code>,
                 <code>openai_comp_use_v1</code> <span class="sup_comment">(boolean)</span>,
                 <code>openai_comp_chat_name</code>, <code>openai_comp_temperature</code>,
+                <code>openai_comp_reasoning_effort</code>,
+                <code>openai_comp_chat_models_only</code> <span class="sup_comment">(boolean)</span>,
                 <code>openai_comp_extra_body</code>, <code>openai_comp_extra_headers</code></td>
         </tr>
         <tr>
@@ -945,7 +947,8 @@ Type = "no-list"
     <tbody>
         <tr>
             <td><code>*_host</code></td>
-            <td>an <code>http://</code> or <code>https://</code> URL</td>
+            <td>an <code>http://</code> or <code>https://</code> URL, with no user name or password in it
+                (the warning masks them)</td>
         </tr>
         <tr>
             <td><code>*_model</code></td>
@@ -1023,6 +1026,11 @@ Type = "no-list"
             <td><code>""</code>, <code>"auto"</code>, <code>"default"</code>, <code>"flex"</code> or
                 <code>"priority"</code></td>
         </tr>
+        <tr>
+            <td><code>openai_comp_reasoning_effort</code></td>
+            <td><code>""</code>, <code>"none"</code>, <code>"low"</code>, <code>"medium"</code> or
+                <code>"high"</code>. Another value can go through <code>openai_comp_extra_body</code></td>
+        </tr>
     </tbody>
 </table>
 
@@ -1030,6 +1038,12 @@ Type = "no-list"
     <code>"&lt;field&gt;:locked"</code> must be a boolean. Any other value is ignored with a warning,
     and the field stays enforced. A <code>":locked"</code> whose field is absent or was rejected is also
     reported.
+</p>
+<p>
+    <strong>A policy host on plain <code>http://</code> counts as approved.</strong> Since 5.2.0 ThunderAI
+    asks users to approve an unencrypted <code>http://</code> server on another machine before sending
+    anything to it. A host set by the policy skips that question: the per-feature connection hosts here,
+    the global <code>*_host</code> keys and the hosts of organization prompts.
 </p>
 <p>
     The settings pages don't apply these rules to what users type. The policy does, because a typo there
@@ -1389,9 +1403,10 @@ Type = "no-list"
 <p>
     Free-text keys (languages, signature name, system prompts…) accept any string. Provider-specific
     choices such as <code>chatgpt_reasoning_effort</code> or <code>anthropic_effort</code> are not checked:
-    the values each provider accepts change with its models. The exceptions are the ChatGPT choices the
+    the values each provider accepts change with its models. The exceptions are the choices the
     settings page offers as a fixed list (<code>chatgpt_verbosity</code>, <code>chatgpt_text_format</code>,
-    <code>chatgpt_truncation</code>, <code>chatgpt_service_tier</code>): those must be one of its values, see
+    <code>chatgpt_truncation</code>, <code>chatgpt_service_tier</code>,
+    <code>openai_comp_reasoning_effort</code>): those must be one of its values, see
     the <a href="#connection-field-rules">rules table</a>.
 </p>
 <p>
@@ -1405,7 +1420,7 @@ Type = "no-list"
 <h3>All keys</h3>
 
 <p>
-    153 of ThunderAI's 163 settings can be set by policy; the other ten are listed at the end.
+    156 of ThunderAI's 166 settings can be set by policy; the other ten are listed at the end.
     Two settable keys need a permission the policy cannot grant — see
     <a href="#permissions">Settings that require a browser permission</a>.
 </p>
@@ -1612,7 +1627,8 @@ Type = "no-list"
         <tr>
             <td>One field of a per-feature connection ignored</td>
             <td>It belongs to a different provider, has the wrong type (temperatures are strings), or fails
-                its content rule, such as a host that is not an <code>http(s)://</code> URL.</td>
+                its content rule, such as a host that is not an <code>http(s)://</code> URL or that holds a
+                user name or password.</td>
         </tr>
         <tr>
             <td>A restriction has no effect</td>

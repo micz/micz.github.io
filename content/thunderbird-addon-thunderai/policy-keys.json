@@ -1397,6 +1397,28 @@
         "settable": true
     },
     {
+        "key": "openai_comp_reasoning_effort",
+        "type": "string",
+        "default": "\"\"",
+        "values": "\"\" | none | low | medium | high",
+        "notes": "Sent as the <code>reasoning_effort</code> parameter; <code>\"\"</code> = not sent. Another value can go through <code>openai_comp_extra_body</code>, which takes precedence.",
+        "version": "5.3.0",
+        "group": "OpenAI-compatible",
+        "category": "provider",
+        "settable": true
+    },
+    {
+        "key": "openai_comp_chat_models_only",
+        "type": "boolean",
+        "default": "false",
+        "values": "",
+        "notes": "Show only chat models: the <b>Update list</b> button leaves out the models not usable for chat and the deprecated ones, and lists the <code>-latest</code> aliases first. It only filters the fetched list.",
+        "version": "5.3.0",
+        "group": "OpenAI-compatible",
+        "category": "provider",
+        "settable": true
+    },
+    {
         "key": "placeholders_use_default_value",
         "type": "boolean",
         "default": "false",
@@ -1810,6 +1832,17 @@
         "values": "",
         "notes": "",
         "version": "5.1.0",
+        "group": "Features",
+        "category": "feature",
+        "settable": true
+    },
+    {
+        "key": "qnote_integration",
+        "type": "boolean",
+        "default": "false",
+        "values": "",
+        "notes": "Read the QNote note of a message for the <code>{%qnote_text%}</code> and <code>{%qnote_datetime%}</code> placeholders. While on, the note text reaches the AI provider of every prompt that uses them. Needs no browser permission, but locking it on does not give QNote's consent: each user still allows ThunderAI in QNote's dialog.",
+        "version": "5.3.0",
         "group": "Features",
         "category": "feature",
         "settable": true

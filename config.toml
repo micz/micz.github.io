@@ -66,3 +66,8 @@ defaultContentLanguageInSubdir = false
 # (dark and light tokens) instead of a fixed inline style.
 [markup.highlight]
   noClasses = false
+
+# Newer Hugo versions refuse text/html content files by default; most pages here are .html.
+# Same as Hugo's default (org files stay refused), without the text/html exclusion.
+[security]
+  allowContent = ['! ^text/org$']

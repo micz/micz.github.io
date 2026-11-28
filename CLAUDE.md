@@ -27,6 +27,9 @@ notes that no longer apply instead of leaving them as history.
 - Single theme: `themes/miczit_2027`.
 - Languages: en (default, served at the root), it, de, fr, es, ja. RSS, taxonomy and sitemap are disabled.
 - `content/**/*.json` is excluded from rendering (`ignoreFiles`). Shortcodes read these files as data.
+- `security.allowContent = ['! ^text/org$']`: newer Hugo versions (the local 0.169) refuse `text/html`
+  content files by default, and most pages here are `.html`. Keep it; it also works with the
+  0.157.0 pinned in `hugo.yml`.
 - `params.forceCSSReloadID` (YYYYMMDD) is the `?v=` cache-buster on `theme.css`. **Bump it whenever
   `theme.css` changes.**
 - `params.goatcounterURL`: GoatCounter analytics, loaded in `partials/head-extra.html`. There is no
